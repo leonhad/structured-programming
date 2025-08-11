@@ -1,0 +1,44 @@
+\documentclass[a4paper,12pt]{book}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+
+\usepackage{listings} % For code formatting
+
+\lstset{
+	basicstyle=\ttfamily, % Use monospaced font
+	numbers=left,         % Line numbers on the left
+	numberstyle=\tiny,    % Small line numbers
+	stepnumber=1,         % Line number step
+	frame=none,         % Frame around the code
+	keywordstyle=\color{blue}, % Keywords in blue
+	commentstyle=\color{green}, % Comments in green
+	stringstyle=\color{red}, % Strings in red
+	breaklines=true       % Automatic line breaking
+}
+
+%\begin{lstlisting}[language=Ada]
+%fori = 0 dd, =d fori > 0 dd, = 2*dd;-_, from which dd, = da*2" (1)
+%\end{lstlisting}
+
+\begin{document}
+
+\author{TeXstudio Team}
+\title{Simple Book Example}
+\date{January 2013}
+
+\frontmatter
+\maketitle
+\tableofcontents
+
+\mainmatter
+
+\include{./preface}
+
+\include{./chapters/chapter01}
+%\include{./chapters/chapter02}
+%\include{./chapters/chapter03}
+
+\backmatter
+% bibliography, glossary and index would go here.
+
+\end{document}
