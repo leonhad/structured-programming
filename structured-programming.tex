@@ -30,10 +30,11 @@ pdfcreator={pdflatex}]{hyperref}
 %fori = 0 dd, =d fori > 0 dd, = 2*dd;-_, from which dd, = da*2" (1)
 %\end{lstlisting}
 
-\titleformat{\chapter}[hang]{\large\bfseries\centering}{\thechapter}{1em}{}
+\titleformat{\chapter}[hang]{\large\bfseries\centering}{\thechapter}{.5em}{}
 \titlespacing{\chapter}{0pt}{0pt}{.5cm}
 
-\titleformat{\section}[hang]{\normalsize\centering\scshape}{\thesection{}.}{1em}{}
+\titleformat{\section}[hang]{\normalsize\centering\scshape}{\thesection{}.}{.5em}{}
+\titlespacing{\section}{0pt}{.5cm}{.5cm}
 \counterwithout{section}{chapter}
 
 \renewcommand{\chaptermark}[1]{ \markboth{#1}{} }
