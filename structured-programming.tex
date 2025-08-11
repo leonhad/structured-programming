@@ -2,7 +2,13 @@
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{titlesec}
-\usepackage[hidelinks]{hyperref}
+\usepackage[hidelinks,pdftex,
+pdfauthor={O.-J. DAHL, E. W. DIJKSTRA, C. A. R. HOARE},
+pdftitle={Structured Programming},
+pdfsubject={A.P.I.C. Studies in Data Processing	No. 8},
+pdfkeywords={Structured, Programming},
+pdfproducer={Latex with hyperref},
+pdfcreator={pdflatex}]{hyperref}
 \usepackage{mathptmx}
 
 \usepackage{listings}
@@ -31,15 +37,14 @@
 \counterwithout{section}{chapter}
 
 \renewcommand{\chaptermark}[1]{ \markboth{#1}{} }
-%\renewcommand{\sectionmark}[1]{ \markright{#1}{} }
 
 \begin{document}
 	
 \renewcommand{\thechapter}{\Roman{chapter}}
 
-\author{TeXstudio Team}
-\title{Simple Book Example}
-\date{January 2013}
+\author{O.-J. DAHL, E. W. DIJKSTRA, C. A. R. HOARE}
+\title{STRUCTURED PROGRAMMING}
+\date{1972}
 
 \frontmatter
 \maketitle
