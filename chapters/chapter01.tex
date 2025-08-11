@@ -3,11 +3,7 @@
 
 {
 	\noindent
-	\scshape
-	\hfill
-	\small
-	Edsger W. Dijkstra
-	\hfill
+	\scshape\hfill\small Edsger W. Dijkstra\hfill
 }
 
 \section{To my reader}
@@ -16,9 +12,12 @@ These notes have the status of ``Letters written to myself'': I wrote them down 
 
 For one thing, I felt that they suffered from a marked verbosity. Yet I do not try to condense them (now), firstly because that would introduce another delay and I would like to ``think on'', secondly because earlier experiences have made me afraid of being misunderstood: many a programmer tends to see his (sometimes rather specific) difficulties as the core of the subject and as a result there are widely divergent opinions as to what programming is really about.
 
-For another thing, as a document this is very incomplete: I am only too aware of the fact that it ends in mid-air. Yet I have decided to have these notes duplicated, besides some practical considerations mainly to show what I have thought to those who expressed interest in it or to those whose comments I would welcome.
-
 I hope that, despite its defects, you will enjoy at least parts of it. If these notes prove to be a source of inspiration or to give you a new appreciation of the programmer's trade, some of my goals will have been reached.
+
+Prior to their publication in book form, the ``Notes on Structured Programming'' have been distributed privately. The interest then shown in
+them, for which I would like to express my gratitude here, has been one of the main incentives to supplement them with some additional material and to make them available to a wider public. In particular I would like to thank Bob Floyd, Ralph London and Mike Woodger for their encouraging
+comments and Peter Naur for the criticism he expressed. Finally I would like to express my gratitude to Mrs. E. L. Dijkstra-Tucker for her kind
+assistance in my struggles with the English language.
 
 \section{On our Inability To Do Much}
 
@@ -39,3 +38,60 @@ Yet we must organize the computations in such a way that our limited powers are 
 It is in the same mood that I should like to draw the reader's attention to the fact that ``clarity'' has pronounced quantitative aspects, a fact many mathematicians, curiously enough, seem to be unaware of. A theorem stating the validity of a conclusion when ten pages full of conditions are satisfied is hardly a convenient tool, as all conditions have to be verified whenever the theorem is appealed to. In Euclidean geometry, Pythagoras' Theorem holds for any three points $A$, $B$ and $C$ such that through $A$ and $C$ a straight line can be drawn orthogonal to a straight line through $B$ and $C$. How many mathematicians appreciate that the theorem remains applicable when some or all of the points $A$, $B$ and $C$ coincide? Yet this seems largely responsible for the convenience with which Pythagoras Theorem can be used.
 
 Summarizing: as a slow-witted human being I have a very small head and I had better learn to live with it and to respect my limitations and give them full credit, rather than to try to ignore them, for the latter vain effort will be punished by failure.
+
+\section{On The Reliability Of Mechanisms}
+
+Being a programmer by trade, programs are what I am talking about and the true subject of this section really is the reliability of programs. That, nevertheless, I have mentioned ``mechanisms'' in its title is because I regard programs as specific instances of mechanisms, and that I wanted to express, at least once, my strong feeling that many of my considerations concerning software are, mutatis mutandis, just as relevant for hardware design.
+
+Present-day computers are amazing pieces of equipment, but most amazing of all are the uncertain grounds on account of which we attach any validity to their output. It starts already with our belief that the hardware functions properly.
+
+Let us restrict, for a moment, our attention to the hardware and let us wonder to what extent one can convince oneself of its being properly constructed. Some years ago a machine was installed on the premises of my University; in its documentation it was stated that it contained, among many other things, circuitry for the fixed-point multiplication of two 27-bit integers. A legitimate question seems to be: ``Is this multiplier correct, is it performing according to the specifications?''.
+
+The naïve answer to this is: ``Well, the number of different multiplications this multiplier is claimed to perform correctly is finite, viz. $2^{54}$, so let us try them all.'' But, reasonable as this answer may seem, it is not, for although a single multiplication took only some tens of microseconds, the total time needed for this finite set of multiplications would add up to more than 10,000 years! We must conclude that exhaustive testing, even of a single component such as a multiplier, is entirely out of the question. (Testing a complete computer on the same basis would imply the established correct processing of all possible programs!)
+
+A first consequence of the 10,000 years is that during its life-time the multiplier will be asked to perform only a negligible fraction of the vast number of all possible multiplications it could do: practically none of them! Funnily enough, we still require that it should do any multiplication correctly when ordered to do so. The reason underlying this fantastic quality requirement is that we do not know in advance, which are the negligibly few multiplications it will be asked to perform. In our reasoning about our programs we talk about "the product" and have abstracted from the specific values of the factors: we do not know them, we do not wish to know them, it is not our business to know them, it is our business not to know them! Our wish to think in terms of the concept ``the product'', abstracted from the specific instances occurring in a computation is granted, but the price paid for this is precisely the reliability requirement that \textit{any} multiplication of the vast set will be performed correctly. So much for the justification of our desire for a correct multiplier.
+
+But how is the correctness established in a convincing manner? As long as the multiplier is considered as a black box, the only thing we can do is `testing by sampling'', i.e. offering to the multiplier a feasible amount of factor pairs and checking the result. But in view of the 10,000 years, it is clear that we can only test a negligible fraction of the possible multiplications. Whole classes of in some sense ``critical'' multiplications may remain untested and in view of the reliability justly desired, our quality control is still most unsatisfactory. Therefore it is not done that way.
+
+The straightforward conclusion is the following: a convincing demonstration of correctness being impossible as long as the mechanism is regarded
+as a black box, our only hope lies in not regarding the mechanism as a black box. I shall call this ``taking the structure of the mechanism into account''.
+
+From now onward the type of mechanisms we are going to deal with are programs. (In many respects, programs are mechanisms much easier to deal
+with than circuitry, which is really an analogue device and subject to wear and tear.) And also with programs it is fairly hopeless to establish the correctness beyond even the mildest doubt by testing, without taking their structure into account. In other words, we remark that the extent to which the program correctness can be established is not purely a function of the program's external specifications and behavior but depends critically upon its internal structure.
+
+Recalling that our true concern is with really large programs, we observe as an aside that the size itself requires a high confidence level for the individual program components. If the chance of correctness of an individual component equals p, the chance of correctness of a whole program, composed of $N$ such components, is something like
+
+$$
+P=p^n.
+$$
+
+As $N$ will be very large, $p$ should be very, very close to $1$ if we desire $P$ to differ significantly from zero!
+
+When we now take the position that it is not only the programmer's task to produce a correct program but also to demonstrate its correctness in a convincing manner, then the above remarks have a profound influence on the programmer's activity: the object he has to produce must be usefully
+structured.
+
+The remaining part of this monograph will mainly be an exploration of what program structure can be used to good advantage. In what follows it will become apparent that program correctness is not my only concern, program adaptability or manageability will be another. This stress on program manageability is my deliberate choice, a choice that, therefore, I should like to justify.
+
+While in the past the growth in power of the generally available equipment has mitigated the urgency of the efficiency requirements, this very same growth has created its new difficulties. Once one has a powerful machine at one's disposal one tries to use it and the size of the problems one tackles adjusts itself to the scope of the equipment: no one thinks about programming an algorithm that would take twenty years to execute. With processing power increased by a factor of a thousand over the last ten to fifteen years, Man has become considerably more ambitious in selecting problems that now should be ``technically feasible''. Size, complexity and sophistication of programs one should like to make have exploded and over the past years it has become patently clear that on the whole our programming ability has not kept pace with these exploding demands made on it.
+
+The power of available equipment will continue to grow: we can expect manufacturers to develop still faster machines and even without that development we shall witness that the type of machine that is presently considered as exceptionally fast will become more and more common. The things we should like to do with these machines will grow in proportion and it is on this extrapolation that I have formed my picture of the programmer's task.
+
+My conclusion is that it is becoming most urgent to stop to consider programming primarily as the minimization of a cost/performance ratio. We
+should recognize that already now programming is much more an intellectual challenge: the art of programming is the art of organizing complexity, of mastering multitude and avoiding its bastard chaos as effectively as possible.
+
+My refusal to regard efficiency considerations as the programmer's prime concern is not meant to imply that I disregard them. On the contrary,
+efficiency considerations are recognized as one of the main incentives to modifying a logically correct program. My point, however, is that we can
+only afford to optimize (whatever that may be) provided that the program remains sufficiently manageable.
+
+Let me end this section with a final aside on the significance of computers. Computers are extremely flexible and powerful tools and many feel that their application is changing the face of the earth. I would venture the opinion that as long as we regard them primarily as tools, we might grossly underestimate their significance. Their influence as tools might tum out to be but a ripple on the surface of our culture, whereas I expect them to have a much more profound influence in their capacity of intellectual challenge!
+\medskip
+
+\noindent
+\textit{Corollary of the first part of this section:}
+
+Program testing can be used to show the presence of bugs, but never to
+show their absence!
+
+\section{On Our Mental Aids}
+
+...
