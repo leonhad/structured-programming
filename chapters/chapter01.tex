@@ -20,6 +20,7 @@ comments and Peter Naur for the criticism he expressed. Finally I would like to 
 assistance in my struggles with the English language.
 
 \section{On our Inability To Do Much}
+\label{sec:our-inability-to-do-much}
 
 I am faced with a basic problem of presentation. What I am really concerned about is the composition of large programs, the text of which may be, say, of the same size as the whole text of this booklet. Also I have to include examples to illustrate the various techniques. For practical reasons, the demonstration programs must be small, many times smaller than the ``life-size programs'' I have in mind. My basic problem is that precisely this difference in scale is one of the major sources of our difficulties in programming!
 
@@ -113,8 +114,8 @@ I regard as an appeal to enumeration the effort to verify a property of the comp
 It is asked to establish that the successive execution of the following two statements
 \begin{equation*}
 	\begin{split}
-		\text{``}dd &:= dd/2; \\
-		\text{\textbf{if} } dd <= r \text{ \textbf{do} } r &:= r - dd\text{''}
+		\text{``}dd &\coloneq dd/2; \\
+		\text{\textbf{if} } dd <= r \text{ \textbf{do} } r &\coloneq r - dd\text{''}
 	\end{split}
 \end{equation*}
 
@@ -122,37 +123,37 @@ It is asked to establish that the successive execution of the following two stat
 operating on the variables ``$r$'' and ``$dd$'' leaves the relations
 \begin{equation}
 	\label{eq:relation-r-dd}
-	0 \leq r < dd
+	0 \leqslant r < dd
 \end{equation}
 
 \noindent
 invariant. One just ``follows'' the little piece of program assuming that (\ref{eq:relation-r-dd}) is satisfied to start with. After the execution of the first statement, which halves the value of $dd$, but leaves $r$ unchanged, the relations
 \begin{equation}
 	\label{eq:relation-r-2dd}
-	0 \leq r < 2\times dd
+	0 \leqslant r < 2\times dd
 \end{equation}
 
 \noindent
 will hold. Now we distinguish two mutually exclusive cases.
 
-(\ref{eq:relation-r-dd}) $dd \leq r$. Together with (\ref{eq:relation-r-2dd}) this leads to the relations
+(\ref{eq:relation-r-dd}) $dd \leqslant r$. Together with (\ref{eq:relation-r-2dd}) this leads to the relations
 \begin{equation}
 	\label{eq:relation-dd-r-2dd}
-	dd \leq r < 2\times dd
+	dd \leqslant r < 2\times dd
 \end{equation}
 
 \noindent
 In this case the statement following \textbf{do} will be executed, ordering a decrease of r by dd, so that from (\ref{eq:relation-dd-r-2dd}) it follows that eventually
 \begin{equation*}
-	0 \leq r < dd,
+	0 \leqslant r < dd,
 \end{equation*}
 
 \noindent
 i.e. (\ref{eq:relation-r-dd}) will be satisfied.
 
-(\ref{eq:relation-r-2dd}) \textbf{non} $dd \leq r$ (i.e. $dd > r$). In this case the statement following \textbf{do} will be skipped and therefore also $r$ has its final value. In this case ``$dd > r$'' together with (\ref{eq:relation-r-2dd}), which is valid after the execution of the first statement leads immediately to
+(\ref{eq:relation-r-2dd}) \textbf{non} $dd \leqslant r$ (i.e. $dd > r$). In this case the statement following \textbf{do} will be skipped and therefore also $r$ has its final value. In this case ``$dd > r$'' together with (\ref{eq:relation-r-2dd}), which is valid after the execution of the first statement leads immediately to
 \begin{equation*}
-	0 \leq r < dd
+	0 \leqslant r < dd
 \end{equation*}
 
 \noindent
@@ -174,14 +175,159 @@ Let us consider the sequence of values
 given by
 \begin{subequations}
 \begin{align}
-\text{for } i &= 0 & d_i &= D \\
-\text{for } i &> 0 & d_i &= f(d_{i-1})
+	\label{eq:induction-for-a}
+	\text{for } i &= 0 & d_i &= D \\
+	\label{eq:induction-for-b}
+	\text{for } i &> 0 & d_i &= f(d_{i-1})
 \end{align}
 \end{subequations}
 
 \noindent
-where $D$ is a given value and $f$ a given (computable) function. It is asked to make the value of the variable ``$d$'' equal to the first value $d_k$ in the sequence that satisfies a given (computable) condition ``prop''. It is given that such a value exists for finite k. A more formal definition of the requirement is to establish the relation
+where $D$ is a given value and $f$ a given (computable) function. It is asked to make the value of the variable ``$d$'' equal to the first value $d_k$ in the sequence that satisfies a given (computable) condition ``prop''. It is given that such a value exists for finite $k$. A more formal definition of the requirement is to establish the relation
 \begin{equation}
+	\label{eq:induction-dk}
 	d=d_k
 \end{equation}
 
+\noindent
+where $k$ is given by the (truth of the) expressions
+\begin{eqnarray}
+	\label{eq:prod-dk}
+	\text{prop } (d_k)& \\
+	\label{eq:non-prop-i}
+	\text{and}\quad \text{\textbf{non} prop }(d_i)&\text{ for all } i \text{ satisfying } 0 \leqslant i < k
+\end{eqnarray}
+
+We now consider the following program part:
+\begin{equation}
+	\label{eq:program-while-non-prop}
+	\begin{split}
+		&\text{``}d \coloneq D;\\
+		&\text{\textbf{while non} prop }(d) \text{ \textbf{do} } d \coloneq f(d)\text{''}
+	\end{split}
+\end{equation}
+
+\noindent
+in which the first line represents the initialization and the second one the loop, controlled by the (hopefully self-explanatory) repetition clause \textbf{while} \dots\ \textbf{do}. (In terms of the conditional clause \textbf{if} \dots\ \textbf{do}, used in our previous example, a more formal definition of the semantics of the repetition clause is by stating
+that
+\medskip
+
+{
+	\setlength{\parindent}{8em}
+	``\textbf{while} $B$ \textbf{do} $S$''
+}
+\medskip
+
+\noindent
+is semantically equivalent with
+\medskip
+
+{
+	\setlength{\parindent}{8em}
+	``\textbf{if} $B$ \textbf{do}
+	
+	\quad \textbf{begin} $S$; \textbf{while} $B$ \textbf{do} $S$ end''
+}
+\medskip
+
+\noindent
+expressing that ``\textbf{non} $B$'' is the necessary and sufficient condition for the repetition to terminate.)
+
+Calling in the construction ``\textbf{while} $B$ \textbf{do} $S$'' the statement $S$ ``the repeated statement'' we shall prove that in program (\ref{eq:program-while-non-prop}):
+
+after the nth execution of the repeated statement will hold (for $n \leqslant 0$)
+\begin{subequations}
+	\label{eq:n-execution-prop}
+	\begin{align}
+		\label{eq:n-execution-prop-a}
+		d=d_k \\
+		\label{eq:n-execution-prop-b}
+		\text{and}\quad \text{\textbf{non} prop }(d_1)&\text{ for all } i \text{ satisfying } 0 \leqslant i < k
+	\end{align}
+\end{subequations}
+
+The above statement holds for $n = 0$ (by enumerative reasoning); we have to prove (by enumerative reasoning) that when it holds for $n = N(N \geqslant 0)$, it will also hold for $n = N + 1$.
+
+After the $N^{\text{\tiny th}}$ execution of the repeated statement relations (\ref{eq:n-execution-prop-a}) and (\ref{eq:n-execution-prop-b}) are satisfied for $n = N$. For the $N + 1^{\text{\tiny st}}$ execution to take place, the necessary and sufficient condition is the truth of
+\begin{center}
+	\textbf{non} prop $(d)$
+\end{center}
+
+\noindent
+which, thanks to (\ref{eq:n-execution-prop-a}) for $n = N$ (i.e. $d = d_N$) means
+\begin{center}
+	\textbf{non} prop $(d_N)$
+\end{center}
+
+\noindent 
+leading to condition (\ref{eq:n-execution-prop-b}) being satisfied for $n = N + 1$. Furthermore, $d = d_N$ and (eq:induction-for-b) leads to
+$$
+f(d) = d_{N + 1}
+$$
+
+\noindent
+so that the net effect of the $N + 1^{\text{\tiny st}}$ execution of the repeated statement
+$$
+\text{``}d \coloneq f(d)\text{''}
+$$
+
+\noindent
+established the relation
+$$
+d = d_{N + 1}
+$$
+
+\noindent
+i.e. relation (\ref{eq:n-execution-prop-a}) for $N = N + 1$ and thus the induction step (\ref{eq:n-execution-prop}) has been
+proved.
+
+Now we shall show that the repetition terminates after the $k$th execution of the repeated statement. The $n$th execution cannot take place for $n > k$
+for (on account of \ref{eq:n-execution-prop-b}) this would imply
+\begin{center}
+	\textbf{non} prop $(d_k)$
+\end{center}
+
+\noindent 
+thereby violating (\ref{eq:prod-dk}). When the repetition terminates after the $n$th execution of the repeated statement, the necessary and sufficient condition for termination, viz.
+\begin{center}
+	\textbf{non} (\textbf{non} prop $(d)$)
+\end{center}
+
+\noindent
+becomes, thanks to (\ref{eq:n-execution-prop-a})
+\begin{equation}
+	\label{eq:induction-end}
+\text{prop } (d_n).
+\end{equation}
+
+This excludes termination for $n < k$, as this would violate (\ref{eq:non-prop-i}). As a result the repetition will terminate with $n = k$, so that (\ref{eq:induction-dk}) follows from (\ref{eq:n-execution-prop-a}), (\ref{eq:prod-dk}) follows from (\ref{eq:induction-end}) and (\ref{eq:non-prop-i}) follows from (\ref{eq:n-execution-prop-b}). Which terminates our proof.
+
+Before turning our attention away from this example illustrating the use of mathematical induction as a pattern of reasoning, I should like to add some remarks, because I have the uneasy feeling that by now some of my readers (in particular experienced and competent programmers) will be terribly irritated, viz. those readers for whom program (\ref{eq:program-while-non-prop}) is so obviously correct that they wonder what all the fuss is about: ``Why his pompous restatement of the problem, as in (\ref{eq:induction-dk}), (\ref{eq:prod-dk}) and (\ref{eq:non-prop-i}), because anyone knows what is meant by the first value in the sequence, satisfying a condition? Certainly he does not expect us, who have work to do, to supply such lengthy proofs, with all the mathematical dressing, whenever we use such a simple loop as that?'' Etc.
+
+To tell the honest truth: the pomp and length of the above proof infuriate me as well! But at present I cannot do much better if I really try to prove the correctness of this program. But it sometimes fills me with the same kind of anger as years ago the crazy proofs of the first simple theorems in plane geometry did, proving things of the same degree of ``obviousness'' as Euclid's axioms themselves.
+
+Of course I would not dare to suggest (at least at present!) that it is the programmer's duty to supply such a proof whenever he writes a simple loop in his program. If so, he could never write a program of any size at all! It would be as impractical as reducing each proof in plane geometry explicitly and in extension to Euclid's axioms. (Cf. Section ``\nameref{sec:our-inability-to-do-much}.'')
+
+My moral is threefold. Firstly, when a programmer considers a construction like (\ref{eq:program-while-non-prop}) as obviously correct, he can do so because he is familiar with the construction. I prefer to regard his behavior as an unconscious appeal to a theorem he \textit{knows}, although perhaps he has never bothered to formulate it; and once in his life he has convinced himself of its truth, although he has probably forgotten in which way he did it and although the way was (probably) unfit for print. But we could call our assertions about program (\ref{eq:program-while-non-prop}), say, ``The Linear Search Theorem'' and knowing such a name it is much easier (and more natural) to appeal to it consciously.
+
+Secondly, to the best of my knowledge, there is no set of theorems of the type illustrated above, whose usefulness has been generally accepted. But we should not be amazed about that, for the absence of such a set of theorems is a direct consequence of the fact that the type of object -- i.e. programs -- has not settled down. The kind of object the programmer is dealing with, viz. programs, is much less well-established than the kind of object that is dealt with in plane geometry. In the meantime the intuitively competent programmer is probably the one who confines himself, whenever acceptable, to program structures with which he is very familiar, while becoming very alert and careful whenever he constructs something unusual (for him). For an established style of programming, however, it might be a useful activity to look for a body of theorems pertinent to such programs.
+
+Thirdly, the length of the proof we needed in our last example is a warning that should not be ignored. There is of course the possibility that a better mathematician will do a much shorter and more elegant job than I have done. Personally I am inclined to conclude from this length that programming is more difficult than is commonly assumed: let us be honestly humble and interpret the length of the proof as an urgent advice to restrict ourselves to simple structures whenever possible and to avoid in all intellectual modesty ``clever constructions'' like the plague.
+
+\subsection{On Abstraction}
+
+At this stage I find it hard to be very explicit about the role of abstraction, partly because it permeates the whole subject. Consider an algorithm and all possible computations it can evoke: starting from the computations the algorithm is what remains when one abstracts from the specific values manipulated this time. The concept of ``a variable'' represents an abstraction from its current value. It has been remarked to me (to my great regret I cannot remember by whom and so I am unable to give credit where it seems due) that once a person has understood the way in which variables are used in programming, he has understood the quintessence of programming. We can find a confirmation for this remark when we return to our use of mathematical induction with regard to the repetition: on the one hand it is by abstraction that the concepts are introduced in terms of which the induction step can be formulated; on the other hand it is the repetition that really calls for the concept of ``a variable''. (Without repetition one can restrict oneself to ``quantities'' the value of which has to be defined as most once but never has to be redefined as in the case of a variable.)
+
+There is also an abstraction involved in naming an operation and using it on account of ``what it does'' while completely disregarding ``how it works''. (In the same way one should state that a programming manual describes an abstract machine: the specific piece of hardware delivered by the manufacturer is nothing but a -- usually imperfect! -- mechanical model of this abstract machine.) There is a strong analogy between using a named operation in a program regardless of ``how it works'' and using a theorem regardless of how it has been proved. Even if its proof is highly intricate, it may be a very convenient theorem to use!
+
+Here, again, I refer to our inability to do much. Enumerative reasoning is all right as far as it goes, but as we are rather slow-witted it does not go very
+far. Enumerative reasoning is only an adequate mental tool under the severe boundary condition that we use it only very moderately. We should appreciate
+abstraction as our main mental technique to reduce the demands made upon enumerative reasoning.
+
+(Here Mike Woodger, National Physical Laboratory, Teddington, England, made the following remark, which I insert in gratitude: ``There is a parallel analogy between the unanalysed terms in which an axiom or theorem is expressed and the unanalysed operands upon which a named operation is expected to act.'')
+
+\section{An Example Of a Correctness Proof}
+
+Let us consider the following program section, where the integer constants $a$ and $d$ satisfy the relations
+
+page 12

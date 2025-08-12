@@ -22,43 +22,27 @@
 	pdfproducer={Latex with hyperref},
 	pdfcreator={pdflatex}]{hyperref}
 \usepackage{mathptmx}
+\RequirePackage{amssymb,amsmath,amsthm,mathtools}
 \usepackage{pdfpages}
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage{afterpage}
+\usepackage{nameref}
 
 \definecolor{desertstorm}{RGB}{242,233,224}
 \definecolor{shadesofmidnight}{RGB}{28,56,95}
 
-\usepackage{listings}
-
-\lstset{
-	basicstyle=\ttfamily, % Use monospaced font
-	numbers=left,         % Line numbers on the left
-	numberstyle=\tiny,    % Small line numbers
-	stepnumber=1,         % Line number step
-	frame=none,         % Frame around the code
-	keywordstyle=\color{blue}, % Keywords in blue
-	commentstyle=\color{green}, % Comments in green
-	stringstyle=\color{red}, % Strings in red
-	breaklines=true       % Automatic line breaking
-}
-
 \setlist{topsep=0em, itemsep=-.2em} 
-
-%\begin{lstlisting}[language=Ada]
-%fori = 0 dd, =d fori > 0 dd, = 2*dd;-_, from which dd, = da*2" (1)
-%\end{lstlisting}
 
 \titleformat{\chapter}[hang]{\large\bfseries\centering}{\thechapter}{.5em}{}
 \titlespacing{\chapter}{0pt}{.5cm}{.5cm}
 
 \titleformat{\section}[hang]{\normalsize\centering\scshape}{\thesection{}.}{.5em}{}
-\titlespacing{\section}{0pt}{.5cm}{.5cm}
+\titlespacing{\section}{0pt}{.8em}{.6em}
 \counterwithout{section}{chapter}
 
 \titleformat{\subsection}[hang]{\small\scshape\uppercase}{\thesubsection{}.}{.5em}{}
-\titlespacing{\subsection}{0pt}{.5cm}{.5cm}
+\titlespacing{\subsection}{0pt}{.8em}{.6em}
 
 \renewcommand{\chaptermark}[1]{ \markboth{#1}{} }
 
