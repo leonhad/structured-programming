@@ -6,7 +6,7 @@
 	\scshape\hfill\small Edsger W. Dijkstra\hfill
 }
 
-\section{To my reader}
+\section{To My Reader}
 
 These notes have the status of ``Letters written to myself'': I wrote them down because, without doing so, I found myself repeating the same arguments over and over again. When reading what I had written, I was not always too satisfied.
 
@@ -51,7 +51,7 @@ The naïve answer to this is: ``Well, the number of different multiplications th
 
 A first consequence of the 10,000 years is that during its life-time the multiplier will be asked to perform only a negligible fraction of the vast number of all possible multiplications it could do: practically none of them! Funnily enough, we still require that it should do any multiplication correctly when ordered to do so. The reason underlying this fantastic quality requirement is that we do not know in advance, which are the negligibly few multiplications it will be asked to perform. In our reasoning about our programs we talk about "the product" and have abstracted from the specific values of the factors: we do not know them, we do not wish to know them, it is not our business to know them, it is our business not to know them! Our wish to think in terms of the concept ``the product'', abstracted from the specific instances occurring in a computation is granted, but the price paid for this is precisely the reliability requirement that \textit{any} multiplication of the vast set will be performed correctly. So much for the justification of our desire for a correct multiplier.
 
-But how is the correctness established in a convincing manner? As long as the multiplier is considered as a black box, the only thing we can do is `testing by sampling'', i.e. offering to the multiplier a feasible amount of factor pairs and checking the result. But in view of the 10,000 years, it is clear that we can only test a negligible fraction of the possible multiplications. Whole classes of in some sense ``critical'' multiplications may remain untested and in view of the reliability justly desired, our quality control is still most unsatisfactory. Therefore it is not done that way.
+But how is the correctness established in a convincing manner? As long as the multiplier is considered as a black box, the only thing we can do is ``testing by sampling'', i.e. offering to the multiplier a feasible amount of factor pairs and checking the result. But in view of the 10,000 years, it is clear that we can only test a negligible fraction of the possible multiplications. Whole classes of in some sense ``critical'' multiplications may remain untested and in view of the reliability justly desired, our quality control is still most unsatisfactory. Therefore it is not done that way.
 
 The straightforward conclusion is the following: a convincing demonstration of correctness being impossible as long as the mechanism is regarded
 as a black box, our only hope lies in not regarding the mechanism as a black box. I shall call this ``taking the structure of the mechanism into account''.
@@ -94,4 +94,95 @@ show their absence!
 
 \section{On Our Mental Aids}
 
-...
+In the previous section we have stated that the programmer's duty is to make his product "usefully structured" and we mentioned the program structure in connection with a convincing demonstration of the correctness of the program.
+
+But how do we convince? And how do we convince ourselves? What are the typical patterns of thought enabling ourselves to understand? It is to a broad survey of such questions that the current section is devoted. It is written with my sincerest apologies to the professional psychologist, because it will be amateurishly superficial. Yet I hope (and trust) that it will be sufficient to give us a yardstick by which to measure the usefulness of a proposed structuring.
+
+Among the mental aids available to understand a program (or a proof of its correctness) there are three that I should like to mention explicitly:
+
+\begin{enumerate}[label=(\arabic*)]
+	%\addtolength{\itemsep}{-0.6\baselineskip}
+\item Enumeration
+\item Mathematical induction
+\item Abstraction.
+\end{enumerate}
+
+\subsection{On Enumeration}
+
+I regard as an appeal to enumeration the effort to verify a property of the computations that can be evoked by an enumerated set of statements performed in sequence, including conditional clauses distinguishing between two or more cases. Let me give a simple example of what I call ``enumerative reasoning''.
+
+It is asked to establish that the successive execution of the following two statements
+\begin{equation*}
+	\begin{split}
+		\text{``}dd &:= dd/2; \\
+		\text{\textbf{if} } dd <= r \text{ \textbf{do} } r &:= r - dd\text{''}
+	\end{split}
+\end{equation*}
+
+\noindent
+operating on the variables ``$r$'' and ``$dd$'' leaves the relations
+\begin{equation}
+	\label{eq:relation-r-dd}
+	0 \leq r < dd
+\end{equation}
+
+\noindent
+invariant. One just ``follows'' the little piece of program assuming that (\ref{eq:relation-r-dd}) is satisfied to start with. After the execution of the first statement, which halves the value of $dd$, but leaves $r$ unchanged, the relations
+\begin{equation}
+	\label{eq:relation-r-2dd}
+	0 \leq r < 2\times dd
+\end{equation}
+
+\noindent
+will hold. Now we distinguish two mutually exclusive cases.
+
+(\ref{eq:relation-r-dd}) $dd \leq r$. Together with (\ref{eq:relation-r-2dd}) this leads to the relations
+\begin{equation}
+	\label{eq:relation-dd-r-2dd}
+	dd \leq r < 2\times dd
+\end{equation}
+
+\noindent
+In this case the statement following \textbf{do} will be executed, ordering a decrease of r by dd, so that from (\ref{eq:relation-dd-r-2dd}) it follows that eventually
+\begin{equation*}
+	0 \leq r < dd,
+\end{equation*}
+
+\noindent
+i.e. (\ref{eq:relation-r-dd}) will be satisfied.
+
+(\ref{eq:relation-r-2dd}) \textbf{non} $dd \leq r$ (i.e. $dd > r$). In this case the statement following \textbf{do} will be skipped and therefore also $r$ has its final value. In this case ``$dd > r$'' together with (\ref{eq:relation-r-2dd}), which is valid after the execution of the first statement leads immediately to
+\begin{equation*}
+	0 \leq r < dd
+\end{equation*}
+
+\noindent
+so that also in the second case (\ref{eq:relation-r-dd}) will be satisfied.
+
+Thus we have completed our proof of the invariance of relations (\ref{eq:relation-r-dd}), we have also completed our example of enumerative reasoning, conditional clauses included.
+
+\subsection{On Mathematical Induction}
+
+I have mentioned mathematical induction explicitly because it is the only pattern of reasoning that I am aware of that eventually enables us to cope with loops (such as can be expressed by repetition clauses) and recursive procedures. I should like to give an example.
+
+Let us consider the sequence of values
+\begin{equation}
+	\label{eq:induction-d}
+	d_0,\ d_1,\ d_2,\ d_3,\ \dotso
+\end{equation}
+
+\noindent
+given by
+\begin{subequations}
+\begin{align}
+\text{for } i &= 0 & d_i &= D \\
+\text{for } i &> 0 & d_i &= f(d_{i-1})
+\end{align}
+\end{subequations}
+
+\noindent
+where $D$ is a given value and $f$ a given (computable) function. It is asked to make the value of the variable ``$d$'' equal to the first value $d_k$ in the sequence that satisfies a given (computable) condition ``prop''. It is given that such a value exists for finite k. A more formal definition of the requirement is to establish the relation
+\begin{equation}
+	d=d_k
+\end{equation}
+
