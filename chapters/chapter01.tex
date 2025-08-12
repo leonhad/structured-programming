@@ -115,8 +115,8 @@ I regard as an appeal to enumeration the effort to verify a property of the comp
 It is asked to establish that the successive execution of the following two statements
 \begin{equation*}
 	\begin{split}
-		\text{``}dd &\coloneq dd/2; \\
-		\text{\textbf{if} } dd <= r \text{ \textbf{do} } r &\coloneq r - dd\text{''}
+		&\text{``}dd \coloneq dd/2; \\
+		&\text{\textbf{if} } dd <= r \text{ \textbf{do} } r \coloneq r - dd\text{''}
 	\end{split}
 \end{equation*}
 
@@ -194,9 +194,9 @@ where $D$ is a given value and $f$ a given (computable) function. It is asked to
 where $k$ is given by the (truth of the) expressions
 \begin{eqnarray}
 	\label{eq:prod-dk}
-	\text{prop } (d_k)& \\
+	&\text{prop } (d_k)& \\
 	\label{eq:non-prop-i}
-	\text{and}\quad \text{\textbf{non} prop }(d_i)&\text{ for all } i \text{ satisfying } 0 \leqslant i < k
+	\text{and}\quad &\text{\textbf{non} prop }(d_i) &\text{ for all } i \text{ satisfying } 0 \leqslant i < k
 \end{eqnarray}
 
 We now consider the following program part:
@@ -241,9 +241,9 @@ after the nth execution of the repeated statement will hold (for $n \leqslant 0$
 	\label{eq:n-execution-prop}
 	\begin{align}
 		\label{eq:n-execution-prop-a}
-		d=d_k \\
+		&d=d_k& \\
 		\label{eq:n-execution-prop-b}
-		\text{and}\quad \text{\textbf{non} prop }(d_1)&\text{ for all } i \text{ satisfying } 0 \leqslant i < k
+		\text{and}\quad &\text{\textbf{non} prop }(d_1) &\text{ for all } i \text{ satisfying } 0 \leqslant i < k
 	\end{align}
 \end{subequations}
 
