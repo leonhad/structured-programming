@@ -22,6 +22,13 @@
 	pdfproducer={Latex with hyperref},
 	pdfcreator={pdflatex}]{hyperref}
 \usepackage{mathptmx}
+\usepackage{pdfpages}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{afterpage}
+
+\definecolor{desertstorm}{RGB}{242,233,224}
+\definecolor{shadesofmidnight}{RGB}{28,56,95}
 
 \usepackage{listings}
 
@@ -37,6 +44,7 @@
 	breaklines=true       % Automatic line breaking
 }
 
+\setlist{topsep=0em, itemsep=-.2em} 
 
 %\begin{lstlisting}[language=Ada]
 %fori = 0 dd, =d fori > 0 dd, = 2*dd;-_, from which dd, = da*2" (1)
@@ -54,8 +62,6 @@
 
 \renewcommand{\chaptermark}[1]{ \markboth{#1}{} }
 
-\setlist{topsep=0em, itemsep=-.2em} 
-
 \counterwithout{equation}{chapter}
 \counterwithin*{equation}{section}
 \counterwithin*{equation}{subsection}
@@ -68,11 +74,12 @@
 \title{STRUCTURED PROGRAMMING}
 \date{1972}
 
-\include{./cover}
-%\maketitle
+\include{./frontcover}
+\cleardoublepage
 
 \pagenumbering{roman}
 \pagestyle{plain}
+\include{./cover}
 
 \cleardoublepage
 \include{./preface}
