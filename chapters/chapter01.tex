@@ -217,7 +217,7 @@ that
 
 {
 	\setlength{\parindent}{8em}
-	``\textbf{while} $B$ \textbf{do} $S$''
+	\hspace{-.5em}``\textbf{while} $B$ \textbf{do} $S$''
 }
 \medskip
 
@@ -227,7 +227,7 @@ is semantically equivalent with
 
 {
 	\setlength{\parindent}{8em}
-	``\textbf{if} $B$ \textbf{do}
+	\hspace{-.5em}``\textbf{if} $B$ \textbf{do}
 	
 	\quad \textbf{begin} $S$; \textbf{while} $B$ \textbf{do} $S$ \textbf{end}''
 }
@@ -338,7 +338,7 @@ Let us consider the following program section, where the integer constants $a$ a
 	\setlength{\parindent}{8em}
 	$a \geqslant 0$\quad and\quad $d > 0$.
 	
-	``\textbf{integer} $r$,\ $dd$;
+	\hspace{-.5em}``\textbf{integer} $r$,\ $dd$;
 	
 	$r \coloneq a;\ dd \coloneq d$;
 	
@@ -468,7 +468,7 @@ $$
 	
 	{
 		\setlength{\parindent}{8em}
-		``\textbf{integer} $r,\ dd,\ q;$
+		\hspace{-.5em}``\textbf{integer} $r,\ dd,\ q;$
 		
 		$r:= a;\ dd:= d;\ q:= 0;$
 		
@@ -514,7 +514,7 @@ assigns to $q$ the value of the corresponding quotient. The proof can be establi
 	
 	{
 		\setlength{\parindent}{8em}
-		``$x \coloneq A;\ y \coloneq B;\ z \coloneq 1;$
+		\hspace{-.5em}``$x \coloneq A;\ y \coloneq B;\ z \coloneq 1;$
 		
 		\textbf{while} $y \neq 0$ \textbf{do}
 		
@@ -548,7 +548,7 @@ When writing a program operating on real numbers with rounded operations, one mu
 		-(a \times  b) =&\ (-a)\times b\\
 		0\times  x =&\ 0\\
 		0 + x =&\ x\\
-		1\times x =&\ x\text{ etc. etc.}
+		1\times x =&\ x\quad\text{etc. etc.}
 	\end{split}
 \end{equation*}
 
@@ -580,5 +580,164 @@ The simplest case is a parsing, a decomposition, into a fixed number of subactio
 \end{figure}
 
 The validity of this decomposition has to be established by enumerative reasoning. In this case, shortening of the conceptual gap between program and computation can be achieved by requiring that a linear piece of program text contains names or descriptions of the subactions in the order in which they have to take place. In our earlier example (invariance of $0 \leqslant r < dd$)
+\medskip
 
-page 17
+{
+	\setlength{\parindent}{8em}
+	\hspace{-.5em}``$dd \coloneq dd/2;$
+	
+	\textbf{if} $dd \leqslant r$ \textbf{do} $r \coloneq r - dd$''
+}
+\medskip
+
+\noindent
+this condition is satisfied. The primary decomposition of the computation is into a time-succession of two actions; in the program text we recognize this structure
+\medskip
+
+{
+	\setlength{\parindent}{8em}
+	\hspace{-.5em}``halve $dd;$
+	
+	reduce $r$ modulo $dd$".
+}
+\medskip
+
+We are considering all initial states satisfying $0 \leqslant r < dd$ and in all computations then considered, the given parsing into two subactions is applicable. So far, so good.
+
+The program, however, is written under the assumption that ``reduce $r$ modulo $dd$'' is not a primitive action, while ``decrease $r$ by $dd$'' is. Viewing all possible happenings during ``reduce $r$ modulo $dd$'' it then becomes relevant to distinguish that in some cases ``decrease $r$ by $dd$'' takes place, while in the other cases $r$ remains unchanged. By writing
+\medskip
+
+{
+	\setlength{\parindent}{8em}
+	\hspace{-.5em}``\textbf{if} $dd \leqslant r$ \textbf{do} decrease $r$ by $dd$''
+}
+\medskip
+
+\noindent
+we have represented that at the given level of detail the action ``reduce $r$ modulo $dd$'' can take one of two mutually exclusive forms and we have also given the criterion on account of which the choice between them is made. If we regard ``\textbf{if} $dd \leqslant r$ \textbf{do}'' as a conditional clause attached to ``decrease $r$ by $dd$'' it is natural that the conditional clause is placed in front of the conditioned statement. (In this sense the alternative clause
+\medskip
+
+{
+	\setlength{\parindent}{8em}
+	\hspace{-.5em}``\textbf{if} condition \textbf{then} statement 1 \textbf{else} statement 2''
+}
+\medskip
+
+\noindent
+is ``over-ordered'' with respect to ``statement 1'' and ``statement 2'': they are just two alternatives that cannot be expressed simultaneously on a linear medium.)
+
+The alternative clause has been generalized by C. A. R. Hoare whose ``case-of'' construction provides a choice between more than two possibilities. In flowchart form they can be represented as follows.
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=\textwidth]{fig2}
+\end{figure}
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=\textwidth]{fig3}
+\end{figure}
+
+These flowcharts share the property that they have a single entry at the top and a single exit at the bottom: as indicated by the dotted block they can again be interpreted (by disregarding what is inside the dotted lines) as a single action in a sequential computation. To be a little bit more precise: we are dealing with a great number of possible computations, primarily decomposed into the same time-succession of subactions and it is only on closer inspection --- i.e. by looking inside the dotted block --- that it is revealed that over the collection of possible computations such a subaction may take one of an enumerated set of distinguished forms.
+
+The above is sufficient to consider a class of computations that are primarily decomposed into the same set of enumerated subactions; they are insufficient to consider a class of computations that are primarily decomposed into a varying number of subactions (i.e. varying over the class of computations considered). It is here that the usefulness of the repetition clauses becomes apparent. We mention ``\textbf{while} condition \textbf{do} statement'' and ``\textbf{repeat} statement \textbf{until} condition'' that may be represented in flowchart form as follows.
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=\textwidth]{fig4}
+\end{figure}
+
+These flowcharts also share the property of a single entry at the top and a single exit at the bottom. They enable us to express that the action represented by the dotted block is on closer inspection a time-succession of ``a sufficient number'' of subactions of a certain type.
+
+We have now seen three types of decomposition; we could call them ``concatenation'', ``selection'' and ``repetition'' respectively. The first two are understood by enumerative reasoning, the last one by mathematical induction. 
+
+The programs that can be written using the selection clauses and the repetition clauses as only the means for sequencing control, permit straight-forward translation into a programming language that is identical but for the fact that sequencing control has to be expressed by jumps to labeled points. The converse is not true. Alternatively: restricting ourselves to the three mentioned types of decomposition leads to flowcharts of a restricted topology compared with the flowcharts one can make when arrows can be drawn from any block leading into any other. Compared with that greater freedom, to restrict oneself to the clauses presents itself as a sequencing discipline.
+
+Why do I propose to adhere to this sequencing discipline? The justification for this decision can be presented in many ways and let me try a number of them in the hope that at least one of them will appeal to my readers.
+
+Eventually, one of our aims is to make such well-structured programs that the intellectual effort (measured in some loose sense) needed to understand them is proportional to program length (measured in some equally loose sense). In particular we have to guard against an exploding appeal to enumerative reasoning, a task that forces upon us some application of the old adage ``Divide and Rule'', and that is the reason why we propose the step-wise decomposition of the computations.
+
+We can understand a decomposition by concatenation via enumerative reasoning. (We can do so, provided that the number of subactions into which the computation is primarily parsed, is sufficiently small and that the specification of their net effect is sufficiently concise. I shall return to these requirements at a later stage, at present we assume the conditions met.) It is then feasible to make assertions about the computations on account of the program text, thanks to the triviality of the relation between the progress through the computations and the progress through the program text. In particular: if on closer inspection one of the subactions transpires to be controlled by a selective clause or a repetition clause, this fact does not impose any burden on the understandability of the primary decomposition, because there only the subaction's net effect plays a role.
+
+As a corollary: if on closer inspection a subaction is controlled by a selective clause the specific path taken is always irrelevant at the primary level (the only thing that matters is that the correct path has been taken). And also: if on closer inspection a subaction is controlled by a repetitive clause, the number of times the repeated statement has been executed is, as such, irrelevant (the only thing that matters is that it has been repeated the correct number of times).
+
+We can also understand the selective clauses as such, viz. by enumerative reasoning; we can also understand the repetition clause, viz. by mathematical induction. For all three types of decomposition --- and this seems to me a great help --- we know the appropriate pattern of reasoning.
+
+There is a further benefit to be derived from the proposed sequencing discipline. In understanding programs we establish relations. In our example on enumerative reasoning we established that the program part
+\medskip
+
+{
+	\setlength{\parindent}{8em}
+	\hspace{-.5em}``$dd: = dd/2;$
+	
+	\textbf{if} $dd \leqslant r$ \textbf{do} $r \coloneq r - dd$''
+}
+\medskip
+
+\noindent
+leaves the relation
+$$
+0 \leqslant r < dd
+$$
+
+\noindent
+invariant. Yet, even if we can ensure that these relations hold before execution of the quoted program part, we cannot conclude that they always hold, viz. not necessarily between the execution of the two quoted statements. In other words: the validity of such relations is dependent on the progress of the computation, and this seems typical for a sequential process.
+
+Similarly, we attach meanings to variables: a variable may count the number of times an event of a given type has occurred, say the number of lines that has been printed on the current page. Transition to the next page will be followed immediately by a reset to zero, printing a line will be followed immediately by an increase by 1. Again, just before resetting or increasing this count, the interpretation ``number of lines printed on the current page'' is non-valid. To assign such a meaning to a variable, again, can only be done relative to the progress of the computation. This observation raises the following question: ``How do we characterize the progress of a computation?''
+
+In short, we are looking for a co-ordinate system in terms of which the discrete points of computation progress can be identified, and we want this co-ordinate system to be independent of the variables operated upon under program control: if we need values of such variables to describe progress of the computation we are begging the question, for it is precisely in relation to this progress that we want to interpret the meaning of these variables.
+
+(A still more stringent reason not to rely upon the values of variables is presented by a program containing a non-ending loop, cycling through a finite number of different states. Eternal cycling follows from the fact that a different points of progress the \textit{same} state prevails. But then the state is clearly incapable of distinguishing between these two \textit{different} points of progress!)
+
+We can state our problem in another way. Given a program in action and suppose that before completion of the computation the latter is stopped at one of the discrete points of progress. How can we identify the point of interruption, for instance if we want to redo the computation up to the very same point? Or also: if stopping was due to some kind of dynamic error, how can we identify the point of progress short of a complete memory dump?
+
+For the sake of simplicity we assume our program text spread out in (linear) text space and assume an identifying mechanism for the program points corresponding to the discrete points of computation progress; let us call this identifying mechanism ``the textual index''. (If the discrete points of computation progress are situated in between successive statement executions, the textual index identifies, say, semicolons.) The textual index is a kind of generalized order counter, its value points to a place in the text.
+
+If we restrict ourselves to decomposition by concatenation and selection, a single textual index is sufficient to identify the progress of the computation. With the inclusion of repetition clauses textual indices are no longer sufficient to describe the progress of the computation. With each entry into a repetition clause, however, the system could introduce a so-called ``dynamic index'', inexorably counting the ordinal number of the corresponding current repetition; at termination of the repetition the system should again remove the corresponding dynamic index. As repetition clauses may occur nested inside each other, the appropriate mechanism is a stack (i.e. a last-in-first-out-memory). Initially the stack is empty; at entry of a repetition clause a new dynamic index (set to zero or one) is added on the top of the stack; whenever it is decided that the repetition is not terminated the top element of this stack is increased by 1 ; whenever it is decided that a repetition is terminated, the top element of the stack is removed. (This arrangement reflects very clearly that after termination of a repetition the number of times, even the fact that it was a repetition, is no longer relevant.)
+
+As soon as the programming language admits procedures, then a single textual index is no longer sufficient. In the case that a textual index points to the interior of a procedure body, the dynamic progress of the computation is only characterized when we also describe to which call of the procedure we refer, but this can be done by giving the textual index pointing to the place of the call. With the inclusion of the procedure the textual index must be generalized to a stack of textual indices, increased by one element at procedure call and decreased by one element at procedure return.
+
+The main point is that the values of these indices are outside the programmer's control; they are defined (either by the write-up of his program or by the dynamic evolution of the current computation) whether he likes it or not. They provide independent co-ordinates in which to describe the progress of the computation, a ``variable-independent'' frame of reference in which meanings to variables can be assigned.
+
+There is, of course, even with the free use of jumps, a programmer independent co-ordinate system in terms of which the progress of a sequential computation can be described uniquely, viz. a kind of normalized clock that counts the number of ``discrete points of computation progress'' passed since program start. It is unique, but utterly unhelpful, because the textual index is no longer a constituent component of such a coordinate system.
+
+The moral of the story is that when we acknowledge our duty to control the computations (intellectually!) via the program text evoking them, that then we should restrict ourselves in all humility to the most systematic sequencing mechanisms, ensuring that "progress through the computation" is mapped on ``progress through the text'' in the most straightforward manner.
+
+\section{On comparing programs}
+
+It is a programmer's everyday experience that for a given problem to be solved by a given algorithm, the program for a given machine is far from uniquely determined. In the course of the design process he has to select between alternatives; once he has a correct program, he will often be called to modify it, for instance because it is felt that an alternative program would be more attractive as far as the demands that the computations make upon the available equipment resources are concerned.
+
+These circumstances have raised the question of the equivalence of programs: given two programs, do they evoke computations establishing the same net effect? After suitable formalization (of the way in which the programs are given, of the machine that performs the computations evoked by them and of the ``net effect'' of the computations) this can presumably be made into a well-posed problem appealing to certain mathematical minds. But I do not intend to tackle it in this general form. On the contrary: instead of starting with two arbitrarily given programs (say: independently conceived by two different authors) I am concerned with alternative programs that can be considered as products of the same mind and then the question becomes: how can we conceive (and structure) those two alternative programs so as to ease the job of comparing the two?
+
+I have done many experiments and my basic experience gained by them can be summed up as follows. Two programs evoking computations that establish the same net effect are equivalent \textit{in that sense} and \textit{a priori} not in any other. When we wish to compare programs in order to compare their corresponding computations, the basic experience is that it is impossible (or fruitless, unattractive, or terribly hard or what you wish) to do so when on the level of comparison the sequencing through the two programs differs. To be a little more explicit: it is only attractive to compare two programs and the computations they may possibly evoke, when paired computations can be parsed into a time-succession of actions that can be mapped on each other and the corresponding program texts can be equally parsed into instructions, each corresponding to such an action.
+
+This is a very strong condition. Let me give a first example.
+
+Excluding side-effects of the boolean inspections and assuming the value ``B2'' constant (i.e. unaffected by the execution of either ``S1'' or ``S2''), \textit{we} can establish the equivalence of the following two programs:
+\begin{equation}
+	\label{eq:comparing-example-1}
+	\begin{split}
+	&\text{\hspace{-.5em}``\textbf{if }} B2\text{ \textbf{then}}\\
+	&\quad\text{\textbf{begin while} } B1\text{ \textbf{do} } S1 \text{ \textbf{end}}\\
+	&\text{\textbf{else}}\\
+	&\quad\text{\textbf{begin while} } B1\text{ \textbf{do} } S2\text{ \textbf{end}''}
+	\end{split}
+\end{equation}
+
+\noindent
+and
+\begin{equation}
+	\label{eq:comparing-example-2}
+	\begin{split}
+		&\text{\hspace{-.5em}``\textbf{while }} B1\text{ \textbf{do}}\\
+		&\text{\textbf{begin if} } B2\text{ \textbf{then} } S1\text{ \textbf{else} } S2\text{ \textbf{end}''}
+	\end{split}
+\end{equation}
+
+The first construction is primarily one in which sequencing is controlled by a selective clause, the second construction is primarily one in which sequencing is controlled by a repetitive clause. I can establish the equivalence of the output of the computations, but I cannot regard them as equivalent in any other useful sense. I had to force myself to the conclusion that (\ref{eq:comparing-example-1}) and (\ref{eq:comparing-example-2}) are ``hard to compare''. Originally this conclusion annoyed me very much. In the meantime I have grown to regard this incomparability as one of the facts of life and, therefore, as one of the major reasons why I regard the choice between (\ref{eq:comparing-example-1}) and (\ref{eq:comparing-example-2}) as a relevant design decision, that should not be taken without careful consideration. It is precisely its apparent triviality that has made me sensitive to the considerations that should influence such a choice. They fall outside the scope of the present section but I hope to return to them later.
+
+Let me give a second example of incomparability that is slightly more subtle.
+
+Given two arrays $X[1:N]$ and $Y[1:N]$ and a boolean variable ``equal'', make a program that assigns to the boolean variable ``equal'' the value: ``the two arrays are equal element-wise''. Empty arrays (i.e. $N = 0$) are regarded as being equal.
+
+Introducing a variable $j$ and giving to ``equal'' the meaning ``among the first $j$ pairs no difference has been detected'', we can write the following two programs.
