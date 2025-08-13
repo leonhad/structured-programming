@@ -35,29 +35,32 @@
 \definecolor{desertstorm}{RGB}{242,233,224}
 \definecolor{shadesofmidnight}{RGB}{28,56,95}
 
-\setlist{topsep=0em, itemsep=-.2em} 
+\setlist{topsep=0em, itemsep=-.4em} 
 
-\titleformat{\chapter}[hang]{\large\bfseries\centering}{\thechapter}{.5em}{}
+\titleformat{\chapter}[hang]{\large\bfseries\centering}{\thechapter{}}{.5em}{}
 \titlespacing{\chapter}{0pt}{.5cm}{.5cm}
 
-\titleformat{\section}[hang]{\normalsize\centering\scshape}{\thesection{}.}{.5em}{}
-\titlespacing{\section}{0pt}{.8em}{.6em}
+\titleformat{\section}[hang]{\normalsize\centering\scshape}{\thesection{}}{.5em}{}
+\titlespacing{\section}{0pt}{2em}{.6em}
 \counterwithout{section}{chapter}
 
-\titleformat{\subsection}[hang]{\footnotesize\scshape\uppercase}{\thesubsection{}.}{.5em}{}
-\titlespacing{\subsection}{0pt}{.8em}{.em}
+\titleformat{\subsection}[hang]{\footnotesize\scshape\uppercase}{\thesubsection{}}{.5em}{}
+\titlespacing{\subsection}{0pt}{.8em}{.2em}
 
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\thechapter}{\Roman{chapter}.}
+\renewcommand\thesection{\arabic{section}.}
+\renewcommand\thesubsection{\thesection\arabic{subsection}.}
+
+\setcounter{tocdepth}{1}
 
 \counterwithout{equation}{chapter}
 \counterwithin*{equation}{section}
 \counterwithin*{equation}{subsection}
 
-\uchyph=0
+\hyphenation{ALGOL}
 
 \begin{document}
-	
-\renewcommand{\thechapter}{\Roman{chapter}}
 
 \author{O.-J. DAHL, E. W. DIJKSTRA, C. A. R. HOARE}
 \title{STRUCTURED PROGRAMMING}
@@ -81,7 +84,7 @@
 
 \pagestyle{myheadings}
 
-\renewcommand{\chaptermark}[1]{\markright{\small\normalfont \hfill #1\hfill}{} }
+\renewcommand{\chaptermark}[1]{\markright{\scriptsize\normalfont\uppercase{}\hfill #1\hfill}{} }
 
 \include{./chapters/chapter01}
 %\include{./chapters/chapter02}

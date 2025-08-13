@@ -2,9 +2,9 @@
 
 {
 	\noindent
-	\scshape\hfill\small Edsger W. Dijkstra\hfill
+	\scshape\hfill\scriptsize Edsger W. Dijkstra\hfill
 }
-\renewcommand{\leftmark}{\normalfont\small\hfill E. W. DIJKSTRA\hfill}
+\renewcommand{\leftmark}{\normalfont\scriptsize\hfill E. W. DIJKSTRA\hfill}
 
 \section{To my reader}
 
@@ -62,7 +62,7 @@ with than circuitry, which is really an analogue device and subject to wear and 
 
 Recalling that our true concern is with really large programs, we observe as an aside that the size itself requires a high confidence level for the individual program components. If the chance of correctness of an individual component equals p, the chance of correctness of a whole program, composed of $N$ such components, is something like
 $$
-P=p^n.
+P=p^N.
 $$
 
 As $N$ will be very large, $p$ should be very, very close to $1$ if we desire $P$ to differ significantly from zero!
@@ -76,7 +76,7 @@ While in the past the growth in power of the generally available equipment has m
 
 The power of available equipment will continue to grow: we can expect manufacturers to develop still faster machines and even without that development we shall witness that the type of machine that is presently considered as exceptionally fast will become more and more common. The things we should like to do with these machines will grow in proportion and it is on this extrapolation that I have formed my picture of the programmer's task.
 
-My conclusion is that it is becoming most urgent to stop to consider programming primarily as the minimization of a cost/performance ratio. We
+My conclusion is that it is becoming most urgent to stop to consider programming primarily as the minimization of a cost$/$performance ratio. We
 should recognize that already now programming is much more an intellectual challenge: the art of programming is the art of organizing complexity, of mastering multitude and avoiding its bastard chaos as effectively as possible.
 
 My refusal to regard efficiency considerations as the programmer's prime concern is not meant to imply that I disregard them. On the contrary,
@@ -84,7 +84,7 @@ efficiency considerations are recognized as one of the main incentives to modify
 only afford to optimize (whatever that may be) provided that the program remains sufficiently manageable.
 
 Let me end this section with a final aside on the significance of computers. Computers are extremely flexible and powerful tools and many feel that their application is changing the face of the earth. I would venture the opinion that as long as we regard them primarily as tools, we might grossly underestimate their significance. Their influence as tools might tum out to be but a ripple on the surface of our culture, whereas I expect them to have a much more profound influence in their capacity of intellectual challenge!
-\medskip
+\smallskip
 
 \noindent
 \textit{Corollary of the first part of this section:}
@@ -96,7 +96,7 @@ Program testing can be used to show the presence of bugs, but never to show thei
 \section{On our mental aids}
 \label{sec:out-mental-aids}
 
-In the previous section we have stated that the programmer's duty is to make his product "usefully structured" and we mentioned the program structure in connection with a convincing demonstration of the correctness of the program.
+In the previous section we have stated that the programmer's duty is to make his product ``usefully structured'' and we mentioned the program structure in connection with a convincing demonstration of the correctness of the program.
 
 But how do we convince? And how do we convince ourselves? What are the typical patterns of thought enabling ourselves to understand? It is to a broad survey of such questions that the current section is devoted. It is written with my sincerest apologies to the professional psychologist, because it will be amateurishly superficial. Yet I hope (and trust) that it will be sufficient to give us a yardstick by which to measure the usefulness of a proposed structuring.
 
@@ -145,7 +145,7 @@ will hold. Now we distinguish two mutually exclusive cases.
 \end{equation}
 
 \noindent
-In this case the statement following \textbf{do} will be executed, ordering a decrease of r by dd, so that from (\ref{eq:relation-dd-r-2dd}) it follows that eventually
+In this case the statement following \textbf{do} will be executed, ordering a decrease of $r$ by $dd$, so that from (\ref{eq:relation-dd-r-2dd}) it follows that eventually
 \begin{equation*}
 	0 \leqslant r < dd,
 \end{equation*}
@@ -229,7 +229,7 @@ is semantically equivalent with
 	\setlength{\parindent}{8em}
 	``\textbf{if} $B$ \textbf{do}
 	
-	\quad \textbf{begin} $S$; \textbf{while} $B$ \textbf{do} $S$ end''
+	\quad \textbf{begin} $S$; \textbf{while} $B$ \textbf{do} $S$ \textbf{end}''
 }
 \medskip
 
@@ -238,20 +238,20 @@ expressing that ``\textbf{non} $B$'' is the necessary and sufficient condition f
 
 Calling in the construction ``\textbf{while} $B$ \textbf{do} $S$'' the statement $S$ ``the repeated statement'' we shall prove that in program (\ref{eq:program-while-non-prop}):
 
-after the nth execution of the repeated statement will hold (for $n \leqslant 0$)
+\quad after the \textit{n}th execution of the repeated statement will hold (for $n \geqslant 0$)
 \begin{subequations}
 	\label{eq:n-execution-prop}
 	\begin{align}
 		\label{eq:n-execution-prop-a}
 		&d=d_k& \\
 		\label{eq:n-execution-prop-b}
-		\text{and}\quad &\text{\textbf{non} prop }(d_1) &\text{ for all } i \text{ satisfying } 0 \leqslant i < k
+		\text{and}\quad &\text{\textbf{non} prop }(d_1) &\text{ for all } i \text{ satisfying } 0 \leqslant i < n.
 	\end{align}
 \end{subequations}
 
 The above statement holds for $n = 0$ (by enumerative reasoning); we have to prove (by enumerative reasoning) that when it holds for $n = N(N \geqslant 0)$, it will also hold for $n = N + 1$.
 
-After the $N^{\text{\tiny th}}$ execution of the repeated statement relations (\ref{eq:n-execution-prop-a}) and (\ref{eq:n-execution-prop-b}) are satisfied for $n = N$. For the $N + 1^{\text{\tiny st}}$ execution to take place, the necessary and sufficient condition is the truth of
+After the $N$th execution of the repeated statement relations (\ref{eq:n-execution-prop-a}) and (\ref{eq:n-execution-prop-b}) are satisfied for $n = N$. For the $N + 1$st execution to take place, the necessary and sufficient condition is the truth of
 \begin{center}
 	\textbf{non} prop $(d)$
 \end{center}
@@ -269,7 +269,7 @@ f(d) = d_{N + 1}
 $$
 
 \noindent
-so that the net effect of the $N + 1^{\text{\tiny st}}$ execution of the repeated statement
+so that the net effect of the $N + 1$st execution of the repeated statement
 $$
 \text{``}d \coloneq f(d)\text{''}
 $$
@@ -313,7 +313,7 @@ Of course I would not dare to suggest (at least at present!) that it is the prog
 
 My moral is threefold. Firstly, when a programmer considers a construction like (\ref{eq:program-while-non-prop}) as obviously correct, he can do so because he is familiar with the construction. I prefer to regard his behavior as an unconscious appeal to a theorem he \textit{knows}, although perhaps he has never bothered to formulate it; and once in his life he has convinced himself of its truth, although he has probably forgotten in which way he did it and although the way was (probably) unfit for print. But we could call our assertions about program (\ref{eq:program-while-non-prop}), say, ``The Linear Search Theorem'' and knowing such a name it is much easier (and more natural) to appeal to it consciously.
 
-Secondly, to the best of my knowledge, there is no set of theorems of the type illustrated above, whose usefulness has been generally accepted. But we should not be amazed about that, for the absence of such a set of theorems is a direct consequence of the fact that the type of object -- i.e. programs -- has not settled down. The kind of object the programmer is dealing with, viz. programs, is much less well-established than the kind of object that is dealt with in plane geometry. In the meantime the intuitively competent programmer is probably the one who confines himself, whenever acceptable, to program structures with which he is very familiar, while becoming very alert and careful whenever he constructs something unusual (for him). For an established style of programming, however, it might be a useful activity to look for a body of theorems pertinent to such programs.
+Secondly, to the best of my knowledge, there is no set of theorems of the type illustrated above, whose usefulness has been generally accepted. But we should not be amazed about that, for the absence of such a set of theorems is a direct consequence of the fact that the type of object --- i.e. programs --- has not settled down. The kind of object the programmer is dealing with, viz. programs, is much less well-established than the kind of object that is dealt with in plane geometry. In the meantime the intuitively competent programmer is probably the one who confines himself, whenever acceptable, to program structures with which he is very familiar, while becoming very alert and careful whenever he constructs something unusual (for him). For an established style of programming, however, it might be a useful activity to look for a body of theorems pertinent to such programs.
 
 Thirdly, the length of the proof we needed in our last example is a warning that should not be ignored. There is of course the possibility that a better mathematician will do a much shorter and more elegant job than I have done. Personally I am inclined to conclude from this length that programming is more difficult than is commonly assumed: let us be honestly humble and interpret the length of the proof as an urgent advice to restrict ourselves to simple structures whenever possible and to avoid in all intellectual modesty ``clever constructions'' like the plague.
 
@@ -321,7 +321,7 @@ Thirdly, the length of the proof we needed in our last example is a warning that
 
 At this stage I find it hard to be very explicit about the role of abstraction, partly because it permeates the whole subject. Consider an algorithm and all possible computations it can evoke: starting from the computations the algorithm is what remains when one abstracts from the specific values manipulated this time. The concept of ``a variable'' represents an abstraction from its current value. It has been remarked to me (to my great regret I cannot remember by whom and so I am unable to give credit where it seems due) that once a person has understood the way in which variables are used in programming, he has understood the quintessence of programming. We can find a confirmation for this remark when we return to our use of mathematical induction with regard to the repetition: on the one hand it is by abstraction that the concepts are introduced in terms of which the induction step can be formulated; on the other hand it is the repetition that really calls for the concept of ``a variable''. (Without repetition one can restrict oneself to ``quantities'' the value of which has to be defined as most once but never has to be redefined as in the case of a variable.)
 
-There is also an abstraction involved in naming an operation and using it on account of ``what it does'' while completely disregarding ``how it works''. (In the same way one should state that a programming manual describes an abstract machine: the specific piece of hardware delivered by the manufacturer is nothing but a -- usually imperfect! -- mechanical model of this abstract machine.) There is a strong analogy between using a named operation in a program regardless of ``how it works'' and using a theorem regardless of how it has been proved. Even if its proof is highly intricate, it may be a very convenient theorem to use!
+There is also an abstraction involved in naming an operation and using it on account of ``what it does'' while completely disregarding ``how it works''. (In the same way one should state that a programming manual describes an abstract machine: the specific piece of hardware delivered by the manufacturer is nothing but a --- usually imperfect! --- mechanical model of this abstract machine.) There is a strong analogy between using a named operation in a program regardless of ``how it works'' and using a theorem regardless of how it has been proved. Even if its proof is highly intricate, it may be a very convenient theorem to use!
 
 Here, again, I refer to our inability to do much. Enumerative reasoning is all right as far as it goes, but as we are rather slow-witted it does not go very
 far. Enumerative reasoning is only an adequate mental tool under the severe boundary condition that we use it only very moderately. We should appreciate
@@ -360,7 +360,7 @@ To apply the Linear Search Theorem (see Section ``\nameref{sec:out-mental-aids}'
 	\begin{split}
 		\text{for } i = 0\quad & dd_i = d \\
 		\text{for } i > 0\quad & dd_i = 2\times dd_{i - 1}\\
-		\text{from which }\quad & dd_n = d\times 2^2
+		\text{from which }\quad & dd_n = d\times 2^n
 	\end{split}
 \end{equation}
 
@@ -470,7 +470,7 @@ $$
 		\setlength{\parindent}{8em}
 		``\textbf{integer} $r,\ dd,\ q;$
 		
-		$r:= a;\ dd:= d;\ q:= O;$
+		$r:= a;\ dd:= d;\ q:= 0;$
 		
 		\textbf{while} $dd \leqslant r$ \textbf{do} $dd \coloneq 2 \times dd;$
 		
@@ -478,7 +478,7 @@ $$
 		
 		\quad\textbf{begin} $dd \coloneq dd/2;\ q: = 2 \times q;$
 		
-		\quad\quad\textbf{if} $dd \leqslant t$ \textbf{do begin} $r \coloneq r - dd;\ q: = q + 1$ \textbf{end}
+		\quad\quad\textbf{if} $dd \leqslant r$ \textbf{do begin} $r \coloneq r - dd;\ q: = q + 1$ \textbf{end}
 		
 		\quad\textbf{end}''
 	}
@@ -538,7 +538,7 @@ $$
 
 In the previous section I have assumed ``perfect arithmetic'' and in my experience the validity of such proofs often gets questioned by people who argue that in practice one never has perfect arithmetic at ones disposal: admissible integer values usually have an absolute upper bound, real numbers are only represented to a finite accuracy etc. So what is the validity of such proofs?
 
-The answer to this question seems to be the following. If one proves the correctness of a program assuming an idealized, perfect world, one should not be amazed if something goes wrong when this ideal program gets executed by an ``imperfect'' implementation. Obviously! Therefore, if we wish to prove program correctness in a more realistic world, the thing to do is to acknowledge right at the start that all operations appealed to in the program (in particular all arithmetic operations) need not be perfect, provided we state -- rather axiomatically -- the properties they have to satisfy for the proper execution of the program, i.e. the properties on which the correctness proof relies. (In the example of the previous section this requirement is simply exact integer arithmetic in the range $[0, 2a]$.)
+The answer to this question seems to be the following. If one proves the correctness of a program assuming an idealized, perfect world, one should not be amazed if something goes wrong when this ideal program gets executed by an ``imperfect'' implementation. Obviously! Therefore, if we wish to prove program correctness in a more realistic world, the thing to do is to acknowledge right at the start that all operations appealed to in the program (in particular all arithmetic operations) need not be perfect, provided we state --- rather axiomatically --- the properties they have to satisfy for the proper execution of the program, i.e. the properties on which the correctness proof relies. (In the example of the previous section this requirement is simply exact integer arithmetic in the range $[0, 2a]$.)
 
 When writing a program operating on real numbers with rounded operations, one must be aware of the assumptions one makes, such as
 \begin{equation*}
@@ -548,21 +548,20 @@ When writing a program operating on real numbers with rounded operations, one mu
 		-(a \times  b) =&\ (-a)\times b\\
 		0\times  x =&\ 0\\
 		0 + x =&\ x\\
-		1 * x =&\ x\text{ etc. etc.}
+		1\times x =&\ x\text{ etc. etc.}
 	\end{split}
 \end{equation*}
 
-Very often the validity of such relations is essential to the logic of the program. For the sake of compatibility, the programmer would be wise to be
-as undemanding as possible, whereas a good implementation should satisfy as many reasonable requirements as possible.
+Very often the validity of such relations is essential to the logic of the program. For the sake of compatibility, the programmer would be wise to be as undemanding as possible, whereas a good implementation should satisfy as many reasonable requirements as possible.
 
-This is the place to confess one of my blunders. In implementing ALGOL 60 we decided that ``$x = y$'' would deliver the value \textbf{true} not only in the case of exact equality, but also when the two values differed only in the least significant digit represented, because otherwise it was so very improbable that the value \textit{true} would ever be computed. We were thinking of converging iterations that could oscillate within rounding accuracy. While we had been generous (with the best of intentions!) in regarding real numbers as equal, it quickly turned out that the chosen operation was so weak as to be hardly of any use at all. What it boiled down to was that the established truth of $a = b$ \textbf{and} $b = c$ did not allow the programmer to conclude the truth of $a = c$. The decision was quickly changed. It is because of that experience that I know that the programmer can only use his tool by virtue of (a number of) its properties; conversely, the programmer must be able to state which properties he requires. (Usually programmers don't do so because, for lack of tradition as to what properties can be taken for granted, this would require more explicitness than is otherwise desirable. The proliferation of machines with lousy floating-point hardware -- together with the misapprehension that the automatic computer is primarily the tool of the numerical analyst -- has done much harm to the profession!)
+This is the place to confess one of my blunders. In implementing ALGOL 60 we decided that ``$x = y$'' would deliver the value \textbf{true} not only in the case of exact equality, but also when the two values differed only in the least significant digit represented, because otherwise it was so very improbable that the value \textit{true} would ever be computed. We were thinking of converging iterations that could oscillate within rounding accuracy. While we had been generous (with the best of intentions!) in regarding real numbers as equal, it quickly turned out that the chosen operation was so weak as to be hardly of any use at all. What it boiled down to was that the established truth of $a = b$ \textbf{and} $b = c$ did not allow the programmer to conclude the truth of $a = c$. The decision was quickly changed. It is because of that experience that I know that the programmer can only use his tool by virtue of (a number of) its properties; conversely, the programmer must be able to state which properties he requires. (Usually programmers don't do so because, for lack of tradition as to what properties can be taken for granted, this would require more explicitness than is otherwise desirable. The proliferation of machines with lousy floating-point hardware --- together with the misapprehension that the automatic computer is primarily the tool of the numerical analyst --- has done much harm to the profession!)
 
 \section{On understanding programs}
 
 In my life I have seen many programming courses that were essentially like the usual kind of driving lessons, in which one is taught how to handle a car
 instead of how to use a car to reach one's destination.
 
-My point is that a program is never a goal in itself; the purpose of a program is to evoke computations and the purpose of the computations is to establish a desired effect. Although the program is the final product made by the programmer, the possible computations evoked by it -- the ``making'' of which is left to the machine! -- are the true subject matter of his trade. For instance, whenever a programmer states that his program is correct, he really makes an assertion about the computations it may evoke.
+My point is that a program is never a goal in itself; the purpose of a program is to evoke computations and the purpose of the computations is to establish a desired effect. Although the program is the final product made by the programmer, the possible computations evoked by it --- the ``making'' of which is left to the machine! --- are the true subject matter of his trade. For instance, whenever a programmer states that his program is correct, he really makes an assertion about the computations it may evoke.
 
 The fact that the last stage of the total activity, viz. the transition from the (static) program text to the (dynamic) computation, is essentially left to the machine is an added complication. In a sense the making of a program is therefore more difficult than the making of a mathematical theory: both program and theory are structured, timeless objects. But while the mathematical theory makes sense as it stands, the program only makes sense via its execution.
 
