@@ -6,7 +6,7 @@
 }
 \renewcommand{\leftmark}{\normalfont\small\hfill E. W. DIJKSTRA\hfill}
 
-\section{To My Reader}
+\section{To my reader}
 
 These notes have the status of ``Letters written to myself'': I wrote them down because, without doing so, I found myself repeating the same arguments over and over again. When reading what I had written, I was not always too satisfied.
 
@@ -19,7 +19,7 @@ them, for which I would like to express my gratitude here, has been one of the m
 comments and Peter Naur for the criticism he expressed. Finally I would like to express my gratitude to Mrs. E. L. Dijkstra-Tucker for her kind
 assistance in my struggles with the English language.
 
-\section{On our Inability To Do Much}
+\section{On our inability to do much}
 \label{sec:our-inability-to-do-much}
 
 I am faced with a basic problem of presentation. What I am really concerned about is the composition of large programs, the text of which may be, say, of the same size as the whole text of this booklet. Also I have to include examples to illustrate the various techniques. For practical reasons, the demonstration programs must be small, many times smaller than the ``life-size programs'' I have in mind. My basic problem is that precisely this difference in scale is one of the major sources of our difficulties in programming!
@@ -40,7 +40,7 @@ It is in the same mood that I should like to draw the reader's attention to the 
 
 Summarizing: as a slow-witted human being I have a very small head and I had better learn to live with it and to respect my limitations and give them full credit, rather than to try to ignore them, for the latter vain effort will be punished by failure.
 
-\section{On The Reliability Of Mechanisms}
+\section{On the reliability of mechanisms}
 
 Being a programmer by trade, programs are what I am talking about and the true subject of this section really is the reliability of programs. That, nevertheless, I have mentioned ``mechanisms'' in its title is because I regard programs as specific instances of mechanisms, and that I wanted to express, at least once, my strong feeling that many of my considerations concerning software are, mutatis mutandis, just as relevant for hardware design.
 
@@ -93,7 +93,8 @@ Let me end this section with a final aside on the significance of computers. Com
 \noindent
 Program testing can be used to show the presence of bugs, but never to show their absence!
 
-\section{On Our Mental Aids}
+\section{On our mental aids}
+\label{sec:out-mental-aids}
 
 In the previous section we have stated that the programmer's duty is to make his product "usefully structured" and we mentioned the program structure in connection with a convincing demonstration of the correctness of the program.
 
@@ -102,13 +103,13 @@ But how do we convince? And how do we convince ourselves? What are the typical p
 Among the mental aids available to understand a program (or a proof of its correctness) there are three that I should like to mention explicitly:
 
 \begin{enumerate}[label=(\arabic*)]
-	%\addtolength{\itemsep}{-0.6\baselineskip}
 \item Enumeration
 \item Mathematical induction
 \item Abstraction.
 \end{enumerate}
 
-\subsection{On Enumeration}
+\subsection{On enumeration}
+\label{subsec:enumeration}
 
 I regard as an appeal to enumeration the effort to verify a property of the computations that can be evoked by an enumerated set of statements performed in sequence, including conditional clauses distinguishing between two or more cases. Let me give a simple example of what I call ``enumerative reasoning''.
 
@@ -162,7 +163,8 @@ so that also in the second case (\ref{eq:relation-r-dd}) will be satisfied.
 
 Thus we have completed our proof of the invariance of relations (\ref{eq:relation-r-dd}), we have also completed our example of enumerative reasoning, conditional clauses included.
 
-\subsection{On Mathematical Induction}
+\subsection{On mathematical induction}
+\label{subsec:mathematical-induction}
 
 I have mentioned mathematical induction explicitly because it is the only pattern of reasoning that I am aware of that eventually enables us to cope with loops (such as can be expressed by repetition clauses) and recursive procedures. I should like to give an example.
 
@@ -298,7 +300,7 @@ thereby violating (\ref{eq:prod-dk}). When the repetition terminates after the $
 becomes, thanks to (\ref{eq:n-execution-prop-a})
 \begin{equation}
 	\label{eq:induction-end}
-\text{prop } (d_n).
+	\text{prop } (d_n).
 \end{equation}
 
 This excludes termination for $n < k$, as this would violate (\ref{eq:non-prop-i}). As a result the repetition will terminate with $n = k$, so that (\ref{eq:induction-dk}) follows from (\ref{eq:n-execution-prop-a}), (\ref{eq:prod-dk}) follows from (\ref{eq:induction-end}) and (\ref{eq:non-prop-i}) follows from (\ref{eq:n-execution-prop-b}). Which terminates our proof.
@@ -315,7 +317,7 @@ Secondly, to the best of my knowledge, there is no set of theorems of the type i
 
 Thirdly, the length of the proof we needed in our last example is a warning that should not be ignored. There is of course the possibility that a better mathematician will do a much shorter and more elegant job than I have done. Personally I am inclined to conclude from this length that programming is more difficult than is commonly assumed: let us be honestly humble and interpret the length of the proof as an urgent advice to restrict ourselves to simple structures whenever possible and to avoid in all intellectual modesty ``clever constructions'' like the plague.
 
-\subsection{On Abstraction}
+\subsection{On abstraction}
 
 At this stage I find it hard to be very explicit about the role of abstraction, partly because it permeates the whole subject. Consider an algorithm and all possible computations it can evoke: starting from the computations the algorithm is what remains when one abstracts from the specific values manipulated this time. The concept of ``a variable'' represents an abstraction from its current value. It has been remarked to me (to my great regret I cannot remember by whom and so I am unable to give credit where it seems due) that once a person has understood the way in which variables are used in programming, he has understood the quintessence of programming. We can find a confirmation for this remark when we return to our use of mathematical induction with regard to the repetition: on the one hand it is by abstraction that the concepts are introduced in terms of which the induction step can be formulated; on the other hand it is the repetition that really calls for the concept of ``a variable''. (Without repetition one can restrict oneself to ``quantities'' the value of which has to be defined as most once but never has to be redefined as in the case of a variable.)
 
@@ -327,8 +329,257 @@ abstraction as our main mental technique to reduce the demands made upon enumera
 
 (Here Mike Woodger, National Physical Laboratory, Teddington, England, made the following remark, which I insert in gratitude: ``There is a parallel analogy between the unanalysed terms in which an axiom or theorem is expressed and the unanalysed operands upon which a named operation is expected to act.'')
 
-\section{An Example Of a Correctness Proof}
+\section{An example of a correctness proof}
 
 Let us consider the following program section, where the integer constants $a$ and $d$ satisfy the relations
+\medskip
 
-page 12
+{
+	\setlength{\parindent}{8em}
+	$a \geqslant 0$\quad and\quad $d > 0$.
+	
+	``\textbf{integer} $r$,\ $dd$;
+	
+	$r \coloneq a;\ dd \coloneq d$;
+	
+	\textbf{while} $dd \leqslant r$ \textbf{do} $dd \coloneq 2\times dd;$
+	
+	\textbf{while} $dd \neq d$ \textbf{do}
+	
+	\quad \textbf{begin} $dd \coloneq dd/2;$
+	
+	\quad\quad \textbf{if} $dd \leqslant r$ \textbf{do} $r \coloneq r - dd$
+	
+	\quad\textbf{end}''.
+}
+\medskip
+
+To apply the Linear Search Theorem (see Section ``\nameref{sec:out-mental-aids}'', subsection ``\nameref{subsec:mathematical-induction}'') we consider the sequence of values given by
+\begin{equation}
+	\label{eq:example-initial}
+	\begin{split}
+		\text{for } i = 0\quad & dd_i = d \\
+		\text{for } i > 0\quad & dd_i = 2\times dd_{i - 1}\\
+		\text{from which }\quad & dd_n = d\times 2^2
+	\end{split}
+\end{equation}
+
+\noindent
+can be derived by normal mathematical techniques, which also tell us that (because $d > 0$) for finite $r$
+$$
+dd_k > r
+$$
+
+\noindent
+will hold for some finite $k$, thus ensuring that the first repetition terminates with
+$$
+dd = d\times 2^k
+$$
+
+Solving the relation
+$$
+d_i = 2\times d_{i-1}
+$$
+
+for $d_{i-1}$ gives
+$$
+d_{i-1} = d_i/2
+$$
+
+\noindent
+and the Linear Search Theorem then tells us, that the second repetition will also terminate. (As a matter of fact the second repeated statement will be executed exactly the same number of times as the first one.)
+
+At the termination of the first repetition,
+$$
+dd=dd_k
+$$
+
+\noindent
+and therefore,
+\begin{equation}
+	\label{eq:example-linear}
+	0 \leqslant r <dd
+\end{equation}
+
+\noindent
+holds. As shown earlier (Section ``\nameref{sec:out-mental-aids}'', subsection ``\nameref{subsec:enumeration}'') the repeated statement of the second clause leaves this relation invariant. After termination (on account of ``\textbf{while} $dd \neq d$ \textbf{do}'') we can
+conclude
+$$
+dd = d
+$$
+
+\noindent
+which together with (\ref{eq:example-linear}) gives
+\begin{equation}
+	\label{eq:example-r-interval}
+	0 \leqslant r < d
+\end{equation}
+
+Furthermore we prove that after the initialization
+\begin{equation}
+	\label{eq:example-dd-equiv-0-mod-d}
+	dd \equiv 0 \bmod d
+\end{equation}
+
+\noindent
+holds; this follows, for instance, from the fact that the possible values of $dd$ are (see (\ref{eq:example-initial}))
+$$
+d\times 2^i\quad \text{for}\quad 0 \leqslant i \leqslant k.
+$$
+
+Our next step is to verify, that after the initial assignment to $r$ the relation
+\begin{equation}
+	\label{eq:example-a-equiv-r-mod-d}
+	a \equiv r \bmod d
+\end{equation}
+
+\noindent
+holds.
+\begin{enumerate}[label=(\arabic*)]
+	\item It holds after the initial assignments.
+	\item The repeated statement of the first clause (``$dd \coloneq 2\times dd$'') maintains the invariance of (\ref{eq:example-a-equiv-r-mod-d}) and therefore the whole first repetition maintains the validity of (\ref{eq:example-a-equiv-r-mod-d}). 
+	\item The second repeated statement consists of two statements. The first (``$dd \coloneq dd/2$'') leaves (\ref{eq:example-a-equiv-r-mod-d}) invariant, the second one also leaves (\ref{eq:example-a-equiv-r-mod-d}) invariant for either it leaves $r$ untouched or it decreases $r$ by the current value of $dd$, an operation which on account of (\ref{eq:example-dd-equiv-0-mod-d}) also maintains the validity of (\ref{eq:example-a-equiv-r-mod-d}). Therefore the whole second repeated statement leaves (\ref{eq:example-a-equiv-r-mod-d}) invariant and therefore the whole repetition leaves (\ref{eq:example-a-equiv-r-mod-d}) invariant. Combining (\ref{eq:example-r-interval}) and (\ref{eq:example-a-equiv-r-mod-d}), the final value	therefore satisfies
+\end{enumerate}
+\medskip
+$$
+0 \leqslant r < d\quad \text{and}\quad a \equiv r \bmod d
+$$
+
+\noindent
+i.e. $r$ is the smallest non-negative remainder of the division of $a$ by $d$.
+
+\textit{Remark l}. The program
+"integer r, dd, q;
+r:= a; dd:= d; q:= O;
+while dd ~ r do dd: = 2 * dd;
+while dd =F d do
+begin dd: = dd/2; q: = 2 * q;
+end if dd ~ t do begin r: = r - dd; q: = q +I end
+
+assigns to q the value of the corresponding quotient. The proof can be established by observing the invariance of the relation
+$$
+a= q \times dd + r.
+$$
+
+(I owe this example to my colleague N. G. de Bruijn.)
+
+\begin{enumerate}[leftmargin=*, itemindent=3\parindent, label=\textit{Remark }\arabic*.]
+	\item The program
+	
+	{
+		\setlength{\parindent}{8em}
+		``\textbf{integer} $r,\ dd,\ q;$
+		
+		$r:= a;\ dd:= d;\ q:= O;$
+		
+		\textbf{while} $dd \leqslant r$ \textbf{do} $dd \coloneq 2 \times dd;$
+		
+		\textbf{while} $dd \neq d$ \textbf{do}
+		
+		\quad\textbf{begin} $dd \coloneq dd/2;\ q: = 2 \times q;$
+		
+		\quad\quad\textbf{if} $dd \leqslant t$ \textbf{do begin} $r \coloneq r - dd;\ q: = q + 1$ \textbf{end}
+		
+		\quad\textbf{end}''
+	}
+	
+\noindent
+assigns to $q$ the value of the corresponding quotient. The proof can be established by observing the invariance of the relation
+	$$
+	a= q \times dd + r.
+	$$
+	
+	(I owe this example to my colleague N. G. de Bruijn.)
+
+	\item In the subsection ``\nameref{subsec:mathematical-induction}'' we have proved the Linear Search Theorem. In the previous proof we have used another theorem about repetitions (a theorem that, obviously, can only be proved by mathematical induction, but the proof is so simple that we leave it as an exercise to the reader), viz. that if prior to entry of a repetition a certain relation $P$ holds, whose truth is not destroyed by a single execution of the repeated statement, then relation $P$ will still hold after termination of the repetition. This is a very useful theorem, often allowing us to bypass an explicit appeal to mathematical induction. (We can state the theorem a little more sharply; in the repetition
+	$$
+		\text{``\textbf{while} } B \text{ \textbf{do} } S\text{''}
+	$$	
+	
+	one has to show that $S$ is such that the truth of
+	$$
+	P \text{ \textbf{and} } B
+	$$
+	
+	prior to the execution of $S$ implies the truth of
+	$$ P $$
+	
+	after its execution.)
+	\item As an exercise for the reader (for which acknowledgment is due to James King, CMU, Pittsburgh, USA), prove that with integer $A$, $B$, $x$, $y$ and $z$ and
+	$$
+	A > 0\quad \text{and}\quad B\geqslant 0
+	$$
+	
+	after the execution of the program section
+	
+	{
+		\setlength{\parindent}{8em}
+		``$x \coloneq A;\ y \coloneq B;\ z \coloneq 1;$
+		
+		\textbf{while} $y \neq 0$ \textbf{do}
+		
+		\quad\textbf{begin if} odd($y$) \textbf{do begin} $y \coloneq y - 1; z \coloneq z \times x$ \textbf{end};
+		
+		\quad\quad $y \coloneq y/2;\ x \coloneq x \times x$
+		
+		\quad\textbf{end}''
+	}
+	
+	finally $z = A^B$ will hold.
+\end{enumerate}
+
+
+The proof has to show that (in spite of ``$y: = y/2$'') all variables keep integer values; the method shows the invariance of
+$$
+x > 0\quad \text{\textbf{and}}\quad y \geqslant 0\quad \text{\textbf{and}}\quad A^B = z \times x^y
+$$
+
+\section{On the validity of proofs versus the validity of implementations}
+
+In the previous section I have assumed ``perfect arithmetic'' and in my experience the validity of such proofs often gets questioned by people who argue that in practice one never has perfect arithmetic at ones disposal: admissible integer values usually have an absolute upper bound, real numbers are only represented to a finite accuracy etc. So what is the validity of such proofs?
+
+The answer to this question seems to be the following. If one proves the correctness of a program assuming an idealized, perfect world, one should not be amazed if something goes wrong when this ideal program gets executed by an ``imperfect'' implementation. Obviously! Therefore, if we wish to prove program correctness in a more realistic world, the thing to do is to acknowledge right at the start that all operations appealed to in the program (in particular all arithmetic operations) need not be perfect, provided we state -- rather axiomatically -- the properties they have to satisfy for the proper execution of the program, i.e. the properties on which the correctness proof relies. (In the example of the previous section this requirement is simply exact integer arithmetic in the range $[0, 2a]$.)
+
+When writing a program operating on real numbers with rounded operations, one must be aware of the assumptions one makes, such as
+\begin{equation*}
+	\begin{split}
+		b > 0\quad \text{implies}&\quad a + b \geqslant a\\
+		a\times b =&\ b\times a\\
+		-(a \times  b) =&\ (-a)\times b\\
+		0\times  x =&\ 0\\
+		0 + x =&\ x\\
+		1 * x =&\ x\text{ etc. etc.}
+	\end{split}
+\end{equation*}
+
+Very often the validity of such relations is essential to the logic of the program. For the sake of compatibility, the programmer would be wise to be
+as undemanding as possible, whereas a good implementation should satisfy as many reasonable requirements as possible.
+
+This is the place to confess one of my blunders. In implementing ALGOL 60 we decided that ``$x = y$'' would deliver the value \textbf{true} not only in the case of exact equality, but also when the two values differed only in the least significant digit represented, because otherwise it was so very improbable that the value \textit{true} would ever be computed. We were thinking of converging iterations that could oscillate within rounding accuracy. While we had been generous (with the best of intentions!) in regarding real numbers as equal, it quickly turned out that the chosen operation was so weak as to be hardly of any use at all. What it boiled down to was that the established truth of $a = b$ \textbf{and} $b = c$ did not allow the programmer to conclude the truth of $a = c$. The decision was quickly changed. It is because of that experience that I know that the programmer can only use his tool by virtue of (a number of) its properties; conversely, the programmer must be able to state which properties he requires. (Usually programmers don't do so because, for lack of tradition as to what properties can be taken for granted, this would require more explicitness than is otherwise desirable. The proliferation of machines with lousy floating-point hardware -- together with the misapprehension that the automatic computer is primarily the tool of the numerical analyst -- has done much harm to the profession!)
+
+\section{On understanding programs}
+
+In my life I have seen many programming courses that were essentially like the usual kind of driving lessons, in which one is taught how to handle a car
+instead of how to use a car to reach one's destination.
+
+My point is that a program is never a goal in itself; the purpose of a program is to evoke computations and the purpose of the computations is to establish a desired effect. Although the program is the final product made by the programmer, the possible computations evoked by it -- the ``making'' of which is left to the machine! -- are the true subject matter of his trade. For instance, whenever a programmer states that his program is correct, he really makes an assertion about the computations it may evoke.
+
+The fact that the last stage of the total activity, viz. the transition from the (static) program text to the (dynamic) computation, is essentially left to the machine is an added complication. In a sense the making of a program is therefore more difficult than the making of a mathematical theory: both program and theory are structured, timeless objects. But while the mathematical theory makes sense as it stands, the program only makes sense via its execution.
+
+In the remaining part of this section I shall restrict myself to programs written for a sequential machine, and I shall explore some of the consequences of our duty to use our understanding of a program to make assertions about the ensuing computations. It is my (unproven) claim that the ease and reliability with which we can do this depends critically upon the simplicity of the relation between the two, in particular upon the nature of sequencing control. In vague terms we may state the desirability that the structure of the program text reflects the structure of the computation. Or, in other terms, ``What can we do to shorten the conceptual gap between the static program
+text (spread out in ``text space'') and the corresponding computations (evolving in time)?''
+
+It is the purpose of the computation to establish a certain desired effect. When it starts at a discrete moment $t_0$ it will be completed at a later discrete moment $t_1$ and we assume that its effect can be described by comparing ``the state at $t_0$'' with ``the state at $t_1$''. If no intermediate states are taken into consideration the effect is regarded as being established by a primitive action.
+
+When we do take a number of intermediate states into consideration this means that we have parsed the happening in time. We regard it as a sequential computation, i.e. the time-succession of a number of subactions and we have to convince ourselves that the cumulative effect of this time-succession of subactions indeed equals the desired net effect of the total computation.
+
+The simplest case is a parsing, a decomposition, into a fixed number of subactions that can be enumerated. In flowchart form this can be represented as follows. 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.7]{fig1}
+\end{figure}
+
+The validity of this decomposition has to be established by enumerative reasoning. In this case, shortening of the conceptual gap between program and computation can be achieved by requiring that a linear piece of program text contains names or descriptions of the subactions in the order in which they have to take place. In our earlier example (invariance of $0 \leqslant r < dd$)
+
+page 17

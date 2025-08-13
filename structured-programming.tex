@@ -28,6 +28,9 @@
 \usepackage{xcolor}
 \usepackage{afterpage}
 \usepackage{nameref}
+\usepackage{mfirstuc}
+
+\graphicspath{ {./images/} }
 
 \definecolor{desertstorm}{RGB}{242,233,224}
 \definecolor{shadesofmidnight}{RGB}{28,56,95}
@@ -42,9 +45,9 @@
 \counterwithout{section}{chapter}
 
 \titleformat{\subsection}[hang]{\footnotesize\scshape\uppercase}{\thesubsection{}.}{.5em}{}
-\titlespacing{\subsection}{0pt}{.8em}{.2em}
+\titlespacing{\subsection}{0pt}{.8em}{.em}
 
-\renewcommand{\chaptermark}[1]{ \markboth{#1}{} }
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
 
 \counterwithout{equation}{chapter}
 \counterwithin*{equation}{section}
@@ -73,7 +76,6 @@
 
 \cleardoublepage
 \pagenumbering{arabic}
-
 
 \pagestyle{myheadings}
 
