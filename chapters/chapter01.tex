@@ -741,3 +741,28 @@ Let me give a second example of incomparability that is slightly more subtle.
 Given two arrays $X[1:N]$ and $Y[1:N]$ and a boolean variable ``equal'', make a program that assigns to the boolean variable ``equal'' the value: ``the two arrays are equal element-wise''. Empty arrays (i.e. $N = 0$) are regarded as being equal.
 
 Introducing a variable $j$ and giving to ``equal'' the meaning ``among the first $j$ pairs no difference has been detected'', we can write the following two programs.
+\begin{equation}
+	\label{eq:comparing-example-3}
+	\begin{split}
+		&\text{\hspace{-.5em}``}j \coloneq 0;\text{ equal} \coloneq \text{\textbf{true}};\\
+		&\text{\textbf{while} } j \neq N\text{ \textbf{do}}\\
+		&\quad\text{\textbf{begin} } j \coloneq  j + 1;\text{ equal} \coloneq \text{equal \textbf{and} } (X[j] = Y[j]) \text{ \textbf{end}''}
+	\end{split}
+\end{equation}
+
+\noindent
+and
+\begin{equation}
+	\label{eq:comparing-example-4}
+	\begin{split}
+		&\text{\hspace{-.5em}``}j \coloneq 0;\text{ equal} \coloneq \text{\textbf{true}};\\
+		&\text{\textbf{while} } j \neq N\text{ \textbf{and} equal \textbf{do}}\\
+		&\quad\text{\textbf{begin} } j \coloneq  j + 1;\text{ equal} \coloneq (X[j] = Y[j]) \text{ \textbf{end}''}
+	\end{split}
+\end{equation}
+
+Program (\ref{eq:comparing-example-4}) differs from program (\ref{eq:comparing-example-3}) in that repetition is terminated as soon as a pair-wise difference has been detected. For the same input the number of repetitions may differ in the two programs and therefore the programs are only comparable in our sense as long as the last two lines of the programs are regarded as describing a single action, not subdivided into subactions. But what is their relation when we do wish to take into account that they both end with a repetition? To find this out, we shall prove the correctness of the programs.
+
+On the arrays $X$ and $Y$ we can define of $0 \leqslant j \leqslant N$ the $N + 1$ functions $\text{EQUAL}_j$ as follows:
+
+page 25 fi

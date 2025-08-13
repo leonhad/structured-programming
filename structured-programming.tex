@@ -29,6 +29,8 @@
 \usepackage{afterpage}
 \usepackage{nameref}
 \usepackage{mfirstuc}
+\usepackage[hyphenation]{impnattypo}
+\usepackage[protrusion=true, expansion=true]{microtype}
 
 \graphicspath{ {./images/} }
 
@@ -38,7 +40,7 @@
 \setlist{topsep=0em, itemsep=-.4em} 
 
 \titleformat{\chapter}[hang]{\large\bfseries\centering}{\thechapter{}}{.5em}{}
-\titlespacing{\chapter}{0pt}{.5cm}{.5cm}
+\titlespacing{\chapter}{0pt}{0cm}{.5cm}
 
 \titleformat{\section}[hang]{\normalsize\centering\scshape}{\thesection{}}{.5em}{}
 \titlespacing{\section}{0pt}{2em}{.6em}
@@ -59,6 +61,8 @@
 \counterwithin*{equation}{subsection}
 
 \hyphenation{ALGOL}
+\hyphenation{modulo}
+\frenchspacing
 
 \begin{document}
 
