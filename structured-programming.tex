@@ -56,6 +56,8 @@
 
 \setcounter{tocdepth}{1}
 
+\renewcommand{\contentsname}{CONTENTS}
+
 \counterwithout{equation}{chapter}
 \counterwithin*{equation}{section}
 \counterwithin*{equation}{subsection}
@@ -69,11 +71,12 @@
 \author{O.-J. DAHL, E. W. DIJKSTRA, C. A. R. HOARE}
 \title{STRUCTURED PROGRAMMING}
 \date{1972}
+\pagestyle{empty}
+\pagenumbering{roman}
 
 \include{./frontcover}
 \cleardoublepage
 
-\pagenumbering{roman}
 \pagestyle{plain}
 \include{./cover}
 
