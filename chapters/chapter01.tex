@@ -784,7 +784,7 @@ It is tempting to regard programs (\ref{eq:comparing-example-3}) and (\ref{eq:co
 \end{equation}
 
 \noindent
-in which ``perhaps still:equal $=$ EQUAL$_N$'' stands for some sort of still open primitive. When this is evaluated
+in which ``perhaps still:equal $\neq$ EQUAL$_N$'' stands for some sort of still open primitive. When this is evaluated
 $$
 \text{equal} = \text{EQUAL}_j
 $$
@@ -838,7 +838,7 @@ The task is to instruct a computer to print a table of the first thousand prime 
 \begin{enumerate}[leftmargin=*, itemindent=2.2\parindent, label=\textit{Note }\arabic*.]
 	\item This example has been chosen because on the one hand.it is sufficiently difficult to serve as a model for some of the problems encountered in programming, and on the other hand its mathematical background is so simple and familiar that our attention is not usurped by the problem.
 	
-	\item I do not claim that my final program will be ``the best one'', measured by whatever yardstick any of my readers might care to choose. At least two readers of a previous version of this presentation-in which remainders were computed via a divide operation-reacted quite vehemently to it: ``But everyone knows that the most efficient way to generate prime numbers is by using the Sieve of Eratosthenes.'' thereby blocking their ability to read any further!
+	\item I do not claim that my final program will be ``the best one'', measured by whatever yardstick any of my readers might care to choose. At least two readers of a previous version of this presentation --- in which remainders were computed via a divide operation --- reacted quite vehemently to it: ``But everyone knows that the most efficient way to generate prime numbers is by using the Sieve of Eratosthenes.'' thereby blocking their ability to read any further!
 \end{enumerate}
 
 The basic pattern of my approach will be to compose the program in minute steps, deciding each time as little as possible. As the problem analysis proceeds, so does the further refinement of my program.
@@ -846,6 +846,7 @@ The basic pattern of my approach will be to compose the program in minute steps,
 When an algorithm has to be made, the desired computation has to be composed from actions corresponding to a well-understood instruction repertoire.
 
 The simplest form of the program is
+\medskip
 
 \noindent
 description 0:
@@ -853,7 +854,8 @@ description 0:
 \textbf{begin} ``print first thousand prime numbers'' \textbf{end}
 
 \noindent
-and when ``print first thousand prime numbers'' refers to an instruction from the well-understood repertoire, the description 0 solves the problem. For the sake of argument we assume that this instruction does \textit{not} occur in the well-understood repertoire. Therefore we have to conceive a computation composed from ``more primitive'' actions that establishes the desired net effect. Our first proposal is to separate the generation of the prime numbers and their printing, and we propose
+and when ``print first thousand prime numbers'' refers to an instruction from the well-understood repertoire, the description 0 solves the problem. For the sake of argument we assume that this instruction does \textit{not} occur in the well-understood repertoire. Therefore we have to conceive a computation composed from ``more primitive'' actions that establishes the desired net effect. Our first proposal is to separate the generation of the prime numbers and their printing, and we propose description 1.
+\medskip
 
 \noindent
 description 1:
@@ -897,19 +899,24 @@ For the continuation of our discussion we make a very tentative proposal. We say
 
 Description 1 is called ``1'' because it is the next refinement of description 0; it contains a refinement of $0a$ --- the only term in which description 0 is expressed --- and is itself expressed in terms of three named entities to which we attach the codes:
 
+\noindent
 ``table $p$''\hfill 1a
 
+\noindent
 ``fill table $p$ with first thousand prime numbers''\hfill 1b
 
+\noindent
 ``print table $p$''\hfill 1c
 
 \noindent
 code numbers, starting with 1, because description 1 is expressed in terms of them, and ``a'', ``b'' and ``c'' being attached for the purpose of distinction.
 
 Now we have to describe our convention chosen for the representation of the information to be contained in ``table $p$'', but this convention pertains to all three elements 1a, 1b and 1c. Therefore we call this description 2; it should contain the descriptions of the three separate elements (I use the equality sign as separator)
+\medskip
 
 \noindent
 description 2:
+\nopagebreak
 
 \noindent
 1a $=$ ``\textbf{integer array} $p[1 : 1000]$"
@@ -920,23 +927,25 @@ description 2:
 \noindent
 1c $=$ ``print $p[k]$ for $k$ from 1 through 1000".
 
-Description 2 is expressed in terms of three named entities to which we give (in the obvious order) the codes 2a, 2b and 2c. (In code numbers, description 2 is very meagre: it just states that for 1a, 1b and 1c, we have chosen the refinements 2a, 2b and 2c respectively.)
+Description 2 is expressed in terms of three named entities to which we give (in the obvious order) the codes 2a, 2b and 2c. (In code numbers, description 2 is very meager: it just states that for 1a, 1b and 1c, we have chosen the refinements 2a, 2b and 2c respectively.)
 
+\noindent
 \textit{Remark}. In the representation of the information to be contained in ``table $p$'', we have chosen not to exploit the fact that each of the values to be printed occurs only once, nor that they occur in the order of increasing magnitude. Conversely, this implies that the action that has to take place under the name of 2c is regarded as a specific instance of printing any set of thousand integer values (it could be a table of monthly wages of thousand numbered employees!). The net effect of the printing action in this example is an uniquely defined as the first thousand prime numbers are: we conceive it, however, as a specific instance of a larger class of occurrences. In the further refinement of 2c we deal with this whole class, the specific instance in this class being defined by the values of the elements of the array $p$. When people talk about ``defining an interface'' I often get the feeling that they overlook the presupposed generalization, the conception of the class of ``possible'' actions.
 
 When 2b and 2c occur among the well-understood repertoire of instructions (and therefore 2a among the resources implicitly available) our whole problem is solved. For the sake of argument we again assume this not to be the case, and so we find ourselves faced with the task of conceiving subcomputations for the actions 2b and 2c. But now, thanks to the introduction of level 2, the respective refinements of 2b and 2c can be designed independently.
 
-\emph{The refinement of 2b: ``make for $k$ from 1 through 1000 $p[k]$ equal to the $k$\emph{th} prime number''}.
+\emph{The refinement of 2b: ``make for $k$ from $1$ through $1000\ p[k]$ equal to the $k$\emph{th} prime number''}.
 
 We are looking for description 2b1, i.e. the first refinement of 2b. We introduce a fresh numbering after 2b (rather than calling our next description ``3 something'') in order to indicate the mutual independence of the refinements of 2b and 2c respectively.
 
-In description 2b1 we have to give an algorithm describing how the elements of the array p will get their values. This implies that we have to describe, for instance, in what order this will happen. In our first refinement we shall describe just that and preferably nothing more. An obvious, but ridiculous version starts as follows (with ``version number'' enclosed within parentheses):
+In description 2b1 we have to give an algorithm describing how the elements of the array $p$ will get their values. This implies that we have to describe, for instance, in what order this will happen. In our first refinement we shall describe just that and preferably nothing more. An obvious, but ridiculous version starts as follows (with ``version number'' enclosed within parentheses):
 
 \noindent
 2b1(l):
+\nopagebreak
 
 \noindent
-\textbf{begin} $p[1] \coloneq 2$; $p[2] \coloneq 3$; $p[3] \coloneq S$; $p[4] \coloneq 7$; $p[5] \coloneq 11$; \dots \textbf{end}
+\textbf{begin} $p[1] \coloneq 2$; $p[2] \coloneq 3$; $p[3] \coloneq 5$; $p[4] \coloneq 7$; $p[5] \coloneq 11$;\ \dots\ \textbf{end}
 
 \noindent
 implying that the programmer's knowledge includes that of a table of the first thousand primes. We shall not pursue this version as it would imply that the programmer hardly needed the machine at all.
@@ -953,7 +962,7 @@ The first prime number being given $(=2)$, the thousandth being assumed unknown 
 \quad \textbf{while} $k < 1000$ \textbf{do begin} ``increase $j$ until next prime number'';
 
 \noindent
-\quad\quad $k \coloneq k + l$; $p[k]:=j$ \textbf{end}
+\quad\quad $k \coloneq k + 1$; $p[k] \coloneq j$ \textbf{end}
 
 \noindent
 \textbf{end}
@@ -1001,7 +1010,7 @@ Again its correctness can hardly be subject to doubt. If, however, we assume tha
 \quad\quad\quad $k \coloneq k + 1; p[k]: = j$
 
 \noindent
-\quad\textbf{end}
+\quad\quad\textbf{end}
 
 \noindent
 \textbf{end}
@@ -1068,7 +1077,7 @@ We use the facts that
 
 (Here I have also used the fact that the smallest prime number whose square exceeds $j$ can already be found in the table $p$. In all humility I quote Don Knuth's comment on an earlier version of this program, where I took this fact for granted:
 
-\begin{addmargin}[2em]{0em}
+\begin{addmargin}[1.5em]{0em}
 ``Here you are guilty of a serious omission! Your program makes use of a deep result of number theory, namely that if $p_n$ denotes the $n$th prime number we \textit{always} have
 \end{addmargin}
 $$
@@ -1079,6 +1088,7 @@ $$
 Peccavi.)
 
 If this set is not empty, we have a chance of finding a factor, and as soon as a factor has been found, the investigation of this particular $j$ value can be stopped. We have to decide in which order the prime numbers from the set will be tried, and we shall do so in order of increasing magnitude, because the smaller a prime number the larger the probability of its being a factor of $j$.
+
 When the value of ord is known we can give for ``give for odd $j$ to $j$prime the meaning: $j$ is a prime number'' the following description on level 2b3(3):
 
 \noindent
@@ -1121,7 +1131,7 @@ For 2b: ``make for $k$ from 1 through 1000 $p[k]$ equal to the $k$th prime numbe
 level 2b1(4):·
 
 \noindent
-\textbf{begin integer} $k$, $j$; $p[1] \coloneq 2$; $k \coloneq l$;
+\textbf{begin integer} $k$, $j$; $p[1] \coloneq 2$; $k \coloneq 1$;
 
 \noindent
 \quad ``set $j$ to one'';
@@ -1180,13 +1190,13 @@ level 2b2(4):
 expressed in terms of
 
 \noindent
-2b2( 4)b\quad\quad still meaning ``set $j$ to one''
+2b2(4)b\quad\quad still meaning ``set $j$ to one''
 
 \noindent
 2b2(4)c\quad\quad ``increase $j$ with two''
 
 \noindent
-2b2( 4)d\quad\quad ``give for odd $j$ to $j$prime the meaning: $j$ is a prime number''.
+2b2(4)d\quad\quad ``give for odd $j$ to $j$prime the meaning: $j$ is a prime number''.
 
 It is only at the next level that we need to talk about ord. Therefore we now write
 
@@ -1212,7 +1222,7 @@ level 2b3(4): \textbf{integer} ord;
 \textbf{begin integer} $n$; $n \coloneq 2$; $j$prime $\coloneq$ \textbf{true};
 
 \noindent
-\quad\textbf{while} $n <$ ord and $j$prime \textbf{do}
+\quad\textbf{while} $n <$ ord \textbf{and} $j$prime \textbf{do}
 
 \noindent
 \quad\quad\textbf{begin} ``give to $j$prime the meaning: $p[n]$ is not a factor of $j$'';
@@ -1268,7 +1278,7 @@ level 2b4(4):
 \textbf{begin integer} $r$;
 
 \noindent
-\quad ``maker equal to remainder of $j$ over $p[n]$'';
+\quad ``make $r$ equal to remainder of $j$ over $p[n]$'';
 
 \noindent
 \quad $j$prime $\coloneq (r \neq 0)$
@@ -1297,7 +1307,7 @@ $$
 $$
 
 \noindent
-would lead to the (non-positive) remainder but it would be most unattractive from the point of view of computation time. Again this asks for the introduction of some additional tabulated material (similar to the way in which "ord" has been introduced).
+would lead to the (non-positive) remainder but it would be most unattractive from the point of view of computation time. Again this asks for the introduction of some additional tabulated material (similar to the way in which ``ord'' has been introduced).
 
 We want to know whether a given value of $j$ is a multiple of $p[n]$ for $n < \text{ord}$. In order to assist us in this analysis we introduce a second array in the elements of which we can store multiples of the successive prime numbers, as close to $j$ as is convenient. In order to be able to give the size of the array we should like to know an upper bound for the value of ord; of course, 1000 would be safe, but number theory gives us 30 as a safe upper bound. We therefore introduce
 
@@ -1362,6 +1372,7 @@ level 2b5(4):
 \noindent
 which has made our computation close to an implementation of the Sieve of Eratosthenes!
 
+\noindent
 \textit{Note}. In the refinement of 2b4(4)d, when mult$[n]$ is compared with the current value of $j$, mult$[n]$ is increased as much as possible; this could have been done in steps of $2\times p[n]$, because we only submit odd values of $j$ and therefore are only interested in odd multiples of $p[n]$. (The value of mult$[1]$ remains, once set, equal to 4.)
 
 The refinement of 2c ``print $p[k]$ for $k$ from 1 through 1000'' is left to the reader. I suggest that the table should be printed on five pages, each page containing four columns with fifty consecutive prime numbers.
@@ -1369,6 +1380,7 @@ The refinement of 2c ``print $p[k]$ for $k$ from 1 through 1000'' is left to the
 \vspace*{-1em}
 \begin{center}
 	$\star$\quad\quad  $\star$\\
+	\nopagebreak
 	
 	\vspace*{-.5em}
 	$\star$
@@ -1403,7 +1415,7 @@ If a program has to exist in two different versions, I would rather not regard (
 	\item that the regions affected by the modification are already well-isolated, a condition which is not met when the transition requires ``brain-made'' modifications scattered all over the text.
 \end{enumerate}
 
-Well, this is a lofty goal. It has been inspired by the potential similarity between the task of program modification and program composition: when a program has been built up to an intermediate stage of refinement, ·what has then been written down is in fact a suitable "common ancestor" for all possible programs produced by further refinements. It is the similarity between "the decision to be changed" and "the decision still left open": in both cases we are left with what remains when we abstract from such a decision.
+Well, this is a lofty goal. It has been inspired by the potential similarity between the task of program modification and program composition: when a program has been built up to an intermediate stage of refinement, what has then been written down is in fact a suitable "common ancestor" for all possible programs produced by further refinements. It is the similarity between "the decision to be changed" and "the decision still left open": in both cases we are left with what remains when we abstract from such a decision.
 
 There is a second source of inspiration to be found in our experience. In the process of step-wise program composition, proceeding from outside inwards, going towards progressive refinements, we have in the earlier stages not only postponed deciding how certain things would be done, but we have also postponed committing ourselves as to exactly what had to be done: with progressing refinement, more detail about the actual problem statement has been brought into the picture. (Later examples will show this even more clearly than the problem of the prime table.) As a result, our first levels of refinement are equally applicable for the members of a whole class of problem statements.
 
