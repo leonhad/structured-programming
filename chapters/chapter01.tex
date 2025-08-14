@@ -449,21 +449,6 @@ $$
 \noindent
 i.e. $r$ is the smallest non-negative remainder of the division of $a$ by $d$.
 
-\textit{Remark l}. The program
-"integer r, dd, q;
-r:= a; dd:= d; q:= O;
-while dd ~ r do dd: = 2 * dd;
-while dd =F d do
-begin dd: = dd/2; q: = 2 * q;
-end if dd ~ t do begin r: = r - dd; q: = q +I end
-
-assigns to q the value of the corresponding quotient. The proof can be established by observing the invariance of the relation
-$$
-a= q \times dd + r.
-$$
-
-(I owe this example to my colleague N. G. de Bruijn.)
-
 \begin{enumerate}[leftmargin=*, itemindent=3\parindent, label=\textit{Remark }\arabic*.]
 	\item The program
 	
@@ -927,7 +912,7 @@ Now we have to describe our convention chosen for the representation of the info
 description 2:
 
 \noindent
-1a $=$ ``\textbf{integer array} $p[l : 1000]$"
+1a $=$ ``\textbf{integer array} $p[1 : 1000]$"
 
 \noindent
 1b $=$ ``make for $k$ from 1 through 1000 $p[k]$ equal to the $k$th prime number"
