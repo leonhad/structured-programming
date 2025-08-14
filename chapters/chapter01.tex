@@ -828,6 +828,7 @@ And now it is clear why the introduction of (\ref{eq:comparing-example-7}) as an
 So much for programs that we consider as incomparable. Examples of comparable programs will be encountered in the following sections. A final remark: we have stated that ``paired computations can be parsed into a time-succession of actions that can be mapped on each other''. We have not required that actions so paired should have the same net effect! We may compare alternative programs for the same job but also different programs for similar jobs.
 
 \section{A first example of step-wise program composition}
+\label{sec:first-example-step-wise-program-composition}
 
 In the section ``\nameref{sec:undertanding-programs}'' I have stressed the need for systematic sequencing so that the structure of the computations could be reflected in the structure of our program: in this way we can speak of the joint structuring of program and computations. In the current section I shall now try to give a little more content to the still rather vague notion of structuring computations. It will be a first effort to exploit our powers of abstraction to reduce the appeal made to enumerative reasoning; it will be a consequent application of the decompositions mentioned in the section ``\nameref{sec:undertanding-programs}''.
 
@@ -1437,5 +1438,187 @@ From the point of view of the programmer, storage space and computation time are
 In its most simple form we are faced with a computation that regularly needs the value of ``FUN(arg)'', where ``FUN'' is a given, computable function defined on the current value of one or more stored variables, collectively called ``arg''. In version $A$ of the program, only the value of arg is stored and the value of FUN(arg) is computed whenever needed. In version $B$, an additional variable, ``fun'' say, is introduced, whose sole purpose is to record the value of ``FUN(arg)'' corresponding to the current value of arg.
 
 Where version $A$ has
+\medskip
 
-page 42
+{
+	\setlength{\parindent}{8em}
+	\hspace{-.5em}``arg $\coloneq \dots$'' (i.e. assignment to arg)
+	
+}
+\medskip
+
+\noindent
+version $B$ will have
+\medskip
+
+{
+	\setlength{\parindent}{8em}
+	\hspace{-.5em}``arg $\coloneq \dots$; fun $\coloneq$ FUN(arg)''
+	
+}
+\medskip
+
+\noindent
+thereby maintaining the relation
+\medskip
+
+{
+	\setlength{\parindent}{8em}
+	fun = FUN(arg)
+}
+\medskip
+
+\noindent
+As a result of the validity of this relation, wherever version $A$ calls for the evaluation of FUN(arg), version $B$ will call for the current value of the variable fun.
+
+There are two possible reasons to prefer version $B$ to version $A$. When the value of FUN(arg) is more frequently requested than assignments to arg take place, version $B$ could require less computation time. If necessary the technique can be refined by the introduction of a further (boolean) variable ``fun up to date'', indicating whether the relation ``fun = FUN(arg)'' is assumed to hold. Assignment to arg is then associated with
+\medskip
+
+{
+	\setlength{\parindent}{8em}
+	\hspace{-.5em}``fun up to date $\coloneq$ \textbf{false}''
+}
+\medskip
+
+\noindent
+whenever the value of FUN(arg) is needed, inspection of this boolean variable will tell, whether FUN(arg) has to be computed afresh; if so, the computed value will be assigned to fun and in accordance with its meaning ``fun up to date'' will be set to \textbf{true}. Let us call the last program version $C$. It is clear that these three programs, only differing where version $A$ assigns to arg or uses the value of FUN(arg), are equivalent as far as their output is concerned; it is certainly not inconceivable that version $B$ or $C$ is derived from version $A$ by mechanical means.
+
+But quite often the situation is not as simple as that and now we come to the second reason for introducing such a variable ``fun''. Often it is very unattractive to compute FUN(arg) from scratch for arbitrary values of arg, while it is much easier to compute how the value of FUN(arg) changes when the value of arg is changed. In that case, the adjustment of the value of ``fun'' is more intimately linked with the nature of the functional dependence than is suggested by
+\medskip
+
+{
+	\setlength{\parindent}{8em}
+	\hspace{-.5em}``arg $\coloneq\dots$; fun $\coloneq$ FUN(arg)''
+}
+\medskip
+
+Often this possibility is not only intimately linked to the nature of the functional dependence, but also to the ``history of the variable arg'' as the computation proceeds! We have seen a very striking example in the program for the prime table (see Section ``\nameref{sec:first-example-step-wise-program-composition}ly dependent on ``$j$'', viz. ``ord'' is the minimum value satisfying
+\medskip
+
+{
+	\setlength{\parindent}{8em}
+	$p[\text{ord}]$ $\uparrow$ $2 > j$
+}
+\medskip
+
+\noindent
+where the adjustment of ``ord'' was a very attractive operation thanks to the fact that ``$j$'' was monotonically increasing in time.
+
+In my understanding of programs I want such additional variables that store redundant information, to be clearly recognized as such, even if it is a somewhat undefined functional relationship as in the case of the table ``mult'' from the same example. I am strongly inclined to view such programs as, say, optimizing refinements of a more abstract program, even when the optimization effected by the additional variables is essential when we want to make a program with a realistic performance. From the point of view of efficiency such an additional variable may be so vital that it may strike one as irresponsible daydreaming to conceive a level in which its presence has been abstracted from. The way in which such an additional variable is manipulated is often experienced as the body of the algorithm: it is often there that we harvest the fruits of our mathematical ingenuity. The point is that, although the possibility of at least one such optimizing refinement is essential for making something with a realistic performance, on closer inspection one often discovers that such an optimizing refinement is far from unique, even on its coarsest level.
+
+\noindent
+\textit{Note}. I remember one program in which the additional information was so redundant that not only the value of ``fun'' could be derived from that of ``arg'' but also the other way round. Suddenly the relation between ``fun'' and ``arg'' became symmetric, and I have been seriously bothered by the question: what entitled me to treat them so asymmetrically? The program in question generated all the solutions of a combinatorial puzzle. On closer inspection it turned out that there was a second combinatorial puzzle, where it could be proved that there existed a one-to-one correspondence between the solutions of the two problems. If I had solved the second combinatorial problem I would have found the role of ``fun'' and ``arg'' interchanged! In traditional programming, where such functional dependencies are not explicitly shown, the two puzzles would probably be solved by identical programs, whereas I made two differently structured programs. And I think rightly so, because the single program for the two puzzles needed a different proof for its correctness, depending on which puzzle it was supposed to solve, and this seems somewhat unfair when we also wish that our understanding of the computations be reflected in the structure of our programs!
+
+\section{On a program model}
+
+Before we have a program we must have composed it; after we have a program --- if there was any sense in making it --- we shall have it executed. In this section I shall not stress the activities of program composition and of program execution too much, and I shall try to view the program as a static object. We want to view it as a highly structured object and our main question is: what kind of structures do we envisage and why? Our hope is that eventually we shall arrive at a program structure that is both nice to compose and nice to execute. Mentally, of course, I am unable to ignore these processes, but at present I do not want to discuss them; in particular: I do not want to discuss a design methodology (whether to work ``from outside inwards'' or the other way round), nor do I want to discuss implementation consequences now. Again, in order not to complicate matters too much, I shall restrict myself to sequential programs.
+
+If I judge a program by itself, my central theme, I think, is that I want the program written down as I can understand it, I want it written down as I would like to explain it to someone. However, without further qualification these are just motherhood statements, so let me try and see whether I can be more specific.
+
+Let us consider a very simple computation, in which three distinct actions can be distinguished to take place in succession, say: input of data, manipulation (i.e. the computation proper) and the output of the results. One way of representing the program is as a long string of statements:
+
+\noindent
+\textbf{begin}
+
+\noindent
+\quad\dots
+
+\noindent
+\quad\dots
+
+\noindent
+\quad\dots
+
+\noindent
+\quad\dots
+
+\noindent
+\quad\dots
+
+\noindent
+\quad\dots
+
+\noindent
+\textbf{end}
+
+The next form adds some labels for explanatory purposes:
+
+\noindent
+\tabto{10em}\textbf{begin}
+\nopagebreak
+
+\noindent
+begin of input:\tabto{10em} \quad\dots
+\nopagebreak
+
+\noindent
+\tabto{10em} \quad\dots
+
+\noindent
+begin of manipulation:\tabto{10em} \quad\dots
+\nopagebreak
+
+\noindent
+\tabto{10em} \quad\dots
+
+\noindent
+begin of output:\tabto{10em} \quad\dots
+\nopagebreak
+
+\noindent
+\tabto{10em} \quad\dots
+
+\noindent
+\tabto{10em}\textbf{end}
+
+\noindent
+suggesting to us, when we read the text, what is going to happen next.
+
+Still better, we write:
+
+\noindent
+\tabto{10em}\textbf{begin}
+\nopagebreak
+
+\noindent
+input:\tabto{10em} \quad\textbf{begin} \tabto{14em}\dots
+\nopagebreak
+
+\noindent
+\tabto{13em} \quad\dots\ \textbf{end};
+
+\noindent
+manipulation:\tabto{10em} \quad\textbf{begin} \tabto{14em}\dots
+\nopagebreak
+
+\noindent
+\tabto{13em} \quad\dots\ \textbf{end};
+
+\noindent
+output:\tabto{10em} \quad\textbf{begin} \tabto{14em}\dots
+\nopagebreak
+
+\noindent
+\tabto{13em} \quad\dots\ \textbf{end}
+
+\noindent
+\tabto{10em}\textbf{end}
+
+\noindent
+where the labels are considered less as markers of points in the program text than as names of regions --- as indicated by the bracket pairs ``\textbf{begin} -- \textbf{end}'' --- that follow the label, or as names of the three actions in which the computation has been decomposed. However, if we take this point of view, the three ``labels'' are still comments, i.e. explanatory noise for the benefit of the interested (human) reader, whereas I would like to consider them as an integral part of the program. I want my program text to reflect somewhere the fact that the computation has been decomposed into a time-succession of the three actions, whatever form these might take upon closer inspection. A way of doing this is to write somewhere the (textual) succession of the three (abstract) statements
+\medskip
+
+{
+	\setlength{\parindent}{8em}
+	\hspace{-.5em}``input; manipulation; output''
+}
+\medskip
+
+\noindent
+on the understanding that the time-succession of these three actions will indeed be controlled from the above textual succession, whereas the further refinements of these three actions will be given ``somewhere else'', perhaps separately, but certainly without relative ordering.
+
+Well, if closed subroutines had not been invented more than twenty years ago, this would have been the time to do it! In other words: we are returning to familiar grounds, to such an extent that many of my readers will even feel cheated! I don't, because one should never be ashamed of sticking to a proven method as long as it is satisfactory. But we should get a clear picture of the benefits we should like to derive from it, if necessary we should adjust it, and finally we should create a discipline for using it. Let me therefore review the subroutine concept, because my appreciation for it has changed in the course of the last year.
+
+I was introduced to the concept of the closed subroutine in connection with the EDSAC\footnote{``The Preparation of Programs for an Electronic Digital Computer; with Special Reference to the EDSAC and the use of a Library of Subroutines'', M. V. Wilkes, D. J. Wheeler and S. Gill, Addison-Wesley Press, 1951.}, where the subroutine concept served as the basis for a library of standard routines. Those were the days when the construction of hardware was a great adventure and many of the standard routines were means by which (scarce!) memory and computation time could be traded for circuitry: as the order code did not comprise a divide instruction, they had subroutines for division. Yet I do not remember having appreciated subroutines as a means for ``rebuilding'' a given machine into a more suitable one, curiously enough. Nor do I remember from those days subroutines as objects to be conceived and constructed by the user to reflect his analysis: they were more the standard routines to be used by the user. Eventually I saw them mainly as a device for the reduction of program length. But the whole program as such remained conceived as acting in a single homogeneous store, in an unstructured state space; the whole computation remained conceived as a single sequential process performed by a single processor. In the following years, in the many programming courses I gave, I preached the gospel faithfully and I have often explained how the calling sequence handed over the return address and how the subroutine would then begin by setting ``the link'' --- i.e. the return jump --- at its own end. At present I would rather view the main program as having its own instruction counter that just continues ``counting'' upon the completion of the subroutine execution and would certainly not regard the "sleeping value" as a parameter handed over to the subroutine. (Still the old view has found its way into the hardware of many machines. We have seen machines in which a subroutine jump stored the link at ``address zero'' of the subroutine and ordered instruction fetch to be resumed at ``address one'', an arrangement which makes re-entrant code and recursive subroutines somewhat hard to implement. And even in this decade we find machines which store at program interrupt the ``program status'' of the interrupted program at a location associated with the interrupt rather than with the interrupted program!)
+
+page 47
