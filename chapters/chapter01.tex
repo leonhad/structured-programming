@@ -41,6 +41,7 @@ It is in the same mood that I should like to draw the reader's attention to the 
 Summarizing: as a slow-witted human being I have a very small head and I had better learn to live with it and to respect my limitations and give them full credit, rather than to try to ignore them, for the latter vain effort will be punished by failure.
 
 \section{On the reliability of mechanisms}
+\label{sec:realiability-of-mechanisms}
 
 Being a programmer by trade, programs are what I am talking about and the true subject of this section really is the reliability of programs. That, nevertheless, I have mentioned ``mechanisms'' in its title is because I regard programs as specific instances of mechanisms, and that I wanted to express, at least once, my strong feeling that many of my considerations concerning software are, mutatis mutandis, just as relevant for hardware design.
 
@@ -557,6 +558,7 @@ Very often the validity of such relations is essential to the logic of the progr
 This is the place to confess one of my blunders. In implementing ALGOL 60 we decided that ``$x = y$'' would deliver the value \textbf{true} not only in the case of exact equality, but also when the two values differed only in the least significant digit represented, because otherwise it was so very improbable that the value \textit{true} would ever be computed. We were thinking of converging iterations that could oscillate within rounding accuracy. While we had been generous (with the best of intentions!) in regarding real numbers as equal, it quickly turned out that the chosen operation was so weak as to be hardly of any use at all. What it boiled down to was that the established truth of $a = b$ \textbf{and} $b = c$ did not allow the programmer to conclude the truth of $a = c$. The decision was quickly changed. It is because of that experience that I know that the programmer can only use his tool by virtue of (a number of) its properties; conversely, the programmer must be able to state which properties he requires. (Usually programmers don't do so because, for lack of tradition as to what properties can be taken for granted, this would require more explicitness than is otherwise desirable. The proliferation of machines with lousy floating-point hardware --- together with the misapprehension that the automatic computer is primarily the tool of the numerical analyst --- has done much harm to the profession!)
 
 \section{On understanding programs}
+\label{sec:undertanding-programs}
 
 In my life I have seen many programming courses that were essentially like the usual kind of driving lessons, in which one is taught how to handle a car
 instead of how to use a car to reach one's destination.
@@ -570,16 +572,16 @@ text (spread out in ``text space'') and the corresponding computations (evolving
 
 It is the purpose of the computation to establish a certain desired effect. When it starts at a discrete moment $t_0$ it will be completed at a later discrete moment $t_1$ and we assume that its effect can be described by comparing ``the state at $t_0$'' with ``the state at $t_1$''. If no intermediate states are taken into consideration the effect is regarded as being established by a primitive action.
 
-When we do take a number of intermediate states into consideration this means that we have parsed the happening in time. We regard it as a sequential computation, i.e. the time-succession of a number of subactions and we have to convince ourselves that the cumulative effect of this time-succession of subactions indeed equals the desired net effect of the total computation.
+When we do take a number of intermediate states into consideration this means that we have parsed the happening in time. We regard it as a sequential computation, i.e. the time-succession of a number of sub-actions and we have to convince ourselves that the cumulative effect of this time-succession of sub-actions indeed equals the desired net effect of the total computation.
 
-The simplest case is a parsing, a decomposition, into a fixed number of subactions that can be enumerated. In flowchart form this can be represented as follows. 
+The simplest case is a parsing, a decomposition, into a fixed number of sub-actions that can be enumerated. In flowchart form this can be represented as follows. 
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.7]{fig1}
 \end{figure}
 
-The validity of this decomposition has to be established by enumerative reasoning. In this case, shortening of the conceptual gap between program and computation can be achieved by requiring that a linear piece of program text contains names or descriptions of the subactions in the order in which they have to take place. In our earlier example (invariance of $0 \leqslant r < dd$)
+The validity of this decomposition has to be established by enumerative reasoning. In this case, shortening of the conceptual gap between program and computation can be achieved by requiring that a linear piece of program text contains names or descriptions of the sub-actions in the order in which they have to take place. In our earlier example (invariance of $0 \leqslant r < dd$)
 \medskip
 
 {
@@ -602,7 +604,7 @@ this condition is satisfied. The primary decomposition of the computation is int
 }
 \medskip
 
-We are considering all initial states satisfying $0 \leqslant r < dd$ and in all computations then considered, the given parsing into two subactions is applicable. So far, so good.
+We are considering all initial states satisfying $0 \leqslant r < dd$ and in all computations then considered, the given parsing into two sub-actions is applicable. So far, so good.
 
 The program, however, is written under the assumption that ``reduce $r$ modulo $dd$'' is not a primitive action, while ``decrease $r$ by $dd$'' is. Viewing all possible happenings during ``reduce $r$ modulo $dd$'' it then becomes relevant to distinguish that in some cases ``decrease $r$ by $dd$'' takes place, while in the other cases $r$ remains unchanged. By writing
 \medskip
@@ -638,16 +640,16 @@ The alternative clause has been generalized by C. A. R. Hoare whose ``case-of'' 
 	\includegraphics[width=\textwidth]{fig3}
 \end{figure}
 
-These flowcharts share the property that they have a single entry at the top and a single exit at the bottom: as indicated by the dotted block they can again be interpreted (by disregarding what is inside the dotted lines) as a single action in a sequential computation. To be a little bit more precise: we are dealing with a great number of possible computations, primarily decomposed into the same time-succession of subactions and it is only on closer inspection --- i.e. by looking inside the dotted block --- that it is revealed that over the collection of possible computations such a subaction may take one of an enumerated set of distinguished forms.
+These flowcharts share the property that they have a single entry at the top and a single exit at the bottom: as indicated by the dotted block they can again be interpreted (by disregarding what is inside the dotted lines) as a single action in a sequential computation. To be a little bit more precise: we are dealing with a great number of possible computations, primarily decomposed into the same time-succession of subactions and it is only on closer inspection --- i.e. by looking inside the dotted block --- that it is revealed that over the collection of possible computations such a sub-action may take one of an enumerated set of distinguished forms.
 
-The above is sufficient to consider a class of computations that are primarily decomposed into the same set of enumerated subactions; they are insufficient to consider a class of computations that are primarily decomposed into a varying number of subactions (i.e. varying over the class of computations considered). It is here that the usefulness of the repetition clauses becomes apparent. We mention ``\textbf{while} condition \textbf{do} statement'' and ``\textbf{repeat} statement \textbf{until} condition'' that may be represented in flowchart form as follows.
+The above is sufficient to consider a class of computations that are primarily decomposed into the same set of enumerated sub-actions; they are insufficient to consider a class of computations that are primarily decomposed into a varying number of sub-actions (i.e. varying over the class of computations considered). It is here that the usefulness of the repetition clauses becomes apparent. We mention ``\textbf{while} condition \textbf{do} statement'' and ``\textbf{repeat} statement \textbf{until} condition'' that may be represented in flowchart form as follows.
 
 \begin{figure}[ht!]
 	\centering
 	\includegraphics[width=\textwidth]{fig4}
 \end{figure}
 
-These flowcharts also share the property of a single entry at the top and a single exit at the bottom. They enable us to express that the action represented by the dotted block is on closer inspection a time-succession of ``a sufficient number'' of subactions of a certain type.
+These flowcharts also share the property of a single entry at the top and a single exit at the bottom. They enable us to express that the action represented by the dotted block is on closer inspection a time-succession of ``a sufficient number'' of sub-actions of a certain type.
 
 We have now seen three types of decomposition; we could call them ``concatenation'', ``selection'' and ``repetition'' respectively. The first two are understood by enumerative reasoning, the last one by mathematical induction. 
 
@@ -657,9 +659,9 @@ Why do I propose to adhere to this sequencing discipline? The justification for 
 
 Eventually, one of our aims is to make such well-structured programs that the intellectual effort (measured in some loose sense) needed to understand them is proportional to program length (measured in some equally loose sense). In particular we have to guard against an exploding appeal to enumerative reasoning, a task that forces upon us some application of the old adage ``Divide and Rule'', and that is the reason why we propose the step-wise decomposition of the computations.
 
-We can understand a decomposition by concatenation via enumerative reasoning. (We can do so, provided that the number of subactions into which the computation is primarily parsed, is sufficiently small and that the specification of their net effect is sufficiently concise. I shall return to these requirements at a later stage, at present we assume the conditions met.) It is then feasible to make assertions about the computations on account of the program text, thanks to the triviality of the relation between the progress through the computations and the progress through the program text. In particular: if on closer inspection one of the subactions transpires to be controlled by a selective clause or a repetition clause, this fact does not impose any burden on the understandability of the primary decomposition, because there only the subaction's net effect plays a role.
+We can understand a decomposition by concatenation via enumerative reasoning. (We can do so, provided that the number of sub-actions into which the computation is primarily parsed, is sufficiently small and that the specification of their net effect is sufficiently concise. I shall return to these requirements at a later stage, at present we assume the conditions met.) It is then feasible to make assertions about the computations on account of the program text, thanks to the triviality of the relation between the progress through the computations and the progress through the program text. In particular: if on closer inspection one of the sub-actions transpires to be controlled by a selective clause or a repetition clause, this fact does not impose any burden on the understandability of the primary decomposition, because there only the sub-action's net effect plays a role.
 
-As a corollary: if on closer inspection a subaction is controlled by a selective clause the specific path taken is always irrelevant at the primary level (the only thing that matters is that the correct path has been taken). And also: if on closer inspection a subaction is controlled by a repetitive clause, the number of times the repeated statement has been executed is, as such, irrelevant (the only thing that matters is that it has been repeated the correct number of times).
+As a corollary: if on closer inspection a sub-action is controlled by a selective clause the specific path taken is always irrelevant at the primary level (the only thing that matters is that the correct path has been taken). And also: if on closer inspection a sub-action is controlled by a repetitive clause, the number of times the repeated statement has been executed is, as such, irrelevant (the only thing that matters is that it has been repeated the correct number of times).
 
 We can also understand the selective clauses as such, viz. by enumerative reasoning; we can also understand the repetition clause, viz. by mathematical induction. For all three types of decomposition --- and this seems to me a great help --- we know the appropriate pattern of reasoning.
 
@@ -704,6 +706,7 @@ There is, of course, even with the free use of jumps, a programmer independent c
 The moral of the story is that when we acknowledge our duty to control the computations (intellectually!) via the program text evoking them, that then we should restrict ourselves in all humility to the most systematic sequencing mechanisms, ensuring that "progress through the computation" is mapped on ``progress through the text'' in the most straightforward manner.
 
 \section{On comparing programs}
+\label{sec:comparing-programs}
 
 It is a programmer's everyday experience that for a given problem to be solved by a given algorithm, the program for a given machine is far from uniquely determined. In the course of the design process he has to select between alternatives; once he has a correct program, he will often be called to modify it, for instance because it is felt that an alternative program would be more attractive as far as the demands that the computations make upon the available equipment resources are concerned.
 
@@ -761,8 +764,681 @@ and
 	\end{split}
 \end{equation}
 
-Program (\ref{eq:comparing-example-4}) differs from program (\ref{eq:comparing-example-3}) in that repetition is terminated as soon as a pair-wise difference has been detected. For the same input the number of repetitions may differ in the two programs and therefore the programs are only comparable in our sense as long as the last two lines of the programs are regarded as describing a single action, not subdivided into subactions. But what is their relation when we do wish to take into account that they both end with a repetition? To find this out, we shall prove the correctness of the programs.
+Program (\ref{eq:comparing-example-4}) differs from program (\ref{eq:comparing-example-3}) in that repetition is terminated as soon as a pair-wise difference has been detected. For the same input the number of repetitions may differ in the two programs and therefore the programs are only comparable in our sense as long as the last two lines of the programs are regarded as describing a single action, not subdivided into sub-actions. But what is their relation when we do wish to take into account that they both end with a repetition? To find this out, we shall prove the correctness of the programs.
 
 On the arrays $X$ and $Y$ we can define of $0 \leqslant j \leqslant N$ the $N + 1$ functions $\text{EQUAL}_j$ as follows:
+\begin{equation}
+	\label{eq:comparing-example-5}
+	\begin{split}
+		\text{for } j = 0\quad & \text{EQUAL}_j = \text{\textbf{true}} \\
+		\text{for } j > 0\quad  & \text{EQUAL}_j = \text{EQUAL}_{j-1}\text{ \textbf{and} } (X[j] = Y[j]).
+	\end{split}
+\end{equation}
 
-page 25 fi
+In terms of these functions it is required to establish the net effect
+$$
+\text{equal} = \text{EQUAL}_N.
+$$
+
+Both programs maintain the relation
+\begin{equation}
+	\text{equal} = \text{EQUAL}_j
+\end{equation}
+
+\noindent
+for increasing values of $j$, starting with $j = 0$.
+
+It is tempting to regard programs (\ref{eq:comparing-example-3}) and (\ref{eq:comparing-example-4}) as alternative refinements of the same (abstract) program (\ref{eq:comparing-example-7}):
+\begin{equation}
+	\label{eq:comparing-example-7}
+	\begin{split}
+		&\text{\hspace{-.5em}``}j \coloneq 0;\text{ equal} \coloneq \text{EQUAL}_0;\\
+		&\text{\textbf{while} ``perhaps still:equal} \neq \text{EQUAL}_N\text{'' \textbf{do}}\\
+		&\quad\text{\textbf{begin} } j \coloneq  j + 1;\text{ ``equal} \coloneq \text{EQUAL}_j\text{'' \textbf{end}''}
+	\end{split}
+\end{equation}
+
+\noindent
+in which ``perhaps still:equal $=$ EQUAL$_N$'' stands for some sort of still open primitive. When this is evaluated
+$$
+\text{equal} = \text{EQUAL}_j
+$$
+
+\noindent
+will hold and the programs (\ref{eq:comparing-example-3}) and (\ref{eq:comparing-example-4}) differ in that they guarantee on different criteria that ``equal'' will have its final value EQUAL$_N$.
+
+In program (\ref{eq:comparing-example-3}) the criterion is very naïve, viz.
+$$
+j = N.
+$$
+
+\noindent
+At the beginning of the repeated statement
+$$
+\text{equal} = \text{EQUAL}_j
+$$
+
+\noindent
+still holds. After the execution of ``$j \coloneq j + 1$'' therefore
+$$
+\text{equal} = \text{EQUAL}_{j-1}
+$$
+
+\noindent
+holds and the assignment statement
+$$
+\text{``equal} \coloneq \text{equal \textbf{and} } (X[j] = Y[j])"
+$$
+
+\noindent
+is now a straightforward transcription of the recurrence relation (\ref{eq:comparing-example-5}).
+
+To come to program (\ref{eq:comparing-example-4}) some analysis has to be applied to the recurrence relation (\ref{eq:comparing-example-5}), from which can be derived (by mathematical induction again) that EQUAL$_j =$ \textbf{false} implies EQUAL$_N =$ \textbf{false}, and therefore EQUAL$_j =$ \textbf{false} implies EQUAL$_j =$ EQUAL$_N$. If this situation arises, the equality ``equal = EQUAL$_N$'' can also be guaranteed and this leads to program (\ref{eq:comparing-example-4}). The set of (sub)computations the repeated statement has to cope with in program (\ref{eq:comparing-example-4}) is restricted to those with the initial state ``equal $=$ \textbf{true}'' and therefore in program (\ref{eq:comparing-example-4}) the assignment ``equal $\coloneq$ EQUAL$_j$'' can be abbreviated to
+$$
+\text{``equal} \coloneq (X[j] = Y[j])\text{''}
+$$
+
+And now it is clear why the introduction of (\ref{eq:comparing-example-7}) as an abstraction of (\ref{eq:comparing-example-3}) and (\ref{eq:comparing-example-4}) was misleading. With ``perhaps still:equal $\neq$ EQUAL$_N$'' we have stated the meaning of truth and falsity of a boolean expression without stating the expression itself and that was very tricky. We have tried to interpret (\ref{eq:comparing-example-7}) as a program in which part of the sequencing at its own level was undefined and varying over its refinements. As a result we have tried to view the last lines of (\ref{eq:comparing-example-7}) as a model for the last lines of both (\ref{eq:comparing-example-3}) and (\ref{eq:comparing-example-4}), but this was misleading because the computations to be evoked by them cannot be brought into a one-to-one correspondence.
+
+So much for programs that we consider as incomparable. Examples of comparable programs will be encountered in the following sections. A final remark: we have stated that ``paired computations can be parsed into a time-succession of actions that can be mapped on each other''. We have not required that actions so paired should have the same net effect! We may compare alternative programs for the same job but also different programs for similar jobs.
+
+\section{A first example of step-wise program composition}
+
+In the section ``\nameref{sec:undertanding-programs}'' I have stressed the need for systematic sequencing so that the structure of the computations could be reflected in the structure of our program: in this way we can speak of the joint structuring of program and computations. In the current section I shall now try to give a little more content to the still rather vague notion of structuring computations. It will be a first effort to exploit our powers of abstraction to reduce the appeal made to enumerative reasoning; it will be a consequent application of the decompositions mentioned in the section ``\nameref{sec:undertanding-programs}''.
+
+Instead of presenting (as a ready-made product) what I would call a well-structured program I am going to describe in very great detail the composition process of such a program. I do this because programs are not there: on the contrary, they have to be made, and the kind of programs I am particularly interested in are those which I feel to be reasonably well suited to our powers of construction and conception.
+
+The task is to instruct a computer to print a table of the first thousand prime numbers, 2 being considered as the first prime number.
+
+\begin{enumerate}[leftmargin=*, itemindent=2.2\parindent, label=\textit{Note }\arabic*.]
+	\item This example has been chosen because on the one hand.it is sufficiently difficult to serve as a model for some of the problems encountered in programming, and on the other hand its mathematical background is so simple and familiar that our attention is not usurped by the problem.
+	
+	\item I do not claim that my final program will be ``the best one'', measured by whatever yardstick any of my readers might care to choose. At least two readers of a previous version of this presentation-in which remainders were computed via a divide operation-reacted quite vehemently to it: ``But everyone knows that the most efficient way to generate prime numbers is by using the Sieve of Eratosthenes.'' thereby blocking their ability to read any further!
+\end{enumerate}
+
+The basic pattern of my approach will be to compose the program in minute steps, deciding each time as little as possible. As the problem analysis proceeds, so does the further refinement of my program.
+
+When an algorithm has to be made, the desired computation has to be composed from actions corresponding to a well-understood instruction repertoire.
+
+The simplest form of the program is
+
+\noindent
+description 0:
+
+\textbf{begin} ``print first thousand prime numbers'' \textbf{end}
+
+\noindent
+and when ``print first thousand prime numbers'' refers to an instruction from the well-understood repertoire, the description 0 solves the problem. For the sake of argument we assume that this instruction does \textit{not} occur in the well-understood repertoire. Therefore we have to conceive a computation composed from ``more primitive'' actions that establishes the desired net effect. Our first proposal is to separate the generation of the prime numbers and their printing, and we propose
+
+\noindent
+description 1:
+
+\textbf{begin variable} ``table $p$'';
+
+\quad ``fill table $p$ with first thousand prime numbers'';
+
+\quad ``print table $p$''
+
+\textbf{end},
+
+\noindent
+describing that our computation consists of a time-succession of two actions and takes place in a state space containing a single variable, called ``table $p$''. The first action assigns a value to this variable, the second action is controlled by the (then current) value of this variable.
+
+Again, when ``fill table $p$ with first thousand prime numbers'' and ``print table $p$'' occur in the well-understood repertoire (and ``table $p$'' occurs among the implicitly available resources) then our problem is solved. Again, for the sake of argument, we assume this not to be the case. This means that in our next refinement we have to express how the effect of these two actions can be established by two further (sub)computations. Apart from that we have to decide, how the information to be contained in the.intermediate value of the still rather undefined object ``table $p$'' is to be represented.
+
+Before going on, I would like to stress how little we have decided upon when writing down description l, and how little of our original problem statement has been taken into account. We have assumed that the availability of a resource ``table $p$'' (in some form or other) would permit us to compute the first thousand prime numbers before printing starts, and on this assumption we have exploited the fact that the computation of the primes can be conceived independently of the printing. Of our original problem statement we have not taken into account very much more than that at least a thousand different prime numbers do exist (we had to assume this for the problem statement to make sense). At this stage it is still fairly immaterial what the concept ``prime number'' really means. Also, we have not committed ourselves in the least as regards the specific layout requirements of the print-out to be produced. Apparently it is the strength of our approach that the consequences of these two rather independent aspects of our original problem statement seem to have been allocated in the respective refinements of our two constituent actions. It suggests that we have been more or less successful in our effort to apply the golden principle ``divide and rule''.
+
+Resuming our discussion, however, we have to ask ourselves, to what extent the two sub-computations can now be conceived independently of each other. To be more precise ``Have we now reached the stage that the design of the two sub-algorithms (that have to evoke the two sub-computations) can be conceived by two programmers, working independently of each other?''.
+
+When the two actions can no longer be regarded as invoked by instructions from the well-understood repertoire, neither can the variable ``table $p$'' any longer be regarded as an implicitly available resource. And in a way similar to the one in which we have to decompose the actions into sub-actions, we have to choose how the variable ``table $p$'' will be composed, viz. what data structure we select to represent the information to be handed over via ``table $p$'' from the first action to the second. At some point this has to be decided and the questions are ``when?'' and ``how?''.
+
+In principle, there seem to be two ways out of this. The first one is to try to postpone the decision on how to structure ``table $p$'' into (more neutral, less problem-bound) components. If we postpone the decision on how to structure ``table $p$'', the next thing to do is to refine one of the actions or both. We can do so, assuming a proper set of operations on the still mysterious object ``table $p$''; finally we collect these operations and in view of their demands we design the most attractive structure of ``table $p$''.
+
+Alternatively, we can try to decide, here and now, upon the structure of ``table $p$''. Once it has been decided how the table of the first thousand primes will be represented, the refinements of both actions can be done fairly independently of each other.
+
+Both ways are equally tricky, for what will be an attractive algorithm for, say, the first sub-computation will greatly depend on the ease and elegance with which the assumed operations on ``table $p$'' can be realized, and if one or more turn out to be prohibitively clumsy, the whole edifice falls to pieces. Alternatively, if we decide prematurely upon a structure for ``table $p$'' we may well discover that the sub-computations then turn out to be awkward. There is no way around it: in an elegant program the structure of ``table $p$'' and the computations referring to it must be well-matched. I think that the behavior of the efficient programmer can be described as trying to take the easiest decision first, that is the decision that requires the minimum amount of investigation (trial and error, iterative mutual adjustment etc.) for the maximum justification of the hope that he will not regret it.
+
+In order not to make this treatment unduly lengthy we assume that the programmer finds the courage to decide that now the structure of ``table $p$'' is the first thing to be decided upon. Once this position has been taken, two alternatives immediately present themselves. On the one hand we can try to exploit that ``a table of the first 1000 primes'' is not just a table of a thousand numbers --- as would be a table of the monthly wages of 1000 employees in a factory --- but that all these numbers are different from each other. Using this we can arrange the information with a linear boolean array (with consecutive elements associated with consecutive natural numbers) indicating whether the natural number in question is a prime number or not. Number theory gives us an estimation of the order of magnitude of the thousandth prime number and thereby a boundary of the length of the array that will suffice. If we arrange our material in that way we have prepared an easy mechanism to answer the question ``is $n$ (less than the maximum) prime or not?''. Alternatively, we can choose an integer array in which the successive prime numbers will be listed. (Here the same estimate, obtained by means of number theory, will be used, viz. when a maximum value of the integer array elements needs to be given \textit{a priori}.) In the latter form we create a mechanism suited to answer the question ``what is the value of the $k$th prime number, for $k \leqslant 1000$?''.
+
+We grant the programmer the courage to choose the latter representation. It seems attractive in the printing operation in which it is requested to print the prime numbers and not to print natural numbers with an indication whether they are prime or not. It also seems attractive for the computing stage, if we grant the programmer the clairvoyance that the analysis of whether a given natural number is a prime number or not, will have something to do with the question of whether prime factors of the number to be investigated can be found.
+
+The next stage of our program refinement then becomes the careful statement of a convention regarding the representation of the still mysterious object ``table $p$'' and a redefinition of the two operations in terms of this convention.
+
+The convention is that the information to be contained in ``table $p$'' will be represented by the values of the elements of the ``\textbf{integer array} $p[1 : 1000]$'', such that for $1 \leqslant k \leqslant 1000$ $p[k]$ will be equal to the $k$th prime number, when the prime numbers are arranged in order of increasing magnitude. (If a maximum value of the integers is implicitly understood, we assume that number theory allows us to state that this is large enough.)
+
+When we now want to describe this new refinement we are faced with a new difficulty. Our description 1 had the form of a single program, thanks to the fact that it was a refinement of the single action named ``print the first thousand prime numbers'', referred to in description 0. (In more conventional terms: description 1 could have the form of a procedure body.) This no longer holds for our next level, in which we have to refine (simultaneously, in a sense) three named entities, viz. ``table $p$'' and the two actions, and we should invent some sort of identifying terminology indicating what refines what.
+
+For the continuation of our discussion we make a very tentative proposal. We say: description 0 is a valid text expressed in terms of a single named action ``print first thousand prime numbers''; let this be identified by the code $0a$.
+
+Description 1 is called ``1'' because it is the next refinement of description 0; it contains a refinement of $0a$ --- the only term in which description 0 is expressed --- and is itself expressed in terms of three named entities to which we attach the codes:
+
+``table $p$''\hfill 1a
+
+``fill table $p$ with first thousand prime numbers''\hfill 1b
+
+``print table $p$''\hfill 1c
+
+\noindent
+code numbers, starting with 1, because description 1 is expressed in terms of them, and ``a'', ``b'' and ``c'' being attached for the purpose of distinction.
+
+Now we have to describe our convention chosen for the representation of the information to be contained in ``table $p$'', but this convention pertains to all three elements 1a, 1b and 1c. Therefore we call this description 2; it should contain the descriptions of the three separate elements (I use the equality sign as separator)
+
+\noindent
+description 2:
+
+\noindent
+1a $=$ ``\textbf{integer array} $p[l : 1000]$"
+
+\noindent
+1b $=$ ``make for $k$ from 1 through 1000 $p[k]$ equal to the $k$th prime number"
+
+\noindent
+1c $=$ ``print $p[k]$ for $k$ from 1 through 1000".
+
+Description 2 is expressed in terms of three named entities to which we give (in the obvious order) the codes 2a, 2b and 2c. (In code numbers, description 2 is very meagre: it just states that for 1a, 1b and 1c, we have chosen the refinements 2a, 2b and 2c respectively.)
+
+\textit{Remark}. In the representation of the information to be contained in ``table $p$'', we have chosen not to exploit the fact that each of the values to be printed occurs only once, nor that they occur in the order of increasing magnitude. Conversely, this implies that the action that has to take place under the name of 2c is regarded as a specific instance of printing any set of thousand integer values (it could be a table of monthly wages of thousand numbered employees!). The net effect of the printing action in this example is an uniquely defined as the first thousand prime numbers are: we conceive it, however, as a specific instance of a larger class of occurrences. In the further refinement of 2c we deal with this whole class, the specific instance in this class being defined by the values of the elements of the array $p$. When people talk about ``defining an interface'' I often get the feeling that they overlook the presupposed generalization, the conception of the class of ``possible'' actions.
+
+When 2b and 2c occur among the well-understood repertoire of instructions (and therefore 2a among the resources implicitly available) our whole problem is solved. For the sake of argument we again assume this not to be the case, and so we find ourselves faced with the task of conceiving subcomputations for the actions 2b and 2c. But now, thanks to the introduction of level 2, the respective refinements of 2b and 2c can be designed independently.
+
+\emph{The refinement of 2b: ``make for $k$ from 1 through 1000 $p[k]$ equal to the $k$\emph{th} prime number''}.
+
+We are looking for description 2b1, i.e. the first refinement of 2b. We introduce a fresh numbering after 2b (rather than calling our next description ``3 something'') in order to indicate the mutual independence of the refinements of 2b and 2c respectively.
+
+In description 2b1 we have to give an algorithm describing how the elements of the array p will get their values. This implies that we have to describe, for instance, in what order this will happen. In our first refinement we shall describe just that and preferably nothing more. An obvious, but ridiculous version starts as follows (with ``version number'' enclosed within parentheses):
+
+\noindent
+2b1(l):
+
+\noindent
+\textbf{begin} $p[1] \coloneq 2$; $p[2] \coloneq 3$; $p[3] \coloneq S$; $p[4] \coloneq 7$; $p[5] \coloneq 11$; \dots \textbf{end}
+
+\noindent
+implying that the programmer's knowledge includes that of a table of the first thousand primes. We shall not pursue this version as it would imply that the programmer hardly needed the machine at all.
+
+The first prime number being given $(=2)$, the thousandth being assumed unknown to the programmer, the most natural order in which to fill the elements of the array $p$ seems to be in the order of increasing subscript value, and if we express just that we arrive (for instance) at
+
+\noindent
+2b1(2):
+
+\noindent
+\textbf{begin integer} $k$, $j$; $k \coloneq 0$; $j \coloneq 1$;
+
+\noindent
+\quad \textbf{while} $k < 1000$ \textbf{do begin} ``increase $j$ until next prime number'';
+
+\noindent
+\quad\quad $k \coloneq k + l$; $p[k]:=j$ \textbf{end}
+
+\noindent
+\textbf{end}
+
+By identifying $k$ as the number of primes found and by verifying that our first prime number $(=2)$ is indeed the smallest prime number larger than 1 ($=$ the initial value of $j$), the correctness of 2b1(2) is easily proved by mathematical induction (assuming the existence of a sufficient number of primes).
+
+Description 2b1(2) is a perfect program when the operation described by ``increase $j$ until next prime number'' --- call it 2b1(2)a --- occurs among the repertoire, but let us suppose that it does not. In that case we have to express in a next refinement how $j$ is increased (and, again, preferably nothing more). We arrive at a description of level 2b2(2)
+
+\noindent
+2b1(2)a $=$
+
+\noindent
+\textbf{begin boolean} $j$prime;
+
+\noindent
+\quad \textbf{repeat} $j \coloneq j + 1$;
+
+\noindent
+\quad\quad  ``give to $j$prime the meaning: $j$ is a prime number''
+
+\noindent
+\quad \textbf{until} $j$prime
+
+\noindent
+\textbf{end}
+
+\noindent
+\textit{Remark}. Here we use the repeat-until clause in order to indicate that $j$ has always to be increased at least once.
+
+Again its correctness can hardly be subject to doubt. If, however, we assume that the programmer knows that, apart from 2, all further prime numbers are odd, then we may expect him to be dissatisfied with the above version because of its inefficiency. The price to be paid for this ``lack of clairvoyance'' is a revision of version 2b1(2). The prime number 2 will be dealt with separately, after which the cycle can deal with odd primes only. Instead of 2b1(2) we come to
+
+\noindent
+2b1(3):
+
+\noindent
+\textbf{begin integer} $k$, $j$; $p[1] \coloneq 2$; $k \coloneq 1$; $j \coloneq 1$;
+
+\noindent
+\quad\textbf{while} $k < 1000$ \textbf{do}
+
+\noindent
+\quad\quad\textbf{begin} ``increase odd $j$ until next odd prime number'';
+
+\noindent
+\quad\quad\quad $k \coloneq k + 1; p[k]: = j$
+
+\noindent
+\quad\textbf{end}
+
+\noindent
+\textbf{end}
+
+\noindent
+where the analogous refinement of the operation between quotes --- ``2b1(3)a'' say --- leads to the description on level 2b2(3):
+
+\noindent
+2b1(3)a $=$
+
+\noindent
+\textbf{begin boolean} $j$prime;
+
+\noindent
+\quad\textbf{repeat} $j \coloneq j + 2;$
+
+\noindent
+\quad\quad``give for odd $j$ to $j$prime the meaning: $j$ is a prime number'';
+
+\noindent
+\quad\textbf{until} $j$prime
+
+\noindent
+\textbf{end}
+
+The above oscillation between two levels of description is in fact nothing else but adjusting to our convenience the interface between the overall structure and the primitive operation that has to fit into this structure. This oscillation, this form of trial and error, is definitely not attractive, but with a sufficient lack of clairvoyance and being forced to take our decisions in
+sequence, I see no other way: we can regard our efforts as experiments to explore (at a rather low cost!) where the interface can probably be most conveniently chosen.
+
+\noindent
+\textit{Remark}. Both 2b1(2) and 2b1(3) can be loosely described as
+
+\noindent
+\textbf{begin} ``set table $p$ and $j$ at initial value'';
+
+\noindent
+\quad\textbf{while} ``table $p$ not full'' \textbf{do}
+
+\noindent
+\quad\textbf{begin} ``increase $j$ until next prime number to be added'';
+
+\noindent
+\quad\quad ``add $j$ to table $p$''
+
+\noindent
+\quad\textbf{end}
+
+\noindent
+\textbf{end}
+
+\noindent
+but we shall not do this as the sequencing in the two versions differs (see ``\nameref{sec:comparing-programs}'') and we regard them as ``incomparable''. By choosing 2b1(3) we decide that our trial 2b1(2) --- as 2b1(1) --- is no longer applicable and therefore rejected.
+
+The change from 2b1(2) to 2b1(3) is justified by the efficiency gain at the levels of higher refinement. This efficiency gain is earned at level 2b2, because now $j$ can be increased by 2 at a time. It will also manifest itself in the still open primitive at level 2b2(3) where the algorithm for ``give for odd $j$ to $j$prime the meaning: $j$ is a prime number'' has only to cater for the analysis of odd values of $j$.
+
+Again: in 2b2(3) we have refined 2b1(3) with an algorithm which solves our problem when ``give for odd $j$ to $j$prime the meaning: $j$ is a prime number'' --- call it ``2b2(3)a'' --- occurs among the well-understood repertoire. We now assume that it does not, in other words we have to evoke a computation deciding whether a given odd value of $j$ has a factor. It is only at this stage that the algebra really enters the picture. Here we make use of our knowledge that we only need to try prime factors: furthermore we shall use the fact that the prime numbers to be tried can already be found in the filled portion of the array $p$.
+
+We use the facts that
+
+\begin{enumerate}[label=(\arabic*)]
+	\item $j$ being an odd value, the smallest potential factor to be tried is $p[2]$, i.e. the smallest prime number larger than 2
+
+	\item the largest prime number to be tried is $p[\text{ord} - 1]$ when $p[\text{ord}]$ is the smallest prime number whose square exceeds $j$.
+\end{enumerate}
+
+(Here I have also used the fact that the smallest prime number whose square exceeds $j$ can already be found in the table $p$. In all humility I quote Don Knuth's comment on an earlier version of this program, where I took this fact for granted:
+
+\begin{addmargin}[2em]{0em}
+``Here you are guilty of a serious omission! Your program makes use of a deep result of number theory, namely that if $p_n$ denotes the $n$th prime number we \textit{always} have
+\end{addmargin}
+$$
+p_{n+1}<p_n^2.\text{''}
+$$
+
+\noindent
+Peccavi.)
+
+If this set is not empty, we have a chance of finding a factor, and as soon as a factor has been found, the investigation of this particular $j$ value can be stopped. We have to decide in which order the prime numbers from the set will be tried, and we shall do so in order of increasing magnitude, because the smaller a prime number the larger the probability of its being a factor of $j$.
+When the value of ord is known we can give for ``give for odd $j$ to $j$prime the meaning: $j$ is a prime number'' the following description on level 2b3(3):
+
+\noindent
+2b2(3)a =
+
+\noindent
+\textbf{begin integer} $n$; $n \coloneq 2$; $j$prime $\coloneq$ \textbf{true};
+
+\noindent
+\quad\textbf{while} $n <$ ord \textbf{and} $j$prime \textbf{do}
+
+\noindent
+\quad\textbf{begin} ``give to $j$prime the meaning: $p[n]$ is not a factor of $j$''; $n \coloneq n + 1$
+
+\noindent
+\quad\textbf{end}
+
+\noindent
+\textbf{end}
+
+But the above version is written on the assumption that the value of ord, a function of $j$, is known. We could have started this refinement with
+
+\noindent
+\textbf{begin integer} $n$, ord;
+
+\noindent
+\quad ord $\coloneq 1$; \textbf{while} $p[\text{ord}] \uparrow 2 \leqslant j$ \textbf{do} ord $\coloneq$ ord $+ 1$;
+
+\noindent
+\quad \dots
+
+\noindent
+i.e. recomputing the value of ``ord'' afresh, whenever it is needed. Here some trading of storage space for computation time seems indicated: instead of recomputing this function whenever we need it, we introduce an additional variable ord for its current value: it has to be set when $j$ is set, it has to be adjusted when $j$ is changed.
+
+This, alas, forces upon us some reprogramming. One approach would be to introduce, together withj, an integer variable ord and to scan the programs in order to insert the proper operations on ord, whenever $j$ is operated upon. I do not like this because at the level at which $j$ is introduced and has a meaning, the function ``ord'' is immaterial. We shall therefore try to introduce ord only at its appropriate level and we shall be very careful.
+
+For 2b: ``make for $k$ from 1 through 1000 $p[k]$ equal to the $k$th prime number'' we write (analogous to level 2b1(3))
+
+\noindent
+level 2b1(4):·
+
+\noindent
+\textbf{begin integer} $k$, $j$; $p[1] \coloneq 2$; $k \coloneq l$;
+
+\noindent
+\quad ``set $j$ to one'';
+
+\noindent
+\quad\textbf{while} $k < 1000$ \textbf{do}
+
+\noindent
+\quad\textbf{begin} ``increase odd $j$ until next odd prime number'';
+
+\noindent
+\quad\quad $k \coloneq k + 1$; $p[k] \coloneq j$
+
+\noindent
+\quad\textbf{end}
+
+\noindent
+\textbf{end}
+
+\noindent
+expressed in terms of
+
+\noindent
+2b1(4)a\quad\quad ``increase odd $j$ until next odd prime number''
+
+\noindent
+2b1(4)b\quad\quad ``set $j$ to one''.
+
+In our next level we only introduce the sub-computation for 2b1(4)a; the other is handed down.
+
+\noindent
+level 2b2(4):
+
+\noindent
+2b1(4)a $=$
+
+\noindent
+\textbf{begin boolean} $j$prime;
+
+\noindent
+\quad\textbf{repeat} ``increase $j$ with two'';
+
+\noindent
+\quad\quad ``give for odd $j$ to $j$prime the meaning: $j$ is a prime number''
+
+\noindent
+\quad\textbf{until} $j$prime
+
+\noindent
+\textbf{end;}
+
+\noindent
+2b1(4)b $=$ 2b2(4)b
+
+\noindent
+expressed in terms of
+
+\noindent
+2b2( 4)b\quad\quad still meaning ``set $j$ to one''
+
+\noindent
+2b2(4)c\quad\quad ``increase $j$ with two''
+
+\noindent
+2b2( 4)d\quad\quad ``give for odd $j$ to $j$prime the meaning: $j$ is a prime number''.
+
+It is only at the next level that we need to talk about ord. Therefore we now write
+
+\noindent
+level 2b3(4): \textbf{integer} ord;
+
+\noindent
+2b2(4)b =
+
+\noindent
+\textbf{begin} $j \coloneq 1$; ``set ord initial'' \textbf{end};
+
+\noindent
+2b2(4)c =
+
+\noindent
+\textbf{begin} $j \coloneq j + 2$; ``adjust ord'' \textbf{end};
+
+\noindent
+2b2(4)d =
+
+\noindent
+\textbf{begin integer} $n$; $n \coloneq 2$; $j$prime $\coloneq$ \textbf{true};
+
+\noindent
+\quad\textbf{while} $n <$ ord and $j$prime \textbf{do}
+
+\noindent
+\quad\quad\textbf{begin} ``give to $j$prime the meaning: $p[n]$ is not a factor of $j$'';
+
+\noindent
+\quad\quad\quad $n \coloneq n + 1$
+
+\noindent
+\quad\textbf{end}
+
+\noindent
+\textbf{end}
+
+\noindent
+expressed in terms of
+
+\noindent
+2b3(4)a\quad\quad ``set ord initial''
+
+\noindent
+2b3(4)b\quad\quad ``adjust ord''
+
+\noindent
+2b3(4)c\quad\quad ``give to $j$prime the meaning: $p[n]$ is not a factor of $j$". 
+
+In our next level we give two independent refinements. (Note. We could have given them in successive levels, but then we should have to introduce an arbitrary ordering to these two levels. We could also try to treat the refinements separately --- i.e. as separately as 2b and 2c --- but we feel that it is a little premature for this drastic decision.) We are going to express
+
+\begin{enumerate}[label=(\arabic*)]
+	\item that, ord being a non-decreasing function of $j$ and $j$ only increasing in value, adjustment of ord implies a conditional increase;
+
+	\item that, whether $p[n]$ is a factor of $j$ is given by the question whether the remainder equals zero.
+\end{enumerate}
+
+\noindent
+This leads to
+
+\noindent
+level 2b4(4):
+
+\noindent
+2b3(4)a $=$ 2b4(4)a
+
+\noindent
+2b3(4)b $=$
+
+\noindent
+\textbf{begin while} ``ord too small'' \textbf{do} ``increase ord by one'' \textbf{end};
+
+\noindent
+2b3(4)c =
+
+\noindent
+\textbf{begin integer} $r$;
+
+\noindent
+\quad ``maker equal to remainder of $j$ over $p[n]$'';
+
+\noindent
+\quad $j$prime $\coloneq (r \neq 0)$
+
+\noindent
+\textbf{end}
+
+\noindent
+expressed in terms of
+
+\noindent
+2b4(4)a\quad\quad still meaning ``set ord initial''
+
+\noindent
+2b4(4)b\quad\quad ``ord too small''
+
+\noindent
+2b4(4)c\quad\quad ``increase ord by one''
+
+\noindent
+2b4(4)d\quad\quad ``maker equal to remainder of $j$ over $p[n]$''
+
+If we have a built-in division, the implementation of ``make $r$ equal to the remainder of $j$ over $p[n]$'' can be assumed to be an easy matter. The case that the refinement of 2b4(4)d can be treated independently is now left to the interested reader. To give the algorithm an unexpected turn we shall assume the absence of a convenient remainder computation. In that case the algorithm
+$$
+\text{``}r: = j;\text{ \textbf{while} } r > 0\text{ \textbf{do} } r \coloneq r - p[n]\text{''}
+$$
+
+\noindent
+would lead to the (non-positive) remainder but it would be most unattractive from the point of view of computation time. Again this asks for the introduction of some additional tabulated material (similar to the way in which "ord" has been introduced).
+
+We want to know whether a given value of $j$ is a multiple of $p[n]$ for $n < \text{ord}$. In order to assist us in this analysis we introduce a second array in the elements of which we can store multiples of the successive prime numbers, as close to $j$ as is convenient. In order to be able to give the size of the array we should like to know an upper bound for the value of ord; of course, 1000 would be safe, but number theory gives us 30 as a safe upper bound. We therefore introduce
+
+\noindent
+\textbf{integer array} mult$[1 : 30]$
+
+\noindent
+and introduce the convention that for $n < \text{ord}$, mult$[n]$ will be a multiple of $p[n]$ and will satisfy the relation
+$$
+\text{mult}[n] < j + p[n]
+$$
+
+\noindent
+a relation that remains invariantly true under increase of $j$. Whenever we wish to investigate, whether $p[n]$ is a factor of $j$, we increase mult$[n]$ by $p[n]$ as long as
+$$
+\text{mult}[n] < j.
+$$
+
+\noindent
+After this increase mult$[n] = i$ is the necessary and sufficient condition for $j$ to be a multiple of $p[n]$.
+
+The low maximum value of ord has another consequence: the inspection ``ord too small'' can be expressed by
+$$
+\text{``}p[\text{ord}] \uparrow 2 \leqslant j\text{''}
+$$
+
+\noindent
+but this inspection has to be performed many times for the same value of ord. We may assume that we can speed up matters by introducing a variable (called ``square'') whose value equals $p[ord] \uparrow 2$.
+
+So we come to our final
+
+\noindent
+level 2b5(4):
+
+\noindent
+\textbf{integer square}; \textbf{integer array} mult$[1 : 30]$;
+
+\noindent
+2b4(4)a $=$
+
+\noindent
+\textbf{begin} ord $\coloneq 1$; square $\coloneq 4$ \textbf{end};
+
+\noindent
+2b4(4)b =
+
+\noindent
+\quad (square $\leqslant j$);
+
+\noindent
+2b4(4)c =
+
+\noindent
+\textbf{begin} mult$[\text{ord}] \coloneq$ square; ord $\coloneq$ ord $ + 1$; square $\coloneq p[\text{ord}] \uparrow 2$ \textbf{end};
+
+\noindent
+2b4(4)d =
+
+\noindent
+\textbf{begin while} mult$[n] < j$ \textbf{do} mult$[n]\coloneq$ mult$[n] + p[n]$; $r\coloneq j -$ mult$[n]$ \textbf{end}
+
+\noindent
+which has made our computation close to an implementation of the Sieve of Eratosthenes!
+
+\textit{Note}. In the refinement of 2b4(4)d, when mult$[n]$ is compared with the current value of $j$, mult$[n]$ is increased as much as possible; this could have been done in steps of $2\times p[n]$, because we only submit odd values of $j$ and therefore are only interested in odd multiples of $p[n]$. (The value of mult$[1]$ remains, once set, equal to 4.)
+
+The refinement of 2c ``print $p[k]$ for $k$ from 1 through 1000'' is left to the reader. I suggest that the table should be printed on five pages, each page containing four columns with fifty consecutive prime numbers.
+
+\vspace*{-1em}
+\begin{center}
+	$\star$\quad\quad  $\star$\\
+	
+	\vspace*{-.5em}
+	$\star$
+\end{center}
+\vspace*{-1em}
+
+Here I have completed what I announced at the beginning of this section, viz. ``to describe in very great detail the composition process of such a [well-structured] program''. I would like to end this section with some comments.
+
+The most striking observation is that our treatment of a very simple program has become very long, too long indeed for my taste and wishes, even if I take into account that essentially we did two things: we made a program and we discussed extensively the kind of considerations leading to it. It is not so much the length of the latter part that bothers me (writers fill whole novels with the description of human behavior); what bothers me is the length of the texts at the various levels. Therefore we may expect that notational technique will be one of our main concerns.
+
+But we have also had encouraging experiences. Giving full recognition to the fact that the poor programmer cannot decide all at once, we succeeded to a large extent in building up this program one decision at a time, and in our example quite a lot of programming was already done in its definite form while major decisions were still left open: irrespective of whether the final decisions are taken this way or that way, the coding of the earlier levels remains valid. In view of the requirement of program manageability, this is very encouraging.
+
+\section{On program families}
+
+In our previous section we have considered the design of a program for a given task, but in doing so, we have considered our final program as an isolated object, a structure standing all by itself and to be judged on its private merits. Its structure was the result of successive decompositions; the purpose of this structure was to make a program in such a way that its correctness could be proved without undue intellectual labor.
+
+In this section I am going to explain why I prefer to regard a program not so much as an isolated object, but rather as a member of a family of ``related programs''. In traditional terminology we can think about related programs either as alternative programs for the same task or as similar programs for similar tasks.
+
+Why cannot the programmer confine his attention to the program he has to make and why has he to take into account such a whole family as well? For one thing, it is hard to claim that you know what you are doing unless you can present your act as a deliberate choice out of a possible set of things you could have done as well. But if we want to give due recognition to the difficulties that are specific to the construction of large complicated programs, there is a very practical justification. (And we \textit{have} to recognize these specific difficulties: experience has shown that someone's proven ability to do an excellent job on a given scale is by no means a guarantee that, when faced with a much larger job, he will not make a mess of it.)
+
+Certainly, one of the properties of large programs is that they have to be modified in the course of their life-time. A very common reason is that the program, although logically correct, turns out to evoke unsatisfactory computations (for instance unsatisfactory in one or more quantitative aspects). A second reason is that, although the program is logically correct and even satisfactorily meeting the original demands, it turns out to be a perfect solution for not quite the right problem; one is faced with a restatement of the problem and adaptation of the program.
+
+The naïve approach to this situation is that we must be able to modify an existing program (and for this the curious term ``program maintenance'' has established itself). The task is then viewed as one of text manipulation; as an aside we may recall that the need to do so has been used as an argument in favor of punched cards as against paper tape as an input medium for program texts. The actual modification of a program text, however, is a clerical matter, which can be dealt with in many different ways; my point is that if we have our grip on the program text  primarily as on a linear sequence of symbols, the task to establish and to describe what has to be modified tends to become prohibitively difficult when the texts get longer and longer.
+
+If a program has to exist in two different versions, I would rather not regard (the text of) the one program as a modification of (the text of) the other. It would be much more attractive if the two different programs could, in some sense or another, be viewed as, say, different children from a common ancestor, where the ancestor represents a more or less abstract program, embodying what the two versions have in common. Hopefully, this common ancestor can be readily recognized in the (pre-)documentation. The intentions are
+
+\begin{enumerate}[label=(\arabic*)]
+	\item that the two versions share their respective correctness proofs as far as possible;
+
+	\item that the two versions share (mechanically) as far as possible the common (or ``equal'') coding;
+
+	\item that the regions affected by the modification are already well-isolated, a condition which is not met when the transition requires ``brain-made'' modifications scattered all over the text.
+\end{enumerate}
+
+Well, this is a lofty goal. It has been inspired by the potential similarity between the task of program modification and program composition: when a program has been built up to an intermediate stage of refinement, ·what has then been written down is in fact a suitable "common ancestor" for all possible programs produced by further refinements. It is the similarity between "the decision to be changed" and "the decision still left open": in both cases we are left with what remains when we abstract from such a decision.
+
+There is a second source of inspiration to be found in our experience. In the process of step-wise program composition, proceeding from outside inwards, going towards progressive refinements, we have in the earlier stages not only postponed deciding how certain things would be done, but we have also postponed committing ourselves as to exactly what had to be done: with progressing refinement, more detail about the actual problem statement has been brought into the picture. (Later examples will show this even more clearly than the problem of the prime table.) As a result, our first levels of refinement are equally applicable for the members of a whole class of problem statements.
+
+In other words, in the step-wise approach it is suggested that even in the case of a well-defined task, certain aspects of the given problem statement are ignored at the beginning. That means that the programmer does not regard the given task as an isolated thing to be done, but is invited to view the task as a member of a whole family; he is invited to make the suitable generalizations of the given problem statement. By successively adding more detail he eventually pins his algorithm down to a solution for the given problem.
+
+All this is well-known, each competent programmer does so all the time. Yet I stress it for a variety of reasons. If the given problem statement is an elaborate affair, i.e. too much to be grasped in a single glance, he \textit{must} approach (and dissect) the problem statement in this way (see the section ``\nameref{sec:our-inability-to-do-much}''). Secondly, if the given problem is perfectly defined, it is a wise precaution to anticipate as many future changes in the problem statement as one can foresee and accommodate. This remark is not an invitation to make one's program so ``general'' that it becomes, say, unacceptably inefficient, as might easily happen, when the generalizations of the problem statement are ill-considered (which might easily happen when they have been dictated by the Sales Department!) But in my experience, even in traditional programming, it is a very worth-while exercise to look for feasible generalizations of conceivable utility, because such considerations may give clear guidance as to how the final program should be structured. But such considerations boil down to \dots{} conceiving (more or less explicitly) a whole program family!
+
+In an earlier section (``\nameref{sec:realiability-of-mechanisms}'') the need for careful program structuring has been put forward as a consequence of the requirement that program correctness can be proved. In this section we are faced with another reason: program structure should be such as to anticipate its adaptations and modifications. Our program should not only reflect (by structure) our understanding of it, but it should also be clear from its structure what sort of adaptations can be catered for smoothly. Thank goodness, the two requirements go hand in hand.
+
+\section{On trading storage space for computation speed}
+
+In present-day sequential computers (spring 1969) we can distinguish two main components, an active one (the processor) and a passive one (the store). The active component has the specific function to be fast, the passive one has the specific function to be large. The following is written on the assumption that this functional division is here to stay for a sufficient period of time to make a study of its consequences relevant.
+
+From the point of view of the programmer, storage space and computation time are then two distinct resources and I regard it as one of the responsibilities of the programmer --- rather than of the system --- to allocate them, i.e. to divide the load between them. It is to the consequences of this responsibility that the present section is devoted. This section is not devoted to techniques of estimating the various loads, i.e. to give quantitative criteria by which to influence the programmer's choice: it is devoted to the logical relation between the alternatives between which the programmer may choose.
+
+\noindent
+\textit{Note}. It is not inconceivable that some of the choices can be left to the system. In all but the most trivial cases, however, design and establishment of the equivalence seem to require mathematical invention from the side of the programmer. All efforts to automate this problem-solving activity fall outside the scope of this monograph.
+
+In its most simple form we are faced with a computation that regularly needs the value of ``FUN(arg)'', where ``FUN'' is a given, computable function defined on the current value of one or more stored variables, collectively called ``arg''. In version $A$ of the program, only the value of arg is stored and the value of FUN(arg) is computed whenever needed. In version $B$, an additional variable, ``fun'' say, is introduced, whose sole purpose is to record the value of ``FUN(arg)'' corresponding to the current value of arg.
+
+Where version $A$ has
+
+page 42
