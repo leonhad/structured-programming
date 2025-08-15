@@ -41,15 +41,18 @@
 
 \setlist{topsep=0em, itemsep=-.4em} 
 
+
+\usepackage{titlecaps}
+\usepackage{sectsty}
+
+\chapterfont{\large\bfseries\centering}
 \titleformat{\chapter}[hang]{\large\bfseries\centering}{\thechapter{}}{.5em}{}
 \titlespacing{\chapter}{0pt}{0cm}{.5cm}
 
-\titleformat{\section}[hang]{\normalsize\centering\scshape}{\thesection{}}{.5em}{}
-\titlespacing{\section}{0pt}{1em}{.6em}
+\sectionfont{\normalfont\normalsize\centering\scshape\titlecap}
 \counterwithout{section}{chapter}
 
-\titleformat{\subsection}[hang]{\footnotesize\scshape\uppercase}{\thesubsection{}}{.5em}{}
-\titlespacing{\subsection}{0pt}{.8em}{.2em}
+\subsectionfont{\normalfont\footnotesize\scshape\uppercase}
 
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
 \renewcommand{\thechapter}{\Roman{chapter}.}
