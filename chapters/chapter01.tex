@@ -1621,4 +1621,475 @@ Well, if closed subroutines had not been invented more than twenty years ago, th
 
 I was introduced to the concept of the closed subroutine in connection with the EDSAC\footnote{``The Preparation of Programs for an Electronic Digital Computer; with Special Reference to the EDSAC and the use of a Library of Subroutines'', M. V. Wilkes, D. J. Wheeler and S. Gill, Addison-Wesley Press, 1951.}, where the subroutine concept served as the basis for a library of standard routines. Those were the days when the construction of hardware was a great adventure and many of the standard routines were means by which (scarce!) memory and computation time could be traded for circuitry: as the order code did not comprise a divide instruction, they had subroutines for division. Yet I do not remember having appreciated subroutines as a means for ``rebuilding'' a given machine into a more suitable one, curiously enough. Nor do I remember from those days subroutines as objects to be conceived and constructed by the user to reflect his analysis: they were more the standard routines to be used by the user. Eventually I saw them mainly as a device for the reduction of program length. But the whole program as such remained conceived as acting in a single homogeneous store, in an unstructured state space; the whole computation remained conceived as a single sequential process performed by a single processor. In the following years, in the many programming courses I gave, I preached the gospel faithfully and I have often explained how the calling sequence handed over the return address and how the subroutine would then begin by setting ``the link'' --- i.e. the return jump --- at its own end. At present I would rather view the main program as having its own instruction counter that just continues ``counting'' upon the completion of the subroutine execution and would certainly not regard the "sleeping value" as a parameter handed over to the subroutine. (Still the old view has found its way into the hardware of many machines. We have seen machines in which a subroutine jump stored the link at ``address zero'' of the subroutine and ordered instruction fetch to be resumed at ``address one'', an arrangement which makes re-entrant code and recursive subroutines somewhat hard to implement. And even in this decade we find machines which store at program interrupt the ``program status'' of the interrupted program at a location associated with the interrupt rather than with the interrupted program!)
 
-page 47
+Ten years later, when ALGOL 60 emerged, the scene changed and we did not talk any more about closed subroutines: we called them ``procedures'' instead. They remained to be appreciated by the programmer as a very handy means for shortening the program text, and more and more programmers started to use them for the purpose of structuring, so that program adaptation to foreseen changes in problem specification could be confined to the replacement of one or more procedure bodies, or to a procedure call with some actual parameters changed. But the main novelty was the concept of the local variables.
+
+This was reflected in two important aspects. The first one was the concept of ``scope'', i.e. the idea that not all variables are homogeneously accessible all through the program: local variables of a procedure are inaccessible from  outside the procedure body, because outside it they are irrelevant. What local variables a procedure needs to do its private task is its private concern; it is no concern of the calling main program and the fact that the main program can (and must!) be conceived independently of these local variables is judiciously reflected. We may have some misgivings about the specific scope rules, as embodied in ALGOL 60, but we should appreciate them as a very significant step in the right direction.
+
+The second aspect of the novelty was given by the fact that procedures could be used recursively, more precisely, that a procedure was allowed to call itself, either directly or indirectly. The virtue of this facility has been the subject of many hot debates; as far as I can see the discussion has died down. The argument against recursive procedures was always an efficiency argument: non-re-entrant code could be executed so much more efficiently.But with the advent of multi programming another need for flexible storage allocation has emerged. And if there are still machines in which non-re-entrant code can be executed much more efficiently, i.e. in which the use of recursive routines is punished by too heavy a penalty, then I would venture the opinion that the structure of such a machine should now be called somewhat old-fashioned. The recursive procedure, however, forced upon us the recognition of the difference between its (static) text and its (dynamic) activation --- its ``incarnation'' as it has been called. The procedure text is one thing; the set of local variables it operates upon this time is quite another matter.
+
+So far, so good, but now some of its shortcomings (and I don't care, whether you call them linguistic or conceptual). Local variables are ``created'' upon procedure entry, and are ``annihilated'' upon procedure exit. It is precisely this automatic control over the life-time of variables pertaining to a procedure incarnation that allows us to implement the (recursive) procedures by means of a stack (i.e. a last-in-first-out storage arrangement). The fact that local variables pertaining to an incarnation only exist during the incarnation make it impossible for the procedure to transmit information behind the scenes from one incarnation to the next. To overcome this the concept ``own'' has been introduced, but this is no solution to the problem: what own variables are really good for becomes very unclear in the case of recursion and, secondly, it is impossible to write a set of procedures sharing a number of own variables. (We can simulate this by declaring them in an outer block, embracing the procedure declarations, but then the scope rules make them too generally accessible: they can then no longer be regarded as ``behind the scenes''.) Our conclusion-by no means new and by no means only mine! --- is that the concept "own" as introduced in ALGOL 60 must be regarded as ill-considered, and that we must look for new ways to control and describe life-time, accessibility and identity of local variables.
+
+But I have still another complaint about the procedure concept, and that is that it is still primarily regarded as a means for shortening the program text (although it may be a text of unknown length as in the case of recursion). The semantics of the procedure call are described in terms of the famous ``copy rule'': the procedure call is to be understood as a short-hand, because, semantically speaking, we should replace it with a copy of the text of the procedure body (with suitable adjustments of identifiers and substitutions for parameters) whereupon the thus modified text will be executed by the same machine as the one executing the main program. It remains (a representation for) a single program text to be executed by a single sequential machine. And it is precisely this picture of a single machine that does not satisfy me any longer.
+
+I want to view the main program as executed by its own, dedicated machine, equipped with the adequate instruction repertoire operating on the adequate variables and sequenced under control of its own instruction counter, in order that my main program would solve my problem if I had such a machine. I want to view it that way, because it stresses the fact that  the correctness of the main program can be discussed and established regardless of the availability of this (probably still virtual) machine: I don't
+need to have it, I only need to have its specifications as far as relevant for the proper execution of the main program under consideration.
+
+For me, the conception of this virtual machine is an embodiment of my powers of abstraction, not unlike the way in which I can understand a program written in a so-called higher level language, without knowing how all kinds of operations (such as multiplication and subscription) are implemented and without knowing such irrelevant details as the number system used in the hardware that is eventually responsible for the program execution.
+
+In actual practice, of course, this ideal machine will turn out not to exist, so our next task --- structurally similar to the original one --- is to program the simulation of the ``upper'' machine. In programming this simulation we have to decide upon data structures to provide for the state space of the upper machine; furthermore we have to make a bunch of algorithms, each of them providing an implementation of an instruction assumed for the order code of the upper machine. Finally, the ``lower'' machine may have a set of private variables, introduced for its own benefit and completely outside the realm and scope of the upper machine. But this bunch of programs is written for a machine that in all probability will not exist, so our next job will be to simulate it in terms of programs for a next-lower machine, etc. until finally we have a program that can be executed by our hardware.
+
+If we succeed in building up our program along the lines just given, we have arranged our program in layers. Each program layer is to be understood all by itself, under the assumption of a suitable machine to execute it, while the function of each layer is to simulate the machine that is assumed to be available on the level immediately above it.
+
+Why this model? What are the benefits we hope to derive from it? Let me try to list them.
+
+\begin{enumerate}[label=(\arabic*)]
+	\item Our experience as recorded in ``A first example of step-wise program composition'' strongly suggests that the arrangement of various layers, corresponding to different levels of abstraction, is an attractive vehicle for program composition.
+
+	\item It is not vain to hope that many a program modification can now be presented as replacement of one (virtual) machine by a compatible one.
+
+	\item We may hope that the model will give us a better grip on the problems that arise when a program has to be modified while it is in action. If a machine at a given level is stopped between two of its instructions, all lower  machines are completely passive and can be replaced, while all higher machines must be regarded as engaged in the middle of an instruction: their state must be considered as being in transition. In a sequential machine the state can only be interpreted in between instruction executions and the picture of this hierarchy of machines, each having its own instruction counter --- ``counting its instructions'' --- seems more profitable if we wish to decide at any given moment, what interpretations are valid. In the usual programming language in which computational progress is measured in a homogeneous measure --- say ``the grain'' of one statement --- I feel somewhat helpless when faced with the question of which interpretations are valid when.
+	
+	\item We may hope that the model will even assist us in recovery problems 	--- total or partial --- when some malfunctioning has been detected. (Recently I have been involved in the design and construction of a multi programming system, but one of the most annoying things was our total inability to estimate (mechanically) the scope of the disaster when a memory cell gave a parity alarm. The only safe reaction we could implement was instantaneous machine stop, hardly a solution to be proud of!)
+	
+	\item The picture of a layered hierarchy of machines provides a counter 	poison to one of the dangers evoked by ruthless application of the principle ``Divide and Rule'', viz. that different components are programmed so independently of each other that duplication of work (or worse) takes place. The fact that a layer contains ``a bunch of programs'' to be executed by some conceptual machine stresses the fact that the programs of this bunch are invited to share the same primitives. Separation of tasks is a good thing, on the other hand we have to tie the loose ends together again!
+\end{enumerate}
+
+\section{A second example of step-wise program composition}
+
+With a picture of program structure as a layered hierarchy of machines emerging, my fingers are itching to play with it, i.e. to make another program. The notational techniques employed should not be regarded as a well-considered proposal: they have been chosen to suit my fancy and should be regarded as part of the experiment.
+
+The problem is the following one. There is given a line printer which is controlled by two commands ``NLCR'' (New Line Carriage Return) which defines the utmost left position of the next line as the ``currently printable position'', and the command ``PRSYM($n$)'' which prints a character identified by the value of the integer parameter $n$ on the currently printable position and defines the position immediately to the right of the printed position as the new currently printable position. (For our discussion we can regard lines of infinite length as permissible.) We shall only make use of two specific values of $n$, called ``space'' and ``mark'' respectively. ``PRSYM(space)'' causes the currently printable position to remain blank, ``PRSYM(mark)'' will print a given, visible character, some sort of asterisk say.
+
+Furthermore two integer function of an integer argument are given, satisfying
+$$
+\text{\textbf{for} } 0 \leqslant i < 1000 : 0 \leqslant fx(i) < 100 \text{ \textbf{and} } 0 \leqslant fy(i) < 50.
+$$
+
+Now we have to make a program printing 50 lines, numbered from top to bottom by a $y$-coordinate running from 49 through 0, the positions on a line being numbered from left to right by an $x$-coordinate running from 0 through 99. On the thousand positions (or less in the case of coincidence) given by
+$$
+x = fx(i) \text{ \textbf{and} } y = fy(i) \text{ for some } i \text{ satisfying } 0 \leqslant i < 1000
+$$
+
+\noindent
+a mark has to be printed; all other positions on the paper have to remain blank. In other words: a curve is given in a discrete parameter representation and we wish to use the line printer as a digital plotter.
+
+I have used this problem extensively in viva voce examinations and the majority of the students quickly discover that, due to the absence of OLCR (Old Line Carriage Return) and of a ``backspace'', the order in which the printable positions have to be served is dictated by the printing commands and, secondly, that this order has nothing to do with the order of the marks if we number them, say, in the order of increasing $i$. As a result they quickly conclude that the use of storage seems indicated: first the thousand $i$-values should be scanned, i.e. the page image should be stored in a convenient manner, while afterwards, under control of the stored image, the page should be printed. (To be more precise: we assume that the computer has sufficient store for this purpose and that the computation of the function values ``$fx(i)$'' and ``$fy(i)$'' may be so time-consuming that we wish to have them computed only once for each $i$-value.)
+
+We now document this design decision, and I propose the following piece of text:
+
+\noindent
+COMPFIRST
+
+\noindent
+\textbf{begin}
+
+\noindent
+draw: \{build; print\};
+
+\noindent
+\textbf{var} image;
+
+\noindent
+\textbf{instr} build(image), print(image)
+
+\noindent
+\textbf{end}
+
+The above piece of documentation, which is considered as an integral part of the final program, should be interpreted as follows. It refers to a machine called ``COMPFIRST'' (we use capitals for machine names and try to express the type of decision reflected in the program made for them).
+
+The next line gives a named algorithm: its name is ``draw'' (this being assumed to be the name of the total program to be made, that has to ``draw'' a curve), the algorithm expresses the desired time-succession of two actions, building the image in store, followed by printing paper under control of the stored value.
+
+In the last two lines we give the declarations (or declaration headings), naming the components of the machine for which the above algorithm is intended. The first line describes that the name ``image'' will be used for the data structure that has to accommodate the page image; the variable ``image'' is the only component of the state space of this machine. Its instruction code comprises two instructions, named ``build'' and ``print'' respectively.
+
+Before proceeding, it should be noted that we have used abbreviations, some of which I do not yet know whether they are very wise or very foolish. They have both to do with the fact that the variable ``image'' is a unique variable of this type.
+
+If the state space should have contained two images, I would have written
+
+\noindent
+``\textbf{type} image;
+
+\noindent
+image \textbf{var} imagel, image2''
+
+\noindent
+expressing that the state space comprises two variables (called ``imagel'' and ``image2'' respectively), with the same set of possible values, this set being characterised by their \textbf{type}, called ``image''. In a later step the \textbf{type} image would enjoy further detailing and this would apply to both variables. As the set of variables of this type contains only one element, I have ventured not to distinguish between the set (called "image") and its only element (also called ``image''). When descriptions in COMPFIRST (such as ``build(image)'') refer to ``image'', they refer to the variable; when later structuring detail is given, it refers to the type image.
+
+The last line contains the code of instructions which are like the procedure heading. In general they contain the type of the parameters, where the call contains the variables as actual parameters. Again this seems foolish if the parameter is uniquely given by its type and for this reason we have mentioned the actual parameter in the declaration, and have omitted the mentioning of ``image'' in the code describing the algorithm "draw". Thus we can reserve the explicitly mentioned actual parameters for the case where this combinatorial freedom is actually used.
+
+Before proceeding, I would like to stress that our little algorithm named ``draw'' can and should be regarded as a program written for a machine. We should write the manual for this machine; in it we have to state 
+\begin{enumerate}[label=(\arabic*)]
+	\item that the operation ``build'' assigns a value to the variable ``image'' specifying the image to be printed on paper as given by the functions $fx$ and $fy$.
+
+	\item that the operation ``print'' prints the picture on paper as specified by the current value of the variable "image".
+\end{enumerate}
+
+The fact that it can really be regarded as an algorithm for a machine is perhaps most easily seen when we consider alternative algorithms for ``draw'' e.g.
+
+\noindent
+draw: \{print; build\}
+
+\noindent
+is wrong, because now the action "print" is undefined;
+
+\noindent
+draw: \{build; build; print\}
+
+\noindent
+is correct but unnecessarily time-consuming, because the second action ``build'' assigns to ``image'' the value it already has;
+
+\noindent
+draw: \{build; print; print\}
+
+\noindent
+would make sense: it would print the picture twice.
+
+We now resume our programming task. If we had machine ``COMPFIRST'' at our disposal, the little program named ``draw'' to be executed by it would do the job. For the sake of argument and in order to be realistic we now assume that we do not have at our disposal such a machine tailored to our needs, and therefore our next task (similar to the previous one!) is to make such a machine.
+
+There are three named entities assumed, viz. ``build'', ``print'' and ``image'', where the first two refer to the latter one. As a consequence, a further detailing of the latter one will affect the two first ones; also, it is very hard to give any further detailing of the action ``print'' without any further commitments as to the structure of ``image''. The action ``build'', however, admits a further detailing all by itself. And it is for that reason that we take ``build'' as our first candidate for further refinement.
+
+We have to describe how the variable ``image'' will get its value corresponding to the proper positioning of the thousand marks. As a total operation, it assigns a value to a variable, whose earlier value was undefined: anticipating that the marks will be added ``one at a time'', we see, that addition of a next mark will turn out to be an action operating on an already defined value of the variable "image". It therefore seems attractive to view the whole setting of the marks as operating on an already defined value, viz. the one corresponding to the blank page. This decision leads to
+
+\noindent
+CLEARFIRST
+
+\noindent
+\textbf{begin}
+
+\noindent
+\quad build: \{clear; setmarks\};
+
+\noindent
+\quad \textbf{instr} clear(image), setmarks(image)
+
+\noindent
+\textbf{end}
+
+\noindent
+where the action ``clear'' assigns to image the value corresponding to a picture of fifty blank lines, where the action ``setmarks'' adjusts the initial value of image to the one in which the thousand (or less) marks of the curve have been added.
+
+Again, CLEARFIRST is a machine for which alternative programs could have been written, e.g.
+
+\noindent
+build: \{clear\}
+
+\noindent
+would make sense, but would produce fifty blank lines as output;
+
+\noindent
+build: \{setmarks; clear\}
+
+\noindent
+would contain an undefined operation;
+
+\noindent
+build: \{clear; clear; setmarks\}
+
+\noindent
+would contain a superfluous operation, just as
+
+\noindent
+build: \{clear; setmarks; setmarks\}
+
+\noindent
+would, because the second action ``setmarks'' would only add marks to the picture that would already be there and therefore would not change the value of ``image''.
+
+(Note on notation used. The algorithm explaining "build" in terms of ``clear'' and ``setmarks'' does so without explicitly mentioning ``image'', because we do not wish to use the actual parameter notation in algorithms unless its actual combinatorial freedom is in fact used in this machine.
+
+Furthermore, ``build'' being a one-parameter operation no separate identifier for its formal parameter has been introduced. Also this abbreviation on my part could turn out to be very unwise.)
+
+The next step in the design of the computation --- because it can be made without any further commitments --- is to describe how the thousand marks of the curve will be dealt with in turn. For the time being I propose the following write-up:
+
+\noindent
+ISCANNER
+
+\noindent
+\textbf{begin integer} $i$;
+
+\noindent
+\quad setmarks: \{$i \coloneq 0$; \textbf{while} $i < 1000$ \textbf{do} \{add mark; $i$ plus 1\}\};
+
+\noindent
+\quad \textbf{instr} add mark($i$, image)
+
+\noindent
+\textbf{end}
+
+This algorithm is to be understood in a machine whose instruction repertoire comprises ``add mark($i$, image)'' which will change the value of ``image'' in accordance with the addition of the $i$th mark. It describes the order in which the marks are dealt with; it shows all marks will be dealt with exactly once.
+
+But this is not all: a new variable (viz. ``$i$'') has been introduced, the algorithm appeals to a set of actions referring to this variable (``$i \coloneq 0$'', \mbox{``$i < 1000$''} and ``$i$ \textbf{plus} 1'') and if I were completely consistent, it seems that I should list them at the bottom, as possibly requiring further clarification at a later stage, just as ``add mark''. I have not done so (I have treated them along the same lines as the \textbf{while-do} clause). From the point of view of language semantics this separate treatment of an implicitly understood type \textbf{integer} does not seem attractive, and it seems hard to justify, why the type \textbf{integer} is treated differently from the type ``image'': both are implicitly understood in this machine.
+
+Yet I have done it. All the time I design programs for non-existing machines and add: ``if we now had a machine comprising the primitives here assumed, then the job is done''. This is, logically speaking, correct; in practice it is a joke, because we know very well that we cannot assume a general purpose machine to be available whose instruction code is so very well tailored to our needs. We should not close our eyes --- nor feign to do so! --- to our responsibility to provide such primitives in a later stage of the design. When I now appeal to a well-understood type ``integer'' and the operations defined on variables of such a type in this exceptional manner, I lo so with the intention of expressing that-although these facilities have to be provided in some form or another-providing these facilities fall outside the scope of the programmer's responsibility and also that the programmer will accept any reasonable implementation of them.
+
+Again we are left with a primitive that admits further refinement without commitments regarding the other primitives. We have to describe how dealing with mark no. $i$ can be expressed in terms of dealing with a position on the page: we create the machine dealing with the computation of this position.
+
+\noindent
+COMPPOS
+\nopagebreak
+
+\noindent
+\textbf{begin integer} $x$, $y$;
+\nopagebreak
+
+\noindent
+\quad add mark: \{$x \coloneq fx(i)$; $y \coloneq fy(i)$; mark pos\};
+
+\noindent
+\quad\textbf{instr} mark pos($x$, $y$, image)
+
+\noindent
+\textbf{end}
+
+\noindent
+where ``mark pos'' will change the current value of the variable ``image'' in accordance with the addition of a mark with the co-ordinates ``$x$'' and ``$y$'' on the picture to be printed.
+
+(Note. In the last refinement it is explicitly assumed that the functions $fx(i)$ and $fy(i)$ can be evaluated in any order of their argument values. If these two thousand function values were to be read from an input stream, pair wise in a prescribed order of $i$-values, then the last two machines would have to be merged into a single one.)
+
+By now I see no possibility of further refinement without committing myself to the structure of the still rather vague type ``image''. How do we propose that this value will be stored? We have to structure the variables of type ``image'', or, what amounts to exactly the same thing, we have to choose a representation for its possible values.
+
+While lecturing at various places I have described versions of this program to different audiences, and it may be worth-while to point out that at least twice part of my audience was deeply troubled by the time I had reached this stage. They felt for instance, that I could not claim that my program, as far as developed, was correct; they objected to my remark that
+
+\noindent
+draw: \{build; print; print\}
+
+\noindent
+would produce the same picture twice, for how did I know, that "print" did not (by means of some side-effect) change the value of ``image'' before I had \textit{made} the primitive ``print''? The answer to this, of course, is that ``print'' has to do what has been stated and should not do what has not been stated. But then more objections came: I had failed to show that the representation was unique, perhaps it was such, that ``print'' was only a partial function, undefined for some possible values of ``image'', etc. The answer to this seems to be the following: legitimate as such concerns are, they should be dealt with at the right moment, i.e. not before we commit ourselves to a representation. It is apparently the strength of our approach that so much of the program could be written down independently of the representation to be chosen for the values of the type ``image''. What we have done so far seems indeed a judicious exploitation of our power of abstraction (here abstraction of the particular representation to be chosen for the data structure ``image'').
+
+But even if we now come to the conclusion that the time has come to decide upon the data structure for the type ``image'' we still do not need to commit ourselves completely. Faced with the question how to structure our variable no w, we can take our decisions step-wise, just as we have done with the algorithmic refinements encountered so far.
+
+We recall that the origin of the problem was to be found in the circumstance that the printing primitives ``PRSYM'' and ``NLCR'' forced the computation to produce the picture line after line going from top to bottom. Let us try to give recognition to that fact by regarding the image as composed of an array of lines. I then come to the following next level.
+
+\noindent
+LINER
+
+\noindent
+\textbf{begin integer} $j$;
+
+\noindent
+\quad image: \{\textbf{array} line$[0: 49]$\};
+
+\noindent
+\quad print: \{$j \coloneq 49$; \textbf{while} $j \geqslant 0$ \textbf{do} \{lineprint(line[$j$]); $j$ \textbf{minus} 1\}\};
+
+\noindent
+\quad clear: \{$j \coloneq 49$; \textbf{while} $j \geqslant 0$ \textbf{do} \{lineclear(line[$j$]); $j$ \textbf{minus} 1\}\};
+
+\noindent
+\quad mark pos: \{linemark(line[$y$])\} ;
+
+\noindent
+\quad \textbf{type} line;
+
+\noindent
+\quad \textbf{instr} lineprint(line), lineclear(line), linemark($x$, line)
+
+\noindent
+\textbf{end}
+
+In the last line but one we have introduced a type called ``line''; a type, I recall, is regarded as a collection of distinguishable values and a variable of such a type can, at any moment, have one of this collection as its value. The first line of code expresses that the type ``image'' is composed of an array of 50 elements of type ``line'', numbered from 0 through 49, and, being the only type composed from this type, again we abstain from introducing a new identifier (wisely or not).
+
+Then, ``print'', ``clear'', and ``mark pos'', being operations that were understood as operating on an "image" are translated in algorithms expressed in terms of operations on a line. In the code of these algorithms, the (true) actual parameter specifies which line; at the end of the description we give the instruction list, indicating that the actions operate on ``a line''; we have given the type, but not the parameter.
+
+This level introduces some new features. To start with (as in explaining ``image'') we treat the structural refinement of a data type on a footing very similar to the algorithmic refinements (as applied to ``print'', ``clear'' and ``mark pos''). Before this level, our approach could have been regarded as an effort to establish a discipline for ``subroutinization'' --- if the reader will excuse this horrible term! --- now we observe that that characterization of  our effort covers only half of what we are trying to do, as we are trying to apply a similar technique to data structures as well. Secondly, our previous machine explained just one entity (instruction or data type) in contrast to ``LINER'', which explains a whole bunch of them. The point is that we try to associate with each level a separate design decision; the decision taken here is to understand the image from now onwards in terms of lines, and therefore all operations dealing with an image as such have to be translated in terms of operations dealing with its lines. The image has been ``explained away'', the only unusual type we still have to deal with is the type ``line'' and that is what we are going to do now. I draw your attention to the fact that in the level to come, we have to deal with lines: that lines are used to compose images from is no longer relevant!
+
+To represent a line we have many different possibilities, e.g. a list of the the $x$-coordinates of the positions where a mark should be printed (possibly sorted in order of increasing x-value), a boolean array of 100 elements, each element indicating whether the corresponding position on the line of the picture should be marked, or an integer array of 100 elements, each element having the value ``mark'' or ``space'' of the PRSYM-parameter for the corresponding printable position. The last representation caters for extension when different curves (with different marks) have to be printed in the same picture ; therefore we select the last one.
+
+This leads to
+
+\noindent
+LONG REP
+
+\noindent
+\textbf{begin integer} $k$;
+
+\noindent
+\quad line: \{\textbf{integer array} sym$[0 : 99]$\};
+
+\noindent
+\quad lineprint: \{$k \coloneq 0$; \textbf{while} $k < 100$ \textbf{do} \{PRSYM(sym[k$]$); $k$ \textbf{plus} 1\}; NLCR\};
+
+\noindent
+\quad lineclear: \{$k \coloneq 0$; \textbf{while} $k < 100$ \textbf{do} \{sym[$k$] $\coloneq$ space; $k$ \textbf{plus} 1\}\};
+
+\noindent
+\quad linemark: \{sym[$x$] $\coloneq$ mark\}
+
+\noindent
+\textbf{end}
+
+This however leads to an implementation filling out the line with spaces at the righthand side of the rightmost mark: it is like banging the space bar until the bell rings when we want to effect the transition to a new paragraph while writing a letter!
+
+The next version suppresses superfluous PRSYM-commands and even leaves those elements of the variable of type "line" undefined that do not need to be defined. With each line a counter ``$f$'' is associated, giving the number of PRSYM-commands to be given for that line. Clearing a line now shrinks into setting ``$f$'' to zero!
+
+\noindent
+SHORTREP
+
+\noindent
+\textbf{begin integer} $k$;
+
+\noindent
+\quad line: \{\textbf{integer} $f$; \textbf{integer array} sym$[0 : 99]$\};
+
+\noindent
+\quad lineprint: \{k $\coloneq$ 0; while $k < f$ \textbf{do} \{PRSYM(sym[$k$]); $k$ \textbf{plus} 1\}; NLCR\};
+
+\noindent
+\quad lineclear: \{$f \coloneq 0$\} ;
+
+\noindent
+\quad linemark: \{sym$[x] \coloneq$ mark;
+
+\noindent
+\quad \textbf{if} $f \leqslant x$ \textbf{do} \{$k \coloneq f$; \textbf{while} $k < x$ \textbf{do} \{sym$[k] \coloneq$ space; $k$ \textbf{plus} 1\};
+
+\noindent
+\quad \quad $f \coloneq x + 1$ \}\}
+
+\noindent
+\textbf{end}
+
+\noindent
+\textit{Note added later.}
+
+The above program is essentially the program as I have shown it to at least five different audiences. Now, two months later, while thinking at leisure about correctness proofs, I suddenly realize that the given algorithm for ``linemark'' betrays my past, for it is a piece of lousy coding, compared with the following alternative:
+
+\noindent
+linemark: \{\textbf{while} $f \leqslant x$ \textbf{do} \{sym$[f] \coloneq$ space; $f$ \textbf{plus} 1\};
+	
+\noindent
+\quad sym$[x] \coloneq$ mark\}
+
+\noindent
+a version which guarantees that whenever ``sym$[x] \coloneq$ mark'' is executed, the relation ``$x < f$'' will always be satisfied: it is precisely the function of the first line to see to this. The reader is invited to try to understand both versions of linemark and to compare both reasonings. He will then agree with my judgment that the original version is lousy.
+
+The second version jumped into my mind on account of the following observation. The conditional clause
+$$
+\text{``\textbf{if} } B \text{ \textbf{do} } S\text{''}
+$$
+
+\noindent
+is used in programs in two different ways. On the one hand we have the applications, in which the execution of the statement $S$ does not invalidate the truth of $B$, on the other hand we have the situations in which the execution of the statement S is guaranteed to invalidate the truth of $B$. In the latter case, it is the function of the conditional statement to ensure that after its execution $B$ will not hold. It is then, essentially, a shortcut for
+$$
+\text{``\textbf{while} } B \text{ \textbf{do} } S\text{'',}
+$$
+
+\noindent
+which has the property of invalidating the truth of $B$ (provided that it stops), but the justification of the shortcut requires a separate proof that the repeated statement will be executed at most once. (In ``\nameref{sec:first-example-step-wise-program-composition}'' we did not bother to introduce this shortcut on level 2b4(4) where he wrote
+$$
+\text{``\textbf{while} ``ord too small'' \textbf{do} ``increase ord by one'''';}
+$$
+
+\noindent
+here a conditional clause would have done the job!)
+
+\section{On what we have achived}
+
+One of the metaphors in which I find myself thinking about the program structure envisaged regards the program as a necklace, strung from individual pearls.
+
+We have described the program in terms of levels and each level contained ``refinements'' of entities that were assumed available in higher levels. These refinements were either dynamic refinements (algorithms) or static refinements (data structures) to be understood by an appropriate machine. I use the term ``pearl'' for such a machine, refinements included.
+
+Our previous program consists of a necklace of six pearls, in order either
+
+COMPFIRST
+
+CLEARFIRST
+
+I SCANNER
+
+COMPPOS
+
+LINER
+
+LONG REP
+
+\noindent
+or
+
+COMP FIRST
+
+CLEARFIRST
+
+I SCANNER
+
+COMPPOS
+
+LINER
+
+SHORTREP.
+
+LONGREP and SHORTREP are two different pearls, they explain the same concepts (from the ``upper face'') into the same concept (of the ``lower face''); only the particular refinements differ: they are as alternative programs for the same job and the same machine.
+
+Changing a program will be treated as replacing one or more pearls of the original necklace by one or more other pearls. The pearl is the individual unit from which programs are composed. Making a program (as a member of a class of related programs) is now regarded as a two-stage process: making pearls (more than strictly necessary) and then stringing a fitting necklace out of (a selection of) them.
+
+The reasons for this two-stage approach are many. In designing a program we have to consider many, many alternative programs and once our program is finished, we will have to change it (into one of the alternative ones). As long as programs are regarded as linear strings of basic symbols of a programming language and, accordingly, program modification is treated as text manipulation on that level, then each program modification must be understood in the universe of all programs (right or wrong!) that can be written in that programming language. No wonder that program modification is then a most risky operation! The basic symbol is too small and meaningless a unit in terms of which to describe this. The pearl, embodying the independent design decision or, as the case may be, an isolated aspect of the original problem statement, is meant to be the natural unit for such modifications.
+
+To rephrase the same argument: with the birth of ALGOL 60, syntax was discovered as a powerful means for expressing structure in a program text. (Syntax became so glorified that many workers in the field identified Computing Science with Syntactic Analysis!) It was slightly overlooked, however, that by expressing structure via syntax, this structure is only given very indirectly, i.e. to be derived by means of a parsing algorithm to be applied to a linear sequence of basic symbols. This hurts if we realize that many a program modification leaves large portions of the structure unaffected, so that after painful re-parsing of the modified text the same structure re-emerges! I have a strong feeling that the adequacy of context-free methods for the representation of structure has been grossly over-estimated. (In my immediate environment the following program bug in an ALGOL 60 program was brought to my attention. A program produced erroneous output with a completely checking implementation which in addition to the program text requires a final ``\textbf{progend}'' after the last ``\textbf{end}''; this additional character is refused everywhere else so that a correct ``\textbf{begin} -- \textbf{end}'' bracketing can be established. It turned out that
+
+\begin{enumerate}[label=(\arabic*)]
+	\item somewhere in the program a closing string quote was omitted;
+	
+	\item somewhere further down in the program text an opening string quote was omitted;
+	
+	\item the ``\textbf{begin} -- \textbf{end}'' structure of the resulting program was syntactically correct;
+	
+	\item the identifiers declared between the two omissions were only used 	between the two omissions, so that even context-dependent checks were 	unable to give alarm.
+\end{enumerate}
+
+\noindent
+Having already my doubts as to the adequacy of context-free methods for expressing macroscopic structure, I was delighted when this bug was shown to me!)
+
+The more I think about pearls, the more I feel that something like them is the only way out of it, if we recognize our responsibility to take (for a large program) say a thousand (possible) versions into consideration. You cannot expect the programmer to make all these thousand versions from scratch, independent of each other. The only way I see to produce such a potential variety is by a combinatorial technique, i.e. by making more pearls (say 250) than needed for a single necklace (say 200) and stringing a necklace from a particular selection. I see no other feasible way. The other mechanism to achieve great variety by combinatorial means is permutation, but this is denied to us because the final necklace must be a fitting necklace and, given the pearls, the order in which they have to be strung on the thread to produce a fitting necklace is pretty well defined. And also: if it is not, the permissible change of order is pretty irrelevant!
+
+Also, the pearl gives a clear status to an ``incomplete'' program, consisting of the top half of a necklace: it can be regarded as a complete program to be executed by a suitable machine (of which the bottom half of the necklace gives a feasible implementation). As such, the correctness of the upper half of the necklace can be established regardless the choice of the bottom half. Between two successive pearls we can make a ``cut'' which is a manual for a machine, provided by the part of the necklace below the cut and used by the program represented by the part of the necklace above the cut. This manual serves as an interface between the two parts of the necklace. We.feel this form of interface more helpful than regarding data-representation as an interface between operations, in particular more helpful towards ensuring the combinatorial freedom required when a program has to be adapted.
+
+Another remark concerns the range of validity of concepts along the necklace. For instance, the concept ``image'' is introduced in our top pearl ``COMPFIRST'' and is explained away in our bottom pearl but one, viz. ``LINER''. If we now come to the conclusion that the program as envisaged is too demanding on storage space so that we cannot afford to introduce the variable ``image'', we are faced with a major program revision and we have to replace the top five pearls by other ones, because that is the range of validity of the concept ``image''! The bottom pearl (either ``LONGREP'' or ``SHORTREP''), however, can be retained. (I mention this as an example of the fact that pearl exchange is by no means restricted to exchange of the bottom pearl.)
+
+With respect to the validity range of concepts along the necklace I would like to ask your attention for an observation which thrilled me the first time I made it. (In retrospect it is pretty obvious and that is exactly why it may be worth-while to be explicit about it.) With each pearl we associate ``an independent design decision'' and the ordering of the pearls along the necklace therefore implies an ordering of the design decisions. Can we change this order? Yes, we can, although we then have different pearls. By way of experiment I have followed the well-known advice: if you are faced with two primitives-in our case ``build'' and ``print'' --- decide immediately upon their interface-in our example ``image'' --- so that the two primitives can now be refined independently of each other. So I did, and I came to the following form of necklace
+
+COMPFIRST
+
+LINER'
+
+CLEARFIRST'
+
+I SCANNER'
+
+COMPPOS'
+
+SHORTREP
+
+\noindent
+(the four middle pearls being primed to indicate that they refer to different pearls, although they embody the same decisions as the ones in the original set). The resulting program is much messier. Why?
+
+Along the necklace we can indicate for each concept its range of validity: of course they overlap and we can view them as the individual threads from which the whole explanation is twined, as a kind of ``logical rope''. The messy version has a logical rope twined from more and sometimes longer individual threads: its logical rope is thicker, the whole construction is more tightly interconnected. The observation thrilled me because it gave a very convincing demonstration (at least for me!) that elegance, clarity and the like have indeed marked quantitative aspects (as Mozart knew: many of his compositions that make one catch one's breath are misleadingly simple, they seem to be made just out of practically nothing!).
+
+We can phrase the observation in more technical terms. The primed version is messy because the image is explained away in terms of lines at too early a stage, thereby forcing us to explain ``CLEARFIRST'', ``ISCANNER'' and ``COMPPOS'' in terms of lines, while they could still be explained in terms of the image, i.e. independent of the representation to be chosen for it. Or, in other words, in the original version we have made a more judicious exploitation of our power of abstraction than in the primed one. The larger the number of pearls independent of the particular representation, the more adaptable one's program and the more easily understandable --- because that set of pearls can be understood at a higher level of abstraction. The experience seems to indicate that the goals of adaptability and clarity have been given some substance and (what is more) go by their very nature hand in hand. This is very encouraging (although not surprising).
+
+It also gives --- me at least --- a somewhat clearer picture of the scope of my present efforts. Whatever I shall develop, it will not be a General Problem Solver, not a mechanical one, not even one written for the benefit of the human problem solver. But it may give the human some appreciation for the various aspects of ``elegance'' of a solution when he succeeds in finding one. And as such it may give him a guide line.
+
+\section{On grouping and sequencing}
+
+While we are considering a programming tool in which explicit recognition has been given to the hierarchy of levels of abstraction, the present section is also applicable to programming in programming languages as they are understood today, viz. on a constant semantic level. (And there is a fair chance that the current section has its morals outside the restricted field of programming, for it seems to be concerned with problem solving in general.)
+
+I shall illustrate my point with two examples, both of which, again, I have used in viva voce examinations. I owe the first example to Niklaus Wirth.
+
+The problem is to construct a program generating non-empty sequences of $0$'s, $1$'s and $2$'s without non-empty, element-wise equal, adjoining sub-sequences, generating these sequences in alphabetical order until a sequence of length 100 (i.e. of 100 digits) has been generated. The programmer may make use of the knowledge that a sequence of length 100 and satisfying the conditions actually exists. The start of the list of sequences to be generated is:
+
+0
+
+01
+
+010
+
+0102
+
+01020
+
+010201
+
+0102010
+
+0102012
+
+\dots
+
+Page 64
