@@ -1627,7 +1627,7 @@ This was reflected in two important aspects. The first one was the concept of ``
 
 The second aspect of the novelty was given by the fact that procedures could be used recursively, more precisely, that a procedure was allowed to call itself, either directly or indirectly. The virtue of this facility has been the subject of many hot debates; as far as I can see the discussion has died down. The argument against recursive procedures was always an efficiency argument: non-re-entrant code could be executed so much more efficiently.But with the advent of multi programming another need for flexible storage allocation has emerged. And if there are still machines in which non-re-entrant code can be executed much more efficiently, i.e. in which the use of recursive routines is punished by too heavy a penalty, then I would venture the opinion that the structure of such a machine should now be called somewhat old-fashioned. The recursive procedure, however, forced upon us the recognition of the difference between its (static) text and its (dynamic) activation --- its ``incarnation'' as it has been called. The procedure text is one thing; the set of local variables it operates upon this time is quite another matter.
 
-So far, so good, but now some of its shortcomings (and I don't care, whether you call them linguistic or conceptual). Local variables are ``created'' upon procedure entry, and are ``annihilated'' upon procedure exit. It is precisely this automatic control over the life-time of variables pertaining to a procedure incarnation that allows us to implement the (recursive) procedures by means of a stack (i.e. a last-in-first-out storage arrangement). The fact that local variables pertaining to an incarnation only exist during the incarnation make it impossible for the procedure to transmit information behind the scenes from one incarnation to the next. To overcome this the concept ``own'' has been introduced, but this is no solution to the problem: what own variables are really good for becomes very unclear in the case of recursion and, secondly, it is impossible to write a set of procedures sharing a number of own variables. (We can simulate this by declaring them in an outer block, embracing the procedure declarations, but then the scope rules make them too generally accessible: they can then no longer be regarded as ``behind the scenes''.) Our conclusion-by no means new and by no means only mine! --- is that the concept "own" as introduced in ALGOL 60 must be regarded as ill-considered, and that we must look for new ways to control and describe life-time, accessibility and identity of local variables.
+So far, so good, but now some of its shortcomings (and I don't care, whether you call them linguistic or conceptual). Local variables are ``created'' upon procedure entry, and are ``annihilated'' upon procedure exit. It is precisely this automatic control over the life-time of variables pertaining to a procedure incarnation that allows us to implement the (recursive) procedures by means of a stack (i.e. a last-in-first-out storage arrangement). The fact that local variables pertaining to an incarnation only exist during the incarnation make it impossible for the procedure to transmit information behind the scenes from one incarnation to the next. To overcome this the concept ``own'' has been introduced, but this is no solution to the problem: what own variables are really good for becomes very unclear in the case of recursion and, secondly, it is impossible to write a set of procedures sharing a number of own variables. (We can simulate this by declaring them in an outer block, embracing the procedure declarations, but then the scope rules make them too generally accessible: they can then no longer be regarded as ``behind the scenes''.) Our conclusion --- by no means new and by no means only mine! --- is that the concept "own" as introduced in ALGOL 60 must be regarded as ill-considered, and that we must look for new ways to control and describe life-time, accessibility and identity of local variables.
 
 But I have still another complaint about the procedure concept, and that is that it is still primarily regarded as a means for shortening the program text (although it may be a text of unknown length as in the case of recursion). The semantics of the procedure call are described in terms of the famous ``copy rule'': the procedure call is to be understood as a short-hand, because, semantically speaking, we should replace it with a copy of the text of the procedure body (with suitable adjustments of identifiers and substitutions for parameters) whereupon the thus modified text will be executed by the same machine as the one executing the main program. It remains (a representation for) a single program text to be executed by a single sequential machine. And it is precisely this picture of a single machine that does not satisfy me any longer.
 
@@ -1662,37 +1662,31 @@ The problem is the following one. There is given a line printer which is control
 
 Furthermore two integer function of an integer argument are given, satisfying
 $$
-\text{\textbf{for} } 0 \leqslant i < 1000 : 0 \leqslant fx(i) < 100 \text{ \textbf{and} } 0 \leqslant fy(i) < 50.
+\text{\textbf{for} } 0 \leqslant i < 1000 : 0 \leqslant f_x(i) < 100 \text{ \textbf{and} } 0 \leqslant f_y(i) < 50.
 $$
 
 Now we have to make a program printing 50 lines, numbered from top to bottom by a $y$-coordinate running from 49 through 0, the positions on a line being numbered from left to right by an $x$-coordinate running from 0 through 99. On the thousand positions (or less in the case of coincidence) given by
 $$
-x = fx(i) \text{ \textbf{and} } y = fy(i) \text{ for some } i \text{ satisfying } 0 \leqslant i < 1000
+x = f_x(i) \text{ \textbf{and} } y = f_y(i) \text{ for some } i \text{ satisfying } 0 \leqslant i < 1000
 $$
 
 \noindent
 a mark has to be printed; all other positions on the paper have to remain blank. In other words: a curve is given in a discrete parameter representation and we wish to use the line printer as a digital plotter.
 
-I have used this problem extensively in viva voce examinations and the majority of the students quickly discover that, due to the absence of OLCR (Old Line Carriage Return) and of a ``backspace'', the order in which the printable positions have to be served is dictated by the printing commands and, secondly, that this order has nothing to do with the order of the marks if we number them, say, in the order of increasing $i$. As a result they quickly conclude that the use of storage seems indicated: first the thousand $i$-values should be scanned, i.e. the page image should be stored in a convenient manner, while afterwards, under control of the stored image, the page should be printed. (To be more precise: we assume that the computer has sufficient store for this purpose and that the computation of the function values ``$fx(i)$'' and ``$fy(i)$'' may be so time-consuming that we wish to have them computed only once for each $i$-value.)
+I have used this problem extensively in viva voce examinations and the majority of the students quickly discover that, due to the absence of OLCR (Old Line Carriage Return) and of a ``backspace'', the order in which the printable positions have to be served is dictated by the printing commands and, secondly, that this order has nothing to do with the order of the marks if we number them, say, in the order of increasing $i$. As a result they quickly conclude that the use of storage seems indicated: first the thousand $i$-values should be scanned, i.e. the page image should be stored in a convenient manner, while afterwards, under control of the stored image, the page should be printed. (To be more precise: we assume that the computer has sufficient store for this purpose and that the computation of the function values ``$f_x(i)$'' and ``$f_y(i)$'' may be so time-consuming that we wish to have them computed only once for each $i$-value.)
 
 We now document this design decision, and I propose the following piece of text:
 
-\noindent
 COMPFIRST
 
-\noindent
 \textbf{begin}
 
-\noindent
 draw: \{build; print\};
 
-\noindent
 \textbf{var} image;
 
-\noindent
 \textbf{instr} build(image), print(image)
 
-\noindent
 \textbf{end}
 
 The above piece of documentation, which is considered as an integral part of the final program, should be interpreted as follows. It refers to a machine called ``COMPFIRST'' (we use capitals for machine names and try to express the type of decision reflected in the program made for them).
@@ -1718,26 +1712,23 @@ The last line contains the code of instructions which are like the procedure hea
 
 Before proceeding, I would like to stress that our little algorithm named ``draw'' can and should be regarded as a program written for a machine. We should write the manual for this machine; in it we have to state 
 \begin{enumerate}[label=(\arabic*)]
-	\item that the operation ``build'' assigns a value to the variable ``image'' specifying the image to be printed on paper as given by the functions $fx$ and $fy$.
+	\item that the operation ``build'' assigns a value to the variable ``image'' specifying the image to be printed on paper as given by the functions $f_x$ and $f_y$.
 
-	\item that the operation ``print'' prints the picture on paper as specified by the current value of the variable "image".
+	\item that the operation ``print'' prints the picture on paper as specified by the current value of the variable ``image''.
 \end{enumerate}
 
 The fact that it can really be regarded as an algorithm for a machine is perhaps most easily seen when we consider alternative algorithms for ``draw'' e.g.
 
-\noindent
 draw: \{print; build\}
 
 \noindent
-is wrong, because now the action "print" is undefined;
+is wrong, because now the action ``print'' is undefined;
 
-\noindent
 draw: \{build; build; print\}
 
 \noindent
 is correct but unnecessarily time-consuming, because the second action ``build'' assigns to ``image'' the value it already has;
 
-\noindent
 draw: \{build; print; print\}
 
 \noindent
@@ -1747,21 +1738,16 @@ We now resume our programming task. If we had machine ``COMPFIRST'' at our dispo
 
 There are three named entities assumed, viz. ``build'', ``print'' and ``image'', where the first two refer to the latter one. As a consequence, a further detailing of the latter one will affect the two first ones; also, it is very hard to give any further detailing of the action ``print'' without any further commitments as to the structure of ``image''. The action ``build'', however, admits a further detailing all by itself. And it is for that reason that we take ``build'' as our first candidate for further refinement.
 
-We have to describe how the variable ``image'' will get its value corresponding to the proper positioning of the thousand marks. As a total operation, it assigns a value to a variable, whose earlier value was undefined: anticipating that the marks will be added ``one at a time'', we see, that addition of a next mark will turn out to be an action operating on an already defined value of the variable "image". It therefore seems attractive to view the whole setting of the marks as operating on an already defined value, viz. the one corresponding to the blank page. This decision leads to
+We have to describe how the variable ``image'' will get its value corresponding to the proper positioning of the thousand marks. As a total operation, it assigns a value to a variable, whose earlier value was undefined: anticipating that the marks will be added ``one at a time'', we see, that addition of a next mark will turn out to be an action operating on an already defined value of the variable ``image''. It therefore seems attractive to view the whole setting of the marks as operating on an already defined value, viz. the one corresponding to the blank page. This decision leads to
 
-\noindent
 CLEARFIRST
 
-\noindent
 \textbf{begin}
 
-\noindent
 \quad build: \{clear; setmarks\};
 
-\noindent
 \quad \textbf{instr} clear(image), setmarks(image)
 
-\noindent
 \textbf{end}
 
 \noindent
@@ -1769,129 +1755,106 @@ where the action ``clear'' assigns to image the value corresponding to a picture
 
 Again, CLEARFIRST is a machine for which alternative programs could have been written, e.g.
 
-\noindent
 build: \{clear\}
 
 \noindent
 would make sense, but would produce fifty blank lines as output;
 
-\noindent
 build: \{setmarks; clear\}
 
 \noindent
 would contain an undefined operation;
 
-\noindent
 build: \{clear; clear; setmarks\}
 
 \noindent
 would contain a superfluous operation, just as
 
-\noindent
 build: \{clear; setmarks; setmarks\}
 
 \noindent
 would, because the second action ``setmarks'' would only add marks to the picture that would already be there and therefore would not change the value of ``image''.
 
-(Note on notation used. The algorithm explaining "build" in terms of ``clear'' and ``setmarks'' does so without explicitly mentioning ``image'', because we do not wish to use the actual parameter notation in algorithms unless its actual combinatorial freedom is in fact used in this machine.
+(Note on notation used. The algorithm explaining ``build'' in terms of ``clear'' and ``setmarks'' does so without explicitly mentioning ``image'', because we do not wish to use the actual parameter notation in algorithms unless its actual combinatorial freedom is in fact used in this machine.
 
 Furthermore, ``build'' being a one-parameter operation no separate identifier for its formal parameter has been introduced. Also this abbreviation on my part could turn out to be very unwise.)
 
 The next step in the design of the computation --- because it can be made without any further commitments --- is to describe how the thousand marks of the curve will be dealt with in turn. For the time being I propose the following write-up:
 
-\noindent
 ISCANNER
 
-\noindent
 \textbf{begin integer} $i$;
 
-\noindent
-\quad setmarks: \{$i \coloneq 0$; \textbf{while} $i < 1000$ \textbf{do} \{add mark; $i$ plus 1\}\};
+\quad setmarks: \{$i \coloneq 0$; \textbf{while} $i < 1000$ \textbf{do} \{add mark; $i$ \textbf{plus} 1\}\};
 
-\noindent
 \quad \textbf{instr} add mark($i$, image)
 
-\noindent
 \textbf{end}
 
+\noindent
 This algorithm is to be understood in a machine whose instruction repertoire comprises ``add mark($i$, image)'' which will change the value of ``image'' in accordance with the addition of the $i$th mark. It describes the order in which the marks are dealt with; it shows all marks will be dealt with exactly once.
 
 But this is not all: a new variable (viz. ``$i$'') has been introduced, the algorithm appeals to a set of actions referring to this variable (``$i \coloneq 0$'', \mbox{``$i < 1000$''} and ``$i$ \textbf{plus} 1'') and if I were completely consistent, it seems that I should list them at the bottom, as possibly requiring further clarification at a later stage, just as ``add mark''. I have not done so (I have treated them along the same lines as the \textbf{while-do} clause). From the point of view of language semantics this separate treatment of an implicitly understood type \textbf{integer} does not seem attractive, and it seems hard to justify, why the type \textbf{integer} is treated differently from the type ``image'': both are implicitly understood in this machine.
 
-Yet I have done it. All the time I design programs for non-existing machines and add: ``if we now had a machine comprising the primitives here assumed, then the job is done''. This is, logically speaking, correct; in practice it is a joke, because we know very well that we cannot assume a general purpose machine to be available whose instruction code is so very well tailored to our needs. We should not close our eyes --- nor feign to do so! --- to our responsibility to provide such primitives in a later stage of the design. When I now appeal to a well-understood type ``integer'' and the operations defined on variables of such a type in this exceptional manner, I lo so with the intention of expressing that-although these facilities have to be provided in some form or another-providing these facilities fall outside the scope of the programmer's responsibility and also that the programmer will accept any reasonable implementation of them.
+Yet I have done it. All the time I design programs for non-existing machines and add: ``if we now had a machine comprising the primitives here assumed, then the job is done''. This is, logically speaking, correct; in practice it is a joke, because we know very well that we cannot assume a general purpose machine to be available whose instruction code is so very well tailored to our needs. We should not close our eyes --- nor feign to do so! --- to our responsibility to provide such primitives in a later stage of the design. When I now appeal to a well-understood type ``integer'' and the operations defined on variables of such a type in this exceptional manner, I lo so with the intention of expressing that --- although these facilities have to be provided in some form or another --- providing these facilities fall outside the scope of the programmer's responsibility and also that the programmer will accept any reasonable implementation of them.
 
 Again we are left with a primitive that admits further refinement without commitments regarding the other primitives. We have to describe how dealing with mark no. $i$ can be expressed in terms of dealing with a position on the page: we create the machine dealing with the computation of this position.
 
-\noindent
 COMPPOS
 \nopagebreak
 
-\noindent
 \textbf{begin integer} $x$, $y$;
 \nopagebreak
 
-\noindent
-\quad add mark: \{$x \coloneq fx(i)$; $y \coloneq fy(i)$; mark pos\};
+\quad add mark: \{$x \coloneq f_x(i)$; $y \coloneq f_y(i)$; mark pos\};
 
-\noindent
 \quad\textbf{instr} mark pos($x$, $y$, image)
 
-\noindent
 \textbf{end}
 
 \noindent
 where ``mark pos'' will change the current value of the variable ``image'' in accordance with the addition of a mark with the co-ordinates ``$x$'' and ``$y$'' on the picture to be printed.
 
-(Note. In the last refinement it is explicitly assumed that the functions $fx(i)$ and $fy(i)$ can be evaluated in any order of their argument values. If these two thousand function values were to be read from an input stream, pair wise in a prescribed order of $i$-values, then the last two machines would have to be merged into a single one.)
+(Note. In the last refinement it is explicitly assumed that the functions $f_x(i)$ and $f_y(i)$ can be evaluated in any order of their argument values. If these two thousand function values were to be read from an input stream, pair wise in a prescribed order of $i$-values, then the last two machines would have to be merged into a single one.)
 
 By now I see no possibility of further refinement without committing myself to the structure of the still rather vague type ``image''. How do we propose that this value will be stored? We have to structure the variables of type ``image'', or, what amounts to exactly the same thing, we have to choose a representation for its possible values.
 
 While lecturing at various places I have described versions of this program to different audiences, and it may be worth-while to point out that at least twice part of my audience was deeply troubled by the time I had reached this stage. They felt for instance, that I could not claim that my program, as far as developed, was correct; they objected to my remark that
 
-\noindent
 draw: \{build; print; print\}
 
 \noindent
-would produce the same picture twice, for how did I know, that "print" did not (by means of some side-effect) change the value of ``image'' before I had \textit{made} the primitive ``print''? The answer to this, of course, is that ``print'' has to do what has been stated and should not do what has not been stated. But then more objections came: I had failed to show that the representation was unique, perhaps it was such, that ``print'' was only a partial function, undefined for some possible values of ``image'', etc. The answer to this seems to be the following: legitimate as such concerns are, they should be dealt with at the right moment, i.e. not before we commit ourselves to a representation. It is apparently the strength of our approach that so much of the program could be written down independently of the representation to be chosen for the values of the type ``image''. What we have done so far seems indeed a judicious exploitation of our power of abstraction (here abstraction of the particular representation to be chosen for the data structure ``image'').
+would produce the same picture twice, for how did I know, that ``print'' did not (by means of some side-effect) change the value of ``image'' before I had \textit{made} the primitive ``print''? The answer to this, of course, is that ``print'' has to do what has been stated and should not do what has not been stated. But then more objections came: I had failed to show that the representation was unique, perhaps it was such, that ``print'' was only a partial function, undefined for some possible values of ``image'', etc. The answer to this seems to be the following: legitimate as such concerns are, they should be dealt with at the right moment, i.e. not before we commit ourselves to a representation. It is apparently the strength of our approach that so much of the program could be written down independently of the representation to be chosen for the values of the type ``image''. What we have done so far seems indeed a judicious exploitation of our power of abstraction (here abstraction of the particular representation to be chosen for the data structure ``image'').
 
 But even if we now come to the conclusion that the time has come to decide upon the data structure for the type ``image'' we still do not need to commit ourselves completely. Faced with the question how to structure our variable no w, we can take our decisions step-wise, just as we have done with the algorithmic refinements encountered so far.
 
 We recall that the origin of the problem was to be found in the circumstance that the printing primitives ``PRSYM'' and ``NLCR'' forced the computation to produce the picture line after line going from top to bottom. Let us try to give recognition to that fact by regarding the image as composed of an array of lines. I then come to the following next level.
 
-\noindent
 LINER
 
-\noindent
 \textbf{begin integer} $j$;
 
-\noindent
 \quad image: \{\textbf{array} line$[0: 49]$\};
 
-\noindent
 \quad print: \{$j \coloneq 49$; \textbf{while} $j \geqslant 0$ \textbf{do} \{lineprint(line[$j$]); $j$ \textbf{minus} 1\}\};
 
-\noindent
 \quad clear: \{$j \coloneq 49$; \textbf{while} $j \geqslant 0$ \textbf{do} \{lineclear(line[$j$]); $j$ \textbf{minus} 1\}\};
 
-\noindent
 \quad mark pos: \{linemark(line[$y$])\} ;
 
-\noindent
 \quad \textbf{type} line;
 
-\noindent
 \quad \textbf{instr} lineprint(line), lineclear(line), linemark($x$, line)
 
-\noindent
 \textbf{end}
 
 In the last line but one we have introduced a type called ``line''; a type, I recall, is regarded as a collection of distinguishable values and a variable of such a type can, at any moment, have one of this collection as its value. The first line of code expresses that the type ``image'' is composed of an array of 50 elements of type ``line'', numbered from 0 through 49, and, being the only type composed from this type, again we abstain from introducing a new identifier (wisely or not).
 
-Then, ``print'', ``clear'', and ``mark pos'', being operations that were understood as operating on an "image" are translated in algorithms expressed in terms of operations on a line. In the code of these algorithms, the (true) actual parameter specifies which line; at the end of the description we give the instruction list, indicating that the actions operate on ``a line''; we have given the type, but not the parameter.
+Then, ``print'', ``clear'', and ``mark pos'', being operations that were understood as operating on an ``image'' are translated in algorithms expressed in terms of operations on a line. In the code of these algorithms, the (true) actual parameter specifies which line; at the end of the description we give the instruction list, indicating that the actions operate on ``a line''; we have given the type, but not the parameter.
 
 This level introduces some new features. To start with (as in explaining ``image'') we treat the structural refinement of a data type on a footing very similar to the algorithmic refinements (as applied to ``print'', ``clear'' and ``mark pos''). Before this level, our approach could have been regarded as an effort to establish a discipline for ``subroutinization'' --- if the reader will excuse this horrible term! --- now we observe that that characterization of  our effort covers only half of what we are trying to do, as we are trying to apply a similar technique to data structures as well. Secondly, our previous machine explained just one entity (instruction or data type) in contrast to ``LINER'', which explains a whole bunch of them. The point is that we try to associate with each level a separate design decision; the decision taken here is to understand the image from now onwards in terms of lines, and therefore all operations dealing with an image as such have to be translated in terms of operations dealing with its lines. The image has been ``explained away'', the only unusual type we still have to deal with is the type ``line'' and that is what we are going to do now. I draw your attention to the fact that in the level to come, we have to deal with lines: that lines are used to compose images from is no longer relevant!
 
-To represent a line we have many different possibilities, e.g. a list of the the $x$-coordinates of the positions where a mark should be printed (possibly sorted in order of increasing x-value), a boolean array of 100 elements, each element indicating whether the corresponding position on the line of the picture should be marked, or an integer array of 100 elements, each element having the value ``mark'' or ``space'' of the PRSYM-parameter for the corresponding printable position. The last representation caters for extension when different curves (with different marks) have to be printed in the same picture ; therefore we select the last one.
+To represent a line we have many different possibilities, e.g. a list of the the $x$-coordinates of the positions where a mark should be printed (possibly sorted in order of increasing $x$-value), a boolean array of 100 elements, each element indicating whether the corresponding position on the line of the picture should be marked, or an integer array of 100 elements, each element having the value ``mark'' or ``space'' of the PRSYM-parameter for the corresponding printable position. The last representation caters for extension when different curves (with different marks) have to be printed in the same picture ; therefore we select the last one.
 
 This leads to
 
@@ -1918,7 +1881,7 @@ LONG REP
 
 This however leads to an implementation filling out the line with spaces at the righthand side of the rightmost mark: it is like banging the space bar until the bell rings when we want to effect the transition to a new paragraph while writing a letter!
 
-The next version suppresses superfluous PRSYM-commands and even leaves those elements of the variable of type "line" undefined that do not need to be defined. With each line a counter ``$f$'' is associated, giving the number of PRSYM-commands to be given for that line. Clearing a line now shrinks into setting ``$f$'' to zero!
+The next version suppresses superfluous PRSYM-commands and even leaves those elements of the variable of type ``line'' undefined that do not need to be defined. With each line a counter ``$f$'' is associated, giving the number of PRSYM-commands to be given for that line. Clearing a line now shrinks into setting ``$f$'' to zero!
 
 \noindent
 SHORTREP
@@ -1930,7 +1893,7 @@ SHORTREP
 \quad line: \{\textbf{integer} $f$; \textbf{integer array} sym$[0 : 99]$\};
 
 \noindent
-\quad lineprint: \{k $\coloneq$ 0; while $k < f$ \textbf{do} \{PRSYM(sym[$k$]); $k$ \textbf{plus} 1\}; NLCR\};
+\quad lineprint: \{k $\coloneq$ 0; \textbf{while} $k < f$ \textbf{do} \{PRSYM(sym[$k$]); $k$ \textbf{plus} 1\}; NLCR\};
 
 \noindent
 \quad lineclear: \{$f \coloneq 0$\} ;
@@ -1952,10 +1915,8 @@ SHORTREP
 
 The above program is essentially the program as I have shown it to at least five different audiences. Now, two months later, while thinking at leisure about correctness proofs, I suddenly realize that the given algorithm for ``linemark'' betrays my past, for it is a piece of lousy coding, compared with the following alternative:
 
-\noindent
 linemark: \{\textbf{while} $f \leqslant x$ \textbf{do} \{sym$[f] \coloneq$ space; $f$ \textbf{plus} 1\};
 	
-\noindent
 \quad sym$[x] \coloneq$ mark\}
 
 \noindent
@@ -1967,7 +1928,7 @@ $$
 $$
 
 \noindent
-is used in programs in two different ways. On the one hand we have the applications, in which the execution of the statement $S$ does not invalidate the truth of $B$, on the other hand we have the situations in which the execution of the statement S is guaranteed to invalidate the truth of $B$. In the latter case, it is the function of the conditional statement to ensure that after its execution $B$ will not hold. It is then, essentially, a shortcut for
+is used in programs in two different ways. On the one hand we have the applications, in which the execution of the statement $S$ does not invalidate the truth of $B$, on the other hand we have the situations in which the execution of the statement $S$ is guaranteed to invalidate the truth of $B$. In the latter case, it is the function of the conditional statement to ensure that after its execution $B$ will not hold. It is then, essentially, a shortcut for
 $$
 \text{``\textbf{while} } B \text{ \textbf{do} } S\text{'',}
 $$
