@@ -722,6 +722,7 @@ and
 	\end{split}
 \end{equation}
 
+\label{pg:dilema}
 The first construction is primarily one in which sequencing is controlled by a selective clause, the second construction is primarily one in which sequencing is controlled by a repetitive clause. I can establish the equivalence of the output of the computations, but I cannot regard them as equivalent in any other useful sense. I had to force myself to the conclusion that (\ref{eq:comparing-example-1}) and (\ref{eq:comparing-example-2}) are ``hard to compare''. Originally this conclusion annoyed me very much. In the meantime I have grown to regard this incomparability as one of the facts of life and, therefore, as one of the major reasons why I regard the choice between (\ref{eq:comparing-example-1}) and (\ref{eq:comparing-example-2}) as a relevant design decision, that should not be taken without careful consideration. It is precisely its apparent triviality that has made me sensitive to the considerations that should influence such a choice. They fall outside the scope of the present section but I hope to return to them later.
 
 Let me give a second example of incomparability that is slightly more subtle.
@@ -1507,6 +1508,7 @@ In my understanding of programs I want such additional variables that store redu
 \textit{Note}. I remember one program in which the additional information was so redundant that not only the value of ``fun'' could be derived from that of ``arg'' but also the other way round. Suddenly the relation between ``fun'' and ``arg'' became symmetric, and I have been seriously bothered by the question: what entitled me to treat them so asymmetrically? The program in question generated all the solutions of a combinatorial puzzle. On closer inspection it turned out that there was a second combinatorial puzzle, where it could be proved that there existed a one-to-one correspondence between the solutions of the two problems. If I had solved the second combinatorial problem I would have found the role of ``fun'' and ``arg'' interchanged! In traditional programming, where such functional dependencies are not explicitly shown, the two puzzles would probably be solved by identical programs, whereas I made two differently structured programs. And I think rightly so, because the single program for the two puzzles needed a different proof for its correctness, depending on which puzzle it was supposed to solve, and this seems somewhat unfair when we also wish that our understanding of the computations be reflected in the structure of our programs!
 
 \section{On a program model}
+\label{eq:program-model}
 
 Before we have a program we must have composed it; after we have a program --- if there was any sense in making it --- we shall have it executed. In this section I shall not stress the activities of program composition and of program execution too much, and I shall try to view the program as a static object. We want to view it as a highly structured object and our main question is: what kind of structures do we envisage and why? Our hope is that eventually we shall arrive at a program structure that is both nice to compose and nice to execute. Mentally, of course, I am unable to ignore these processes, but at present I do not want to discuss them; in particular: I do not want to discuss a design methodology (whether to work ``from outside inwards'' or the other way round), nor do I want to discuss implementation consequences now. Again, in order not to complicate matters too much, I shall restrict myself to sequential programs.
 
@@ -2027,6 +2029,7 @@ We can phrase the observation in more technical terms. The primed version is mes
 It also gives --- me at least --- a somewhat clearer picture of the scope of my present efforts. Whatever I shall develop, it will not be a General Problem Solver, not a mechanical one, not even one written for the benefit of the human problem solver. But it may give the human some appreciation for the various aspects of ``elegance'' of a solution when he succeeds in finding one. And as such it may give him a guide line.
 
 \section{On grouping and sequencing}
+\label{sec:grouping-and-sequencing}
 
 While we are considering a programming tool in which explicit recognition has been given to the hierarchy of levels of abstraction, the present section is also applicable to programming in programming languages as they are understood today, viz. on a constant semantic level. (And there is a fair chance that the current section has its morals outside the restricted field of programming, for it seems to be concerned with problem solving in general.)
 
@@ -2240,4 +2243,213 @@ but immediately this question turned up: ``With how much do we deal during a sin
 
 The first two suggestions were rejected very quickly and without much explicit motivation, although --- or because? --- it is not too difficult to provide it. (The first one is unattractive because the amount of output that can be produced on account of the next character of the input text varies wildly; for the second suggestion a similar objection holds. Apart from that, a program with a loop in a loop is in general cleaner: this suggests to look for larger portions.) The audience rejected the fourth suggestion on account of the remark that the terminating point could come equally well after an even number of words as after an odd number of words. To make the selection of the third suggestion explicit, we wrote on the blackboard:
 
-Page 69
+prelude;
+
+\textbf{repeat} process next word \textbf{until} point read;
+
+coda
+
+Everyone was satisfied in as far as this program expresses neatly that the output words are dealt with in exactly the same order as the corresponding input words are read, but it does not express that half of the words are to be printed in reverse order. When this was pointed out to them, they quickly introduced a state variable for the purpose. A first suggestion was to count the number of words processed and to make the processing dependent on the odd/evenness of this count, but a minor hesitation from my side was enough for the discovery that a boolean variable would meet the situation. It was decided that the ``prelude'' should include
+$$
+\text{``forward} \coloneq \text{\textbf{true}''}
+$$
+
+\noindent
+while in "process next word" the printing in the order dependent on the current value of "forward" should be followed by
+$$
+\text{``forward} \coloneq \text{\textbf{non} forward''}
+$$
+
+For me it was very gratifying to see that they introduced the variable ``forward'' before bothering about the details of word separation, which then became their next worry. It took them more time to realize that a further refinement of ``process next word'' required exact specification of which characters of the input text were going to be read and which characters of the output text were going to be printed at each execution of the repeatable statement. In fact, I had to pose the question to them and, after having done so, I asked them in which of the two texts the grouping presented itself most naturally. They selected the output text and chose the following grouping (indicating separation with a vertical bar):
+
+	$\mid$this--$\mid$si--$\mid$a--$\mid$yllis--$\mid$program.$\mid$
+
+\noindent
+i.e. in units of a word followed by a proper terminator. I then asked for the corresponding grouping of the input characters. When their attention had been brought to the terminators, they suggested (from right to left!) the following separation of the input characters:
+
+$\mid$this--i$\mid$s--a$\mid$--s$\mid$illy--p$\mid$rogram--.$\mid$,
+
+\noindent
+as soon as one of them had remarked that the program could only ``know'' that an output word should be followed by a space after having ``seen'' the first letter of the next input word. I then remained silent, leaving them gazing at their grouping of the symbols until one of them discovered that the exceptional grouping of the characters of the first input word was inelegant, that the grouping should be
+
+t$\mid$his--i$\mid$s--a$\mid$--s$\mid$illy--p$\mid$rogram--.$\mid$,
+
+\noindent
+i.e. that the first character of the first word should be read in the prelude. Another variable was introduced and we arrived at
+
+\textbf{boolean} forward; \textbf{char} $x$;
+
+forward $\coloneq$ \textbf{true}; $x \coloneq$ RNC;
+
+\textbf{repeat} process next word;
+
+\quad forward $\coloneq$ \textbf{non} forward
+
+\textbf{until} $x =$ pnt
+
+\noindent
+in which the second line represents the prelude; in the meantime it had been decided that the coda could be empty.
+
+The above stage had been reached after the first 45 minutes and we had our interval for coffee. Personally I felt that the problem had been solved, that from now onwards it was just a matter of routine; as it turned out, my audience was not practised enough and it took another 45 minutes to complete the program.
+
+Unanimously they decided to introduce a
+
+\textbf{char array} $c[1:20]$
+
+\noindent
+to store the letters of the word. (No one discovered that reading the letters and printing them in the reverse order could be done by a recursive routine!) Essentially, four things have to be done: the letters of the word have to be read, the letters of the word have to be printed, enough has to be read to decide which terminator is to be printed and the terminator has to be printed. I did not list these four actions, I did not ask for an explicit decision on how to group and/or combine them. The audience decided that first all reading should be done and thereafter all printing. (From their side this was hardly a conscious decision.)
+
+Trying to refine the reading and the printing process they hit an unsuspected barrier: they were --- at least for me, surprisingly --- slow in discovering that they still had to define an interface between reading and printing through which to transmit the word to be processed, no matter how obvious this interface was. It took a long time before anyone formulated that $c[i]$ should equal the $i$th character of the word when read from left to right. Perhaps half of the audience was wondering what all the fuss was about, but it took an equally long time to discover that the length of the word needed some form of representation as well. No one suggested to do this by storing a terminator, they introduced a separate integer ``$l$'', counting the number of letters of the word. They decided that the first word ``this'' should be represented by
+
+$c[1] = $``$t$'', $c[2] = $``$h$'', $c[3] = $``$i$'', $c[4] = $``$s$'' and $l = 4$
+
+They still had difficulty in arriving at the reading cycle and it was only when I had said repeatedly ``so we have decided that ``$l$'' is going to represent the number of letter of the word stored in the array'' that they arrived for the beginning of the reading process at
+
+$ l \coloneq 0; $
+
+\textbf{repeat} $l \coloneq l + 1;$ $c[l] \coloneq x;$ $x\coloneq$ RNC \textbf{until} $x =$ sp \textbf{or} $x =$ pnt
+
+\noindent
+(In the first draft ``\textbf{or} $x =$ pnt'' was missing, but this was remedied quickly.) Once this was on the blackboard they completed the reading process without much hesitation:
+
+\textbf{while} $x =$ sp \textbf{do} $x\coloneq$ RNC
+
+When we turned our attention to the printing process, they were more productive. Clearly the reading process had shown them the purpose of the interface and suggestions came from various sides. I had never described the dilemma to them (see page \pageref{pg:dilema}), whether to code an alternative clause selecting between two repetitions or a repetitive clause repeating an alternative statement. I was waiting for the dilemma to turn up, it came and I showed it to them. Then I had a surprise, for one of the students suggested to map the two loops on each other with the aid of more variables. We introduced three integers ``$k$. inc, term'' and the printing of the letters became
+
+\textbf{if} forward \textbf{then begin} $k \coloneq 0$; inc $\coloneq + 1$; term $\coloneq l$ \textbf{end}
+
+\tabto{5.8em}\textbf{else begin} $k \coloneq l + 1$; inc $\coloneq -1$; term $\coloneq 1$ \textbf{end};
+
+\textbf{repeat} $k \coloneq k + $inc; PNC($c[k]$) \textbf{until} $k =$ term
+
+\noindent
+followed by
+
+\textbf{if} $x =$ pnt \textbf{then} PNC(pnt) \textbf{else} PNC(sp).
+
+Thus we arrived at the following program:
+
+\textbf{boolean} forward; \textbf{char} $x$; \textbf{char array} $c[1:20]$; \textbf{integer} $l$, $k$, inc, term;
+
+forward $\coloneq$ \textbf{true}; $x \coloneq$ RNC;
+
+\textbf{repeat} $l \coloneq 0$;
+
+\quad \textbf{repeat} $l\coloneq l + 1$; $c[l]\coloneq x$; $x \coloneq$ RNC \textbf{until} $x =$ sp \textbf{or} $x =$ pnt;
+
+\quad \textbf{while} $x =$ sp \textbf{do} $x\coloneq$ RNC;
+
+\quad \textbf{if} forward \textbf{then begin} $k\coloneq 0$; inc $\coloneq + 1$; term $\coloneq l$ \textbf{end}
+
+\quad\quad \textbf{else begin} $k\coloneq l + 1$; inc $\coloneq -1$; term $\coloneq 1$ \textbf{end};
+
+\quad \textbf{repeat} $k\coloneq k + \text{inc}$; PNC($c[k]$) \textbf{until} $k =$ term;
+
+\quad \textbf{if} $x = \text{pnt}$ \textbf{then} PNC(pnt) \textbf{else} PNC(sp);
+
+\quad forward $\coloneq$ \textbf{non} forward
+
+\textbf{until} $x =$ pnt
+
+This section has not been included because the problem tackled in it is very exciting. On the contrary, I feel tempted to remark that the problem is perhaps too trivial to act as a good testing ground for an orderly approach to the problem of program composition. This section has been included because it contains a true eye-witness account of what happened in the classroom. It should be interpreted as a partial answer to the question that is often posed to me, viz. to what extent I can teach programming style. (I never used the ``Notes on Structured Programming'' --- mainly addressed to myself and perhaps to my colleagues --- in teaching. The classroom experiment described in this section took place at the end of a course entitled "Introduction into the Art of Programming", for which separate lecture notes-with exercises and all that-were written. As at the moment of writing the students that followed this course have still to pass their examination, it is for me still an open question how successful I have been. They liked the course, I have heard that they described my programs as ``logical poems'', so I have the best of hopes.)
+
+\section{The problem of the Eight queens}
+
+This last section is adapted from my lecture notes ``Introduction into the Art of Programming''. I owe the example --- as many other good ones --- to Niklaus Wirth. This last section is added for two reasons.
+
+Firstly, it is a second effort to do more justice to the process of invention. (As a matter of fact I start where the student is not familiar with the concept of backtracking and aim at discovering it as I go along.)
+
+Secondly, and that is more important, it deals with recursion as a programming technique. In preceding sections (particularly in ``\nameref{eq:program-model}'') I have reviewed the subroutine concept; there it emerged as an embodiment of what I have also called ``operational abstraction''. In the relation between main program and subroutine we can distinguish quite clearly two different semantic levels. On the level of the main program the subroutine represents a primitive action; on that level it is used on account of ``what it does for us'' and on that same level it is irrelevant ``how it works''. On the level of the subroutine body we are concerned with how it works but can --- and should --- abstract from how it is used. This clear separation of the two semantic levels ``what it does'' and ``how it works'' is denied to the designer of a recursive procedure. As a result of this circumstance the design of a recursive routine requires a different mental skill, justifying the inclusion of the current section in this manuscript. The recursive procedure has to be understood and conceived on a single semantic level: as such it is more like a sequencing device, comparable to the repetitive clauses.
+
+It is requested to make a program generating all configurations of eight queens on a chessboard of $8\times 8$ squares such that no queen can take any of the others. This means that in the configurations sought, no two queens may be on the same row, on the same column or on the same diagonal.
+
+We don't have an operator generating all these configurations, this operator is precisely what we have to make. Now there is a very general way (cf. ``\nameref{sec:grouping-and-sequencing}'') of tackling such a problem, which is as follows.
+
+Call the set of configurations to be generated: set $A$. Look for a set $B$ of configurations with the following properties:
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\item \label[B1]{en:first-item-eight-queen}
+	set $A$ is a subset of set $B$
+	
+	\item \label{en:second-item-eight-queen}
+	given an element of set $B$ it is not too difficult to decide whether it belongs to set $A$ as well
+	
+	\item \label{en:third-item-eight-queen}
+	we can make an operator generating all elements of set $B$. 
+\end{enumerate}
+
+With the aid of the generator \ref{en:third-item-eight-queen} for the elements of set $B$, all elements of set $B$ can then be generated in turn; they will be subjected to the decision criterion \ref{en:second-item-eight-queen} which decides whether they have to be skipped or handed over, thus generating elements of set $A$. Thanks to \ref{en:first-item-eight-queen} this algorithm will produce all elements of set $A$.
+
+Three remarks are in order.
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\item If the whole approach is to make sense, set Bis not identical to set $A$, and as it must contain set $A$ as a (true) subset, it must be larger than set $A$. For reasons of efficiency, however, it is advisable to choose set $B$ ``as small as possible'': the more elements it has, the more elements of it have to be skipped on account of the decision criterion \ref{en:criterion-2-eight-queen}.
+	
+	\item \label{en:criterion-2-eight-queen}
+	We should look for a decision criterion that is cheap to apply, at least the discovery that an element of $B$ does \textit{not} belong to A should (on the average) be cheap. Also this is dictated by efficiency considerations, as we may expect set $B$ to be an order of magnitude larger than set $A$, i.e. the majority of the elements of $B$ will have to be rejected.
+	
+	\item The assumption is that the generation of the elements of set $B$ is easier than a direct generation of the elements of set $A$. If, nevertheless, the generation of the elements of set $B$ still presents difficulties, we can repeat our pattern of thinking, re-apply the trick and look for a still larger set $C$ of configurations that contains $B$ as a subset etc. (And, as the careful reader will observe, we shall do so in the course of this example.)
+\end{enumerate}
+
+Above, we have sketched a very general approach, applicable to many, very different problems. Faced with a particular problem, i.e. faced with a specific set $A$, the problem of course is what to select for our set $B$.
+
+In a moment of optimism one could think that this is an easy matter, as we might consider the following technique. We list all the mutually independent conditions that our elements of set $A$ must satisfy and omit one of them. Sometimes this works but as a general technique it is too naïve: its short-comings become apparent when we apply it blindly to the problem of the eight queens. We can characterize our solutions by the two conditions
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\item there are 8 queens on the board
+	\item no two of the queens can take each other.
+\end{enumerate}
+
+Omitting either of them gives for set $B$ the alternatives
+
+\begin{enumerate}[leftmargin=2.2\parindent, label=B\arabic*:]
+	\item \label{en:b1-eight-queens}
+	all configurations with $N$ queens on the board such that no two queens can take each other
+	\item \label{en:b2-eight-queens}
+	all configurations of 8 queens on the board.
+\end{enumerate}
+
+But both sets are so ludicrously huge that they lead to utterly impractical algorithms. So we have to be smarter. The burning question is: ``How?''.
+
+Well, at this stage of our considerations, being slightly at a loss, we are not so much concerned with the efficiency of our final program as with the efficiency of our own thought processes! So, if we decide to make a list of properties of solutions, in the hope of finding a useful clue, this is a rather undirected search and therefore we should not invest too much mental energy in such a search, that is: for a start we should restrict ourselves to their \textit{obvious} properties.
+
+(I gave the puzzle as a sobering exercise to one of the staff members of the Department of Mathematics at my University, because he expressed the opinion that programming was easy. He violated the above rule and, being, apart from a pure, perhaps also a poor mathematician, he started to look for interesting, non-obvious properties. He conjectured that if the chessboard were divided in four squares of $4\times 4$ fields, each square should contain two queens, and then he started to prove this conjecture without having convinced himself that he could make good use of it. He still has not solved the problem and, as far as I know, has not yet discovered that his conjecture is false.)
+
+Well, let us go ahead and let us list the obvious properties we can think of.
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\alph*)]
+	\item No row may contain more than one queen, 8 queens are to be placed and the chessboard has exactly 8 rows. As a result we conclude that each row will contain precisely one queen.
+	\item Similarly we conclude that each column will contain precisely on queen.
+	\item There are 15 ``upward'' diagonals, each of them containing at most one queen, i.e. 8 upward diagonals contain precisely one queen and 7 upward
+	\item Similarly we conclude that 8 downward diagonals contain precisely one queen and 7 are empty.
+	\item Given any non-empty configuration of queens such that no two of them can take each other, removal of any one of these queens will result in a configuration sharing that property.
+diagonals are empty.
+\end{enumerate}
+
+Now the last property is very important. (To be quite honest: here I feel unable to buffer the shock of invention!) In our earlier terminology it tells us something about any non-empty configuration from set \hyperref[en:b1-eight-queens]{B1}. If we start with a solution (which is an 8-queen configuration from set \hyperref[en:b1-eight-queens]{B1}) and take away one queen we get a 7-queen configuration from set \hyperref[en:b1-eight-queens]{B1}; taking away a next queen will leave again a configuration from set \hyperref[en:b1-eight-queens]{B1} and we can repeat this process until the chessboard is empty. We could have taken a motion picture of this process: playing it back backwards it would show how, starting from an empty board, via configurations from set \hyperref[en:b1-eight-queens]{B1} that solution can be built up by adding one queen at a time. (Whether the trick of the motion picture played backwards is of any assistance for my readers is not for me to judge; I only mention it because I know that such devices help me.) When making the picture, any solution could be reduced to the empty board in many ways, in exactly the same number of ways --- while playing it backwards --- each solution can be built up. Can we exploit this freedom? We have rejected set \hyperref[en:b1-eight-queens]{B1} because it is too large, but maybe we can find a suitable subset of it, such that each non-empty configuration of the subset is a one-queen extension of only one other configuration of the subset. The ``extension property'' suggests that we are willing to consider configurations with less than 8 queens on the board and that we would like to form new configurations by adding a queen to an existing configuration-a relatively simple operation presumably. Well, this draws our attention immediately to the \textit{generation} of the elements of the (still mysterious) set $B$. For instance, in what order? And this again raises a question to which, as yet, we have not paid the slightest attention: in what order are we to generate the solutions, i.e. the elements of set $A$? Can we make a reasonable suggestion in the hope of deriving a clue from it? (In my experience such a question about order is usually very illuminating. It is not only that we have to make a sequential program that by definition will generate the solutions in some order, so that the decision about the order will have to be taken at some stage of the game. The decision about the order usually provides the clue to the proof that the program will generate \textit{all} solutions and each solution only \textit{once}.)
+
+Prior to that we should ask ourselves: how do we characterize solutions once we have them? To characterize a solution we must give the positions of 8 queens. The queens themselves are unordered, but the rows and the columns are not: we may assume them to be numbered from 0 through 7. Thanks to property (a) which tells us that each row contains precisely one queen, we can order the queens according to the number of the row they occupy. Then each configuration of 8 queens can be given by the value of the \textbf{integer array} $x[0:7]$, where
+
+\noindent
+$x[i] =$ the number of the column occupied by the queen in the $i$th row.
+
+Each solution is then a "8-digit word" ($x[0] \dots x[7]$) and the only sensible order in which to generate these words that I can think of is the alphabetical order.
+
+\noindent
+\textit{Note}. As a consequence we open the way to algorithms in which rows and columns are treated differently, while the original problem was symmetrical in rows and columns! To consider asymmetric algorithms is precisely what the above considerations have taught us!
+
+Returning to the alphabetical order: now we are approaching familiar ground. If the elements of set $A$ are to be generated in alphabetical order and they have to be generated by selection from a larger set $B$, then the standard technique is to generate the elements of set $B$ in alphabetical order as well and to produce the elements of the subset in the order in which they occur in set $B$.
+
+First we have to generate all solutions with $x[0] = 0$ (if any), then those with $x[0] = 1$ (if any) etc.; of the solutions with $x[0]$ fixed, those with $x[1] = 0$ (if any) have to be generated first, followed by those with $x[1] = 1$ (if any) etc. In other words: the queen of row 0 is placed in column 0 --- say the square in the bottom left corner --- and remains there until all elements of $A$ (and $B$) with queen 0 in that position have been generated and only then is she moved one square to the right to the next column. For each position of queen 0, queen I will walk from left to right in row I --- skipping the squares that are covered by queen 0 --- for each combined position of the first two queens, queen 2 walks along row 2 from left to right, skipping all squares covered by the preceding queens, etc.
+
+But now we have found set $B$! It is indeed a subset of \hyperref[en:b1-eight-queens]{B1}, set $B$ consists of all configurations with one queen in each of the first $N$ rows, such that no two queens can take each other.
+
+The criterion deciding whether an element of $B$ belongs to $A$ as well is that $N = 8$.
+
+Having established our choice for set $B$, we find ourselves faced with the task of generating its elements in alphabetical order. We could try to do this via an operator ``GENERATE NEXT ELEMENT OF $B$'' with a program of the form
+
+
+page 77
+
+
+
