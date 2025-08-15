@@ -2120,7 +2120,7 @@ I found the majority of my students inclined to make a program with the followin
 
 \textbf{until} length $= 101$''
 
-Although a program along these lines produces the correct output, objections can --- and to my taste: should --- be made against it. The first objections regards the stopping criterion: when a solution of length 100 has been printed, we (knowing the algorithm) can deduce that after that for the first time the trial sequence will have length $= 101$ and this is now the criterion to stop, but this is a rather indirect and tortuous way to establish the stopping criterion. (How tortuous it is was clearly demonstrated by those students who did not see that an unnecessary trial sequence was generated and declared for the trial sequence an array of 100 elements instead of 101.) The second objection is that the operation ``increase trial sequence'' never increases its length: after rejection of a trial sequence a superfluous test on the length is performed. (When I used this example for student examination examinations I had not stressed very explicitly in my lectures any problem solving principles, so my disappointment was not too severe. In a sense I am glad to have observed these examinations, for it was for me an incentive to stress problem solving principles as far as I could find, formulate and teach them.)
+Although a program along these lines produces the correct output, objections can --- and to my taste: should --- be made against it. The first objections regards the stopping criterion: when a solution of length 100 has been printed, \textit{we} (knowing the algorithm) can deduce that after that for the first time the trial sequence will have length $= 101$ and this is now the criterion to stop, but this is a rather indirect and tortuous way to establish the stopping criterion. (How tortuous it is was clearly demonstrated by those students who did not see that an unnecessary trial sequence was generated and declared for the trial sequence an array of 100 elements instead of 101.) The second objection is that the operation ``increase trial sequence'' never increases its length: after rejection of a trial sequence a superfluous test on the length is performed. (When I used this example for student examination examinations I had not stressed very explicitly in my lectures any problem solving principles, so my disappointment was not too severe. In a sense I am glad to have observed these examinations, for it was for me an incentive to stress problem solving principles as far as I could find, formulate and teach them.)
 
 The program to which the above objections do not apply treats the empty sequence as a virtual solution, not to be printed. It has --- to the same level of detail --- the following structure:
 
@@ -2146,7 +2146,7 @@ Here length is the length of the solution printed (if any), thus avoiding the to
 
 This (more abstract) program is only concerned with sequences that are solutions: on this level of description one can ignore that the transition from one solution to the next takes place via a sequence of trial solutions that turn out to be failures.
 
-I owe to Joe Weizenbaum the second example. Make a program that, for given positive integer $n$, determines the smallest number $s$ that can be decomposed into the sum of two nth powers in at least two non-trivially different ways.
+I owe to Joe Weizenbaum the second example. Make a program that, for given positive integer $n$, determines the smallest number $s$ that can be decomposed into the sum of two $n$th powers in at least two non-trivially different ways.
 
 \noindent
 (\textbf{for}\tabto{2em}$n = 1$\tabto{6em}$s = 2 = 0^1 + 2^1 = 1^1 + 1^1$
@@ -2167,12 +2167,13 @@ $s:= 1$;
 
 \textbf{repeat} $s\coloneq s + 1$;
 
-\quad $k\coloneq$ ``the number of ways in which s can be decomposed as the sum
+\quad $k\coloneq$ ``the number of ways in which $s$ can be decomposed as the sum
 
-\quad\quad of two nth powers''
+\quad\quad of two $n$th powers''
 
 \textbf{until} $k > 1$
 
+\noindent
 thus arriving at a hopelessly inefficient algorithm. The error he made was the decision at too early a stage to investigate the natural numbers in succession, the overwhelming majority of which are not decomposable at all. Reasoning that the value we are looking for is the smallest decomposable number satisfying an additional property, one comes to an algorithm whose first sketch could be
 
 ``\textbf{integer} $k$, $s$, $t$;
@@ -2187,15 +2188,15 @@ $t \coloneq 1$ (and further initialisation);
 
 \textbf{until} $k > 1$''
 
-By storing a collection of triples (number pairs with their corresponding $s$-value), among which each time the pair(s) with minimums-value exceeding $t$ will occur and adjusting this collection each time $t$ is increased, a program emerges that is orders of magnitude more efficient, $t$ jumping from decomposable value to the next decomposable value. Programming (or problem solving in general?) as the judicious postponement of decisions and commitments!
+By storing a collection of triples (number pairs with their corresponding $s$-value), among which each time the pair(s) with minimum $s$-value exceeding $t$ will occur and adjusting this collection each time $t$ is increased, a program emerges that is orders of magnitude more efficient, $t$ jumping from decomposable value to the next decomposable value. Programming (or problem solving in general?) as the judicious postponement of decisions and commitments!
 
 \section{Design considerations in more detail}
 
-Preceding sections --- in particular ``A first example of step-wise program composition.'' have evoked the criticism that I have oversimplified the design process almost to the extent of dishonesty; I don't think this criticism fully unjustified and to remedy the situation I shall treat two examples in greater detail. The first example is my own invention; I have tried it out in a few oral examinations and finally I have used it at the end of my course ``An introduction into the Art of Programming'' in the classroom. I posed the problem to an audience of fifty students and together, with me as leader of the discussion, they solved the problem in 90 minutes.
+Preceding sections --- in particular ``\nameref{sec:first-example-step-wise-program-composition}'' have evoked the criticism that I have oversimplified the design process almost to the extent of dishonesty; I don't think this criticism fully unjustified and to remedy the situation I shall treat two examples in greater detail. The first example is my own invention; I have tried it out in a few oral examinations and finally I have used it at the end of my course ``An introduction into the Art of Programming'' in the classroom. I posed the problem to an audience of fifty students and together, with me as leader of the discussion, they solved the problem in 90 minutes.
 
 We consider a character set consisting of letters, a space(sp) and a point(pnt). Words consist of one or more, but at most twenty letters. An input text consists of one or more words, separated from each other by one or more spaces and terminated by zero or more spaces followed by a point. With the character valued function RNC (Read Next Character) the input text should be read from and including the first letter of the first words up to and including the terminating point. An output text has to be produced using the primitive PNC($x$) (i.e. Print Next Character) with a character valued parameter. If the function of the program were to copy the text, the following program would do (assuming character valued variables at our disposal)
 
-\textbf{char} x;
+\textbf{char} $x$;
 
 \textbf{repeat} $x \coloneq$ RNC; PNC($x$) \textbf{until} $x =$ pnt
 
@@ -2227,6 +2228,7 @@ prelude;
 
 coda
 
+\noindent
 but immediately this question turned up: ``With how much do we deal during a single execution of ``something''?''. Four suggestions turned up:
 
 \begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
