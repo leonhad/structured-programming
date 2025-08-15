@@ -10,9 +10,8 @@
 }
 \usepackage{enumitem}
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage{graphicx}
-\usepackage{breqn}
-\usepackage{chngcntr}
 \usepackage[noindentafter]{titlesec}
 \usepackage[hidelinks,pdftex,
 	pdfauthor={O.-J. DAHL, E. W. DIJKSTRA, C. A. R. HOARE},
@@ -30,7 +29,7 @@
 \usepackage{nameref}
 \usepackage{mfirstuc}
 \usepackage[hyphenation]{impnattypo}
-\usepackage[protrusion=true, expansion=true]{microtype}
+\usepackage[protrusion=true, expansion=true, tracking=true, kerning=true, spacing=true]{microtype}
 \usepackage{scrextend}
 \usepackage{tabto}
 \usepackage[para]{footmisc}
@@ -83,6 +82,8 @@
 
 \include{./frontcover}
 \cleardoublepage
+
+\fontfamily{ptm}\selectfont
 
 \pagestyle{plain}
 \include{./cover}

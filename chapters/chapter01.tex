@@ -855,11 +855,8 @@ description 0:
 \textbf{begin} ``print first thousand prime numbers'' \textbf{end}
 
 \noindent
-and when ``print first thousand prime numbers'' refers to an instruction from the well-understood repertoire, the description 0 solves the problem. For the sake of argument we assume that this instruction does \textit{not} occur in the well-understood repertoire. Therefore we have to conceive a computation composed from ``more primitive'' actions that establishes the desired net effect. Our first proposal is to separate the generation of the prime numbers and their printing, and we propose description 1.
+and when ``print first thousand prime numbers'' refers to an instruction from the well-understood repertoire, the description 0 solves the problem. For the sake of argument we assume that this instruction does \textit{not} occur in the well-understood repertoire. Therefore we have to conceive a computation composed from ``more primitive'' actions that establishes the desired net effect. Our first proposal is to separate the generation of the prime numbers and their printing, and we propose description 1:
 \medskip
-
-\noindent
-description 1:
 
 \textbf{begin variable} ``table $p$'';
 
@@ -1597,9 +1594,11 @@ manipulation:\tabto{10em} \quad\textbf{begin} \tabto{14em}\dots
 \noindent
 output:\tabto{10em} \quad\textbf{begin} \tabto{14em}\dots
 \nopagebreak
+\nopagebreak
 
 \noindent
 \tabto{13em} \quad\dots\ \textbf{end}
+\nopagebreak
 
 \noindent
 \tabto{10em}\textbf{end}
@@ -1681,11 +1680,11 @@ COMPFIRST
 
 \textbf{begin}
 
-draw: \{build; print\};
+\quad draw: \{build; print\};
 
-\textbf{var} image;
+\quad\textbf{var} image;
 
-\textbf{instr} build(image), print(image)
+\quad\textbf{instr} build(image), print(image)
 
 \textbf{end}
 
@@ -2054,3 +2053,7 @@ The problem is to construct a program generating non-empty sequences of $0$'s, $
 \dots
 
 Page 64
+
+Table
+
+dictes
