@@ -1425,6 +1425,7 @@ All this is well-known, each competent programmer does so all the time. Yet I st
 In an earlier section (``\nameref{sec:realiability-of-mechanisms}'') the need for careful program structuring has been put forward as a consequence of the requirement that program correctness can be proved. In this section we are faced with another reason: program structure should be such as to anticipate its adaptations and modifications. Our program should not only reflect (by structure) our understanding of it, but it should also be clear from its structure what sort of adaptations can be catered for smoothly. Thank goodness, the two requirements go hand in hand.
 
 \section{On trading storage space for computation speed}
+\label{sec:trading-storage-for-computation-speed}
 
 In present-day sequential computers (spring 1969) we can distinguish two main components, an active one (the processor) and a passive one (the store). The active component has the specific function to be fast, the passive one has the specific function to be large. The following is written on the assumption that this functional division is here to stay for a sufficient period of time to make a study of its consequences relevant.
 
@@ -1837,11 +1838,11 @@ LINER
 
 \quad image: \{\textbf{array} line$[0: 49]$\};
 
-\quad print: \{$j \coloneq 49$; \textbf{while} $j \geqslant 0$ \textbf{do} \{lineprint(line[$j$]); $j$ \textbf{minus} 1\}\};
+\quad print: \{$j \coloneq 49$; \textbf{while} $j \geqslant 0$ \textbf{do} \{lineprint(line$[j]$); $j$ \textbf{minus} 1\}\};
 
-\quad clear: \{$j \coloneq 49$; \textbf{while} $j \geqslant 0$ \textbf{do} \{lineclear(line[$j$]); $j$ \textbf{minus} 1\}\};
+\quad clear: \{$j \coloneq 49$; \textbf{while} $j \geqslant 0$ \textbf{do} \{lineclear(line$[j]$); $j$ \textbf{minus} 1\}\};
 
-\quad mark pos: \{linemark(line[$y$])\} ;
+\quad mark pos: \{linemark(line$[y]$)\} ;
 
 \quad \textbf{type} line;
 
@@ -1872,10 +1873,10 @@ LONG REP
 \quad lineprint: \{$k \coloneq 0$; \textbf{while} $k < 100$ \textbf{do} \{PRSYM(sym[k$]$); $k$ \textbf{plus} 1\}; NLCR\};
 
 \noindent
-\quad lineclear: \{$k \coloneq 0$; \textbf{while} $k < 100$ \textbf{do} \{sym[$k$] $\coloneq$ space; $k$ \textbf{plus} 1\}\};
+\quad lineclear: \{$k \coloneq 0$; \textbf{while} $k < 100$ \textbf{do} \{sym$[k]$ $\coloneq$ space; $k$ \textbf{plus} 1\}\};
 
 \noindent
-\quad linemark: \{sym[$x$] $\coloneq$ mark\}
+\quad linemark: \{sym$[x]$ $\coloneq$ mark\}
 
 \noindent
 \textbf{end}
@@ -1894,7 +1895,7 @@ SHORTREP
 \quad line: \{\textbf{integer} $f$; \textbf{integer array} sym$[0 : 99]$\};
 
 \noindent
-\quad lineprint: \{k $\coloneq$ 0; \textbf{while} $k < f$ \textbf{do} \{PRSYM(sym[$k$]); $k$ \textbf{plus} 1\}; NLCR\};
+\quad lineprint: \{k $\coloneq$ 0; \textbf{while} $k < f$ \textbf{do} \{PRSYM(sym$[k]$); $k$ \textbf{plus} 1\}; NLCR\};
 
 \noindent
 \quad lineclear: \{$f \coloneq 0$\} ;
@@ -2255,7 +2256,7 @@ $$
 $$
 
 \noindent
-while in "process next word" the printing in the order dependent on the current value of "forward" should be followed by
+while in ``process next word'' the printing in the order dependent on the current value of ``forward'' should be followed by
 $$
 \text{``forward} \coloneq \text{\textbf{non} forward''}
 $$
@@ -2351,7 +2352,7 @@ forward $\coloneq$ \textbf{true}; $x \coloneq$ RNC;
 
 \textbf{until} $x =$ pnt
 
-This section has not been included because the problem tackled in it is very exciting. On the contrary, I feel tempted to remark that the problem is perhaps too trivial to act as a good testing ground for an orderly approach to the problem of program composition. This section has been included because it contains a true eye-witness account of what happened in the classroom. It should be interpreted as a partial answer to the question that is often posed to me, viz. to what extent I can teach programming style. (I never used the ``Notes on Structured Programming'' --- mainly addressed to myself and perhaps to my colleagues --- in teaching. The classroom experiment described in this section took place at the end of a course entitled "Introduction into the Art of Programming", for which separate lecture notes-with exercises and all that-were written. As at the moment of writing the students that followed this course have still to pass their examination, it is for me still an open question how successful I have been. They liked the course, I have heard that they described my programs as ``logical poems'', so I have the best of hopes.)
+This section has not been included because the problem tackled in it is very exciting. On the contrary, I feel tempted to remark that the problem is perhaps too trivial to act as a good testing ground for an orderly approach to the problem of program composition. This section has been included because it contains a true eye-witness account of what happened in the classroom. It should be interpreted as a partial answer to the question that is often posed to me, viz. to what extent I can teach programming style. (I never used the ``Notes on Structured Programming'' --- mainly addressed to myself and perhaps to my colleagues --- in teaching. The classroom experiment described in this section took place at the end of a course entitled ``Introduction into the Art of Programming'', for which separate lecture notes-with exercises and all that-were written. As at the moment of writing the students that followed this course have still to pass their examination, it is for me still an open question how successful I have been. They liked the course, I have heard that they described my programs as ``logical poems'', so I have the best of hopes.)
 
 \section{The problem of the Eight queens}
 
@@ -2433,7 +2434,7 @@ Prior to that we should ask ourselves: how do we characterize solutions once we 
 \noindent
 $x[i] =$ the number of the column occupied by the queen in the $i$th row.
 
-Each solution is then a "8-digit word" ($x[0] \dots x[7]$) and the only sensible order in which to generate these words that I can think of is the alphabetical order.
+Each solution is then a ``8-digit word'' ($x[0] \dots x[7]$) and the only sensible order in which to generate these words that I can think of is the alphabetical order.
 
 \noindent
 \textit{Note}. As a consequence we open the way to algorithms in which rows and columns are treated differently, while the original problem was symmetrical in rows and columns! To consider asymmetric algorithms is precisely what the above considerations have taught us!
@@ -2448,8 +2449,263 @@ The criterion deciding whether an element of $B$ belongs to $A$ as well is that 
 
 Having established our choice for set $B$, we find ourselves faced with the task of generating its elements in alphabetical order. We could try to do this via an operator ``GENERATE NEXT ELEMENT OF $B$'' with a program of the form
 
+INITIALIZE EMPTY BOARD;
 
-page 77
+\textbf{\textbf{repeat}} GENERATE NEXT ELEMENT OF $B$;
+
+\quad \textbf{if} $N = 8$ \textbf{then} PRINT CONFIGURATION
+
+\textbf{until} $B$ EXHAUSTED.
+
+\noindent
+(Here we have used the fact that the empty board belongs to $B$, but not to $A$, and is not $B$'s only element. We have made no assumptions about the existence of solutions.)
+
+But for two reasons a program of the above structure is less attractive. Firstly, we don't have a ready-made criterion to recognize the last element of $B$ when we meet it and in all probability we have to generalize the operator ``GENERATE NEXT ELEMENT OF $B$'' in such a way that it will produce the indication ``$B$ EXHAUSTED'' when it is applied to the last ``true'' element of $B$. Secondly, it is not too obvious how to make the operator ``GENERATE NEXT ELEMENT OF $B$'': the number of queens on the board may remain constant, it may decrease and it may increase.
+
+So that is not too attractive. What can we do about it? As long as we regard the sequence of configurations of set $B$ as a single, monotonous sequence, not subdivided into a succession of subsequences, the corresponding program structure will be a single loop as in the program just sketched. If we are looking for an alternative program structure, we must \textit{therefore} ask ourselves ``How can we group the sequence of configurations from set $B$ into a succession of subsequences?''.
+
+Realizing that the sequence ot configurations from set $B$ have to be generated in alphabetical order and thinking about the main subdivision in a dictionary --- viz. by first letter --- the first grouping is obvious: by position of queen 0.
+
+Generating all elements of set $B$ --- for the moment we forget about the printing of those: configurations that belong to set $A$ as well --- then presents itself as
+
+INITIALIZE EMPTY BOARD;
+
+h $\coloneq 0$'';
+
+\textbf{repeat} SET QUEEN ON SQUARE$[0,h]$;
+
+\quad GENERATE ALL CONFIGURATIONS WITH QUEEN 0
+
+\quad\quad FIXED;
+
+\quad REMOVE QUEEN FROM SQUARE$[0,h]$;
+
+\quad $h \coloneq h + 1$
+
+\textbf{until} $h = 8$.
+
+But now the question repeats itself: how do we group all configurations with queen 0 fixed? We have already given the answer: in order of increasing column number of queen 1, i.e.
+
+$h_1 \coloneq 0$;
+
+\textbf{repeat if} SQUARE$[1, h_1]$ FREE \textbf{do}
+
+\quad begin SET QUEEN ON SQUARE$[1, h_1]$;
+
+\quad \quad GENERATE ALL CONFIGURATIONS WITH FIRST
+
+\quad \quad \quad 2 QUEENS FIXED;
+
+\quad \quad REMOVE QUEEN FROM SQUARE$[1, h_1]$
+
+\quad \textbf{end};
+
+\quad $h_1 \coloneq h_1 + 1$
+
+\textbf{until} $h_1 = 8$
+
+For ``GENERATE ALL CONFIGURATIONS WITH FIRST 2 QUEENS FIXED'' we could write a similar piece of program and so on; inserting
+them inside each other would result in a correct program with eight nested loops, but they would all be very, very similar. To do so has two disadvantages
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\item it takes a cumbersome amount of writing
+	\item it gives a program solving the problem for a chessboard of $8\times 8$ squares, but to solve the same puzzle for a board of, say, $10\times 10$ squares would require a new, still longer program.
+\end{enumerate}
+
+We are looking for a way in which all the loops can be executed under control of the same program text. Can we make the text of the loops identical? Can we exploit their identity?
+
+Well, to start with, we observe that the outermost and the innermost loops are exceptional.
+
+The outermost loop is exceptional in the sense that it does not test whether square$[0,h]$ is free because we know it is free. But because we know it is free, there is no harm in inserting the conditional clause
+
+\textbf{if} SQUARE$[0,h]$ FREE \textbf{do}
+
+\noindent
+and this gives the outermost loop the same pattern as the next six loops.
+
+The innermost loop is exceptional in the sense that as soon as 8 queens have been placed on the board, there is no point in generating all configurations with those queens fixed, because we have a full board. Instead the configuration should be printed, because we have found an element of set $B$ that is also an element of set $A$. We can map the innermost cycle and the embracing seven upon each other by replacing the line ``GENERATE'' by
+
+\textbf{if} BOARD FULL \textbf{\textbf{then}} PRINT CONFIGURATION
+
+\quad \textbf{else} GENERATE ALL CONFIGURATIONS EXTENDING THE
+
+\quad\quad CURRENT ONE
+
+For this purpose we introduce a global variable, ``$n$'' say, counting the number of queens currently on the board. The test ``BOARD FULL'' becomes ``$n = 8$'' and the operations on squares can then have ``$n$'' as first subscript.
+
+By now the only difference between the eight cycles is that each has ``its private $h$''. By the time that we have reached this stage, we can give an affirmative answer to the question whether we can exploit the identity of the loops. The sequencing through the eight nested loops can be evoked with the aid of a recursive procedure, ``generate'' say, which describes the cycle once. Using it, the program itself collapses into
+
+INITIALISE EMPTY BOARD; $n \coloneq 0$;
+
+generate
+
+\noindent
+while ``generate'' is recursively defined as follows:
+
+\textbf{procedure generate};
+
+\textbf{begin integer} $h$;
+
+$h \coloneq 0$;
+
+\textbf{repeat if} SQUARE$[n,h]$ FREE \textbf{do}
+
+\quad \textbf{\textbf{begin}} SET QUEEN ON SQUARE$[n,h]$; $n \coloneq n + 1$;
+
+\quad \quad \textbf{if} $n = 8$ \textbf{then} PRINT CONFIGURATION
+
+\quad \quad \textbf{else} generate;
+
+\quad \quad $n \coloneq n - 1$; REMOVE QUEEN FROM SQUARE$[n,h]$
+
+\quad \textbf{end};
+
+\quad $h \coloneq h + 1$
+
+\quad \textbf{until} $h = 8$
+
+\textbf{end}
+
+Each activation of ``generate'' will introduce its private local variable $h$, thus catering for $h,\ h_1,\ \dots,\ h_8$ that we would need when writing eight nested loops.
+
+Our program --- although correct to this level of detail --- is not yet complete, i.e. it has not been refined up to the standard degree of detail that is required by our programming language. In our next refinement we should decide upon the conventions according to which we represent the configurations on the board. We have already decided more or less that we shall use the
+
+\textbf{integer array} $x[0:7]$
+
+\noindent
+giving in order the column numbers occupied by the queens, and also that
+
+\textbf{integer} $n$
+
+\noindent
+should be used to represent the number of queens on the board. More precisely
+
+$n =$ the number of queens on the board
+
+\hangindent=2\parindent $x[i]$ for $0 \leqslant i < n =$ the number of the column occupied by the queen in the $i$th row.
+
+The array $x$ and the scalar n are together sufficient to fix any configuration of the set $B$ and those will be the only ones on the chessboard. As a result we have no \textit{logical} need for more variables; yet we shall introduce a few more, because from a practical point of view we can make good use of them. The problem is that with only the above material the (frequent) analysis whether a given square in the next free row is uncovered is rather painful and time-consuming. It is here that we look for the standard technique as described in the section ``\nameref{sec:trading-storage-for-computation-speed}'' (see page \pageref{sec:trading-storage-for-computation-speed}). The role of the stored argument is here played by the configuration of queens on the board, but this value does not change wildly --- oh no; the only thing we do is to add or remove a queen. And we are looking for additional tables (whose contents are a function of the current configuration) such that they will assist us in deciding whether a square is free, and also such that they can be updated easily when a queen is added to or removed from a configuration.
+
+How? Well, we might think of a boolean array of $8\times 8$, indicating for each square whether it is free or not. If we do this for the full board, adding a queen might imply dealing with 28 squares. Removing a queen, however, is then a painful process, because it does not follow that all squares no longer covered by \textit{her} are indeed free: they might be covered by one or more of the other queens that remain in the configuration. There is a remedy (again standard) for this, viz. associating with each square not a boolean variable, but an integer counter, counting the number of queens covering the square. Adding a queen then means increasing up to 28 counters by 1, removing a queen means decreasing them by 1 and a square is free when its associated counter equals zero. We could do it that way, but the question is whether this is not overdoing it: 28 adjustments is indeed quite a heavy overhead on setting or removing a queen.
+
+Each square in the freedom of which we are interested covers a row (which is free by definition, so we need not bother about that), covers one of the 8 columns (which must still be empty), covers one of the 15 upward diagonals (which must still be empty) and one of the 15 downward diagonals (which must still be empty). This suggests that we should keep track of
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\item the columns that are free
+	\item the upward diagonals that are free
+	\item the downward diagonals that are free.
+\end{enumerate}
+
+As each column or diagonal is covered only once we do not need a counter for each, a boolean variable is sufficient. The columns are readily identified by their column number and for the columns we introduce
+
+\textbf{boolean array} col$[0:7]$
+
+\noindent
+where ``col$[i]$'' means that the $i$th column is still free.
+
+How do we identify the diagonals? Well, along an upward diagonal the difference between row number and column number is constant; along a downward diagonal their sum is constant. As a result, difference and sum respectively are the easiest index by which to distinguish the diagonals and we introduce therefore
+
+\textbf{boolean array} up$[-7:+7]$, down$[0:14]$
+
+\noindent
+to keep track of which diagonals are free.
+
+The question whether square$[n,h]$ is free becomes
+
+col$[h]$ and up$[n-h]$ and down$[n+h]$,
+
+\noindent
+setting and removing a queen both imply the adjustment of three booleans, one in each array.
+
+In the final program the variable ``$k$'' is introduced for general counting purposes, statements and expressions are labeled (in capital letters). Note that we have merged two levels of description: what were statements and functions on the upper level, now appear as explanatory labels.
+
+With the final program we come to the end of the last section. We have attempted to show the pattern of reasoning by which one could discover backtracking as a technique, and also the pattern of reasoning by which one could discover a recursive procedure describing it. The most important moral of this section is perhaps that all that analysis and synthesis could be carried out before we had decided how (and how redundantly) a configuration would be represented inside the machine. It is true that such considerations only bear fruit when eventually a convenient representation for configurations can be found. Yet the mental isolation of a level of abstraction in which we allow ourselves not to bother about it seems crucial.
+
+Finally, I would like to thank the reader that has followed me up till here for his patience.
+
+\newpage
+
+\noindent
+\textbf{begin} \textbf{integer} $n$, $k$; \textbf{integer array} $x[0:7]$;
+
+\noindent
+\quad \quad \textbf{boolean array} col$[0:7]$, up$[-7:+7]$, down$[0:14]$;
+
+\noindent
+\quad \textbf{procedure} generate;
+
+\noindent
+\quad \textbf{begin integer} $h$;
+
+\noindent
+\quad \quad $h \coloneq 0$;
+
+\noindent
+\quad \quad \textbf{repeat}
+
+\noindent
+\quad \quad \quad \textbf{if} SQUARE$[n,h]$ FREE: (col$[h]$ \textbf{and} up$[n-h]$ \textbf{and} down$[n+h]$) \textbf{do}
+
+\noindent
+\quad \quad \quad \textbf{begin} QUEEN ON SQUARE$[n,h]$:
+
+\noindent
+\quad \quad \quad \quad \quad $x[n] \coloneq h$; col$[h]\coloneq$ \textbf{false}; up$[n-h]\coloneq$ \textbf{false};
+
+\noindent
+\quad \quad \quad \quad \quad down$[n+h]\coloneq$ \textbf{false}; $n\coloneq n + 1$;
+
+\noindent
+\quad \quad \quad \quad \textbf{if} BOARD FULL: $(n = 8)$ \textbf{then}
+
+\noindent
+\quad \quad \quad \quad \textbf{begin} PRINT CONFIGURATION:
+
+\noindent
+\quad \quad \quad \quad \quad $k\coloneq 0$; \textbf{repeat} print$(x[k])$; $k\coloneq k + 1$ \textbf{until} $k = 8$; newline
 
 
+\noindent
+\quad \quad \quad \quad \textbf{end}
 
+\noindent
+\quad \quad \quad \textbf{else} generate;
+
+\noindent
+\quad \quad \quad \quad $n \coloneq n - 1;$
+
+\noindent
+\quad \quad \quad \quad  REMOVE QUEEN FROM SQUARE$[n,h]$:
+
+\noindent
+\quad \quad \quad \quad \quad down$[n+h]\coloneq$ \textbf{true}; up$[n-h] \coloneq$ \textbf{true}; col$[h]\coloneq$ \textbf{true}
+
+\noindent
+\quad \quad \quad \textbf{end};
+
+\noindent
+\quad \quad \quad $h\coloneq h + 1$
+
+\noindent
+\quad \quad \textbf{until} $h = 8$
+
+\noindent
+\quad \textbf{end};
+
+\noindent
+\quad INITIALIZE EMPTY BOARD:
+
+\noindent
+\quad \quad $n \coloneq 0$;
+
+\noindent
+\quad \quad $k\coloneq 0$; \textbf{repeat} col$[k] \coloneq$ \textbf{true}; $k\coloneq k + 1$ \textbf{until} $k = 8$;
+
+\noindent
+\quad \quad $k\coloneq 0$; \textbf{repeat} up$[k-7] \coloneq$ \textbf{true}; down$[k] \coloneq$ \textbf{\textbf{true}}; $k\coloneq k + 1$ \textbf{until} $k=15$;
+
+\noindent
+\quad generate
+
+\noindent
+\textbf{end}
