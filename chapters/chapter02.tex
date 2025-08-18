@@ -123,9 +123,9 @@ In general, mathematicians do not use type conventions of this sort to make dist
 
 (2) Logicians on the whole prefer to work without typed variables. However without types it is possible to formulate within set theory certain paradoxes which would lead to inescapable contradiction and collapse of logical and mathematical reasoning. The most famous of these is the Russell paradox:
 
-\quad ``let s be the set of all sets which are \textit{not} members of themselves.
+\quad \hspace{-.4em}``let $s$ be the set of all sets which are \textit{not} members of themselves.
 
-\quad Is s a member of itself or not?''
+\quad Is $s$ a member of itself or not?''
 
 \noindent
 It turns out that whether you answer yes or no, you can be immediately proved wrong.
@@ -134,7 +134,7 @@ Russell's solution to the paradox is to associate with each logical or mathemati
 
 Russell's theory of types leads to certain complexities in the foundation of mathematics, which are not relevant to describe here. Its interesting features for our purposes are that types are used to prevent certain erroneous expressions from being used in logical and mathematical formulae; and that a check against violation of type constraints can be made merely by scanning the text, without any knowledge of the value which a particular symbol might happen to stand for.
 
-(3) In a high-level programming language the concept of a type is of central· importance. Again, each variable, constant and expression has a unique type associated with it. In ALGOL 60 the association of a type with a variable is made by its declaration; in FORTRAN it is deduced from the initial letter of the variable. In the implementation of the language, the type information determines the representation of the values of the variable, and the amount of computer storage which must be allocated to it. Type information also determines the manner in which arithmetic operators are to be interpreted; and enables a compiler to reject as meaningless those programs which invoke inappropriate operations.
+(3) In a high-level programming language the concept of a type is of central importance. Again, each variable, constant and expression has a unique type associated with it. In ALGOL 60 the association of a type with a variable is made by its declaration; in FORTRAN it is deduced from the initial letter of the variable. In the implementation of the language, the type information determines the representation of the values of the variable, and the amount of computer storage which must be allocated to it. Type information also determines the manner in which arithmetic operators are to be interpreted; and enables a compiler to reject as meaningless those programs which invoke inappropriate operations.
 
 Thus there is a high degree of commonality in the use of the concept of type by mathematicians, logicians and programmers. The salient characteristics of the concept of type may be summarized:
 
@@ -208,6 +208,7 @@ In particular, in many computer programs an integer is used to stand not for a n
 \tabto{3.7em}\textbf{type} year $= 1900\,.\,.\,1969$;
 
 \tabto{3.7em}\textbf{type} Boolean $=$ (false, true);
+\medskip
 
 \noindent
 \hangindent=5.6\parindent\textbf{ordered} \tabto{3.7em}\textbf{type} floor $=$ (basement, ground, mezzanine, first, second);
@@ -221,7 +222,7 @@ Our first two examples are drawn from the realm of playing cards. The first decl
 
 \quad The Month type, with twelve values listed in the required order.
 
-\hangindent=1.65\parindent\quad The coordinate type, taking values between 0 and 1023, representing perhaps a coordinate on a CRT display.
+\hangindent=2.8\parindent\quad The coordinate type, taking values between 0 and 1023, representing perhaps a coordinate on a CRT display.
 
 Having defined a type in a suitable fashion, the programmer will use the type name to specify the types of his variables. For this purpose it is useful to follow the current practice of mathematicians and to write the type name \textit{after} the variable, separated from it by a colon:
 
