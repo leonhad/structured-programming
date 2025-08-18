@@ -185,3 +185,64 @@ This chapter describes only a small but useful range of the possible representat
 All structured data must in the last analysis be built up from unstructured components, belonging to a primitive or unstructured type. Some of these unstructured types (for example, reals and integers) may be taken as given by a programming language or the hardware of the computer. Although these primitive types are theoretically adequate for all purposes, there are strong practical reasons for encouraging a programmer to define his own unstructured types, both to clarify his intentions about the potential range of values of a variable, and the interpretation of each such value; and to permit subsequent design of an efficient representation.
 
 In particular, in many computer programs an integer is used to stand not for a numeric quantity, but for a particular choice from a relatively small number of alternatives. In such cases, the annotation of the program usually lists all the possible alternative values, and gives the intended interpretation of each of them. It is possible to regard such a quantity as belonging to a separate type, quite distinct from the integer type, and quite distinct from any other similar set of markers which have a different interpretation. Such a type is said to be an \textit{enumeration}, and we suggest a standard notation for declaring the name of the type and associating a name with each of its alternative values:
+\medskip
+
+\tabto{3.7em}\textbf{type} suit $=$ (club, diamond, heart, spade);
+
+\noindent
+\hangindent=5.6\parindent\textbf{ordered} \tabto{3.7em}\textbf{type} rank = (two, three, four, five, six, seven, eight, nine, ten, Jack, Queen, King, Ace);
+\medskip
+
+\tabto{3.7em}\textbf{type} primary color $=$ (red, yellow, blue);
+
+\noindent
+\hangindent=7.4\parindent\textbf{ordered} \tabto{3.7em}\textbf{type} day of week $=$ (Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday);
+\medskip
+
+\tabto{3.7em}\textbf{type} day of month $= 1\,.\,.\,31$;
+
+\noindent
+\hangindent=6.2\parindent\textbf{ordered} \tabto{3.7em}\textbf{type} month $=$ (Jan, Feb, March, April, May, June, July, Aug, Sept, Oct, Nov, Dec);
+\medskip
+
+\tabto{3.7em}\textbf{type} year $= 1900\,.\,.\,1969$;
+
+\tabto{3.7em}\textbf{type} Boolean $=$ (false, true);
+
+\noindent
+\hangindent=5.6\parindent\textbf{ordered} \tabto{3.7em}\textbf{type} floor $=$ (basement, ground, mezzanine, first, second);
+
+\tabto{3.7em}\textbf{type} coordinate $= 0\,.\,.\,1023$;
+\medskip
+
+Our first two examples are drawn from the realm of playing cards. The first declaration states that club, diamond, heart, and spade are suits; in other words, that any variable or expression of type suit can only denote one of these four values; and that the identifiers ``club'' ``heart'' ``diamond'' and ``spade'' act as \textit{constants} of this type. Similarly, the definition of the type \textit{rank} displays the thirteen constants denoting the thirteen possible values of the type. In this case it is natural to regard the type as ordered. The next examples declare the names of the primary colors and of the days of the week. In considering the days of the month, it is inconvenient to write out the thirty-one possible values in full. We therefore introduce the convention that $a\,.\,.\,b$ stands for the finite range of values between $a$ and $b$ inclusive. This is known as a \textit{subrange} of the type to which $a$ and $b$ belong, in this case integers. This convention is used again in the declaration of year. Other examples of enumeration are:
+
+\quad The Boolean type, with only two values, false and true.
+
+\quad The Month type, with twelve values listed in the required order.
+
+\hangindent=1.65\parindent\quad The coordinate type, taking values between 0 and 1023, representing perhaps a coordinate on a CRT display.
+
+Having defined a type in a suitable fashion, the programmer will use the type name to specify the types of his variables. For this purpose it is useful to follow the current practice of mathematicians and to write the type name \textit{after} the variable, separated from it by a colon:
+
+\quad trumps: suit; today:day of week;
+
+\quad $pc$: primary color;
+
+\noindent
+If several variables of the same type are to be declared at the same time, it is useful to adopt the abbreviation of listing the variable names without repeating the type name, thus:
+
+\quad arrival, departure: day of month;
+
+\quad $x$, $y$, $z$: coordinate.
+
+\noindent
+If only a few variables of a given type are to be used, it is convenient to write the type definition itself in place of and instead of the type name:
+
+\quad answer: (yes, no, don't know);
+
+The cardinality of a type defined by enumeration is obviously equal to the length of the defining list; and for a numeric subrange, it is one more than the difference between the end points of the subrange.
+
+\subsection{Manipulation}
+
+Page 98
