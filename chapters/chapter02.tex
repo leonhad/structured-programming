@@ -353,6 +353,7 @@ This can be efficiently represented in machine code, using an indexed jump and a
 The implementation of the for statement corresponds in an obvious way to the for statement of ALGOL 60, with a step length of unity. The conventions proposed above, which regard the counting variable as a local constant of the loop, not only contribute to clarity of documentation, but also assist in achieving efficiency on a computer, by taking advantage of registers, special count and test instructions, etc.
 
 \subsection{Example}
+\label{sec:example-3-3}
 
 The character set of a computer peripheral is defined by enumeration:
 
@@ -418,7 +419,7 @@ read first character;
 
 \quad\quad \textbf{if} buffer $=$ equals \textbf{then}
 
-\quad\quad\quad \textbf{begin} deal with "becomes"; read next character \textbf{end}
+\quad\quad\quad \textbf{begin} deal with ``becomes''; read next character \textbf{end}
 
 \quad\quad \textbf{else} deal with single colon character
 
@@ -547,6 +548,7 @@ where $sv$ names the structured variable (or expression) and $S$ is a program st
 
 \noindent
 \textit{Exercise}
+\nopagebreak
 
 \noindent
 Write functions to represent the four standard arithmetic operations on complex numbers.
@@ -573,12 +575,13 @@ The choice between the various representations depends on the wider context with
 
 A second occasion for using packed representations is when data storage is scarce, either in main store or on external backing stores. However, care must be taken that space saved on data storage is not outweighed by the expansion of the code which results from having to unpack and repack the data whenever it is inspected or updated.
 
-The minimal representation is not often used for data storage, since the small amount of extra space it saves (always less than one bit per component) is usually more than outweighed by the extra time taken by multiplying and dividing on every access to the components, as compared with the more usual shifting and masking. However, the technique can be useful, possibly in conjunction with more conventional packing, if there is no other way of fitting the value within convenient word boundaries. Also, if the value is to be used solely or primarily as an index to a multi-dimensional array, the minimal representation is to be preferred; since this will save a significant amount of space in the representation of the array (see Section 6.2).
+The minimal representation is not often used for data storage, since the small amount of extra space it saves (always less than one bit per component) is usually more than outweighed by the extra time taken by multiplying and dividing on every access to the components, as compared with the more usual shifting and masking. However, the technique can be useful, possibly in conjunction with more conventional packing, if there is no other way of fitting the value within convenient word boundaries. Also, if the value is to be used solely or primarily as an index to a multi-dimensional array, the minimal representation is to be preferred; since this will save a significant amount of space in the representation of the array (see Section \hyperref[subsec:representation-6.2]{6.2}).
 
 In representing the \textbf{with} construction in machine code, it is sometimes convenient to compute the address of the structure being referenced and store it in a register; this may achieve shorter and faster code for accessing the components. If the components have been packed, it may pay to unpack them into separate words before starting to process them, so that they can be easily referenced or updated; and if they have been updated, they must be packed up again and stored in the structure when the processing is complete. On some machines, it is more economic to pack and unpack a whole structure at the same time, rather than to perform these operations one at a time on the components.
 
 \noindent
 \textit{Exercise}
+\nopagebreak
 
 \noindent
 Given a variable
@@ -675,5 +678,240 @@ Each value of type patience card is clearly marked as having originated either f
 
 Any value of a discriminated union carries with it a \textit{tag} field indicating which of the particular constituent types it originated from; on assignment this is copied, and on a test of equality, the tag fields must be the same if the values are to be equal.
 
-Page 112
+On constructing a value of a discriminated union type, it is necessary to name the alternative type from which the value originated:
+\smallskip
 
+\quad patience card(red(spade, Jack)).
+\smallskip
+
+\noindent
+This will automatically cause the value ``red'' to be assigned to the tag field of the result.
+
+A particular car may be denoted by
+\smallskip
+
+\quad car(Ford, ``RUR157D'', local(me, date(1, Sept, 1968))).
+\smallskip
+
+In order to access and operate on the information encoded as a discriminated union, it is necessary to convert it back to its original type. This may be accomplished by the convention of using the label of this type as if it were a selector, e.g.:
+
+card1.wild \tabto*{8em} is of type (joker 1, joker 2)
+
+car1.foreign \tabto*{8em} is of type (origin:country)
+
+fig1.tri \tabto*{8em} is of type $T$
+
+\noindent
+If the constituent type is a Cartesian product, its selectors may be validly applied to the resulting value, using the convention that the .operator associates to the left.
+
+\quad card1.normal.$r$
+
+\quad car1.local.owner
+
+\quad fig1.circ.diameter
+
+If the programmer attempts to convert a discriminated union value back to a type from which it did \textit{not} originate, this is a serious programming
+error, which could lead to meaningless results. This error can be detected only by a runtime check, which tests the tag field whenever such a conversion is explicitly or implicitly invoked. Such a check is time consuming and when it fails, highly inconvenient. We therefore seek a notational technique which will guarantee that this error can never occur in a running program; and the guarantee is given by merely inspecting the text, without any knowledge of the runtime values being processed. Such a guarantee could be given by an automatic compiler, if available.
+
+The proposed notational technique is a mixture between the \textbf{with} construction for Cartesian products and the case construction for discrimination. Suppose that a value $sv$ of union type is to be processed in one of several ways in accordance with which of the alternative types it came from. Then one may write
+
+\quad \textbf{with} $sv$ \textbf{do} \{$a1:S_1$
+
+\tabto*{7.6em}$a2:S_2$,
+\smallskip
+
+\tabto*{8.85em}\vdots
+
+\tabto*{7.6em}$an:S_n$\};
+
+\noindent
+where $S_i$ is the statement to be selected for execution whenever the value of the tag field of $sv$ is $a_i$. Within $S_1$ it is guaranteed safe to assume that the value came from the corresponding alternative type, provided that the value of $sv$ remains unchanged. Consequently it is safe to use the component selectors which are defined for that alternative type by themselves to refer to the components of $sv$, just as in the case of a simple \textbf{with} statement described previously for a Cartesian product.
+
+If it is desired to regard a union type as ordered, the most natural ordering is that defined by taking all values corresponding to earlier alternatives in the list before any of the values of the later alternatives.
+
+\noindent
+\textit{Exercise}
+\nopagebreak
+
+\noindent
+Write a function that will compute the area of a figure as defined above.
+
+\subsection{Representation}
+
+In representing a value from a discriminated union it is necessary first to represent the tag as an integer between zero and $n - 1$, where $n$ is the number of alternative types. The tag is followed directly by the representation of the value of the original type. As with the Cartesian product, there is a choice of the degree of packing used in a representation.
+
+In the unpacked representation the tag occupies a complete word, and the space occupied by each value of a union type is one word more than that occupied by values from the largest alternative type. In a packed representation, this overhead can be reduced to a few bits. In the minimal representation, each value is obtained by adding its minimal representation in the original type to the sum of the cardinalities of all preceding types in the union. Thus a value originating from the first type, for example (diamond, four), has exactly the same value as it has in the original type, namely 16. But joker 1, with value zero in the original enumeration type, has added to it the cardinality of the card type.
+
+The choice between unpacked, packed and tight packed representations is based on the same considerations as for Cartesian products; however the runtime speed penalty for the minimal representation is a great deal less, since recovery of the original value requires only subtraction rather than division.
+
+In general the values of the different alternative types occupy different amounts of storage, so the shorter values have to be ``padded out'' to equalize the lengths, thus observing the convenient rule that elementary data types occupy a fixed amount of storage. In later chapters it will be seen that this padding can often be omitted when the value is a component of some larger structure.
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=.8\textwidth]{chap2/fig2}
+	\caption{Representation of cars}
+\end{figure}
+
+In present-day programming practice, it is quite common to omit the tag field in the representation of unions. In order to operate correctly on such a representation, the programmer needs to ``know'' from other considerations what the interpretation of the value ought to be, since it is not possible to find out from the value itself. If his belief is mistaken, this is not detectable either by a runtime or compile-time check. Since the effect of such an error will depend on details of bitpattern representation, it will give rise to results unpredictable in terms of the abstractions with which the programmer is working. It would therefore in general seem advisable to use tag fields and compile-time checkable case discriminations as standard programming practice, to be bypassed only in exceptional circumstances.
+
+\subsection{Example}
+
+We return to the context of the example in section \ref{sec:example-3-3}, the analysis of language text into meaningful symbols. We wish to give a rigorous abstract definition of what these symbols are.
+
+\quad \textbf{type} symbol $=$
+
+\tabto*{5.7em}(realconst:real,
+
+\tabto*{6em}integerconst:integer,
+
+\tabto*{6em}identifier:ident,
+
+\tabto*{6em}basic:delimiter);
+
+\noindent
+where we will leave the type ident undefined for the time being, and assume that the delimiters are defined by enumeration.
+
+\section{The array}
+\label{sec:array}
+
+The array is for many programmers the most familiar data structure, and in some programming languages it is the only structure explicitly available. From the abstract point of view, an array may be regarded as a mapping between a domain of one type (the subscript range) and a range of some possibly different type (the type of the array, or more accurately, the type of its elements).
+
+The type of a mapping is normally specified by a mathematician using an arrow:
+
+\quad $M:D\rightarrow R$;
+
+\noindent
+where $D$ is the domain type and $R$ is the range type. An alternative notation which will be more familiar to programmers is:
+
+\quad M:\textbf{array} $D$ \textbf{of} $R$.
+
+This notation is more expressive of the manner in which the data is represented, whereas the mathematical notation emphasizes the abstract character of the structure, independent of its representation.
+
+When a particular value $M$ of a mapping type is applied to a value $x$ of the domain type, it specifies some unique element of the range type, which is known as $M$ of $x$, and is written using either round or square brackets
+
+\quad $M(x)$ or $M[x]$.
+
+\noindent
+Another name for a mapping is a function: the term ``mapping'' is used to differentiate the data structure from a piece of program which actually computes a value in its range from an argument in its domain. The essence of the difference is that a mapping $M$ is specified not by giving a computation method but by explicitly listing the value of $M(x)$ for each possible value $x$ in its domain. Thus an array can be used only for functions defined at a finite set of points, whereas the domain of a computed function may be infinite.
+
+An example of a finite mapping is a monthtable, which specifies for each month of the year the number of days it has:
+
+\quad \textbf{type} monthtable $=$ \textbf{array} month \textbf{of} $28\,.\,.\,31$.
+
+\noindent
+The domain is the month type and the range type consists of the integers between 28 and 31 inclusive. A typical value of this type may be simply specified by listing the values of $M(x)$ as $x$ ranges over its domain. Thus if $M$:monthtable is specified as
+
+\quad monthtable(Jan:31, Feb:28, March:31, April:30,
+
+\quad May:31, June:30, July:31, Aug:31,
+
+\quad Sept:30, Oct:31, Nov:30, Dec:31)
+
+\noindent
+then $M[\text{Jan}] = 31,\, M[\text{Feb}] = 28$, and so on.
+
+The array provides a method of representing a particular arrangement of cards in a pack, since each arrangement may be regarded as a mapping which indicates for each of the fifty-two possible positions in a pack the value of the card which occupies that position. Thus each possible arrangement may be regarded as a value of the mapping type:
+
+\quad \textbf{type} cardpack = \textbf{array} $1\,.\,.\,52$ \textbf{of} cardface.
+
+\noindent
+Of course, not all values of this type represent actual card packs, since there is nothing to prevent some value of the type from mapping two different positions onto the same card; which in real life is impossible.
+
+Arrays with elements that are of Cartesian product type are sometimes known as \textit{tables}.
+
+A third example of an array is that which represents all possible con- figurations of character punching on a conventional punched card. This may be regarded as a mapping $M$ which maps each column number into a character, namely the character punched in that column.
+
+\quad \textbf{type} punchcard = array $1\,.\,.\,80$ \textbf{of} character.
+
+\noindent
+Any possible text punched into a card may be regarded as a single value of type punchcard.
+
+A fourth example shows an array which represents a possible value of a page on a cathode ray tube display device. There are assumed to be 40 rows and 27 character positions in each row. The effect of two dimensions can be achieved by specifying the domain of the mapping as a Cartesian product of the possible rows and the possible character positions within each row. This is written as follows:
+
+\quad \textbf{type} spot $=$ (row:$1\,.\,.\,40$; column:$1\,.\,.\,27$);
+
+\quad \textbf{type} display page $=$ \textbf{array} spot of character.
+
+An alternative method of dealing with a multidimensional array is to regard it as an array of rows, where each row is an array of characters:
+
+\quad \textbf{type} display page $=$ \textbf{array} $1\,.\,.\,40$ \textbf{of} row;
+
+\quad \textbf{type} row $=$ \textbf{array} $1\,.\,.\,27$ \textbf{of} character.
+
+\noindent
+This is a more suitable abstract structure if the rows are to be processed separately and the columns are not.
+
+The cardinality of an array type is computed by raising the cardinality of the range type to the power of the cardinality of the domain type, i.e.
+
+\quad cardinality$(D \rightarrow R) =$ cardinality$(R)^{\text{cardinality}(D)}$
+
+\noindent
+This may be proved by considering the number of decisions which have to be made to specify completely a value of an array type. For each value of the domain we have to choose between cardinality$(R)$ possible values of the range type. We have to make such a choice independently for each element of the array, that is cardinality$(D)$ times.
+
+\subsection{Manipulation}
+
+A mapping which maps all values of its domain onto the same value of its range is known as a constant mapping. A natural constructor for arrays is one which takes as argument an arbitrary range value, and yields as result the constant array, all of whose elements are equal to the given range value. It is convenient to use the type name itself to denote this constructor, e.g.
+
+\quad $M = \text{monthtable}(31)$
+
+\noindent
+is an array such that $M[m] = 31$ for all months m.
+
+\quad card pack(cardface(heart, King))
+
+\noindent
+is obviously a conjuror's pack.
+
+The basic constructive operation on an array is that which defines a new value for one particular element of an array. If $x$ is a value of an array type $T$, $d$ a value from its domain type, and $r$ a value from its range type, then we write:
+
+\quad $T(x, d:r)$
+
+\noindent
+to denote a value of type $T$ which is identical to $x$ in all respects, except that it maps the value $d$ into $r$. The $T$ may be omitted if its existence can be inferred from context. Similarly, the constant array $T(x)$ may be denoted by all $(x)$.
+
+The basic selection operator on arrays is that of subscripting. This is effectively a binary operation on an array and a value from its domain type; and it yields the corresponding value of its range type.
+
+The most common and efficient way of changing the value of an array is by selective updating of one of its components, which is accomplished by the usual notation of placing a subscripted array variable on the left of an assignment:
+
+\quad $a[d]\coloneq r.$
+
+\noindent
+This means the same as
+
+\quad $a\coloneq T(a, d:r).$
+
+\noindent
+Note that from an abstract point of view a new value is assigned to the whole array.
+
+Normally an array type would be regarded as unordered; but in some cases, particularly character arrays, it is desirable to define an ordering corresponding to the normal lexicographic ordering; this is possible only when domain and range types are ordered. In this case the ordering of two arrays is determined by that of the lowest subscripted elements in which the two arrays differ. Thus
+
+\quad ``BACK'' $<$ ``BANK''
+
+\noindent
+because the third letter is the first one in which they differ, and
+
+\quad ``$C$'' $<$ ``$N$''
+
+A convenient method of specifying an array value is by means of a \textit{for expression}, which is modeled on the for statement:
+
+\quad \textbf{for} $i:D$ \textbf{take} $E$
+
+\noindent
+where $E$ is an expression yielding a value of the range type, and containing the variable $i$. As $i$ scans through the domain type $D$, evaluation of the expression $E$ yields the value of the corresponding element of the array.
+
+If certain operations are defined on the range type of an array, it is natural to extend these operations to apply to the array type as well. For example, if $A$ and $B$ are real arrays with the same domain, it is natural to write
+
+\quad $A + B,$ $A - B$,
+
+to denote arrays (with the same domain) whose elements are the sum and difference of the values of the corresponding elements of $A$ and $B$. But the programmer must retain his awareness that these can be expensive operations if the arrays are large, and he should seek ways of eliminating the operations in progressing from an abstract to a more concrete program.
+
+\subsection{Representation}
+\label{subsec:representation-6.2}
+
+The representation of arrays in a computer store is familiar to most programmers. The most usual representation is the unpacked representation, which allocates one or more whole words to each element of the array. In this case, the computer address of each element is simply computed: first, the value of the subscript is converted to a minimal representation; then this is multiplied by the number of words occupied by each element; and finally the result is added to the address of the first element of the array. The normal word-selection mechanism of the computer can be used to access and update this value independently of the other elements of the array.
+
+An alternative representation involves packing of elements within word boundaries, so that each element occupies only a certain fixed number of bits within a word, although the array as a whole may stretch over several words. In the example of a monthtable, each element can take only four values, 28 to 31; therefore it can be accommodated in only two bits in the minimal representation; the whole array can therefore be accommodated in twenty-four consecutive bits.
+
+When an array is packed in this way, the task of selecting the value of a subscripted variable is far more complicated. In order to select the right word, the subscript (in minimal form) must be divided by the number of elements in each word. The quotient is added to the address of the first word of the array, which is then accessed. The remainder is multiplied by the number of bits in each element, and the result is used as a $\text{shift-count}_2$ to shift the required value into a standard position within the word. The unwanted values of neighboring elements of the array can then be masked off. The method of selectively updating an element of a packed array is even more laborious, since the new value must be inserted at the right position within the word, without disturbing the values of the neighboring elements. The efficiency of both operations may be slightly increased if the number of elements per word is an exact power of two, since then the integer division of the subscript may be replaced by a shift to find the quotient, and a mask to find the remainder. On some machines, further efficiency may be gained if each element is stored in a single character position.
+
+page 119
