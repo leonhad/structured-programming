@@ -118,7 +118,7 @@ It is asked to establish that the successive execution of the following two stat
 \begin{equation*}
 	\begin{split}
 		&\text{``}dd \coloneq dd/2; \\
-		&\text{\textbf{if} } dd <= r \text{ \textbf{do} } r \coloneq r - dd\text{''}
+		&\text{\textbf{if} } dd \leqslant r \text{ \textbf{do} } r \coloneq r - dd\text{''}
 	\end{split}
 \end{equation*}
 
@@ -195,19 +195,19 @@ where $D$ is a given value and $f$ a given (computable) function. It is asked to
 
 \noindent
 where $k$ is given by the (truth of the) expressions
-\begin{eqnarray}
+\begin{align}
 	\label{eq:prod-dk}
-	&\text{prop } (d_k)& \\
+	&\text{prop}(d_k)& \\
 	\label{eq:non-prop-i}
-	\text{and}\quad &\text{\textbf{non} prop }(d_i) &\text{ for all } i \text{ satisfying } 0 \leqslant i < k
-\end{eqnarray}
+	\text{and}\quad &\text{\textbf{non} prop}(d_i)& \text{for all } i \text{ satisfying } 0 \leqslant i < k
+\end{align}
 
 We now consider the following program part:
 \begin{equation}
 	\label{eq:program-while-non-prop}
 	\begin{split}
 		&\text{``}d \coloneq D;\\
-		&\text{\textbf{while non} prop }(d) \text{ \textbf{do} } d \coloneq f(d)\text{''}
+		&\text{\textbf{while non} prop}(d) \text{ \textbf{do} } d \coloneq f(d)\text{''}
 	\end{split}
 \end{equation}
 
@@ -218,7 +218,7 @@ that
 
 {
 	\setlength{\parindent}{8em}
-	\hspace{-.5em}``\textbf{while} $B$ \textbf{do} $S$''
+	\hspace{-.4em}``\textbf{while} $B$ \textbf{do} $S$''
 }
 \medskip
 
@@ -228,7 +228,7 @@ is semantically equivalent with
 
 {
 	\setlength{\parindent}{8em}
-	\hspace{-.5em}``\textbf{if} $B$ \textbf{do}
+	\hspace{-.4em}``\textbf{if} $B$ \textbf{do}
 	
 	\quad \textbf{begin} $S$; \textbf{while} $B$ \textbf{do} $S$ \textbf{end}''
 }
@@ -254,17 +254,17 @@ The above statement holds for $n = 0$ (by enumerative reasoning); we have to pro
 
 After the $N$th execution of the repeated statement relations (\ref{eq:n-execution-prop-a}) and (\ref{eq:n-execution-prop-b}) are satisfied for $n = N$. For the $N + 1$st execution to take place, the necessary and sufficient condition is the truth of
 \begin{center}
-	\textbf{non} prop $(d)$
+	\textbf{non} prop$(d)$
 \end{center}
 
 \noindent
 which, thanks to (\ref{eq:n-execution-prop-a}) for $n = N$ (i.e. $d = d_N$) means
 \begin{center}
-	\textbf{non} prop $(d_N)$
+	\textbf{non} prop$(d_N)$
 \end{center}
 
 \noindent 
-leading to condition (\ref{eq:n-execution-prop-b}) being satisfied for $n = N + 1$. Furthermore, $d = d_N$ and (eq:induction-for-b) leads to
+leading to condition (\ref{eq:n-execution-prop-b}) being satisfied for $n = N + 1$. Furthermore, $d = d_N$ and (\ref{eq:induction-for-b}) leads to
 $$
 f(d) = d_{N + 1}
 $$
@@ -288,20 +288,20 @@ proved.
 Now we shall show that the repetition terminates after the $k$th execution of the repeated statement. The $n$th execution cannot take place for $n > k$
 for (on account of \ref{eq:n-execution-prop-b}) this would imply
 \begin{center}
-	\textbf{non} prop $(d_k)$
+	\textbf{non} prop$(d_k)$
 \end{center}
 
 \noindent 
 thereby violating (\ref{eq:prod-dk}). When the repetition terminates after the $n$th execution of the repeated statement, the necessary and sufficient condition for termination, viz.
 \begin{center}
-	\textbf{non} (\textbf{non} prop $(d)$)
+	\textbf{non} (\textbf{non} prop$(d)$)
 \end{center}
 
 \noindent
 becomes, thanks to (\ref{eq:n-execution-prop-a})
 \begin{equation}
 	\label{eq:induction-end}
-	\text{prop } (d_n).
+	\text{prop}(d_n).
 \end{equation}
 
 This excludes termination for $n < k$, as this would violate (\ref{eq:non-prop-i}). As a result the repetition will terminate with $n = k$, so that (\ref{eq:induction-dk}) follows from (\ref{eq:n-execution-prop-a}), (\ref{eq:prod-dk}) follows from (\ref{eq:induction-end}) and (\ref{eq:non-prop-i}) follows from (\ref{eq:n-execution-prop-b}). Which terminates our proof.
@@ -339,7 +339,7 @@ Let us consider the following program section, where the integer constants $a$ a
 	\setlength{\parindent}{8em}
 	$a \geqslant 0$\quad and\quad $d > 0$.
 	
-	\hspace{-.5em}``\textbf{integer} $r$,\ $dd$;
+	\hspace{-.4em}``\textbf{integer} $r$,\ $dd$;
 	
 	$r \coloneq a;\ dd \coloneq d$;
 	
@@ -359,11 +359,12 @@ To apply the Linear Search Theorem (see Section ``\nameref{sec:out-mental-aids}'
 \begin{equation}
 	\label{eq:example-initial}
 	\begin{split}
-		\text{for } i = 0\quad & dd_i = d \\
-		\text{for } i > 0\quad & dd_i = 2\times dd_{i - 1}\\
-		\text{from which }\quad & dd_n = d\times 2^n
+		\text{for } i = 0\qquad & dd_i = d \\
+		\text{for } i > 0\qquad & dd_i = 2\times dd_{i - 1}\\
+		\text{from which}\qquad & dd_n = d\times 2^n
 	\end{split}
 \end{equation}
+
 
 \noindent
 can be derived by normal mathematical techniques, which also tell us that (because $d > 0$) for finite $r$
@@ -382,6 +383,7 @@ $$
 d_i = 2\times d_{i-1}
 $$
 
+\noindent
 for $d_{i-1}$ gives
 $$
 d_{i-1} = d_i/2
@@ -454,7 +456,7 @@ i.e. $r$ is the smallest non-negative remainder of the division of $a$ by $d$.
 	
 	{
 		\setlength{\parindent}{8em}
-		\hspace{-.5em}``\textbf{integer} $r,\ dd,\ q;$
+		\hspace{-.4em}``\textbf{integer} $r,\ dd,\ q;$
 		
 		$r:= a;\ dd:= d;\ q:= 0;$
 		
@@ -500,7 +502,7 @@ assigns to $q$ the value of the corresponding quotient. The proof can be establi
 	
 	{
 		\setlength{\parindent}{8em}
-		\hspace{-.5em}``$x \coloneq A;\ y \coloneq B;\ z \coloneq 1;$
+		\hspace{-.4em}``$x \coloneq A;\ y \coloneq B;\ z \coloneq 1;$
 		
 		\textbf{while} $y \neq 0$ \textbf{do}
 		
@@ -527,16 +529,15 @@ In the previous section I have assumed ``perfect arithmetic'' and in my experien
 The answer to this question seems to be the following. If one proves the correctness of a program assuming an idealized, perfect world, one should not be amazed if something goes wrong when this ideal program gets executed by an ``imperfect'' implementation. Obviously! Therefore, if we wish to prove program correctness in a more realistic world, the thing to do is to acknowledge right at the start that all operations appealed to in the program (in particular all arithmetic operations) need not be perfect, provided we state --- rather axiomatically --- the properties they have to satisfy for the proper execution of the program, i.e. the properties on which the correctness proof relies. (In the example of the previous section this requirement is simply exact integer arithmetic in the range $[0, 2a]$.)
 
 When writing a program operating on real numbers with rounded operations, one must be aware of the assumptions one makes, such as
-\begin{equation*}
-	\begin{split}
-		b > 0\quad \text{implies}&\quad a + b \geqslant a\\
-		a\times b =&\ b\times a\\
-		-(a \times  b) =&\ (-a)\times b\\
-		0\times  x =&\ 0\\
-		0 + x =&\ x\\
-		1\times x =&\ x\quad\text{etc. etc.}
-	\end{split}
-\end{equation*}
+\begin{align*}
+		&b > 0\quad \text{implies}\quad a + b \geqslant a\\
+		&a\times b =\ b\times a\\
+		&-(a \times  b) =\ (-a)\times b\\
+		&0\times  x =\ 0\\
+		&0 + x =\ x\\
+		&1\times x =\ x\quad\text{etc. etc.}
+\end{align*}
+
 
 Very often the validity of such relations is essential to the logic of the program. For the sake of compatibility, the programmer would be wise to be as undemanding as possible, whereas a good implementation should satisfy as many reasonable requirements as possible.
 
@@ -563,7 +564,7 @@ The simplest case is a parsing, a decomposition, into a fixed number of sub-acti
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=0.7]{fig1}
+	\includegraphics[scale=0.6]{fig1}
 \end{figure}
 
 The validity of this decomposition has to be established by enumerative reasoning. In this case, shortening of the conceptual gap between program and computation can be achieved by requiring that a linear piece of program text contains names or descriptions of the sub-actions in the order in which they have to take place. In our earlier example (invariance of $0 \leqslant r < dd$)
@@ -571,7 +572,7 @@ The validity of this decomposition has to be established by enumerative reasonin
 
 {
 	\setlength{\parindent}{8em}
-	\hspace{-.5em}``$dd \coloneq dd/2;$
+	\hspace{-.4em}``$dd \coloneq dd/2;$
 	
 	\textbf{if} $dd \leqslant r$ \textbf{do} $r \coloneq r - dd$''
 }
@@ -583,7 +584,7 @@ this condition is satisfied. The primary decomposition of the computation is int
 
 {
 	\setlength{\parindent}{8em}
-	\hspace{-.5em}``halve $dd;$
+	\hspace{-.4em}``halve $dd;$
 	
 	reduce $r$ modulo $dd$''.
 }
@@ -596,7 +597,7 @@ The program, however, is written under the assumption that ``reduce $r$ modulo $
 
 {
 	\setlength{\parindent}{8em}
-	\hspace{-.5em}``\textbf{if} $dd \leqslant r$ \textbf{do} decrease $r$ by $dd$''
+	\hspace{-.4em}``\textbf{if} $dd \leqslant r$ \textbf{do} decrease $r$ by $dd$''
 }
 \medskip
 
@@ -606,7 +607,7 @@ we have represented that at the given level of detail the action ``reduce $r$ mo
 
 {
 	\setlength{\parindent}{8em}
-	\hspace{-.5em}``\textbf{if} condition \textbf{then} statement 1 \textbf{else} statement 2''
+	\hspace{-.4em}``\textbf{if} condition \textbf{then} statement 1 \textbf{else} statement 2''
 }
 \medskip
 
@@ -655,7 +656,7 @@ There is a further benefit to be derived from the proposed sequencing discipline
 
 {
 	\setlength{\parindent}{8em}
-	\hspace{-.5em}``$dd: = dd/2;$
+	\hspace{-.4em}``$dd: = dd/2;$
 	
 	\textbf{if} $dd \leqslant r$ \textbf{do} $r \coloneq r - dd$''
 }
@@ -680,7 +681,7 @@ We can state our problem in another way. Given a program in action and suppose t
 
 For the sake of simplicity we assume our program text spread out in (linear) text space and assume an identifying mechanism for the program points corresponding to the discrete points of computation progress; let us call this identifying mechanism ``the textual index''. (If the discrete points of computation progress are situated in between successive statement executions, the textual index identifies, say, semicolons.) The textual index is a kind of generalized order counter, its value points to a place in the text.
 
-If we restrict ourselves to decomposition by concatenation and selection, a single textual index is sufficient to identify the progress of the computation. With the inclusion of repetition clauses textual indices are no longer sufficient to describe the progress of the computation. With each entry into a repetition clause, however, the system could introduce a so-called ``dynamic index'', inexorably counting the ordinal number of the corresponding current repetition; at termination of the repetition the system should again remove the corresponding dynamic index. As repetition clauses may occur nested inside each other, the appropriate mechanism is a stack (i.e. a last-in-first-out-memory). Initially the stack is empty; at entry of a repetition clause a new dynamic index (set to zero or one) is added on the top of the stack; whenever it is decided that the repetition is not terminated the top element of this stack is increased by 1 ; whenever it is decided that a repetition is terminated, the top element of the stack is removed. (This arrangement reflects very clearly that after termination of a repetition the number of times, even the fact that it was a repetition, is no longer relevant.)
+If we restrict ourselves to decomposition by concatenation and selection, a single textual index is sufficient to identify the progress of the computation. With the inclusion of repetition clauses textual indices are no longer sufficient to describe the progress of the computation. With each entry into a repetition clause, however, the system could introduce a so-called ``dynamic index'', inexorably counting the ordinal number of the corresponding current repetition; at termination of the repetition the system should again remove the corresponding dynamic index. As repetition clauses may occur nested inside each other, the appropriate mechanism is a stack (i.e. a last-in-first-out-memory). Initially the stack is empty; at entry of a repetition clause a new dynamic index (set to zero or one) is added on the top of the stack; whenever it is decided that the repetition is not terminated the top element of this stack is increased by 1; whenever it is decided that a repetition is terminated, the top element of the stack is removed. (This arrangement reflects very clearly that after termination of a repetition the number of times, even the fact that it was a repetition, is no longer relevant.)
 
 As soon as the programming language admits procedures, then a single textual index is no longer sufficient. In the case that a textual index points to the interior of a procedure body, the dynamic progress of the computation is only characterized when we also describe to which call of the procedure we refer, but this can be done by giving the textual index pointing to the place of the call. With the inclusion of the procedure the textual index must be generalized to a stack of textual indices, increased by one element at procedure call and decreased by one element at procedure return.
 
@@ -701,14 +702,14 @@ I have done many experiments and my basic experience gained by them can be summe
 
 This is a very strong condition. Let me give a first example.
 
-Excluding side-effects of the boolean inspections and assuming the value ``B2'' constant (i.e. unaffected by the execution of either ``S1'' or ``S2''), \textit{we} can establish the equivalence of the following two programs:
+Excluding side-effects of the boolean inspections and assuming the value ``$B2$'' constant (i.e. unaffected by the execution of either ``$S1$'' or ``$S2$''), \textit{we} can establish the equivalence of the following two programs:
 \begin{equation}
 	\label{eq:comparing-example-1}
 	\begin{split}
-	&\text{\hspace{-.5em}``\textbf{if }} B2\text{ \textbf{then}}\\
-	&\quad\text{\textbf{begin while} } B1\text{ \textbf{do} } S1 \text{ \textbf{end}}\\
-	&\text{\textbf{else}}\\
-	&\quad\text{\textbf{begin while} } B1\text{ \textbf{do} } S2\text{ \textbf{end}''}
+	&\text{\hspace{-.4em}``\textbf{if }} B2\text{ \textbf{then}}\\
+	&\text{\textbf{begin while} } B1\text{ \textbf{do} } S1 \text{ \textbf{end}}\\
+	&\qquad\text{\textbf{else}}\\
+	&\text{\textbf{begin while} } B1\text{ \textbf{do} } S2\text{ \textbf{end}''}
 	\end{split}
 \end{equation}
 
@@ -717,7 +718,7 @@ and
 \begin{equation}
 	\label{eq:comparing-example-2}
 	\begin{split}
-		&\text{\hspace{-.5em}``\textbf{while }} B1\text{ \textbf{do}}\\
+		&\text{\hspace{-.4em}``\textbf{while }} B1\text{ \textbf{do}}\\
 		&\text{\textbf{begin if} } B2\text{ \textbf{then} } S1\text{ \textbf{else} } S2\text{ \textbf{end}''}
 	\end{split}
 \end{equation}
@@ -733,7 +734,7 @@ Introducing a variable $j$ and giving to ``equal'' the meaning ``among the first
 \begin{equation}
 	\label{eq:comparing-example-3}
 	\begin{split}
-		&\text{\hspace{-.5em}``}j \coloneq 0;\text{ equal} \coloneq \text{\textbf{true}};\\
+		&\text{\hspace{-.4em}``}j \coloneq 0;\text{ equal} \coloneq \text{\textbf{true}};\\
 		&\text{\textbf{while} } j \neq N\text{ \textbf{do}}\\
 		&\quad\text{\textbf{begin} } j \coloneq  j + 1;\text{ equal} \coloneq \text{equal \textbf{and} } (X[j] = Y[j]) \text{ \textbf{end}''}
 	\end{split}
@@ -744,7 +745,7 @@ and
 \begin{equation}
 	\label{eq:comparing-example-4}
 	\begin{split}
-		&\text{\hspace{-.5em}``}j \coloneq 0;\text{ equal} \coloneq \text{\textbf{true}};\\
+		&\text{\hspace{-.4em}``}j \coloneq 0;\text{ equal} \coloneq \text{\textbf{true}};\\
 		&\text{\textbf{while} } j \neq N\text{ \textbf{and} equal \textbf{do}}\\
 		&\quad\text{\textbf{begin} } j \coloneq  j + 1;\text{ equal} \coloneq (X[j] = Y[j]) \text{ \textbf{end}''}
 	\end{split}
@@ -756,8 +757,8 @@ On the arrays $X$ and $Y$ we can define of $0 \leqslant j \leqslant N$ the $N + 
 \begin{equation}
 	\label{eq:comparing-example-5}
 	\begin{split}
-		\text{for } j = 0\quad & \text{EQUAL}_j = \text{\textbf{true}} \\
-		\text{for } j > 0\quad  & \text{EQUAL}_j = \text{EQUAL}_{j-1}\text{ \textbf{and} } (X[j] = Y[j]).
+		\text{for } j = 0\qquad & \text{EQUAL}_j = \text{\textbf{true}} \\
+		\text{for } j > 0\qquad  & \text{EQUAL}_j = \text{EQUAL}_{j-1}\text{ \textbf{and} } (X[j] = Y[j]).
 	\end{split}
 \end{equation}
 
@@ -778,14 +779,14 @@ It is tempting to regard programs (\ref{eq:comparing-example-3}) and (\ref{eq:co
 \begin{equation}
 	\label{eq:comparing-example-7}
 	\begin{split}
-		&\text{\hspace{-.5em}``}j \coloneq 0;\text{ equal} \coloneq \text{EQUAL}_0;\\
-		&\text{\textbf{while} ``perhaps still:equal} \neq \text{EQUAL}_N\text{'' \textbf{do}}\\
+		&\text{\hspace{-.4em}``}j \coloneq 0;\text{ equal} \coloneq \text{EQUAL}_0;\\
+		&\text{\textbf{while} ``perhaps still: equal} \neq \text{EQUAL}_N\text{'' \textbf{do}}\\
 		&\quad\text{\textbf{begin} } j \coloneq  j + 1;\text{ ``equal} \coloneq \text{EQUAL}_j\text{'' \textbf{end}''}
 	\end{split}
 \end{equation}
 
 \noindent
-in which ``perhaps still:equal $\neq$ EQUAL$_N$'' stands for some sort of still open primitive. When this is evaluated
+in which ``perhaps still: equal $\neq$ EQUAL$_N$'' stands for some sort of still open primitive. When this is evaluated
 $$
 \text{equal} = \text{EQUAL}_j
 $$
@@ -819,12 +820,12 @@ $$
 \noindent
 is now a straightforward transcription of the recurrence relation (\ref{eq:comparing-example-5}).
 
-To come to program (\ref{eq:comparing-example-4}) some analysis has to be applied to the recurrence relation (\ref{eq:comparing-example-5}), from which can be derived (by mathematical induction again) that EQUAL$_j =$ \textbf{false} implies EQUAL$_N =$ \textbf{false}, and therefore EQUAL$_j =$ \textbf{false} implies EQUAL$_j =$ EQUAL$_N$. If this situation arises, the equality ``equal = EQUAL$_N$'' can also be guaranteed and this leads to program (\ref{eq:comparing-example-4}). The set of (sub)computations the repeated statement has to cope with in program (\ref{eq:comparing-example-4}) is restricted to those with the initial state ``equal $=$ \textbf{true}'' and therefore in program (\ref{eq:comparing-example-4}) the assignment ``equal $\coloneq$ EQUAL$_j$'' can be abbreviated to
+To come to program (\ref{eq:comparing-example-4}) some analysis has to be applied to the recurrence relation (\ref{eq:comparing-example-5}), from which can be derived (by mathematical induction again) that $\text{EQUAL}_j = \text{\textbf{false}}$ implies $\text{EQUAL}_N = \text{\textbf{false}}$, and therefore $\text{EQUAL}_j = \text{\textbf{false}}$ implies $\text{EQUAL}_j = \text{EQUAL}_N$. If this situation arises, the equality ``$\text{equal} = \text{EQUAL}_N$'' can also be guaranteed and this leads to program (\ref{eq:comparing-example-4}). The set of (sub)computations the repeated statement has to cope with in program (\ref{eq:comparing-example-4}) is restricted to those with the initial state ``$\text{equal} = \text{\textbf{true}}$'' and therefore in program (\ref{eq:comparing-example-4}) the assignment ``$\text{equal} \coloneq \text{EQUAL}_j$'' can be abbreviated to
 $$
 \text{``equal} \coloneq (X[j] = Y[j])\text{''}
 $$
 
-And now it is clear why the introduction of (\ref{eq:comparing-example-7}) as an abstraction of (\ref{eq:comparing-example-3}) and (\ref{eq:comparing-example-4}) was misleading. With ``perhaps still:equal $\neq$ EQUAL$_N$'' we have stated the meaning of truth and falsity of a boolean expression without stating the expression itself and that was very tricky. We have tried to interpret (\ref{eq:comparing-example-7}) as a program in which part of the sequencing at its own level was undefined and varying over its refinements. As a result we have tried to view the last lines of (\ref{eq:comparing-example-7}) as a model for the last lines of both (\ref{eq:comparing-example-3}) and (\ref{eq:comparing-example-4}), but this was misleading because the computations to be evoked by them cannot be brought into a one-to-one correspondence.
+And now it is clear why the introduction of (\ref{eq:comparing-example-7}) as an abstraction of (\ref{eq:comparing-example-3}) and (\ref{eq:comparing-example-4}) was misleading. With ``perhaps still: equal $\neq \text{EQUAL}_N$'' we have stated the meaning of truth and falsity of a boolean expression without stating the expression itself and that was very tricky. We have tried to interpret (\ref{eq:comparing-example-7}) as a program in which part of the sequencing at its own level was undefined and varying over its refinements. As a result we have tried to view the last lines of (\ref{eq:comparing-example-7}) as a model for the last lines of both (\ref{eq:comparing-example-3}) and (\ref{eq:comparing-example-4}), but this was misleading because the computations to be evoked by them cannot be brought into a one-to-one correspondence.
 
 So much for programs that we consider as incomparable. Examples of comparable programs will be encountered in the following sections. A final remark: we have stated that ``paired computations can be parsed into a time-succession of actions that can be mapped on each other''. We have not required that actions so paired should have the same net effect! We may compare alternative programs for the same job but also different programs for similar jobs.
 
@@ -850,16 +851,19 @@ When an algorithm has to be made, the desired computation has to be composed fro
 The simplest form of the program is
 \medskip
 
+
 \noindent
 description 0:
+\labeltext{description 0}{tx:description-0}
 
 \textbf{begin} ``print first thousand prime numbers'' \textbf{end}
 
 \noindent
-and when ``print first thousand prime numbers'' refers to an instruction from the well-understood repertoire, the description 0 solves the problem. For the sake of argument we assume that this instruction does \textit{not} occur in the well-understood repertoire. Therefore we have to conceive a computation composed from ``more primitive'' actions that establishes the desired net effect. Our first proposal is to separate the generation of the prime numbers and their printing, and we propose description 1:
+and when ``print first thousand prime numbers'' refers to an instruction from the well-understood repertoire, the \ref{tx:description-0} solves the problem. For the sake of argument we assume that this instruction does \textit{not} occur in the well-understood repertoire. Therefore we have to conceive a computation composed from ``more primitive'' actions that establishes the desired net effect. Our first proposal is to separate the generation of the prime numbers and their printing, and we propose \ref{tx:description-1}:
 \medskip
 
 \textbf{begin variable} ``table $p$'';
+\labeltext{description 1}{tx:description-1}
 
 \quad ``fill table $p$ with first thousand prime numbers'';
 
@@ -878,7 +882,7 @@ Resuming our discussion, however, we have to ask ourselves, to what extent the t
 
 When the two actions can no longer be regarded as invoked by instructions from the well-understood repertoire, neither can the variable ``table $p$'' any longer be regarded as an implicitly available resource. And in a way similar to the one in which we have to decompose the actions into sub-actions, we have to choose how the variable ``table $p$'' will be composed, viz. what data structure we select to represent the information to be handed over via ``table $p$'' from the first action to the second. At some point this has to be decided and the questions are ``when?'' and ``how?''.
 
-In principle, there seem to be two ways out of this. The first one is to try to postpone the decision on how to structure ``table $p$'' into (more neutral, less problem-bound) components. If we postpone the decision on how to structure ``table $p$'', the next thing to do is to refine one of the actions or both. We can do so, assuming a proper set of operations on the still mysterious object ``table $p$''; finally we collect these operations and in view of their demands we design the most attractive structure of ``table $p$''.
+In principle, there seem to be two ways out of this. The first one is to try to postpone the decision on how to structure ``table $p$'' into (more neutral, less problem-bound) components. If we postpone the decision on how to structure ``table $p$'', the next thing to do is to refine one of the actions or both. We can do so, assuming a proper set of operations on the still mysterious object \mbox{``table $p$'';} finally we collect these operations and in view of their demands we design the most attractive structure of ``table $p$''.
 
 Alternatively, we can try to decide, here and now, upon the structure of ``table $p$''. Once it has been decided how the table of the first thousand primes will be represented, the refinements of both actions can be done fairly independently of each other.
 
@@ -890,13 +894,13 @@ We grant the programmer the courage to choose the latter representation. It seem
 
 The next stage of our program refinement then becomes the careful statement of a convention regarding the representation of the still mysterious object ``table $p$'' and a redefinition of the two operations in terms of this convention.
 
-The convention is that the information to be contained in ``table $p$'' will be represented by the values of the elements of the ``\textbf{integer array} $p[1 : 1000]$'', such that for $1 \leqslant k \leqslant 1000$ $p[k]$ will be equal to the $k$th prime number, when the prime numbers are arranged in order of increasing magnitude. (If a maximum value of the integers is implicitly understood, we assume that number theory allows us to state that this is large enough.)
+The convention is that the information to be contained in ``table $p$'' will be represented by the values of the elements of the ``\textbf{integer array} $p[1 : 1000]$'', such that for $1 \leqslant k \leqslant 1000\ p[k]$ will be equal to the $k$th prime number, when the prime numbers are arranged in order of increasing magnitude. (If a maximum value of the integers is implicitly understood, we assume that number theory allows us to state that this is large enough.)
 
-When we now want to describe this new refinement we are faced with a new difficulty. Our description 1 had the form of a single program, thanks to the fact that it was a refinement of the single action named ``print the first thousand prime numbers'', referred to in description 0. (In more conventional terms: description 1 could have the form of a procedure body.) This no longer holds for our next level, in which we have to refine (simultaneously, in a sense) three named entities, viz. ``table $p$'' and the two actions, and we should invent some sort of identifying terminology indicating what refines what.
+When we now want to describe this new refinement we are faced with a new difficulty. Our \ref{tx:description-1} had the form of a single program, thanks to the fact that it was a refinement of the single action named ``print the first thousand prime numbers'', referred to in \ref{tx:description-0}. (In more conventional terms: \ref{tx:description-1} could have the form of a procedure body.) This no longer holds for our next level, in which we have to refine (simultaneously, in a sense) three named entities, viz. ``table $p$'' and the two actions, and we should invent some sort of identifying terminology indicating what refines what.
 
-For the continuation of our discussion we make a very tentative proposal. We say: description 0 is a valid text expressed in terms of a single named action ``print first thousand prime numbers''; let this be identified by the code $0a$.
+For the continuation of our discussion we make a very tentative proposal. We say: \ref{tx:description-0} is a valid text expressed in terms of a single named action ``print first thousand prime numbers''; let this be identified by the code $0a$.
 
-Description 1 is called ``1'' because it is the next refinement of description 0; it contains a refinement of $0a$ --- the only term in which description 0 is expressed --- and is itself expressed in terms of three named entities to which we attach the codes:
+\hyperref[tx:description-1]{Description 1} is called ``\hyperref[tx:description-1]{1}'' because it is the next refinement of \ref{tx:description-0}; it contains a refinement of $0a$ --- the only term in which \ref{tx:description-0} is expressed --- and is itself expressed in terms of three named entities to which we attach the codes:
 
 \noindent
 ``table $p$''\hfill 1a
@@ -908,25 +912,26 @@ Description 1 is called ``1'' because it is the next refinement of description 0
 ``print table $p$''\hfill 1c
 
 \noindent
-code numbers, starting with 1, because description 1 is expressed in terms of them, and ``a'', ``b'' and ``c'' being attached for the purpose of distinction.
+code numbers, starting with 1, because \ref{tx:description-1} is expressed in terms of them, and ``a'', ``b'' and ``c'' being attached for the purpose of distinction.
 
-Now we have to describe our convention chosen for the representation of the information to be contained in ``table $p$'', but this convention pertains to all three elements 1a, 1b and 1c. Therefore we call this description 2; it should contain the descriptions of the three separate elements (I use the equality sign as separator)
+Now we have to describe our convention chosen for the representation of the information to be contained in ``table $p$'', but this convention pertains to all three elements 1a, 1b and 1c. Therefore we call this \ref{tx:description-2}; it should contain the descriptions of the three separate elements (I use the equality sign as separator)
 \medskip
 
 \noindent
 description 2:
+\labeltext{description 2}{tx:description-2}
 \nopagebreak
 
 \noindent
 1a $=$ ``\textbf{integer array} $p[1 : 1000]$''
 
 \noindent
-1b $=$ ``make for $k$ from 1 through 1000 $p[k]$ equal to the $k$th prime number''
+1b $=$ ``make for $k$ from 1 through $1000\ p[k]$ equal to the $k$th prime number''
 
 \noindent
 1c $=$ ``print $p[k]$ for $k$ from 1 through 1000''.
 
-Description 2 is expressed in terms of three named entities to which we give (in the obvious order) the codes 2a, 2b and 2c. (In code numbers, description 2 is very meager: it just states that for 1a, 1b and 1c, we have chosen the refinements 2a, 2b and 2c respectively.)
+\hyperref[tx:description-2]{Description 2} is expressed in terms of three named entities to which we give (in the obvious order) the codes 2a, 2b and 2c. (In code numbers, \ref{tx:description-2} is very meager: it just states that for 1a, 1b and 1c, we have chosen the refinements 2a, 2b and 2c respectively.)
 
 \noindent
 \textit{Remark}. In the representation of the information to be contained in ``table $p$'', we have chosen not to exploit the fact that each of the values to be printed occurs only once, nor that they occur in the order of increasing magnitude. Conversely, this implies that the action that has to take place under the name of 2c is regarded as a specific instance of printing any set of thousand integer values (it could be a table of monthly wages of thousand numbered employees!). The net effect of the printing action in this example is an uniquely defined as the first thousand prime numbers are: we conceive it, however, as a specific instance of a larger class of occurrences. In the further refinement of 2c we deal with this whole class, the specific instance in this class being defined by the values of the elements of the array $p$. When people talk about ``defining an interface'' I often get the feeling that they overlook the presupposed generalization, the conception of the class of ``possible'' actions.
@@ -1154,10 +1159,10 @@ level 2b1(4):·
 expressed in terms of
 
 \noindent
-2b1(4)a\quad\quad ``increase odd $j$ until next odd prime number''
+2b1(4)a\tabto{5em} ``increase odd $j$ until next odd prime number''
 
 \noindent
-2b1(4)b\quad\quad ``set $j$ to one''.
+2b1(4)b\tabto{5em} ``set $j$ to one''.
 
 In our next level we only introduce the sub-computation for 2b1(4)a; the other is handed down.
 
@@ -1189,13 +1194,13 @@ level 2b2(4):
 expressed in terms of
 
 \noindent
-2b2(4)b\quad\quad still meaning ``set $j$ to one''
+2b2(4)b\tabto{5em} still meaning ``set $j$ to one''
 
 \noindent
-2b2(4)c\quad\quad ``increase $j$ with two''
+2b2(4)c\tabto{5em} ``increase $j$ with two''
 
 \noindent
-2b2(4)d\quad\quad ``give for odd $j$ to $j$prime the meaning: $j$ is a prime number''.
+2b2(4)d\tabto{5em} ``give for odd $j$ to $j$prime the meaning: $j$ is a prime number''.
 
 It is only at the next level that we need to talk about ord. Therefore we now write
 
@@ -1239,13 +1244,13 @@ level 2b3(4): \textbf{integer} ord;
 expressed in terms of
 
 \noindent
-2b3(4)a\quad\quad ``set ord initial''
+2b3(4)a\tabto{5em} ``set ord initial''
 
 \noindent
-2b3(4)b\quad\quad ``adjust ord''
+2b3(4)b\tabto{5em} ``adjust ord''
 
 \noindent
-2b3(4)c\quad\quad ``give to $j$prime the meaning: $p[n]$ is not a factor of $j$''. 
+2b3(4)c\tabto{5em} ``give to $j$prime the meaning: $p[n]$ is not a factor of $j$''. 
 
 In our next level we give two independent refinements. (Note. We could have given them in successive levels, but then we should have to introduce an arbitrary ordering to these two levels. We could also try to treat the refinements separately --- i.e. as separately as 2b and 2c --- but we feel that it is a little premature for this drastic decision.) We are going to express
 
@@ -1289,16 +1294,16 @@ level 2b4(4):
 expressed in terms of
 
 \noindent
-2b4(4)a\quad\quad still meaning ``set ord initial''
+2b4(4)a\tabto{5em} still meaning ``set ord initial''
 
 \noindent
-2b4(4)b\quad\quad ``ord too small''
+2b4(4)b\tabto{5em} ``ord too small''
 
 \noindent
-2b4(4)c\quad\quad ``increase ord by one''
+2b4(4)c\tabto{5em} ``increase ord by one''
 
 \noindent
-2b4(4)d\quad\quad ``maker equal to remainder of $j$ over $p[n]$''
+2b4(4)d\tabto{5em} ``make $r$ equal to remainder of $j$ over $p[n]$''
 
 If we have a built-in division, the implementation of ``make $r$ equal to the remainder of $j$ over $p[n]$'' can be assumed to be an easy matter. The case that the refinement of 2b4(4)d can be treated independently is now left to the interested reader. To give the algorithm an unexpected turn we shall assume the absence of a convenient remainder computation. In that case the algorithm
 $$
@@ -1342,7 +1347,7 @@ So we come to our final
 level 2b5(4):
 
 \noindent
-\textbf{integer square}; \textbf{integer array} mult$[1 : 30]$;
+\textbf{integer} square; \textbf{integer array} mult$[1 : 30]$;
 
 \noindent
 2b4(4)a $=$
@@ -1360,7 +1365,7 @@ level 2b5(4):
 2b4(4)c =
 
 \noindent
-\textbf{begin} mult$[\text{ord}] \coloneq$ square; ord $\coloneq$ ord $ + 1$; square $\coloneq p[\text{ord}] \uparrow 2$ \textbf{end};
+\textbf{begin} mult$[\text{ord}] \coloneq$ square; $\text{ord} \coloneq \text{ord} + 1$; square $\coloneq p[\text{ord}] \uparrow 2$ \textbf{end};
 
 \noindent
 2b4(4)d =
@@ -1441,7 +1446,7 @@ Where version $A$ has
 
 {
 	\setlength{\parindent}{8em}
-	\hspace{-.5em}``arg $\coloneq \dots$'' (i.e. assignment to arg)
+	\hspace{-.4em}``arg $\coloneq \dots$'' (i.e. assignment to arg)
 	
 }
 \medskip
@@ -1452,7 +1457,7 @@ version $B$ will have
 
 {
 	\setlength{\parindent}{8em}
-	\hspace{-.5em}``arg $\coloneq \dots$; fun $\coloneq$ FUN(arg)''
+	\hspace{-.4em}``arg $\coloneq \dots$; fun $\coloneq$ FUN(arg)''
 	
 }
 \medskip
@@ -1475,7 +1480,7 @@ There are two possible reasons to prefer version $B$ to version $A$. When the va
 
 {
 	\setlength{\parindent}{8em}
-	\hspace{-.5em}``fun up to date $\coloneq$ \textbf{false}''
+	\hspace{-.4em}``fun up to date $\coloneq$ \textbf{false}'';
 }
 \medskip
 
@@ -1487,11 +1492,11 @@ But quite often the situation is not as simple as that and now we come to the se
 
 {
 	\setlength{\parindent}{8em}
-	\hspace{-.5em}``arg $\coloneq\dots$; fun $\coloneq$ FUN(arg)''
+	\hspace{-.4em}``arg $\coloneq\dots$; fun $\coloneq$ FUN(arg)''
 }
 \medskip
 
-Often this possibility is not only intimately linked to the nature of the functional dependence, but also to the ``history of the variable arg'' as the computation proceeds! We have seen a very striking example in the program for the prime table (see Section ``\nameref{sec:first-example-step-wise-program-composition}ly dependent on ``$j$'', viz. ``ord'' is the minimum value satisfying
+Often this possibility is not only intimately linked to the nature of the functional dependence, but also to the ``history of the variable arg'' as the computation proceeds! We have seen a very striking example in the program for the prime table (see Section ``\nameref{sec:first-example-step-wise-program-composition}'') with the introduction of ``ord'', wich is functionally dependent on ``$j$'', viz. ``ord'' is the minimum value satisfying
 \medskip
 
 {
@@ -1612,7 +1617,7 @@ where the labels are considered less as markers of points in the program text th
 
 {
 	\setlength{\parindent}{8em}
-	\hspace{-.5em}``input; manipulation; output''
+	\hspace{-.4em}``input; manipulation; output''
 }
 \medskip
 
@@ -1645,7 +1650,7 @@ If we succeed in building up our program along the lines just given, we have arr
 Why this model? What are the benefits we hope to derive from it? Let me try to list them.
 
 \begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
-	\item Our experience as recorded in ``A first example of step-wise program composition'' strongly suggests that the arrangement of various layers, corresponding to different levels of abstraction, is an attractive vehicle for program composition.
+	\item Our experience as recorded in ``\nameref{sec:first-example-step-wise-program-composition}'' strongly suggests that the arrangement of various layers, corresponding to different levels of abstraction, is an attractive vehicle for program composition.
 
 	\item It is not vain to hope that many a program modification can now be presented as replacement of one (virtual) machine by a compatible one.
 
@@ -1861,7 +1866,7 @@ To represent a line we have many different possibilities, e.g. a list of the the
 This leads to
 
 \noindent
-LONG REP
+LONGREP
 
 \noindent
 \textbf{begin integer} $k$;
@@ -1907,7 +1912,7 @@ SHORTREP
 \quad \textbf{if} $f \leqslant x$ \textbf{do} \{$k \coloneq f$; \textbf{while} $k < x$ \textbf{do} \{sym$[k] \coloneq$ space; $k$ \textbf{plus} 1\};
 
 \noindent
-\quad \quad $f \coloneq x + 1$ \}\}
+\quad \quad $f \coloneq x + 1$\}\}
 
 \noindent
 \textbf{end}
@@ -2200,9 +2205,9 @@ Preceding sections --- in particular ``\nameref{sec:first-example-step-wise-prog
 
 We consider a character set consisting of letters, a space(sp) and a point(pnt). Words consist of one or more, but at most twenty letters. An input text consists of one or more words, separated from each other by one or more spaces and terminated by zero or more spaces followed by a point. With the character valued function RNC (Read Next Character) the input text should be read from and including the first letter of the first words up to and including the terminating point. An output text has to be produced using the primitive PNC($x$) (i.e. Print Next Character) with a character valued parameter. If the function of the program were to copy the text, the following program would do (assuming character valued variables at our disposal)
 
-\textbf{char} $x$;
+\quad \textbf{char} $x$;
 
-\textbf{repeat} $x \coloneq$ RNC; PNC($x$) \textbf{until} $x =$ pnt
+\quad \textbf{repeat} $x \coloneq$ RNC; PNC($x$) \textbf{until} $x =$ pnt
 
 In this example, however, the text is to be subjected to the following transformation:
 
@@ -2214,23 +2219,22 @@ In this example, however, the text is to be subjected to the following transform
 
 For instance (using ``--'' to represent a space) the input text
 
-``this---is---a---silly---program---.''
+\quad ``this---is---a---silly---program---.''
 
 \noindent
 has to be transformed into
 
-``this--si--a--yllis--program.''
-
+\quad ``this--si--a--yllis--program.''
 
 My reader is cordially invited to try this program himself, before reading on and to record his considerations so as to enable himself to compare them with the sequel. (It should take an experienced programmer much less than 90 minutes!)
 
 The unknown length of the non-empty input text suggested a program of the structure
 
-prelude;
+\quad prelude;
 
-\textbf{repeat} something \textbf{until} ready;
+\quad \textbf{repeat} something \textbf{until} ready;
 
-coda
+\quad coda
 
 \noindent
 but immediately this question turned up: ``With how much do we deal during a single execution of ``something''?''. Four suggestions turned up:
@@ -2244,11 +2248,11 @@ but immediately this question turned up: ``With how much do we deal during a sin
 
 The first two suggestions were rejected very quickly and without much explicit motivation, although --- or because? --- it is not too difficult to provide it. (The first one is unattractive because the amount of output that can be produced on account of the next character of the input text varies wildly; for the second suggestion a similar objection holds. Apart from that, a program with a loop in a loop is in general cleaner: this suggests to look for larger portions.) The audience rejected the fourth suggestion on account of the remark that the terminating point could come equally well after an even number of words as after an odd number of words. To make the selection of the third suggestion explicit, we wrote on the blackboard:
 
-prelude;
+\quad prelude;
 
-\textbf{repeat} process next word \textbf{until} point read;
+\quad \textbf{repeat} process next word \textbf{until} point read;
 
-coda
+\quad coda
 
 Everyone was satisfied in as far as this program expresses neatly that the output words are dealt with in exactly the same order as the corresponding input words are read, but it does not express that half of the words are to be printed in reverse order. When this was pointed out to them, they quickly introduced a state variable for the purpose. A first suggestion was to count the number of words processed and to make the processing dependent on the odd/evenness of this count, but a minor hesitation from my side was enough for the discovery that a boolean variable would meet the situation. It was decided that the ``prelude'' should include
 $$
@@ -2263,30 +2267,30 @@ $$
 
 For me it was very gratifying to see that they introduced the variable ``forward'' before bothering about the details of word separation, which then became their next worry. It took them more time to realize that a further refinement of ``process next word'' required exact specification of which characters of the input text were going to be read and which characters of the output text were going to be printed at each execution of the repeatable statement. In fact, I had to pose the question to them and, after having done so, I asked them in which of the two texts the grouping presented itself most naturally. They selected the output text and chose the following grouping (indicating separation with a vertical bar):
 
-	$\mid$this--$\mid$si--$\mid$a--$\mid$yllis--$\mid$program.$\mid$
+\quad $\mid$this--$\mid$si--$\mid$a--$\mid$yllis--$\mid$program.$\mid$
 
 \noindent
 i.e. in units of a word followed by a proper terminator. I then asked for the corresponding grouping of the input characters. When their attention had been brought to the terminators, they suggested (from right to left!) the following separation of the input characters:
 
-$\mid$this--i$\mid$s--a$\mid$--s$\mid$illy--p$\mid$rogram--.$\mid$,
+\quad $\mid$this--i$\mid$s--a$\mid$--s$\mid$illy--p$\mid$rogram--.$\mid$,
 
 \noindent
 as soon as one of them had remarked that the program could only ``know'' that an output word should be followed by a space after having ``seen'' the first letter of the next input word. I then remained silent, leaving them gazing at their grouping of the symbols until one of them discovered that the exceptional grouping of the characters of the first input word was inelegant, that the grouping should be
 
-t$\mid$his--i$\mid$s--a$\mid$--s$\mid$illy--p$\mid$rogram--.$\mid$,
+\quad t$\mid$his--i$\mid$s--a$\mid$--s$\mid$illy--p$\mid$rogram--.$\mid$,
 
 \noindent
 i.e. that the first character of the first word should be read in the prelude. Another variable was introduced and we arrived at
 
-\textbf{boolean} forward; \textbf{char} $x$;
+\quad \textbf{boolean} forward; \textbf{char} $x$;
 
-forward $\coloneq$ \textbf{true}; $x \coloneq$ RNC;
+\quad forward $\coloneq$ \textbf{true}; $x \coloneq$ RNC;
 
-\textbf{repeat} process next word;
+\quad \textbf{repeat} process next word;
 
-\quad forward $\coloneq$ \textbf{non} forward
+\quad \quad forward $\coloneq$ \textbf{non} forward
 
-\textbf{until} $x =$ pnt
+\quad \textbf{until} $x =$ pnt
 
 \noindent
 in which the second line represents the prelude; in the meantime it had been decided that the coda could be empty.
@@ -2295,64 +2299,64 @@ The above stage had been reached after the first 45 minutes and we had our inter
 
 Unanimously they decided to introduce a
 
-\textbf{char array} $c[1:20]$
+\quad \textbf{char array} $c[1:20]$
 
 \noindent
 to store the letters of the word. (No one discovered that reading the letters and printing them in the reverse order could be done by a recursive routine!) Essentially, four things have to be done: the letters of the word have to be read, the letters of the word have to be printed, enough has to be read to decide which terminator is to be printed and the terminator has to be printed. I did not list these four actions, I did not ask for an explicit decision on how to group and/or combine them. The audience decided that first all reading should be done and thereafter all printing. (From their side this was hardly a conscious decision.)
 
 Trying to refine the reading and the printing process they hit an unsuspected barrier: they were --- at least for me, surprisingly --- slow in discovering that they still had to define an interface between reading and printing through which to transmit the word to be processed, no matter how obvious this interface was. It took a long time before anyone formulated that $c[i]$ should equal the $i$th character of the word when read from left to right. Perhaps half of the audience was wondering what all the fuss was about, but it took an equally long time to discover that the length of the word needed some form of representation as well. No one suggested to do this by storing a terminator, they introduced a separate integer ``$l$'', counting the number of letters of the word. They decided that the first word ``this'' should be represented by
 
-$c[1] = $``$t$'', $c[2] = $``$h$'', $c[3] = $``$i$'', $c[4] = $``$s$'' and $l = 4$
+\quad $c[1] = $``$t$'', $c[2] = $``$h$'', $c[3] = $``$i$'', $c[4] = $``$s$'' and $l = 4$
 
 They still had difficulty in arriving at the reading cycle and it was only when I had said repeatedly ``so we have decided that ``$l$'' is going to represent the number of letter of the word stored in the array'' that they arrived for the beginning of the reading process at
 
-$ l \coloneq 0; $
+\quad $l \coloneq 0; $
 
-\textbf{repeat} $l \coloneq l + 1;$ $c[l] \coloneq x;$ $x\coloneq$ RNC \textbf{until} $x =$ sp \textbf{or} $x =$ pnt
+\quad \textbf{repeat} $l \coloneq l + 1;$ $c[l] \coloneq x;$ $x\coloneq$ RNC \textbf{until} $x =$ sp \textbf{or} $x =$ pnt
 
 \noindent
 (In the first draft ``\textbf{or} $x =$ pnt'' was missing, but this was remedied quickly.) Once this was on the blackboard they completed the reading process without much hesitation:
 
-\textbf{while} $x =$ sp \textbf{do} $x\coloneq$ RNC
+\quad \textbf{while} $x =$ sp \textbf{do} $x\coloneq$ RNC
 
 When we turned our attention to the printing process, they were more productive. Clearly the reading process had shown them the purpose of the interface and suggestions came from various sides. I had never described the dilemma to them (see page \pageref{pg:dilema}), whether to code an alternative clause selecting between two repetitions or a repetitive clause repeating an alternative statement. I was waiting for the dilemma to turn up, it came and I showed it to them. Then I had a surprise, for one of the students suggested to map the two loops on each other with the aid of more variables. We introduced three integers ``$k$. inc, term'' and the printing of the letters became
 
-\textbf{if} forward \textbf{then begin} $k \coloneq 0$; inc $\coloneq + 1$; term $\coloneq l$ \textbf{end}
+\quad \textbf{if} forward \textbf{then begin} $k \coloneq 0$; inc $\coloneq + 1$; term $\coloneq l$ \textbf{end}
 
-\tabto{5.8em}\textbf{else begin} $k \coloneq l + 1$; inc $\coloneq -1$; term $\coloneq 1$ \textbf{end};
+\tabto{5.8em}\quad \textbf{else begin} $k \coloneq l + 1$; inc $\coloneq -1$; term $\coloneq 1$ \textbf{end};
 
-\textbf{repeat} $k \coloneq k + $inc; PNC($c[k]$) \textbf{until} $k =$ term
+\quad \textbf{repeat} $k \coloneq k + \text{inc}$; $\text{PNC}(c[k])$ \textbf{until} $k =$ term
 
 \noindent
 followed by
 
-\textbf{if} $x =$ pnt \textbf{then} PNC(pnt) \textbf{else} PNC(sp).
+\quad \textbf{if} $x =$ pnt \textbf{then} PNC(pnt) \textbf{else} PNC(sp).
 
 Thus we arrived at the following program:
 
-\textbf{boolean} forward; \textbf{char} $x$; \textbf{char array} $c[1:20]$; \textbf{integer} $l$, $k$, inc, term;
+\quad \textbf{boolean} forward; \textbf{char} $x$; \textbf{char array} $c[1:20]$; \textbf{integer} $l$, $k$, inc, term;
 
-forward $\coloneq$ \textbf{true}; $x \coloneq$ RNC;
+\quad forward $\coloneq$ \textbf{true}; $x \coloneq$ RNC;
 
-\textbf{repeat} $l \coloneq 0$;
+\quad \textbf{repeat} $l \coloneq 0$;
 
-\quad \textbf{repeat} $l\coloneq l + 1$; $c[l]\coloneq x$; $x \coloneq$ RNC \textbf{until} $x =$ sp \textbf{or} $x =$ pnt;
+\quad \quad \textbf{repeat} $l\coloneq l + 1$; $c[l]\coloneq x$; $x \coloneq$ RNC \textbf{until} $x =$ sp \textbf{or} $x =$ pnt;
 
-\quad \textbf{while} $x =$ sp \textbf{do} $x\coloneq$ RNC;
+\quad \quad \textbf{while} $x =$ sp \textbf{do} $x\coloneq$ RNC;
 
-\quad \textbf{if} forward \textbf{then begin} $k\coloneq 0$; inc $\coloneq + 1$; term $\coloneq l$ \textbf{end}
+\quad \quad \textbf{if} forward \textbf{then begin} $k\coloneq 0$; inc $\coloneq + 1$; term $\coloneq l$ \textbf{end}
 
-\quad\quad \textbf{else begin} $k\coloneq l + 1$; inc $\coloneq -1$; term $\coloneq 1$ \textbf{end};
+\quad \quad\quad \textbf{else begin} $k\coloneq l + 1$; inc $\coloneq -1$; term $\coloneq 1$ \textbf{end};
 
-\quad \textbf{repeat} $k\coloneq k + \text{inc}$; PNC($c[k]$) \textbf{until} $k =$ term;
+\quad \quad \textbf{repeat} $k\coloneq k + \text{inc}$; PNC($c[k]$) \textbf{until} $k =$ term;
 
-\quad \textbf{if} $x = \text{pnt}$ \textbf{then} PNC(pnt) \textbf{else} PNC(sp);
+\quad \quad \textbf{if} $x = \text{pnt}$ \textbf{then} PNC(pnt) \textbf{else} PNC(sp);
 
-\quad forward $\coloneq$ \textbf{non} forward
+\quad \quad forward $\coloneq$ \textbf{non} forward
 
-\textbf{until} $x =$ pnt
+\quad \textbf{until} $x =$ pnt
 
-This section has not been included because the problem tackled in it is very exciting. On the contrary, I feel tempted to remark that the problem is perhaps too trivial to act as a good testing ground for an orderly approach to the problem of program composition. This section has been included because it contains a true eye-witness account of what happened in the classroom. It should be interpreted as a partial answer to the question that is often posed to me, viz. to what extent I can teach programming style. (I never used the ``Notes on Structured Programming'' --- mainly addressed to myself and perhaps to my colleagues --- in teaching. The classroom experiment described in this section took place at the end of a course entitled ``Introduction into the Art of Programming'', for which separate lecture notes-with exercises and all that-were written. As at the moment of writing the students that followed this course have still to pass their examination, it is for me still an open question how successful I have been. They liked the course, I have heard that they described my programs as ``logical poems'', so I have the best of hopes.)
+This section has not been included because the problem tackled in it is very exciting. On the contrary, I feel tempted to remark that the problem is perhaps too trivial to act as a good testing ground for an orderly approach to the problem of program composition. This section has been included because it contains a true eye-witness account of what happened in the classroom. It should be interpreted as a partial answer to the question that is often posed to me, viz. to what extent I can teach programming style. (I never used the ``Notes on Structured Programming'' --- mainly addressed to myself and perhaps to my colleagues --- in teaching. The classroom experiment described in this section took place at the end of a course entitled ``Introduction into the Art of Programming'', for which separate lecture notes --- with exercises and all \mbox{that ---} were written. As at the moment of writing the students that followed this course have still to pass their examination, it is for me still an open question how successful I have been. They liked the course, I have heard that they described my programs as ``logical poems'', so I have the best of hopes.)
 
 \section{The problem of the Eight queens}
 
@@ -2369,7 +2373,7 @@ We don't have an operator generating all these configurations, this operator is 
 Call the set of configurations to be generated: set $A$. Look for a set $B$ of configurations with the following properties:
 
 \begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
-	\item \label[B1]{en:first-item-eight-queen}
+	\item \label{en:first-item-eight-queen}
 	set $A$ is a subset of set $B$
 	
 	\item \label{en:second-item-eight-queen}
@@ -2379,15 +2383,15 @@ Call the set of configurations to be generated: set $A$. Look for a set $B$ of c
 	we can make an operator generating all elements of set $B$. 
 \end{enumerate}
 
-With the aid of the generator \ref{en:third-item-eight-queen} for the elements of set $B$, all elements of set $B$ can then be generated in turn; they will be subjected to the decision criterion \ref{en:second-item-eight-queen} which decides whether they have to be skipped or handed over, thus generating elements of set $A$. Thanks to \ref{en:first-item-eight-queen} this algorithm will produce all elements of set $A$.
+With the aid of the generator \ref{en:third-item-eight-queen} for the elements of set $B$, all elements of set $B$ can then be generated in turn; they will be subjected to the decision criterion \ref{en:second-item-eight-queen} which decides whether they have to be skipped or handed over, thus generating elements of set $A$. Thanks to \ref{en:first-item-eight-queen} this algorithm will produce \textit{all} elements of set $A$.
 
 Three remarks are in order.
 
 \begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
-	\item If the whole approach is to make sense, set Bis not identical to set $A$, and as it must contain set $A$ as a (true) subset, it must be larger than set $A$. For reasons of efficiency, however, it is advisable to choose set $B$ ``as small as possible'': the more elements it has, the more elements of it have to be skipped on account of the decision criterion \ref{en:criterion-2-eight-queen}.
+	\item If the whole approach is to make sense, set $B$ is not identical to set $A$, and as it must contain set $A$ as a (true) subset, it must be larger than set $A$. For reasons of efficiency, however, it is advisable to choose set $B$ ``as small as possible'': the more elements it has, the more elements of it have to be skipped on account of the decision criterion \ref{en:criterion-2-eight-queen}.
 	
 	\item \label{en:criterion-2-eight-queen}
-	We should look for a decision criterion that is cheap to apply, at least the discovery that an element of $B$ does \textit{not} belong to A should (on the average) be cheap. Also this is dictated by efficiency considerations, as we may expect set $B$ to be an order of magnitude larger than set $A$, i.e. the majority of the elements of $B$ will have to be rejected.
+	We should look for a decision criterion that is cheap to apply, at least the discovery that an element of $B$ does \textit{not} belong to $A$ should (on the average) be cheap. Also this is dictated by efficiency considerations, as we may expect set $B$ to be an order of magnitude larger than set $A$, i.e. the majority of the elements of $B$ will have to be rejected.
 	
 	\item The assumption is that the generation of the elements of set $B$ is easier than a direct generation of the elements of set $A$. If, nevertheless, the generation of the elements of set $B$ still presents difficulties, we can repeat our pattern of thinking, re-apply the trick and look for a still larger set $C$ of configurations that contains $B$ as a subset etc. (And, as the careful reader will observe, we shall do so in the course of this example.)
 \end{enumerate}
@@ -2419,7 +2423,8 @@ Well, at this stage of our considerations, being slightly at a loss, we are not 
 Well, let us go ahead and let us list the obvious properties we can think of.
 
 \begin{enumerate}[leftmargin=2\parindent, label=(\alph*)]
-	\item No row may contain more than one queen, 8 queens are to be placed and the chessboard has exactly 8 rows. As a result we conclude that each row will contain precisely one queen.
+	\item \label{en:property-a}
+	No row may contain more than one queen, 8 queens are to be placed and the chessboard has exactly 8 rows. As a result we conclude that each row will contain precisely one queen.
 	\item Similarly we conclude that each column will contain precisely on queen.
 	\item There are 15 ``upward'' diagonals, each of them containing at most one queen, i.e. 8 upward diagonals contain precisely one queen and 7 upward
 	\item Similarly we conclude that 8 downward diagonals contain precisely one queen and 7 are empty.
@@ -2429,7 +2434,7 @@ diagonals are empty.
 
 Now the last property is very important. (To be quite honest: here I feel unable to buffer the shock of invention!) In our earlier terminology it tells us something about any non-empty configuration from set \hyperref[en:b1-eight-queens]{B1}. If we start with a solution (which is an 8-queen configuration from set \hyperref[en:b1-eight-queens]{B1}) and take away one queen we get a 7-queen configuration from set \hyperref[en:b1-eight-queens]{B1}; taking away a next queen will leave again a configuration from set \hyperref[en:b1-eight-queens]{B1} and we can repeat this process until the chessboard is empty. We could have taken a motion picture of this process: playing it back backwards it would show how, starting from an empty board, via configurations from set \hyperref[en:b1-eight-queens]{B1} that solution can be built up by adding one queen at a time. (Whether the trick of the motion picture played backwards is of any assistance for my readers is not for me to judge; I only mention it because I know that such devices help me.) When making the picture, any solution could be reduced to the empty board in many ways, in exactly the same number of ways --- while playing it backwards --- each solution can be built up. Can we exploit this freedom? We have rejected set \hyperref[en:b1-eight-queens]{B1} because it is too large, but maybe we can find a suitable subset of it, such that each non-empty configuration of the subset is a one-queen extension of only one other configuration of the subset. The ``extension property'' suggests that we are willing to consider configurations with less than 8 queens on the board and that we would like to form new configurations by adding a queen to an existing configuration-a relatively simple operation presumably. Well, this draws our attention immediately to the \textit{generation} of the elements of the (still mysterious) set $B$. For instance, in what order? And this again raises a question to which, as yet, we have not paid the slightest attention: in what order are we to generate the solutions, i.e. the elements of set $A$? Can we make a reasonable suggestion in the hope of deriving a clue from it? (In my experience such a question about order is usually very illuminating. It is not only that we have to make a sequential program that by definition will generate the solutions in some order, so that the decision about the order will have to be taken at some stage of the game. The decision about the order usually provides the clue to the proof that the program will generate \textit{all} solutions and each solution only \textit{once}.)
 
-Prior to that we should ask ourselves: how do we characterize solutions once we have them? To characterize a solution we must give the positions of 8 queens. The queens themselves are unordered, but the rows and the columns are not: we may assume them to be numbered from 0 through 7. Thanks to property (a) which tells us that each row contains precisely one queen, we can order the queens according to the number of the row they occupy. Then each configuration of 8 queens can be given by the value of the \textbf{integer array} $x[0:7]$, where
+Prior to that we should ask ourselves: how do we characterize solutions once we have them? To characterize a solution we must give the positions of 8 queens. The queens themselves are unordered, but the rows and the columns are not: we may assume them to be numbered from 0 through 7. Thanks to property \ref{en:property-a} which tells us that each row contains precisely one queen, we can order the queens according to the number of the row they occupy. Then each configuration of 8 queens can be given by the value of the \textbf{integer array} $x[0:7]$, where
 
 \noindent
 $x[i] =$ the number of the column occupied by the queen in the $i$th row.
@@ -2441,7 +2446,7 @@ Each solution is then a ``8-digit word'' ($x[0] \dots x[7]$) and the only sensib
 
 Returning to the alphabetical order: now we are approaching familiar ground. If the elements of set $A$ are to be generated in alphabetical order and they have to be generated by selection from a larger set $B$, then the standard technique is to generate the elements of set $B$ in alphabetical order as well and to produce the elements of the subset in the order in which they occur in set $B$.
 
-First we have to generate all solutions with $x[0] = 0$ (if any), then those with $x[0] = 1$ (if any) etc.; of the solutions with $x[0]$ fixed, those with $x[1] = 0$ (if any) have to be generated first, followed by those with $x[1] = 1$ (if any) etc. In other words: the queen of row 0 is placed in column 0 --- say the square in the bottom left corner --- and remains there until all elements of $A$ (and $B$) with queen 0 in that position have been generated and only then is she moved one square to the right to the next column. For each position of queen 0, queen I will walk from left to right in row I --- skipping the squares that are covered by queen 0 --- for each combined position of the first two queens, queen 2 walks along row 2 from left to right, skipping all squares covered by the preceding queens, etc.
+First we have to generate all solutions with $x[0] = 0$ (if any), then those with $x[0] = 1$ (if any) etc.; of the solutions with $x[0]$ fixed, those with $x[1] = 0$ (if any) have to be generated first, followed by those with $x[1] = 1$ (if any) etc. In other words: the queen of row 0 is placed in column 0 --- say the square in the bottom left corner --- and remains there until all elements of $A$ (and $B$) with queen 0 in that position have been generated and only then is she moved one square to the right to the next column. For each position of queen 0, queen 1 will walk from left to right in row 1 --- skipping the squares that are covered by queen 0 --- for each combined position of the first two queens, queen 2 walks along row 2 from left to right, skipping all squares covered by the preceding queens, etc.
 
 But now we have found set $B$! It is indeed a subset of \hyperref[en:b1-eight-queens]{B1}, set $B$ consists of all configurations with one queen in each of the first $N$ rows, such that no two queens can take each other.
 
@@ -2470,7 +2475,7 @@ Generating all elements of set $B$ --- for the moment we forget about the printi
 
 INITIALIZE EMPTY BOARD;
 
-h $\coloneq 0$'';
+h $\coloneq 0$;
 
 \textbf{repeat} SET QUEEN ON SQUARE$[0,h]$;
 
@@ -2490,7 +2495,7 @@ $h_1 \coloneq 0$;
 
 \textbf{repeat if} SQUARE$[1, h_1]$ FREE \textbf{do}
 
-\quad begin SET QUEEN ON SQUARE$[1, h_1]$;
+\quad \textbf{begin} SET QUEEN ON SQUARE$[1, h_1]$;
 
 \quad \quad GENERATE ALL CONFIGURATIONS WITH FIRST
 
@@ -2502,7 +2507,7 @@ $h_1 \coloneq 0$;
 
 \quad $h_1 \coloneq h_1 + 1$
 
-\textbf{until} $h_1 = 8$
+\textbf{until} $h_1 = 8$.
 
 For ``GENERATE ALL CONFIGURATIONS WITH FIRST 2 QUEENS FIXED'' we could write a similar piece of program and so on; inserting
 them inside each other would result in a correct program with eight nested loops, but they would all be very, very similar. To do so has two disadvantages
@@ -2518,7 +2523,7 @@ Well, to start with, we observe that the outermost and the innermost loops are e
 
 The outermost loop is exceptional in the sense that it does not test whether square$[0,h]$ is free because we know it is free. But because we know it is free, there is no harm in inserting the conditional clause
 
-\textbf{if} SQUARE$[0,h]$ FREE \textbf{do}
+\quad \textbf{if} SQUARE$[0,h]$ FREE \textbf{do}
 
 \noindent
 and this gives the outermost loop the same pattern as the next six loops.
@@ -2535,14 +2540,14 @@ For this purpose we introduce a global variable, ``$n$'' say, counting the numbe
 
 By now the only difference between the eight cycles is that each has ``its private $h$''. By the time that we have reached this stage, we can give an affirmative answer to the question whether we can exploit the identity of the loops. The sequencing through the eight nested loops can be evoked with the aid of a recursive procedure, ``generate'' say, which describes the cycle once. Using it, the program itself collapses into
 
-INITIALISE EMPTY BOARD; $n \coloneq 0$;
+\quad INITIALIZE EMPTY BOARD; $n \coloneq 0$;
 
-generate
+\quad generate
 
 \noindent
 while ``generate'' is recursively defined as follows:
 
-\textbf{procedure generate};
+\textbf{procedure} generate;
 
 \textbf{begin integer} $h$;
 
@@ -2570,12 +2575,12 @@ Each activation of ``generate'' will introduce its private local variable $h$, t
 
 Our program --- although correct to this level of detail --- is not yet complete, i.e. it has not been refined up to the standard degree of detail that is required by our programming language. In our next refinement we should decide upon the conventions according to which we represent the configurations on the board. We have already decided more or less that we shall use the
 
-\textbf{integer array} $x[0:7]$
+\quad \textbf{integer array} $x[0:7]$
 
 \noindent
 giving in order the column numbers occupied by the queens, and also that
 
-\textbf{integer} $n$
+\quad \textbf{integer} $n$
 
 \noindent
 should be used to represent the number of queens on the board. More precisely
@@ -2605,14 +2610,14 @@ where ``col$[i]$'' means that the $i$th column is still free.
 
 How do we identify the diagonals? Well, along an upward diagonal the difference between row number and column number is constant; along a downward diagonal their sum is constant. As a result, difference and sum respectively are the easiest index by which to distinguish the diagonals and we introduce therefore
 
-\textbf{boolean array} up$[-7:+7]$, down$[0:14]$
+\quad \textbf{boolean array} up$[-7:+7]$, down$[0:14]$
 
 \noindent
 to keep track of which diagonals are free.
 
 The question whether square$[n,h]$ is free becomes
 
-col$[h]$ and up$[n-h]$ and down$[n+h]$,
+\quad col$[h]$ \textbf{and} up$[n-h]$ \textbf{and} down$[n+h]$,
 
 \noindent
 setting and removing a queen both imply the adjustment of three booleans, one in each array.

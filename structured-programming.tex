@@ -19,7 +19,12 @@
 	pdfsubject={A.P.I.C. Studies in Data Processing	No. 8},
 	pdfkeywords={Structured, Programming},
 	pdfproducer={Latex with hyperref},
-	pdfcreator={pdflatex}]{hyperref}
+	pdfcreator={pdflatex},
+	colorlinks,
+	citecolor = {blue},
+	linkcolor = {blue},
+	urlcolor  = {blue}
+	]{hyperref}
 \usepackage{mathptmx}
 \RequirePackage{amssymb,amsmath,amsthm,mathtools}
 \usepackage{pdfpages}
@@ -72,6 +77,15 @@
 \frenchspacing
 
 \let\footnoterule\relax
+
+\makeatletter
+\newcommand{\labeltext}[2]{%
+	\@bsphack
+	\MakeLinkTarget*{#1}%
+	\def\@currentlabel{#1}{\label{#2}}%
+	\@esphack
+}
+\makeatother
 
 \begin{document}
 
