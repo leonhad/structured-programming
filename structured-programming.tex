@@ -53,7 +53,6 @@
 \titlespacing{\chapter}{0pt}{0cm}{.5cm}
 
 \sectionfont{\normalfont\normalsize\centering\scshape\titlecap}
-\counterwithout{section}{chapter}
 
 \subsectionfont{\normalfont\footnotesize\scshape\uppercase}
 
@@ -77,6 +76,8 @@
 \frenchspacing
 
 \let\footnoterule\relax
+\counterwithout{footnote}{chapter}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}} 
 
 \makeatletter
 \newcommand{\labeltext}[2]{%
@@ -114,10 +115,10 @@
 
 \pagestyle{myheadings}
 
-\renewcommand{\chaptermark}[1]{\markright{\scriptsize\normalfont\uppercase{}\hfill #1\hfill}{} }
+\renewcommand{\chaptermark}[1]{\markright{\scriptsize\normalfont\hfill \uppercase{#1}\hfill}{} }
 
 \include{./chapters/chapter01}
-%\include{./chapters/chapter02}
+\include{./chapters/chapter02}
 %\include{./chapters/chapter03}
 
 \backmatter
