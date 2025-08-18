@@ -246,4 +246,434 @@ The cardinality of a type defined by enumeration is obviously equal to the lengt
 
 \subsection{Manipulation}
 
-Page 98
+The operations required for successful manipulation of values of enumeration types and subranges are:
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\item test of equality, for example:
+
+	\quad \textbf{if} arrival $=$ departure \textbf{then go} to transit desk;
+
+	\quad \textbf{if} trumps $=$ spade \textbf{then} \dots
+
+	\item assignment, for example·
+
+	\quad $pc \coloneq$ yellow;
+
+	\quad trumps $\coloneq$ club;
+
+	\item \label{en:manipulation-3}
+	case discrimination, for example:
+
+	\quad \textbf{case} $p$c \textbf{of} (red: \dots,
+
+	\tabto{5.7em}yellow: \dots,
+
+	\tabto{5.7em}blue: \dots)
+	
+	where $pc$ is a variable or expression of type primary color, and the limbs of the discrimination are indicated by lacunae. A case discrimination may be either a statement, in which case the limbs must be statements; or it may be an expression, in which case the limbs must be all expressions of the same type.
+	
+	The effect of a case discrimination is to select for execution (or evaluation) that single statement (or expression) which is prefixed by the constant equal to the current value of the case expression. In some cases, it may be convenient to prefix several constants to the same limb, or even to indicate a subrange of values which would select the corresponding limb; but of course each value must be mentioned exactly once:
+	
+	\quad \textbf{case} digit \textbf{of} ($0\,.\,.\,2:\dots$,
+	
+	\tabto{6.6em}$3:7:\dots$,
+	
+	\tabto{6.6em}$4\,.\,.\,6:8:9:\dots$).
+	
+	\noindent
+	In this last case, it would be convenient to replace the labels of the last limb by the basic word \textbf{else}, to cover all the remaining cases not mentioned explicitly on the preceding limbs.
+	
+	When the limbs of a discrimination are statements, we shall sometimes use braces instead of brackets to surround them.
+	
+	\item In the case of a type declared as ordered, it is possible to test the ordering relationships among the values:
+	
+	\quad \textbf{if} May $\leqslant$ this month \& this month $\leqslant$ September \textbf{then}
+	
+	\qquad adopt summer timetables. 
+	
+	\noindent
+	In other cases, the ordering of the values is quite irrelevant, and has no meaning to the programmer.
+	
+	\item In conjunction with ordering, it is useful to introduce a successor and a predecessor function (succ and pred) to map each value of the type onto the next higher or lower value, if there is one. Also, if $T$ is any ordered type, the notation $T$.min will denote the lowest value of the type, and $T$.max the highest value, if they exist. This helps in formulating programs, theorems, and axioms in a manner independent of the actual names of the constants.
+	\item In a computer program we will frequently wish to cause a variable to range sequentially all through the values of a type. This may be denoted by a
+	
+	form of for statement or loop
+	
+	\textbf{for} $a:\text{alpha}$ \textbf{do} \dots;
+	
+	\textbf{for} $i:1\,.\,.\,99$ \textbf{do} \dots;
+	
+	In this construction, the counting variable ($a$ or $i$) is taken to belong to the type indicated, and to be declared locally to the construction, in the sense that its value does not exist before or after the loop, and its name is not accessible outside the loop. In addition, the value of the counting variable is not allowed to be changed inside the body of the loop, since this would frustrate the whole intention of declaring the variable by means of the \textbf{for} construction.
+	
+	In the case of an ordered type, it is natural to assume that the counting variable sequences through the values of the type in the defined order, $T.$min, succ($T.$min), \dots, $T.$max. But if the type is an unordered one, it is assumed that the sequence of the scan does not matter at the current level of abstraction, and will be defined at some later stage in the development of a concrete program.
+	
+	\item For subrange types, particularly integer subranges, it is sometimes required to perform operations which are defined for the original larger type. In principle, it is simple to accomplish this by first converting the subrange value to the corresponding value of the larger type, and then performing the operation, and finally converting back again if necessary. This requires a type transfer function; and for this purpose it is convenient to use the name of the destination type, for example:
+	
+	\quad $x$distance $\coloneq$ integer($x$) - integer($y$);
+	
+	\quad z $\coloneq$ coordinate(integer($z$) $+$ $x$distance);
+	
+	where $x$distance is an integer variable. Of course, this is an excessively cumbersome notation, and one would certainly wish to adopt the convention of omitting the conversions, where the need for their re-insertion can be established from the context:
+	
+	$x$distance $\coloneq x - y$;
+	
+	$z \coloneq z + x$distance.
+\end{enumerate}
+
+\noindent
+\textit{Exercise}
+
+\noindent
+Given $m$:month and $y$:year, write a case discrimination expression giving the number of days in month $m$.
+
+\subsection{Representation}
+
+The standard representation of an enumeration type $T$ is to map the values in the stated order onto the computer integers in the range 0 to $n - 1$, where $n$ is the cardinality of the type. Thus in this case the standard representation is also minimal. The standard representation of a subrange is to give each value the same representation that it had in the original type; thus transfer between the types involves no actual operation; though of course conversion from the base type to the subrange type should involve a check to ensure that the value is within the specified range.
+
+The minimal representation of a subrange value is obtained by subtracting from the standard form the integer representation of the least value of the subrange. In this case, conversion to a subrange involves subtraction as well as a check, and conversion in the opposite direction involves an addition.
+
+Apart from these conversions, enumerations and subranges in either representation can be treated identically. Tests of ordering can be accomplished by normal integer instructions of the computer, and succ and pred involve addition or subtraction of unity, followed by a test that the result is still within range.
+
+The case discrimination can be most efficiently carried out by a switch-jump. For example, in ALGOL 60 the first example quoted above (3.1.\ref{en:manipulation-3}) would be coded:
+
+\quad \textbf{begin switch} $ss \coloneq$ red, yellow, blue;
+
+\quad \quad \textbf{go to} $ss[pc + 1]$;
+
+\quad \quad red:\textbf{begin} \dots; \textbf{go to} end \textbf{end};
+
+\quad \quad yellow:\textbf{begin} \dots; \textbf{go to} end \textbf{end};
+
+\quad \quad blue:\textbf{begin} \dots; \textbf{go to} end \textbf{end};
+
+\quad end:\textbf{end}. 
+
+This can be efficiently represented in machine code, using an indexed jump and a switch table, indicating the starting addresses of the portions of code corresponding to the limbs of the discrimination.
+
+The implementation of the for statement corresponds in an obvious way to the for statement of ALGOL 60, with a step length of unity. The conventions proposed above, which regard the counting variable as a local constant of the loop, not only contribute to clarity of documentation, but also assist in achieving efficiency on a computer, by taking advantage of registers, special count and test instructions, etc.
+
+\subsection{Example}
+
+The character set of a computer peripheral is defined by enumeration:
+
+\quad \textbf{type} character $=$ ( \dots ) ;
+
+\noindent
+The set includes the subranges
+
+\quad \textbf{type} digit $=$ nought\,.\,.\,nine;
+
+\quad \textbf{type} alphabet= $A\,.\,.\,Z$;
+
+\noindent
+as well as individual symbols, point, equals, subten, colon, newline, space, as well as a number of other single-character operators and punctuation marks.
+
+There is a variable
+
+\quad buffer:character 
+
+\noindent
+which contains the most recently input character from the peripheral. A new value can be input to buffer from the input tape by the procedure ``read next character''.
+
+In a certain representation of ALGOL 60, basic words are not singled out by underlining, and therefore look like identifiers. Consequently, if they are followed or preceded by an identifier or a number, they must be separated from it by one or more spaces or newline symbols.
+
+In the first pass of an ALGOL translator it is desired to read in the individual characters, and assemble them into meaningful symbols of the language; thus, an identifier, a basic symbol, a number, and the ``$\coloneq$'' becomes sign, each count as a single symbol, as do all the other punctuation marks. Space and newline, having performed their function of separating symbols, must be ignored. We assume that each meaningful symbol will be scanned by a routine designed for the purpose, and that each such routine will leave in the buffer the first input character which is \textit{not} part of the symbol.
+
+As an example of the analysis of the symbols of a program, input of the text
+
+\quad $l$:beta1 $\coloneq \text{beta} \times 12$;
+
+\noindent
+should be analyzed into the following symbols:
+
+\quad $l$
+
+\quad :
+
+\quad beta1
+
+\quad $\coloneq$
+
+\quad beta
+
+\quad $\times$
+
+\quad 12
+
+\quad ;
+
+The general structure of the program is a case discrimination on the first character of the symbol, which determines to which class the symbol belongs.
+
+read first character;
+
+\textbf{repeat case} buffer \textbf{of}
+
+\quad (alphabet: scan identifier,
+
+\quad digit:point:subten:scan number,
+
+\quad space:newline:read next character,
+
+\quad colon:\textbf{begin} read next character;
+
+\quad\quad \textbf{if} buffer $=$ equals \textbf{then}
+
+\quad\quad\quad \textbf{begin} deal with "becomes"; read next character \textbf{end}
+
+\quad\quad \textbf{else} deal with single colon character
+
+\quad\quad \textbf{end}
+
+\quad \textbf{else begin} deal with single character;
+
+\quad\quad read next character
+
+\quad \textbf{end}
+
+\quad)
+
+\textbf{until} end of tape
+
+\section{The Cartesian product}
+
+Defined enumerations and subranges, like primitive data types, are in principle unstructured. Of course, any particular representation of these types will be structured, for example, as a collection of consecutive binary digits; but from the abstract point of view, this structuring is essentially irrelevant. No operators are provided for accessing the individual bits, or for building up a value from them. In fact, it is essential to the successful use of an abstraction that such a possibility should be ignored; since it is only thus that detailed decisions can be postponed, and data representations can be decided in the light of the characteristics of the computer, as well as the manner in which the data is to be manipulated.
+
+We now turn to deal with data types for which the structure is meaningful to the programmer, at least at some stage in the development of his program. The basis of our approach is that, as in the case of enumerations, the programmer should be able by declaration to introduce new data types; but for structured data, the definition of a new type will refer to other primitive or previously defined types, namely the types of the components of the structure. Thus the declaration of a new type will be somewhat similar to the declaration of a new function in a language such as ALGOL and FORTRAN. A function declaration defines the new function in terms of existing or previously declared functions and operations. Just as a declared function can be invoked on many occasions from within statements of the program or other function declarations, so the new type can be ``invoked'' many times from within other declarations of the program; these may be either declarations of variables specified to range over the newly declared type, or they may be declarations of yet another new type.
+
+We will deal first with elementary data structures, Cartesian products and unions. These elementary structures are almost as simple and familiar to mathematicians and logicians as the natural numbers. Furthermore, from the point of view of the computer programmer, the properties of elementary data structures are very favorable, provided that the constituent types are also elementary.
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\item Firstly, each data item occupies a fixed finite, and usually modest amount of core store, which increases only linearly with the size of the definition.
+
+	\item The store required to hold each value can efficiently be allocated either permanently in main storage or on a run-time stack. There is no need for more sophisticated dynamic storage allocation systems.
+
+	\item The most useful manipulations of the data items can be performed with high efficiency on present-day computers by simple and compact sequences of machine-code instructions.
+
+	\item The structures do not require pointers (references, addresses) for their representation, and thus there is no problem with the transfer of such data between main and backing storage.
+
+	\item For any given structure, the choice of an appropriate representation usually presents no difficulty to the programmer.
+\end{enumerate}
+
+The first data structuring method which we shall discuss is the Cartesian product. A familiar example of a Cartesian product is the space of complex numbers, each of which is constructed as a pair of floating point numbers, one considered as its real part and the other as its imaginary part. The declaration of the complex type might take the form
+
+\quad \textbf{type} complex $=$ (real part:real; imagpart:real);
+\nopagebreak
+
+or more briefly:
+\nopagebreak
+
+\quad \textbf{type} complex $=$ (realpart, imagpart:real).
+
+The names realpart and imagpart are introduced by this definition to provide a means of selecting the components of a complex number. For example, if $n$ is of type complex defined above, $n$. realpart will denote its real part and $n$. imagpart its imaginary part.
+
+A constant denoting a value from a Cartesian product type may be defined in terms of a list of constants denoting the values of the components. As mentioned before, the name of the type is used as a transfer function to indicate the type of the resulting structure, and it takes a list of parameters rather than a single one. Thus the complex number $13 + i$ may be written
+
+\quad complex$(13, + 1)$.
+
+\noindent
+Another example of a Cartesian product is the declaration of a type whose values represent playing cards. Each card can be specified by giving first its suit (for example, heart) and then its rank, say Jack. Both items of information are required uniquely to specify a given card. Thus the type cardface can be defined as the Cartesian product of the types suit and rank:
+
+\quad \textbf{type} cardface $=$ ($s$:suit; $r$:rank).
+
+Typical constants of this type are:
+
+\quad cardface(club, two), cardface(heart, Jack).
+
+Another simple example of a Cartesian product, this time with three
+components, is the date. In the normal way, this can be specified by three
+vakes, the first selected from among the possible values of the type day of
+month, say the seventh; the second from among the possible values of the
+type month, say March; and the third from among the values of the type
+year, say 1908. This date can be written:
+
+\quad date(7, March, 1908).
+
+\noindent
+It belongs to the type declared thus:
+
+\quad \textbf{type} date $=$ (day:day of month; $m$:month; $y$:year);
+
+The defining feature of the Cartesian product type is that it comprises every possible combination of values of its component types, even if some of them should never be encountered in practice. So date (31, Feb, 1931) is a normal value of type date, even though in the real world no such date exists. However date (28, Feb, 1899) is \textit{not} a value of type date, since 1899 is not a value of type year, as defined above. Thus the definition of the type date does not correspond exactly to the real world situation, but the correspondence is close enough for most purposes; and it is the responsibility of the programmer to ensure that the manipulation of the variables of this type will never cause them to take values which he would regard as meaningless.
+
+This example shows that the means provided for defining new types in terms of other types are simpler and less powerful than the general mathematical techniques for defining new sets in terms of other sets; for it certainly is possible to define a set which excludes all unwanted dates. In fact, when declaring a type or variable, it is good documentation practice to specify rigorously the properties which will be possessed by every meaningful value.
+ 
+The last example shows how the set of point positions on a two-dimensional raster can be declared as the Cartesian product of one-dimensional coordinates:
+
+\quad \textbf{type} raster $=$ ($x$, $y$:coordinate)
+
+This is the standard method by which two-dimensional spaces are constructed out of a single-dimension by the method of Cartesian coordinates; for every point in two-dimensional space can be named as an ordered pair of simple one-dimensional numbers. This explains the use of the term ``Cartesian product'' to apply to the given method of defining types. If $r$ is a variable of type raster, $r$. $x$ and $r$. $y$ are commonly known as the projections of $r$ onto the $x$ and $y$ axes respectively; however, we shall refer to the functions $x$ and $y$ as selectors rather than projections.
+
+The cardinality of a Cartesian product type is obtained by multiplying together the cardinalities of the constituent types. This is fairly obvious from the visualization of a Cartesian product as a rectangle or box with sides equal in length to the cardinalities of the types which form the axes. Thus the cardina1ity of the card type is thirteen times four, i.e., fifty-two, which is, as you might expect, the number of cards in a standard pack. The number of dates is 26 040, which slightly overestimates the actual number of days in the interval, since as explained above, it includes a small number of invalid dates.
+
+\subsection{Manipulation}
+
+Apart from assignment and test of equality, which are common to all types, the main operations defined for a product type are just those of constructing a value in terms of component values, and of selecting the components. When constructing a value of a Cartesian product type, it is in principle necessary to quote the name of the type as a transfer function. However, it is often more convenient to follow the traditional mathematical practice, and leave the transfer function implicit in cases where no confusion would arise. This is in any case necessary when a type is not even given an explicit name. For example, one may write (heart, Jack) instead of cardface (heart, Jack).
+
+For selection of a component, a dot-notation has been used, e.g., $n$. imagpart. This is more convenient than the normal functional notation imagpart($n$), since it avoids unnecessarily deep nesting of brackets. Another most important operation is the selective updating of the components of a variable. This may be denoted by placing the component name on the left of an assignment
+
+\quad $u$.imagpart $\coloneq$ 0;
+
+\quad $r.x \coloneq a\times r.x + b\times r.y$.
+
+If a Cartesian product is declared as ordered, it is necessary that all the constituent types be ordered, and it is natural to define the ordering in a lexicographic manner, taking the earlier components as the more significant. Thus if suit and rank are ordered, the cardface type could be declared as ordered in the traditional ranking whereby all clubs precede all diamonds, and these are followed by all hearts and all spades; whereas within each suit, the cards are ordered in accordance with their rank.
+
+In inspecting or processing a structured value, it is often required to make many references to its components within a single small region of code. In such a case it is convenient to use a \textbf{with} construction
+
+\quad \textbf{with} $sv$ \textbf{do} $S$;
+
+\noindent
+where $sv$ names the structured variable (or expression) and $S$ is a program statement defining what is to be done with it. Within the statement $S$, the components of $sv$ will be referred to simply by their selector names, $s_1, \dots, s_n,$ instead of by the usual construction:$sv.s_1, sv.s_2, \dots sv.s_n$. The reasons for using this construction are:
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\item To clarify the purpose of the section of program.
+	\item To abbreviate its formulation.
+	\item To indicate the possibility of improved efficiency of implementation.
+\end{enumerate}
+
+\noindent
+\textit{Example:} Given today:date, test whether it is a valid date or not.
+
+\quad \textbf{with} today \textbf{do case} $m$ \textbf{of}
+
+\quad \quad \{Sept:April:June:Nov:
+
+\quad \quad \quad \textbf{if} day > 30 \textbf{then go} to invalid,
+
+\quad \quad \quad Feb:\textbf{if} day $> (\text{\textbf{if }} (y + 4) \times 4 = y \text{ \textbf{then} } 29 \text{ \textbf{else} } 28)$
+
+\quad \quad \quad \quad then go to invalid,
+
+\quad \quad \quad else do nothing\}.
+
+\noindent
+\textit{Exercise}
+
+\noindent
+Write functions to represent the four standard arithmetic operations on complex numbers.
+
+\subsection{Representation}
+
+The standard method of representing a value of Cartesian product type is simply by juxtaposing the values of its components in a consecutive region of store, usually in the order indicated. However, there is considerable variation in the amount of packing and padding which may be involved in the juxtaposition. In the standard unpacked representation, each component value is made to occupy an integral number of words, where a word is the smallest conveniently addressable and efficiently accessible unit of storage on the computer.
+
+If the values can fit into less storage than one word, there is the option of packing more than one component into a word. In a tight packed representation, the bit patterns of the components are directly juxtaposed. In a loosely packed representation, the components may be fitted within certain subdivisions of a word, which are ``natural'' in the sense that special machine code instructions are available for selecting or updating particular parts of a word --- for example, character boundaries, or instruction fields of a word.
+
+The sequence of the components may be rearranged to fit them conveniently within such boundaries; but such rearrangement is usually inadvisable if the type is ordered.
+
+If a packed representation stretches over several words, there is a possibility that a single component value may overlap word boundaries. The selection or updating of such a component on many machines would be much more time-consuming than normal; and it is therefore a common practice to leave some unused space (padding) at the end of words to prevent such overlaps.
+
+In order to construct a minimal representation of a structured value, it is necessary to use minimal representation of all the components. Then each component is multiplied by the product of the cardinalities of all the types of all subsequent components, and these results are summed to give a minimal representation in the Cartesian product type. For example, the representation of 7th, Mar, 1908 is $6\times 12\times 70 + 2\times 70 + 8 = 5188$.
+
+The choice between the various representations depends on the wider context within which the values are processed. If selection and selective updating are frequent, it pays to use an unpacked representation, so that the normal selection mechanism of word-addressed hardware may be used directly in these operations. However if copying and comparison of the value as a whole is comparatively frequent, then it pays to use a packed representation, so that these operations can be carried out with fewer instructions and fewer stores accesses. A particular case of copying which should be taken into consideration is that which takes place between the main store of the computer and a backing store. If such transfers are frequent, considerable efficiency may be gained if the volume of material transferred is reduced by judicious packing.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{chap2/fig1}
+	\caption{Representation of date (7, March, 1908)}
+\end{figure}
+
+A second occasion for using packed representations is when data storage is scarce, either in main store or on external backing stores. However, care must be taken that space saved on data storage is not outweighed by the expansion of the code which results from having to unpack and repack the data whenever it is inspected or updated.
+
+The minimal representation is not often used for data storage, since the small amount of extra space it saves (always less than one bit per component) is usually more than outweighed by the extra time taken by multiplying and dividing on every access to the components, as compared with the more usual shifting and masking. However, the technique can be useful, possibly in conjunction with more conventional packing, if there is no other way of fitting the value within convenient word boundaries. Also, if the value is to be used solely or primarily as an index to a multi-dimensional array, the minimal representation is to be preferred; since this will save a significant amount of space in the representation of the array (see Section 6.2).
+
+In representing the \textbf{with} construction in machine code, it is sometimes convenient to compute the address of the structure being referenced and store it in a register; this may achieve shorter and faster code for accessing the components. If the components have been packed, it may pay to unpack them into separate words before starting to process them, so that they can be easily referenced or updated; and if they have been updated, they must be packed up again and stored in the structure when the processing is complete. On some machines, it is more economic to pack and unpack a whole structure at the same time, rather than to perform these operations one at a time on the components.
+
+\noindent
+\textit{Exercise}
+
+\noindent
+Given a variable
+
+\quad today:date;
+
+\noindent
+write a program to assign the value of the next following date to the variable tomorrow: date. Translate this program into the machine code of your choice using a tightly packed representation. Rewrite the program using an unpacked and then a minimal representation. Compare the lengths of the code involved, and the time taken to execute them.
+
+\section{The discriminated union}
+
+In defining sets of objects, it is often useful to define one set as the union of two previously known sets. For example, when jokers are added to a standard pack of cards, the extended set may be described as the union of the standard set plus the set consisting of the ``wild'' cards, joker I and joker 2. A type whose values range over the members of this set may be declared as the union of two alternatives, the card type, and an enumeration type with two distinct values:
+
+\quad \textbf{type} pokercard $=$ (normal:($s$:suit; $r$:rank),
+
+\tabto{10.2em}wild:(joker I, joker 2)).
+
+\noindent
+Each value of type pokercard corresponds either to an ordered pair with components indicating suit and rank; or else it corresponds to one of the two jokers in the enumeration type.
+
+In specifying a constant of a discriminated union type, it is necessary to indicate to which of the alternative types the value denoted is intended to belong. This is done by writing the name of the alternative explicitly, for example:
+
+\quad pokercard(normal(heart, Jack))
+
+\noindent
+denotes a value from the first alternative, whereas
+
+\quad pokercard(wild(joker 2))
+
+\noindent
+denotes a value from the second alternative. In general, it is convenient to omit the type name, where the type can be inferred from context.
+
+A second example of a discriminated union might be found in the maintenance of a register of all cars in a country. Cars may be distinguished as local cars owned by residents of the country, and visitor cars brought into the country temporarily by non-residents. The information required is rather different in the two cases. In both cases the number and the make of the car is considered relevant. However, for a local car, the name of the owner of the car is required, and the date on which the car was first registered in that owner's name. For visitor cars, this information is not relevant: all that is required is the standard three-letter abbreviation of the name of the country of origin. Thus the definition of the two alternative types of car might be:
+
+\quad \textbf{type} local car = (make:manufacturer; regnumber:carnumber;
+
+\tabto{9.4em} owner:person; first registration:date);
+
+\quad \textbf{type} visitor car = (make:manufacturer; regnumber:carnumber;
+
+\tabto{10.1em} origin:country);
+
+Now it is possible to define a type covering both kinds of car:
+
+\quad \textbf{type} car $=$ (local:local car,
+
+\tabto{7.4em} foreign:visitor car).
+
+\noindent
+But here it is inconvenient to define the structure of local and foreign cars separately; and we would like to take advantage of the fact that several of their components are the same. This may be done by bringing the common components in front of both alternatives:
+
+\quad \textbf{type} car $=$ (make:manufacturer;
+
+\tabto{7.5em}regnumber:carnumber;
+
+\tabto{7.5em}(local: (owner:person;
+
+\tabto{7.8em}first registration:date),
+
+\tabto{7.8em}foreign: (origin:country))
+
+\tabto{7.1em}).
+
+\noindent
+Every car has a make and regnumber but only local cars have an owner or first registration date; and only foreign cars have an origin. 
+
+A third example is the definition of geometric figures, which in some application might be categorized as either rectangles, triangles, or circles
+
+\quad \textbf{type} figure $=$ (position:point; rect:$R$, tri:$T$, circ:$C$).
+
+\noindent
+The method of specifying the figure varies in each case. For a rectangle, the angle of inclination of one of the sides is given, together with the two lengths of the sides:
+
+\quad \textbf{type} $R =$ (inclination:angle; side1, side2: real).
+
+\noindent
+A triangle is specified by the angle of inclination and length of one of its sides together with the angles formed between it and the other two sides:
+
+\quad \textbf{type} $T =$ (inclination:angle; side:real; angle1, angle2:angle).
+
+\noindent
+For a circle, all that is necessary is to specify the diameter as a real number.
+
+\quad \textbf{type} C $=$ (diameter:real).
+
+When a type is defined as the union of several other types, it is important to recognize that its values must be considered wholly distinct from those of any of the types in terms of which it is defined. Otherwise there would be an immediate violation of the rule that each value belongs to only one type. Thus the union of types must be clearly distinguished from the normal concept of set union. Furthermore, for each element of the union type, it is possible to determine from which of the constituent types it originated, even if the same type has been repeated several times. For example, a double pack of cards used for playing patience may be defined as the union of two packs, i.e.,
+
+\quad \textbf{type} patience card $=$ (red:cardface, blue:cardface).
+
+\noindent
+Each value of type patience card is clearly marked as having originated either from the red pack or from the blue pack, even if perhaps in the real world the colors of the backs are the same. This fact explains the use of the term ``discriminated union'' to apply to this form of type definition. It follows that the cardinality of a discriminated union is always the sum of the cardinalities of its constituent types.
+
+\subsection{Manipulation}
+
+Any value of a discriminated union carries with it a \textit{tag} field indicating which of the particular constituent types it originated from; on assignment this is copied, and on a test of equality, the tag fields must be the same if the values are to be equal.
+
+Page 112
+
