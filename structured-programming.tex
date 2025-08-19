@@ -38,8 +38,6 @@
 \usepackage{scrextend}
 \usepackage{tabto}
 \usepackage[para]{footmisc}
-\usepackage{titlecaps}
-\usepackage{sectsty}
 \usepackage{backnaur}
 
 \graphicspath{ {./images/} }
@@ -49,13 +47,24 @@
 
 \setlist{topsep=0em, itemsep=-.4em} 
 
-\chapterfont{\large\bfseries\centering}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\thechapter}{\Roman{chapter}.}
+\renewcommand\thesection{\arabic{section}.}
+\renewcommand\thesubsection{\thesection\arabic{subsection}.}
+\renewcommand\thesubsubsection{\thesubsection\arabic{subsubsection}.}
+
 \titleformat{\chapter}[hang]{\large\bfseries\centering}{\thechapter{}}{.5em}{}
 \titlespacing{\chapter}{0pt}{0cm}{.5cm}
 
-\sectionfont{\normalfont\normalsize\centering\scshape\titlecap}
-\subsectionfont{\normalfont\footnotesize\scshape\uppercase}
-\subsubsectionfont{\normalfont\footnotesize\itshape}
+\titleformat{\section}[hang]{\normalsize\centering\scshape}{\thesection{}}{.5em}{}
+\titlespacing{\section}{0pt}{1em}{.6em}
+%\counterwithout*{section}{chapter}
+
+\titleformat{\subsection}[hang]{\footnotesize\scshape\uppercase}{\thesubsection{}}{.5em}{}
+\titlespacing{\subsection}{0pt}{.8em}{.2em}
+
+\titleformat{\subsubsection}[hang]{\footnotesize\scshape\uppercase}{\thesubsubsection{}}{.5em}{}
+\titlespacing{\subsubsection}{0pt}{.8em}{.2em}
 
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
 \renewcommand{\thechapter}{\Roman{chapter}.}

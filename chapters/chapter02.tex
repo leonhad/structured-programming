@@ -105,7 +105,7 @@ Each structure is explained informally with the aid of examples. Then the manipu
 
 Section 11 is devoted to an example, a program for constructing an examination timetable. The last section puts the whole exposition on a rigorous theoretical basis by formulating the axioms which express the basic properties of data structures. This section may be used as a summary of the theory, as a reference to refine the understanding, or as a basis for the proof of correctness of programs.
 
-\section{The concept of type}
+\section[The concept of type]{The Concept Of Type}
 
 The theory of data structuring here propounded is strongly dependent on the concept of type. This concept is familiar to mathematicians, logicians, and programmers.
 
@@ -180,7 +180,7 @@ Unfortunately, indirect representations often involve the additional expense and
 
 This chapter describes only a small but useful range of the possible representations of data, and the skillful programmer could readily add to the selection. In many cases, the representation of an abstract data type can be constructed by means of a more elaborate but more efficient data type definition; for instance a large set may be represented as a sequence of items of some suitable type. Examples of this are given in later sections.
 
-\section{Unstructured data types}
+\section[Unstructured data types]{Unstructured Data Types}
 \label{sec:unstructured-data-types}
 
 All structured data must in the last analysis be built up from unstructured components, belonging to a primitive or unstructured type. Some of these unstructured types (for example, reals and integers) may be taken as given by a programming language or the hardware of the computer. Although these primitive types are theoretically adequate for all purposes, there are strong practical reasons for encouraging a programmer to define his own unstructured types, both to clarify his intentions about the potential range of values of a variable, and the interpretation of each such value; and to permit subsequent design of an efficient representation.
@@ -436,7 +436,7 @@ read first character;
 
 \textbf{until} end of tape
 
-\section{The Cartesian product}
+\section[The Cartesian product]{The Cartesian Product}
 
 Defined enumerations and subranges, like primitive data types, are in principle unstructured. Of course, any particular representation of these types will be structured, for example, as a collection of consecutive binary digits; but from the abstract point of view, this structuring is essentially irrelevant. No operators are provided for accessing the individual bits, or for building up a value from them. In fact, it is essential to the successful use of an abstraction that such a possibility should be ignored; since it is only thus that detailed decisions can be postponed, and data representations can be decided in the light of the characteristics of the computer, as well as the manner in which the data is to be manipulated.
 
@@ -593,7 +593,7 @@ Given a variable
 \noindent
 write a program to assign the value of the next following date to the variable tomorrow: date. Translate this program into the machine code of your choice using a tightly packed representation. Rewrite the program using an unpacked and then a minimal representation. Compare the lengths of the code involved, and the time taken to execute them.
 
-\section{The discriminated union}
+\section[The discriminated union]{The Discriminated Union}
 
 In defining sets of objects, it is often useful to define one set as the union of two previously known sets. For example, when jokers are added to a standard pack of cards, the extended set may be described as the union of the standard set plus the set consisting of the ``wild'' cards, joker I and joker 2. A type whose values range over the members of this set may be declared as the union of two alternatives, the card type, and an enumeration type with two distinct values:
 
@@ -773,7 +773,7 @@ We return to the context of the example in section \ref{sec:example-3-3}, the an
 \noindent
 where we will leave the type ident undefined for the time being, and assume that the delimiters are defined by enumeration.
 
-\section{The array}
+\section[The array]{The Array}
 \label{sec:array}
 
 The array is for many programmers the most familiar data structure, and in some programming languages it is the only structure explicitly available. From the abstract point of view, an array may be regarded as a mapping between a domain of one type (the subscript range) and a range of some possibly different type (the type of the array, or more accurately, the type of its elements).
@@ -987,7 +987,7 @@ Rewrite the program, using different representations. Compare the lengths and sp
 
 Write the corresponding programs to read a page from the display, and output the individual characters, taking care to eliminate redundant spaces at the ends of each line and blank lines at the end of each page wherever possible.
 
-\section{The powerset}
+\section[The powerset]{The Powerset}
 
 The powerset of a given set is defined as the set of all subsets of that set; and a powerset type is a type whose values are sets of values selected from some other type known as the \textit{base} of the powerset. For example, the primary colors have been defined by enumeration as red, yellow and blue. The other main colors are made up as a mixture of two or three of these colors: orange is a mixture of red and yellow; brown is a mixture of all three primary colors. Thus each main color (including the primary colors) can be specified as that subset of the primary colors out of which it can be mixed. For example, orange may be regarded as the set with just two members, red and yellow. Using the traditional notation for sets defined by enumeration, this may be written: \{red, yellow\}. The pure color red may be regarded as the set whose only member is the primary color red, i.e. \{red\}. In this way it is possible to represent the seven main colors, red, orange, yellow, green, blue, purple and brown. When no primary color is present (i.e. the null or empty set) this may be regarded as denoting the absence of color, i.e. perhaps white. The type whose values range over the colors may be declared as the power set of the type primary color:
 
@@ -1150,7 +1150,7 @@ Since the number of values of a powerset type is always an exact power of two, f
 
 Thus when the cardinality of the domain type is not greater than the number of bits. in the largest computer word to which logical and shift operations can be applied, all these operations can be carried out with great efficiency. If significantly more than one such word is involved, it will usually pay to use selective updating operations rather than the normal result-producing operators. Furthermore, operations such as size and min can become rather inefficient, and it will often pay to store these values redundantly together with the set, and keep them up to date whenever the value of the set is updated, rather than recomputing them whenever they are required.
 
-When it is known that the cardinality of the base type is very large (perhaps even infinite) compared with the size of the typical set, the bitpattern representation altogether loses its attraction, since it no longer pays to store and operate upon large areas of zeroes. The treatment of such sparse sets is postponed to Section 10.
+When it is known that the cardinality of the base type is very large (perhaps even infinite) compared with the size of the typical set, the bitpattern representation altogether loses its attraction, since it no longer pays to store and operate upon large areas of zeroes. The treatment of such sparse sets is postponed to Section \ref{sec:sparse-data-structures}
 
 \subsection{Example}
 
@@ -1336,7 +1336,7 @@ But the most interesting feature about the program is the way in which it is rel
 \noindent
 Rewrite the program using sets representing only the odd numbers. (Hint: rewrite tile more abstract program first.)
 
-\section{The sequence}
+\section[The sequence]{The Sequence}
 
 The previous chapters have dealt with the topic of elementary data structures, which are of great importance in practical programming,  and present very little problem for representation and manipulation on modern digital computers. Furthermore, they provide the essential basis on which all other more advanced structures are built.
 
@@ -1557,7 +1557,7 @@ When using backing store, efficiency of processing and representation demands th
 
 In a machine which is endowed with an automatic paging scheme, the problems of representing sequences are very much reduced. As far as the programmer is concerned, he need only allocate the amount of storage required for the longest possible sequence, using the contiguous representation. This should not actually cause any waste of storage, since the paging system should delay allocation of store until it is first used. As the sequence expands, new blocks of store will be allocated, but the addressing of these blocks will appear contiguous to the programmer, so there is no problem of leaving unused space at the end of blocks which are not large enough to hold the next item. Shortly after a block has been filled, it will automatically migrate to backing store; and it will be brought back again automatically as soon as it is required. On input sequences, a block which has been scanned will also be removed shortly afterwards from main store; but this will not involve an unnecessary backing store transfer if the material has not been changed since the last input took place. The only operation which a paging system will not perform automatically is to read a block of an input sequence into store ahead of its actual requirement.
 
-\section{Recursive data structures}
+\section[Recursive data structures]{Recursive Data Structures}
 
 There are certain close analogies between the methods used for structuring data and the methods for structuring a program which processes that data. Thus, a Cartesian product corresponds to a compound statement, which assigns values to its components. Similarly, a discriminated union corresponds to a conditional or case construction, selecting an appropriate processing method for each alternative. Arrays and powersets correspond to for statements sequencing through their elements, with an essentially bounded number of iterations.
 
@@ -1685,7 +1685,7 @@ As an example of the processing of a list, we write a function to reverse a comp
 
 The standard representation of a recursive type is also very similar to that of a similarly structured non-recursive type, with the exception that each component specified as belonging to the recursive type itself is represented by a location containing a pointer to its value, rather than the value itself. This use of a pointer is motivated by the fact that the component value may be of arbitrary size; and it is not possible to allocate any fixed amount of storage to contain it. This is known as the ``tree representation'', and is similar to the tree representation of an array or sequence, except that the branches may grow to arbitrary and varying heights.
 
-An alternative method of representation is the linear sequence or \textit{bitstrcam}. In this representation it is possible to avoid the use of pointers, and place the values of recursive substructures contiguous with the rest of the information, just as they are in the familiar bracketed character representations of expressions. However instead of using brackets, we can reestablish the bracketing structure by context, and if necessary by scanning the tag of union values. This method is usually associated with packed representations of the other components, and a very significant reduction in storage may be achieved, at the expense of enforcing serial access to the components of the structure. In many circumstances, a bitstream representation is some ten times more compact than the tree representation.
+An alternative method of representation is the linear sequence or \textit{bitstream}. In this representation it is possible to avoid the use of pointers, and place the values of recursive substructures contiguous with the rest of the information, just as they are in the familiar bracketed character representations of expressions. However instead of using brackets, we can reestablish the bracketing structure by context, and if necessary by scanning the tag of union values. This method is usually associated with packed representations of the other components, and a very significant reduction in storage may be achieved, at the expense of enforcing serial access to the components of the structure. In many circumstances, a bitstream representation is some ten times more compact than the tree representation.
 
 \begin{figure}[h]
 	\centering
@@ -1693,11 +1693,350 @@ An alternative method of representation is the linear sequence or \textit{bitstr
 	\caption{Representation of (($A$\,.\,($B$.NIL))\,.\,($B$\,.\,$A$)}
 \end{figure}
 
-The choice between tree and linear representation is usually obvious. If the structure is being processed by the program, usually by means of recursive procedures, the needs of ready access to any component of the structure dictate a tree representation. In addition, some of the space lost may be regained by sharing common branches among several trees; such commonality of branches is a feature of the processing of symbolic expressions. However, if the structure has to be output and subsequently re-input, the linear structure is vastly preferable. Not only does the reduction in volume reduce transfer time, but the linearization avoids a number of tricky problems of representing pointers in backing store. In many cases, a structure which passes through several phase~ of processing and input-output will be translated between the two representations at each phase; and this is standard practice in a multipass translator for a high-level programming language.
+The choice between tree and linear representation is usually obvious. If the structure is being processed by the program, usually by means of recursive procedures, the needs of ready access to any component of the structure dictate a tree representation. In addition, some of the space lost may be regained by sharing common branches among several trees; such commonality of branches is a feature of the processing of symbolic expressions. However, if the structure has to be output and subsequently re-input, the linear structure is vastly preferable. Not only does the reduction in volume reduce transfer time, but the linearization avoids a number of tricky problems of representing pointers in backing store. In many cases, a structure which passes through several phase~ of processing and input-output will be translated between the two representations at each phase; and this is standard practice in a multi-pass translator for a high-level programming language.
 
 It is important to note that the sharing of the recursive sub-structure is nothing but a means of saving time and storage, and has no effect on the running of the program. This means that the sharing must be avoided whenever there is any danger that the shared sub-structure might be selectively updated as part of one of its owners. In principle, all values are entirely disjoint from all other values, and there is no way in which the programmer could either know or care how far his structures are shared. Furthermore, there is no way whatsoever in which a pointer can be made to point back to a structure of which it is a component; since this would mean that the structure was identical to one of its own components. Only an infinite structure can have this property; and infinite structures do not satisfy the axiom of exclusion on which the important principle of induction for recursive structures is based.
 
 \subsection{Example}
 \label{sec:example-9-2}
 
-Page 147
+A source text for an expression in a programming language is presented as a sequence of symbols defined:
+
+\quad \textbf{type} symbol $=$ (constant:(value:real), variable:(identifier: ident),
+
+\tabto*{9.2em}op:operator, leftbracket, rightbracket);
+
+Write a program operating on an input variable
+
+\quad source:\textbf{sequence} symbol,
+
+\noindent
+which reads from its beginning the longest possible legitimate expression, delivers the corresponding abstract expression as a result, and exits to the label error if this is impossible. The structure of the result and the syntax of the source are as specified earlier in this chapter.
+
+The structure of the program closely follows that of the desired result. There are three functions:
+
+\quad compile expression
+
+\quad compile term (sign)
+
+\quad compile primary
+
+\noindent
+each of which removes from the source the longest expression in its syntactic category, and delivers the corresponding abstract structure as a result. The main irregularity of the process is that the first term of an expression may be unsigned; this is why the sign is provided as a parameter for compile term, instead of being read from source by compile term itself. Each function has the side-effect of shortening the source sequence if successful, and jumping to error if not.
+
+\noindent
+\textbf{function} compile expression:expression;
+
+\noindent
+\quad \textbf{begin} sign:operator;
+
+\noindent
+\quad \quad \textbf{if} source.first $=$ plus $\vee$ source.first $=$ minus \textbf{then} sign \textbf{from} source
+
+\noindent
+\quad \quad \textbf{else} sign $\coloneq$ plus;
+
+\noindent
+\quad \quad \quad compile expression $\leqslant$ [compile term(sign)];
+
+\noindent
+\quad \quad \quad \textbf{while} source.first $=$ plus $\vee$ source.first $=$ minus \textbf{do}
+
+\noindent
+\quad \quad \quad \quad \textbf{begin} sign \textbf{from} source;
+
+\noindent
+\quad \quad \quad \quad \quad compile expression$\wideparen{\text{: [}}$compile term(sign)]
+
+\noindent
+\quad \quad \quad \quad \textbf{end}
+
+\noindent
+\quad \textbf{end};
+
+\noindent
+\textbf{function} compile term($s$:operator):term;
+
+\noindent
+\quad \textbf{begin} $p$:primary; sign:operator; $fs$:\textbf{sequence} factor;
+
+\noindent
+\quad \quad $p\coloneq$ compile primary;
+
+\noindent
+\quad \quad $fs \coloneq$ [factor(times, $p$)];
+
+\noindent
+\quad \quad \textbf{while} source.first $=$ times $\vee$ source.first $=$ div \textbf{do}
+
+\noindent
+\quad \quad \quad \textbf{begin} sign from source:
+
+\noindent
+\quad \quad \quad \quad $p\coloneq$ compile primary;
+
+\noindent
+\quad \quad \quad \quad $fs\wideparen{\text{: [}}$factor(sign, $p$)]
+
+\noindent
+\quad \quad \quad \textbf{end};
+
+\noindent
+\quad \quad compile term $\coloneq$ term($s$, $fs$)
+
+\noindent
+\textbf{function} compile primary: primary;
+
+\noindent
+\quad \textbf{begin} $s$:symbol;
+
+\noindent
+\quad \quad $s$ \textbf{from} source;
+
+\noindent
+\quad \quad \textbf{with} $s$ \textbf{do} \{constant:compile primary $\coloneq$ const(value),
+
+\noindent
+\quad \quad \quad variable:compile primary $\coloneq$ var(identifier),
+
+\noindent
+\quad \quad \quad leftbracket:
+
+\noindent
+\quad \quad \quad \textbf{begin from} source;
+
+\noindent
+\quad \quad \quad \quad compile primary $\coloneq$ bracketed(compile expression);
+
+\noindent
+\quad \quad \quad \quad $s$ \textbf{from} source;
+
+\noindent
+\quad \quad \quad \quad \textbf{if} $s \neq$ rightbracket \textbf{then go to} error
+
+\noindent
+\quad \quad \quad \textbf{end},
+
+\noindent
+\quad \quad \textbf{else go to} error\}
+
+\noindent
+\quad \textbf{end};
+
+\noindent
+\textit{Exercise}
+\nopagebreak
+
+\noindent
+Write programs to convert an expression from tree representation to bitstream and back again.
+
+\section[Sparse data structures]{Sparse Data Structures}
+\label{sec:sparse-data-structures}
+
+In dealing with representations of arrays and powersets, we have hitherto assumed that the base type of a powerset and the domain type of an array is reasonably small, so that it is possible to allocate a bit or larger area of store to hold the value of every potential element of the structure. The examples also were confined to such cases. In this chapter we investigate the consequences and problems which arise when the base or domain types are very large or infinite, and when the standard representations are therefore impossible.
+
+The representation and manipulation of powersets and mappings with infinite domains can be accomplished, provided that consideration is restricted to sets with only a finite number of members, and mappings in which only a finite number of elements take significant values; where ``significant'' is defined as different from some specified null or default value. The powerset of an infinite set is obviously also infinite; but since each value of the powerset type contains only a finite number of elements, each value can be specified simply by listing those elements in a finite period of time, and the list will occupy only a finite amount of storage. Similarly, each value of a mapping type with infinite domain can be finitely specified by listing all elements of the domain which map onto significant values of the range type, together with the value mapped in each case. A type which is restricted in this way is known as \textit{sparse}.
+
+In fact the concept of sparsity is not confined to infinite bases and domains; it may also be applied to very large but finite powersets, when the programmer knows that each actual set in which he is interested will contain only a very small proportion of the potential members. For example, the base type may contain hundreds of millions of values, but the programmer may know that he only has to deal with sets of less than a hundred in size, and perhaps most of them less than ten. It would be impossible to use the bitpattern representation, since this requires hundreds of millions of bits; but since each value actually used in a program contains only a few members, these members can readily be listed in a comparatively small amount of store. A powerset type of this sort is known as \textit{sparse}. Similarly, arrays with a very large domain, nearly all of which map onto the same default value of the range, are said to belong to a \textit{sparse array} type.
+
+Sparse sets and arrays are frequently encountered in advanced data processing applications, and their representation and manipulation present a number of familiar problems. Our first example is the definition of a type whose values are sets of car numbers. The cardinality of the carnumber type is perhaps something like four thousand million; but the programmer wishes only to deal with sets of cars owned by a single person; most of these will have only one member, and very few will have more than ten. The carset type may therefore be declared as sparse powerset:
+
+\quad \textbf{type} carset $=$ \textbf{sparse} powerset carnumber;
+
+As an example of a sparse array, we may take the type of mappings between car owners and the set of cars they own. Each owner is represented by name and address; since these are of arbitrary length, the owner type may be defined:
+
+\quad \textbf{type} owner $=$ \textbf{sequence} character;
+
+\noindent
+and has infinite cardinality. The required type is therefore declared as sparse:
+
+\quad \textbf{type} carfile $=$ \textbf{sparse array} owner \textbf{of} carset.
+
+In a data processing application, a variable of carfile type would be known as a \textit{random access} file, and the owner would be known as the \textit{key} element of the file.
+
+The next two examples are drawn from numerical applications. A vector is a mapping from integers onto floating point numbers. A sparse vector is one in which most of the elements are zero; consequently its initial value will be the zero constant function, and all elements will remain zero unless an explicit assignment is made of a different value:
+
+\quad \textbf{type} sparsevector $=$ \textbf{sparse array} integer \textbf{of} real.
+
+\noindent
+A sparse complex matrix may be defined in a similar way:
+
+\quad \textbf{type} irregular matrix $=$ \textbf{sparse array} (row, column:integer) \textbf{of} complex.
+
+The next example is taken from the field of the translation of programming languages to machine code. During the process of translation, the translator needs to know certain information about each identifier declared in the program, such as machine address allocated to the variable, its length and type, etc. This information is assumed to belong to a type decode. The type of an array which associates a decode with each identifier is given the name dictionary and is declared:
+
+\quad \textbf{type} dictionary $=$ \textbf{sparse array} ident \textbf{of} decode
+
+\noindent
+Of course, the translator is interested in the decode only of those identifiers actually declared in the source program. For the vast majority of possible identifiers, the value given by any dictionary of this type will be that value of the decode type which indicates that the identifier was undeclared.
+
+The final example is of a type that causes familiar problems in a commercial filing system and in real life --- that of multidimensional cross-classification. The customers of a firm are split up into a number of geographical areas; they are also classified in a number of classes, in accordance with the kind of product they purchase. On occasions it is required to access all customers in an area, sequencing through all classes; on other occasions to access all customers in a class, sequencing through the areas; and finally, it is sometimes required to process all customers of a given class in a given area. The abstract structure required to deal with this situation is a two-dimensional sparse array of sparse sets:
+
+\quad \textbf{sparse array} ($c$:class; $a$:area) \textbf{of sparse powerset} customer.
+
+A similar example may arise in the description of family relationship among persons:
+
+\quad \textbf{type} children $=$ \textbf{sparse array} (mother, father:person) \textbf{of} 
+
+\tabto*{9.2em}\textbf{sparse powerset} person:
+
+\noindent
+This array caters for multiple marriages better than the more tree-like representations of a family, which can be defined as a recursive structure.
+
+In the case of sparse arrays, it is sometimes useful to regard them as partial rather than total mappings. A partial mapping is one which does not necessarily give a value for each member of its domain type. In other words, the actual domain over which it is defined is a subset of the domain type. For such an array type it is necessary to introduce an additional constant omega, denoting a mapping which is everywhere undefined. It is also useful to introduce a function
+
+\quad domain$(x)$
+
+\noindent
+which delivers as result the set of subscripts for elements of $x$ which are actually defined. Thus the programmer can sequence through all the defined elements, or test whether a particular element is defined or not. Many of the examples quoted above might well have been declared as partial instead of sparse. In the case of a partial mapping, the default value does not have to be recorded.
+
+\subsection{Representation}
+
+\noindent
+Sparse sets and arrays are usually represented by simply keeping a record of the default value and those members or elements which are significant; thus the representation borrows techniques which are used in the case of the sequence type to deal with structures of changeable size. A sparse set may be regarded as a special case of a sparse mapping, which maps all its members onto the Boolean value true, and all its non-members onto the default value false. Thus their representations are closely similar to those of sparse arrays, and do not require separate treatment.
+
+A sparse mapping consists of a number of elements. Each element of the mapping is represented as the Cartesian product of its subscript and its value; in this case the subscript is known as the \textit{key}, and the value is known as the \textit{information} associated with the element, and the juxtaposition of the two will be known as an \textit{entry}. In the case of a set which is sparse, there is no need to record any information, since the presence of the key itself is sufficient to indicate that this value is a member of the set. Thus an entry for a sparse set consists only of a key.
+
+\subsubsection{Sequential representation}
+
+The simplest representation of a sparse array type is as a sequence of entries;
+i.e.
+sparse array D of R
+is represented as if it had been declared
+(default:R; s:sequence (key:D; information:R)).
+One of the possible sequence representations must now be chosen, in
+accordance with the same criteria that are used in the case of a sequence.
+But when a sequence is used to represent a sparse array, the order of the
+entries is immaterial, and does not have to reflect the relative times at which
+the entries were made. Thus the entries are often sorted into order of their
+key-value, particularly if this is the order in which they are going to be
+scanned.
+The chief disadvantage of the sequential representation is the length of
+time taken to access the element corresponding to a random subscript. In
+the case of structures of any great size, the program designer usually goes to
+considerable trouble to ensure that entries are accessed in the same standard
+order that they are stored in the sequence; and that if new entries are to be
+inserted, these are also sorted and then merged with the original sequence.
+Thus the standard commercial practice of batch processing and updating of
+sequential files may be regarded as a practical implementation of the abstract
+concept of a sparse array on the rather unsympathetic medium of magnetic
+tape.
+
+\subsubsection{Tabular Representation}
+
+If there is an acceptably low upper limit $N$ to the number of entries in a sparse mapping, a great increase in speed of lookup can be achieved by the tabular representation, in which the sparse mapping
+
+sparse array D of R
+
+\noindent
+is represented as a nonsparse array:
+
+(default:R; occupied: powerset 0 . . N;
+
+array 0 .. N of (key: D; information: R) ).
+
+If all the significant entries are collected before they are used, the table can be sorted, and then the entry with a given key can be rapidly located by logarithmic search.
+
+If access to the elements of the array is interleaved with addition of new entries, some form of hash-table technique is indicated. For this an arbitrary ``hashing'' function is chosen, which maps the domain type D into an integer in the range $0\,.\,.\,N$. When the entry is inserted, it is placed at this position in the table; so whenever that entry is accessed, use of the same hashing function will find it there. If that position is already occupied by an entry with a different key, some other vacant position in the table must be found. It is quite usual to search for such a vacant position in the next following locations of the table; but when the table is nearly full, this may cause undesirable bunching around an area of the table which happens to be popular. A solution to this problem is to choose $N + 1$ as a prime number, and to use a second hashing function to compute an arbitrary step length from any given key. The next position to try when any given position is full is obtained by adding the step length (modulo $N + 1$) to the previous position.
+
+\subsubsection{Indexed representation}
+
+The tabular method of storage is suitable only when the whole table can be
+accommodated in the main store of the computer. In the common case
+when this is not possible, a mixture of the tabular and sequential methods is
+often used. In this a sparse array is represented as a table, each of whose
+entries is a sequence:
+
+\quad (default:$R$; table:\textbf{array} $1\,.\,.\,N$ \textbf{of}
+
+\tabto*{10em}(max:$D$; seq:\textbf{sequence} (key:$D$; information:$R$))).
+
+\noindent
+Every entry is placed on that sequence $i$ such that its key fails between table $[i - 1]$.max (or $D$.min if $i = 1$) and table $[i]$.max. The table is sorted so that the appropriate sequence can be quickly located. This technique may be likened to the organization of a multi-volume encyclopedia, in which the keys of the first and last entries of each volume are indicated on the spine, so that the right volume can he quickly identified, without extracting the volumes from the shelf.
+
+When using this representation, it is desirable to ensure that all sequences are of roughly the same length. Indeed, if disc backing store is used, it is very advantageous to ensure that each of them is fitted onto a single cylinder, so that a random access will not involve more than a single head movement. Thus, when one sequence gets too long, it must exchange material with the adjacent sequence. This involves extracting the entries with the largest and/or smallest keys, and is best done when all the sequences are sorted into order of key-value. The sorting and reshuffling is often carried out as a separate operation at regular intervals; and the general method of file organization is known as ``indexed sequential''.
+
+Naturally in this method of representation, it is an advantage to keep the sequences as short as possible, say less than a single track on disk. Consequently, the table itself may get so large that it will no longer fit in main store. In this case the table itself is split up into sections, and a second-level table may be set up to point to its sections, using the same principle again. Thus at least two accesses to backing store will in general be required for each access to an element of the array, and it is strongly recommended to ensure that the sizes and location of the sequences and sections be chosen to correspond closely with the access characteristics of the storage medium.
+
+\subsubsection{Locally dense representation}
+
+A special case of a sparse array encountered in numerical computer applications is the sparse matrix. Quite frequently a sparse matrix can be split into submatrices, only a few of which contain significant non-zero entries. In this case, the matrix may be said to be locally dense, and should be represented and processed in a manner which takes advantage of this fact.
+
+One method of achieving this is to store with each significant submatrix its position and size, and to represent the whole matrix as a table or sequence of such submatrices, where each submatrix is stored contiguously in the usual way, using multiplicative address calculation. However, the submatrices will in general be of different sizes, and if the size varies during the processing of the matrix, the problems will be quite severe. A possible way of dealing with sparse matrices is to split them into submatrices of standard size, say sixteen by sixteen, and set up a table of pointers to each of these submatrices. A submatrix that is wholly zero is represented by a null pointer and occupies no additional storage; otherwise, the submatrix is stored in the usual way, using the following method of address calculation.
+
+Each access to the array involves first ``interleaving'' the bit values of the two subscripts, so that the least significant part of the result contains the least significant part of both subscripts. The more significant part of the result is then used to consult the table of addresses, to locate the desired submatrix, and the less significant part to find the position of the required element within the submatrix. This technique of interleaving subscripts may on some machines be more efficient than general multiplication. If some of the submatrices have to be held on backing store, this method of address calculation is particularly recommended, since it is equally efficient at processing the matrix by rows as by columns; and the method can then be recommended for all large arrays, whether sparse or not, particularly on a paged computer. The inventor of this method is Professor E. W. Dijkstra.
+
+\subsubsection{Grid representation}
+
+The phenomenon of cross-classification of files causes as many problems in a computer as it does in real life. It is usually solved by standardizing on one of the classifications which is most convenient, and accepting the extra cost of processing in accordance with the other classification, even if this involves resorting the file. Thus the sparse mapping
+
+\quad \textbf{sparse array} ($i$:$D_1$; $j$:$D_2$) \textbf{of} $R$
+
+\noindent
+is represented as:
+
+\quad \textbf{sparse array} $D_1$ \textbf{of} (\textbf{sparse array} $D_2$ \textbf{of} $R$)
+
+However, it is also possible to deal with the two dimensions in a more symmetric fashion, using a method based on the chained representation of sequences. In this representation, each actually used value of $D_1$ is placed in one chain, and each actually used value of $D_2$ is placed in another. These are called \textit{border chains}. Each element of either border chain contains a base location pointing to a chained sequence of all elements with key values which fall into the class. Now each actual entry of the array has \textit{two} addresses attached; one points to the next item of the sequence which has the same classification according to $D_1$, and the other to the next item which has the same classification according to $D_2$. Thus each item may be pictured as residing on an intersection of the lines of a two-dimensional grid, with pointers leading across and downwards to the next item on the same row or the same column.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=.7\textwidth]{chap2/fig9}
+	\caption{Grid representation of $A$: \textbf{sparse array} $(d_1: D_1;\ d_2: D_2)$ \textbf{of} $T$}
+\end{figure}
+
+This grid representation is unfortunately suitable only when the entire structure will fit into main store. If the main part of the sequences have to be held on backing store, some sort of blocking of adjacent elements would be desirable in the interests of efficiency.
+
+\section[Example: Examination timetables]{Example: Examination Timetables}
+
+In an educational establishment which offers students a wide choice of course combinations, there arises the problem of designing an examination timetable in which each examination is conducted in a single session, and yet each student can attend the examination for each course that he has taken. This can always be arranged by allocating a separate session for each examination; but the interests of examiner and student alike dictate that the total examination period be as short as possible. This means that each session should contain as many examinations as possible, subject to some limit $k$. An additional constraint is imposed by the size of the examination hall, which can only accommodate a certain maximum number of students.
+
+Before designing the program, it is desirable to confirm our understanding of the problem by making a more rigorous formalization in terms of the structure of the various items of data, both given and required. The types ``student'' and ``exam'' are obviously unstructured and need no further definition at this stage. The load of exams to be taken by each student is given by a mapping:
+
+\quad load:\textbf{array} student \textbf{of powerset} exam.
+
+\noindent
+A timetable is a set of sessions, where each session consists of a set of exams:
+
+\quad \textbf{type} session $=$ \textbf{powerset} exam;
+
+\quad timetable:\textbf{powerset} session.
+
+\noindent
+We next attempt to formalize the properties which the input and output data are required to possess.
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\item We choose not to formalize the condition that the number of sessions be minimized, since in fact we do not want an absolute minimum if this turns out to be too expensive to compute.
+
+	\item \label{en:examination-2}
+	Each exam is scheduled for one of the sessions
+
+	$\displaystyle\bigcup_{s\text{ \textbf{in} timetable} } $\quad $s =$ exam.all
+	s in timetable
+
+	\item \label{en:examination-3}
+	No exam is scheduled for more than one session:
+
+	\quad $(s1 \wedge s2 = \{\})$ or $(s1 = s2)$
+\end{enumerate}
+
+\noindent
+Conditions \ref{en:examination-2} and \ref{en:examination-3} effectively state that the timetable is a partitioning of the set of all exams into exhaustive and exclusive subsets.
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\setcounter{enumi}{3}
+	
+	\item No session includes more thank exams
+
+	\quad $s$ \textbf{in} timetable $\supset$ size$(s) \leqslant k$
+
+	\item No session involves more than hall size students. To formalize this, we need to count the number of students taking each exam:
+	
+	\quad examcount$(e:\text{exam}) = $size $\{st$:student $\mid$ $e$ \textbf{in} load$(st)\}$.
+	
+	Now the number of students involved in a session is
+	
+	\quad session count$(s\text{:session}) = \displaystyle\sum_{e \text{ \textbf{in} } s}$ examcount($e$)
+\end{enumerate}
+
+Page 157

@@ -6,7 +6,7 @@
 }
 \renewcommand{\leftmark}{\normalfont\scriptsize\hfill E. W. DIJKSTRA\hfill}
 
-\section{To my reader}
+\section[To my reader]{To My Reader}
 
 These notes have the status of ``Letters written to myself'': I wrote them down because, without doing so, I found myself repeating the same arguments over and over again. When reading what I had written, I was not always too satisfied.
 
@@ -19,7 +19,7 @@ them, for which I would like to express my gratitude here, has been one of the m
 comments and Peter Naur for the criticism he expressed. Finally I would like to express my gratitude to Mrs. E. L. Dijkstra-Tucker for her kind
 assistance in my struggles with the English language.
 
-\section{On our inability to do much}
+\section[On our inability to do much]{On Our Inability To Do Much}
 \label{sec:our-inability-to-do-much}
 
 I am faced with a basic problem of presentation. What I am really concerned about is the composition of large programs, the text of which may be, say, of the same size as the whole text of this booklet. Also I have to include examples to illustrate the various techniques. For practical reasons, the demonstration programs must be small, many times smaller than the ``life-size programs'' I have in mind. My basic problem is that precisely this difference in scale is one of the major sources of our difficulties in programming!
@@ -40,7 +40,7 @@ It is in the same mood that I should like to draw the reader's attention to the 
 
 Summarizing: as a slow-witted human being I have a very small head and I had better learn to live with it and to respect my limitations and give them full credit, rather than to try to ignore them, for the latter vain effort will be punished by failure.
 
-\section{On the reliability of mechanisms}
+\section[On the reliability of mechanisms]{On The Reliability Of Mechanisms}
 \label{sec:realiability-of-mechanisms}
 
 Being a programmer by trade, programs are what I am talking about and the true subject of this section really is the reliability of programs. That, nevertheless, I have mentioned ``mechanisms'' in its title is because I regard programs as specific instances of mechanisms, and that I wanted to express, at least once, my strong feeling that many of my considerations concerning software are, mutatis mutandis, just as relevant for hardware design.
@@ -94,7 +94,7 @@ Let me end this section with a final aside on the significance of computers. Com
 \noindent
 Program testing can be used to show the presence of bugs, but never to show their absence!
 
-\section{On our mental aids}
+\section[On our mental aids]{On Our Mental Aids}
 \label{sec:out-mental-aids}
 
 In the previous section we have stated that the programmer's duty is to make his product ``usefully structured'' and we mentioned the program structure in connection with a convincing demonstration of the correctness of the program.
@@ -330,7 +330,7 @@ abstraction as our main mental technique to reduce the demands made upon enumera
 
 (Here Mike Woodger, National Physical Laboratory, Teddington, England, made the following remark, which I insert in gratitude: ``There is a parallel analogy between the unanalysed terms in which an axiom or theorem is expressed and the unanalysed operands upon which a named operation is expected to act.'')
 
-\section{An example of a correctness proof}
+\section[An example of a correctness proof]{An Example Of A Correctness Proof}
 
 Let us consider the following program section, where the integer constants $a$ and $d$ satisfy the relations
 \medskip
@@ -522,7 +522,7 @@ $$
 x > 0\quad \text{\textbf{and}}\quad y \geqslant 0\quad \text{\textbf{and}}\quad A^B = z \times x^y
 $$
 
-\section{On the validity of proofs versus the validity of implementations}
+\section[On the validity of proofs versus the validity of implementations]{On The Validity Of Proofs Versus The Validity Of Implementations}
 
 In the previous section I have assumed ``perfect arithmetic'' and in my experience the validity of such proofs often gets questioned by people who argue that in practice one never has perfect arithmetic at ones disposal: admissible integer values usually have an absolute upper bound, real numbers are only represented to a finite accuracy etc. So what is the validity of such proofs?
 
@@ -543,7 +543,7 @@ Very often the validity of such relations is essential to the logic of the progr
 
 This is the place to confess one of my blunders. In implementing ALGOL 60 we decided that ``$x = y$'' would deliver the value \textbf{true} not only in the case of exact equality, but also when the two values differed only in the least significant digit represented, because otherwise it was so very improbable that the value \textit{true} would ever be computed. We were thinking of converging iterations that could oscillate within rounding accuracy. While we had been generous (with the best of intentions!) in regarding real numbers as equal, it quickly turned out that the chosen operation was so weak as to be hardly of any use at all. What it boiled down to was that the established truth of $a = b$ \textbf{and} $b = c$ did not allow the programmer to conclude the truth of $a = c$. The decision was quickly changed. It is because of that experience that I know that the programmer can only use his tool by virtue of (a number of) its properties; conversely, the programmer must be able to state which properties he requires. (Usually programmers don't do so because, for lack of tradition as to what properties can be taken for granted, this would require more explicitness than is otherwise desirable. The proliferation of machines with lousy floating-point hardware --- together with the misapprehension that the automatic computer is primarily the tool of the numerical analyst --- has done much harm to the profession!)
 
-\section{On understanding programs}
+\section[On understanding programs]{On Understanding Programs}
 \label{sec:undertanding-programs}
 
 In my life I have seen many programming courses that were essentially like the usual kind of driving lessons, in which one is taught how to handle a car
@@ -691,7 +691,7 @@ There is, of course, even with the free use of jumps, a programmer independent c
 
 The moral of the story is that when we acknowledge our duty to control the computations (intellectually!) via the program text evoking them, that then we should restrict ourselves in all humility to the most systematic sequencing mechanisms, ensuring that ``progress through the computation'' is mapped on ``progress through the text'' in the most straightforward manner.
 
-\section{On comparing programs}
+\section[On comparing programs]{On Comparing Programs}
 \label{sec:comparing-programs}
 
 It is a programmer's everyday experience that for a given problem to be solved by a given algorithm, the program for a given machine is far from uniquely determined. In the course of the design process he has to select between alternatives; once he has a correct program, he will often be called to modify it, for instance because it is felt that an alternative program would be more attractive as far as the demands that the computations make upon the available equipment resources are concerned.
@@ -829,7 +829,7 @@ And now it is clear why the introduction of (\ref{eq:comparing-example-7}) as an
 
 So much for programs that we consider as incomparable. Examples of comparable programs will be encountered in the following sections. A final remark: we have stated that ``paired computations can be parsed into a time-succession of actions that can be mapped on each other''. We have not required that actions so paired should have the same net effect! We may compare alternative programs for the same job but also different programs for similar jobs.
 
-\section{A first example of step-wise program composition}
+\section[A first example of step-wise program composition]{A First Example Of Step-Wise Program Composition}
 \label{sec:first-example-step-wise-program-composition}
 
 In the section ``\nameref{sec:undertanding-programs}'' I have stressed the need for systematic sequencing so that the structure of the computations could be reflected in the structure of our program: in this way we can speak of the joint structuring of program and computations. In the current section I shall now try to give a little more content to the still rather vague notion of structuring computations. It will be a first effort to exploit our powers of abstraction to reduce the appeal made to enumerative reasoning; it will be a consequent application of the decompositions mentioned in the section ``\nameref{sec:undertanding-programs}''.
@@ -1397,7 +1397,7 @@ The most striking observation is that our treatment of a very simple program has
 
 But we have also had encouraging experiences. Giving full recognition to the fact that the poor programmer cannot decide all at once, we succeeded to a large extent in building up this program one decision at a time, and in our example quite a lot of programming was already done in its definite form while major decisions were still left open: irrespective of whether the final decisions are taken this way or that way, the coding of the earlier levels remains valid. In view of the requirement of program manageability, this is very encouraging.
 
-\section{On program families}
+\section[On program families]{On Program Families}
 
 In our previous section we have considered the design of a program for a given task, but in doing so, we have considered our final program as an isolated object, a structure standing all by itself and to be judged on its private merits. Its structure was the result of successive decompositions; the purpose of this structure was to make a program in such a way that its correctness could be proved without undue intellectual labor.
 
@@ -1429,7 +1429,7 @@ All this is well-known, each competent programmer does so all the time. Yet I st
 
 In an earlier section (``\nameref{sec:realiability-of-mechanisms}'') the need for careful program structuring has been put forward as a consequence of the requirement that program correctness can be proved. In this section we are faced with another reason: program structure should be such as to anticipate its adaptations and modifications. Our program should not only reflect (by structure) our understanding of it, but it should also be clear from its structure what sort of adaptations can be catered for smoothly. Thank goodness, the two requirements go hand in hand.
 
-\section{On trading storage space for computation speed}
+\section[On trading storage space for computation speed]{On Trading Storage Space For Computation Speed}
 \label{sec:trading-storage-for-computation-speed}
 
 In present-day sequential computers (spring 1969) we can distinguish two main components, an active one (the processor) and a passive one (the store). The active component has the specific function to be fast, the passive one has the specific function to be large. The following is written on the assumption that this functional division is here to stay for a sufficient period of time to make a study of its consequences relevant.
@@ -1513,7 +1513,7 @@ In my understanding of programs I want such additional variables that store redu
 \noindent
 \textit{Note}. I remember one program in which the additional information was so redundant that not only the value of ``fun'' could be derived from that of ``arg'' but also the other way round. Suddenly the relation between ``fun'' and ``arg'' became symmetric, and I have been seriously bothered by the question: what entitled me to treat them so asymmetrically? The program in question generated all the solutions of a combinatorial puzzle. On closer inspection it turned out that there was a second combinatorial puzzle, where it could be proved that there existed a one-to-one correspondence between the solutions of the two problems. If I had solved the second combinatorial problem I would have found the role of ``fun'' and ``arg'' interchanged! In traditional programming, where such functional dependencies are not explicitly shown, the two puzzles would probably be solved by identical programs, whereas I made two differently structured programs. And I think rightly so, because the single program for the two puzzles needed a different proof for its correctness, depending on which puzzle it was supposed to solve, and this seems somewhat unfair when we also wish that our understanding of the computations be reflected in the structure of our programs!
 
-\section{On a program model}
+\section[On a program model]{On A Program Model}
 \label{eq:program-model}
 
 Before we have a program we must have composed it; after we have a program --- if there was any sense in making it --- we shall have it executed. In this section I shall not stress the activities of program composition and of program execution too much, and I shall try to view the program as a static object. We want to view it as a highly structured object and our main question is: what kind of structures do we envisage and why? Our hope is that eventually we shall arrive at a program structure that is both nice to compose and nice to execute. Mentally, of course, I am unable to ignore these processes, but at present I do not want to discuss them; in particular: I do not want to discuss a design methodology (whether to work ``from outside inwards'' or the other way round), nor do I want to discuss implementation consequences now. Again, in order not to complicate matters too much, I shall restrict myself to sequential programs.
@@ -1661,7 +1661,7 @@ Why this model? What are the benefits we hope to derive from it? Let me try to l
 	\item The picture of a layered hierarchy of machines provides a counter 	poison to one of the dangers evoked by ruthless application of the principle ``Divide and Rule'', viz. that different components are programmed so independently of each other that duplication of work (or worse) takes place. The fact that a layer contains ``a bunch of programs'' to be executed by some conceptual machine stresses the fact that the programs of this bunch are invited to share the same primitives. Separation of tasks is a good thing, on the other hand we have to tie the loose ends together again!
 \end{enumerate}
 
-\section{A second example of step-wise program composition}
+\section[A second example of step-wise program composition]{A Second Example Of Step-Wise Program Composition}
 
 With a picture of program structure as a layered hierarchy of machines emerging, my fingers are itching to play with it, i.e. to make another program. The notational techniques employed should not be regarded as a well-considered proposal: they have been chosen to suit my fancy and should be regarded as part of the experiment.
 
@@ -1949,7 +1949,7 @@ $$
 \noindent
 here a conditional clause would have done the job!)
 
-\section{On what we have achived}
+\section[On what we have achived]{On What We Have Achived}
 
 One of the metaphors in which I find myself thinking about the program structure envisaged regards the program as a necklace, strung from individual pearls.
 
@@ -2034,7 +2034,7 @@ We can phrase the observation in more technical terms. The primed version is mes
 
 It also gives --- me at least --- a somewhat clearer picture of the scope of my present efforts. Whatever I shall develop, it will not be a General Problem Solver, not a mechanical one, not even one written for the benefit of the human problem solver. But it may give the human some appreciation for the various aspects of ``elegance'' of a solution when he succeeds in finding one. And as such it may give him a guide line.
 
-\section{On grouping and sequencing}
+\section[On grouping and sequencing]{On Grouping And Sequencing}
 \label{sec:grouping-and-sequencing}
 
 While we are considering a programming tool in which explicit recognition has been given to the hierarchy of levels of abstraction, the present section is also applicable to programming in programming languages as they are understood today, viz. on a constant semantic level. (And there is a fair chance that the current section has its morals outside the restricted field of programming, for it seems to be concerned with problem solving in general.)
@@ -2199,7 +2199,7 @@ $t \coloneq 1$ (and further initialisation);
 
 By storing a collection of triples (number pairs with their corresponding $s$-value), among which each time the pair(s) with minimum $s$-value exceeding $t$ will occur and adjusting this collection each time $t$ is increased, a program emerges that is orders of magnitude more efficient, $t$ jumping from decomposable value to the next decomposable value. Programming (or problem solving in general?) as the judicious postponement of decisions and commitments!
 
-\section{Design considerations in more detail}
+\section[Design considerations in more detail]{Design Considerations In More Detail}
 
 Preceding sections --- in particular ``\nameref{sec:first-example-step-wise-program-composition}'' have evoked the criticism that I have oversimplified the design process almost to the extent of dishonesty; I don't think this criticism fully unjustified and to remedy the situation I shall treat two examples in greater detail. The first example is my own invention; I have tried it out in a few oral examinations and finally I have used it at the end of my course ``An introduction into the Art of Programming'' in the classroom. I posed the problem to an audience of fifty students and together, with me as leader of the discussion, they solved the problem in 90 minutes.
 
@@ -2358,7 +2358,7 @@ Thus we arrived at the following program:
 
 This section has not been included because the problem tackled in it is very exciting. On the contrary, I feel tempted to remark that the problem is perhaps too trivial to act as a good testing ground for an orderly approach to the problem of program composition. This section has been included because it contains a true eye-witness account of what happened in the classroom. It should be interpreted as a partial answer to the question that is often posed to me, viz. to what extent I can teach programming style. (I never used the ``Notes on Structured Programming'' --- mainly addressed to myself and perhaps to my colleagues --- in teaching. The classroom experiment described in this section took place at the end of a course entitled ``Introduction into the Art of Programming'', for which separate lecture notes --- with exercises and all \mbox{that ---} were written. As at the moment of writing the students that followed this course have still to pass their examination, it is for me still an open question how successful I have been. They liked the course, I have heard that they described my programs as ``logical poems'', so I have the best of hopes.)
 
-\section{The problem of the Eight queens}
+\section[The problem of the eight queens]{The Problem Of The Eight Queens}
 
 This last section is adapted from my lecture notes ``Introduction into the Art of Programming''. I owe the example --- as many other good ones --- to Niklaus Wirth. This last section is added for two reasons.
 
