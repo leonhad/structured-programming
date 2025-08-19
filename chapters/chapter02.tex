@@ -2006,7 +2006,8 @@ A timetable is a set of sessions, where each session consists of a set of exams:
 We next attempt to formalize the properties which the input and output data are required to possess.
 
 \begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
-	\item We choose not to formalize the condition that the number of sessions be minimized, since in fact we do not want an absolute minimum if this turns out to be too expensive to compute.
+	\item \label{en:examination-1}
+	We choose not to formalize the condition that the number of sessions be minimized, since in fact we do not want an absolute minimum if this turns out to be too expensive to compute.
 
 	\item \label{en:examination-2}
 	Each exam is scheduled for one of the sessions
@@ -2026,17 +2027,67 @@ Conditions \ref{en:examination-2} and \ref{en:examination-3} effectively state t
 \begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
 	\setcounter{enumi}{3}
 	
-	\item No session includes more thank exams
+	\item \label{en:examination-4}
+	No session includes more thank exams
 
 	\quad $s$ \textbf{in} timetable $\supset$ size$(s) \leqslant k$
 
-	\item No session involves more than hall size students. To formalize this, we need to count the number of students taking each exam:
+	\item \label{en:examination-5}
+	No session involves more than hall size students. To formalize this, we need to count the number of students taking each exam:
 	
-	\quad examcount$(e:\text{exam}) = $size $\{st$:student $\mid$ $e$ \textbf{in} load$(st)\}$.
+	\quad examcount$(e$:$\text{exam}) = $ size $\{st$:student $\mid$ $e$ \textbf{in} load$(st)\}$.
 	
 	Now the number of students involved in a session is
 	
 	\quad session count$(s\text{:session}) = \displaystyle\sum_{e \text{ \textbf{in} } s}$ examcount($e$)
+	
+	The condition may be formalized:
+	
+	\quad $s$ \textbf{in} timetable $\supset$ sessioncount$(s) \leqslant$ hallsize.
+	
+	\item \label{en:examination-6}
+	No student takes more than one exam in a session. To formalize this we introduce the concept of incompatibility of exams: two exams are incompatible if some student is taking both of them. For each exam el there is a set incompat$(e1)$ of exams which are incompatible with it:
+	
+	\quad incompat$(e1)= \{e2\text{:exam}\ |\ e2 \neq e1\ \&\ \exists\ st$:student$(e1 \text{ \textbf{in}}$
+		
+	\tabto*{8.2em} load$(st)\ \&\ e2$ \textbf{in} load$(st))\}$
+	
+	Now we can define that every pair of exams in a session must be compatible:
+	
+	\quad $s$ \textbf{in} timetable \& $e1$, $e2$ \textbf{in} $s \supset\neg e1$ \textbf{in} incompat$(e2)$.
 \end{enumerate}
 
-Page 157
+These six conditions, defined in terms of load, hallsize, and $k$, must be possessed by any successful timetable in the real world, and by any successful computer representation of the timetable. They serve to define the objectives and criterion of correctness of our timetabling program.
+
+\subsubsection{The abstract program}
+
+Inspection of the conditions reveals that construction of the timetable does not require full knowledge of the load of each student. All that is needed is the examcount of each exam, and for each exam the set of other exams which are incompatible with it:
+
+\quad examcount:\textbf{array} exam \textbf{of} integer;
+
+\quad incompat:\textbf{array} exam \textbf{of powerset} exam.
+
+\noindent
+These two arrays embody an abstraction from the real life data, which concentrate attention on exactly those features which are for the present purpose relevant, and permitting us to ignore for the time being the other features of the situation. It is plain that these two arrays can be readily constructed from a single scan of the student load data:
+
+\quad examcount $\coloneq$ all$(0)$;
+
+\quad incompat $\coloneq$ all$(\{\})$;
+
+\quad \textbf{for} $st$:student \textbf{do}
+
+\quad \quad \textbf{for} $e$ \textbf{in} load$(st)$ \textbf{do}
+
+\quad \quad \quad \textbf{begin} examcount$(e)$: $+\ 1$;
+
+\quad \quad \quad \quad incompat$(e)$: $\vee\ (\text{load}(st) - \{e\})$
+
+\quad \quad \quad \textbf{end};
+
+One of the simplifying factors in the search for a solution to the given problem is that the conditions fall readily into two classes: \ref{en:examination-1} \ref{en:examination-2} and \ref{en:examination-3} relate to the timetable as a whole, whereas \ref{en:examination-4} \ref{en:examination-5} and \ref{en:examination-6} relate only to individual sessions, and do not mention the timetable at all. This suggests that the program can be structured as an inner part which selects a suitable session satisfying \ref{en:examination-4} \ref{en:examination-5} and \ref{en:examination-6}, and an outer loop which constructs the timetable out of such suitable sessions.
+
+The objective of the outer loop is to achieve satisfaction of conditions \ref{en:examination-2} and \ref{en:examination-3} on its completion. We therefore choose one of these conditions as a terminating condition of the loop, and design the body of the loop in such a way that is preserves the truth of the other condition (that is, the invariant of the loop); furthermore we ensure that the invariant is true before starting the loop.
+
+The obvious choice of invariant is exclusiveness (condition \ref{en:examination-3}), leaving exhaustiveness as the terminating condition towards which each execution of the body of the loop will progress. The empty timetable obviously satisfies the invariant. This leads to an algorithm of the following structure:
+
+page 158
