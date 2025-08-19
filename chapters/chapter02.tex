@@ -2012,7 +2012,7 @@ We next attempt to formalize the properties which the input and output data are 
 	\item \label{en:examination-2}
 	Each exam is scheduled for one of the sessions
 
-	$\displaystyle\bigcup_{s\text{ \textbf{in} timetable} } $\quad $s =$ exam.all
+	$\displaystyle\bigcup_{s\text{ \textbf{in} timetable}}$ $s =$ exam.all
 	s in timetable
 
 	\item \label{en:examination-3}
@@ -2090,4 +2090,497 @@ The objective of the outer loop is to achieve satisfaction of conditions \ref{en
 
 The obvious choice of invariant is exclusiveness (condition \ref{en:examination-3}), leaving exhaustiveness as the terminating condition towards which each execution of the body of the loop will progress. The empty timetable obviously satisfies the invariant. This leads to an algorithm of the following structure:
 
-page 158
+\quad timetable $\coloneq \{\}$;
+
+\quad \textbf{while} timetable does not satisfy \ref{en:examination-2} \textbf{do}
+
+\quad \textbf{begin} select a session satisfying \ref{en:examination-4}, \ref{en:examination-5}, \ref{en:examination-6};
+
+\quad \quad add the session to the timetable
+
+\quad \textbf{end};
+
+\quad print timetable.
+
+In order for the addition of a new session to preserve the truth of the
+invariant, it is necessary that the exams of the session shall be selected from
+exams which do not yet appear in the timetable. We therefore introduce a
+new variable to hold these remaining exams:
+
+\quad remaining:\textbf{powerset} exam;
+
+\noindent
+which is defined by the invariant relation:
+
+\quad remaining $=$ exam.all $- \displaystyle\bigcup_{s \text{ \textbf{in} timetable}} s$.
+
+\noindent
+The structure of the program as a whole now takes the form:
+
+\quad timetable $\coloneq$ \{\};
+
+\quad remaining $\coloneq$ exam.all;
+
+\quad \textbf{while} remaining $\neq \{\}$ \textbf{do}
+
+\quad \quad \textbf{begin} $s\coloneq$ suitable;
+
+\quad \quad \quad timetable: $\vee\ \{s\}$;
+
+\quad \quad \quad remaining: $-\ s$
+
+\quad \quad \textbf{end};
+
+\quad print timetable.
+
+The problem now remains of selecting a suitable session at each stage. In principle, there is no reason to suppose that the ``best'' choice at each stage will lead to a ``best'' or even a ``good'' timetable in the end. However, it would seem that in general it will pay to select a combination of remaining exams that most nearly fills the hall, or most nearly approaches the limit $k$. This will probably mean that the majority of students and exams will be catered for in a reasonably compact set of sessions, even though there may in the end be a fairly long ``tail'' of small sessions, involving a minority of students. Although this will not minimize the number of sessions, it may be reasonably satisfactory to most students and most examiners.
+
+The alternative to accepting an apparent best choice on each occasion is to attempt some more global optimization, which will either involve astronomical numbers of trials, or some sophisticated considerations which are unlikely to become apparent until after practical experience of a simpler algorithm. So there is nothing else that can be done at this stage except hope for the best.
+
+It remains to program the function:
+
+\quad \textbf{function} suitable:session,
+
+\noindent
+which selects a suitable session from the remaining set of exams; A possible method of doing this is to generate a number of trial session satisfying \ref{en:examination-4} \ref{en:examination-5} and \ref{en:examination-6}, and to select the best one found. The best one will probably be the one with the largest sessioncount, but since we may wish to adjust the criterion of selection, it is advisable to define it as a separate subroutine, updating a variable
+
+\quad bestsofar:session;
+
+\noindent
+in accordance with the current value of a variable:
+
+\quad \textbf{trial}:session;
+
+\quad \textbf{procedure} record
+
+\quad \textbf{if} sessioncount (bestsofar) $<$ sessioncount $($trial$)$ \textbf{then}
+
+\quad \quad bestsofar $\coloneq$ trial.
+
+\noindent
+The result of suitable is going to be the final value of bestsofar:
+
+\quad suitable $\coloneq$ bestsofar.
+
+It still remains to write a procedure that will generate and record a sequence of trial sessions which satisfy \ref{en:examination-4} \ref{en:examination-5} and \ref{en:examination-6}. Inspection of these conditions shows that if a trial \textit{fails} to satisfy one of them, no larger trial will satisfy it. In other words, having found an \textit{im}possible trial, there is no need to generate any further trials which contain it. This suggests that we organize the generation process to generate all supersets of each trial that has been found already to be possible, but excluding any exams which have already been tried. We therefore introduce a variable:
+
+\quad untried:\textbf{powerset} exam,
+
+\noindent
+and a procedure
+
+\quad \textbf{procedure} gensupersets,
+
+\noindent
+which generates and records all possible supersets of trial by adding one or more exams from untried to it. This procedure will be called from within ``suitable''.
+
+\quad \textbf{function} suitable:session;
+
+\quad \textbf{begin} trial, bestsofar:session; $e$:exam; untried:\textbf{powerset} exam;
+
+\quad \quad $e$ \textbf{from} remaining;
+
+\quad \quad trial $\coloneq$ bestsofar $\coloneq$ $\{e\}$;
+
+\quad \quad untried $\coloneq$ remaining $-$ trial $-$ incompat$(e)$;
+
+\quad \quad gensupersets;
+
+\quad \quad suitable $\coloneq$ bestsofar
+
+\quad \textbf{end};
+
+\noindent
+Note that the first value of the trial is the unitset of some exam chosen from the remainder according to some as yet undefined criterion. The justification for this is that the chosen exam must eventually feature in some session of the timetable, and it might as well be this one. If this prior choice were not made, gensupersets would keep on generating the same supersets on every cycle of the major loop of the timetabling program.
+
+As another significant optimization, we have removed from untried any exams which are incompatible with the exams in the trial, since there is no need to even consider the addition of any of these exams to the trial.
+
+The generation of supersets of a given trial may proceed by selecting each exam from untried, and adding it to trial. If the result is still valid, it should be recorded, and the new value of trial is then a suitable session to act as a basis for further superset generation. This suggests a recursive program structure. Of course, the exam added to trials should also be subtracted from untried, to avoid unnecessary repetitions; and it is very advantageous to remove from untried any exams which are incompatible with the exam just added to the trial, so that these do not have to be considered again in future. Also, the values of trial and untried must be left unchanged by each call, so any change made to them must be recorded and restored in variables save 1 and save 2.
+
+\quad \textbf{procedure} gensupersets;
+
+\quad \textbf{begin} $e$:exam; save 1, save 2:\textbf{powerset} exam;
+
+\quad \quad record; save 1 $\coloneq$ untried;
+
+\quad \quad \textbf{if} size$($trial$) < k$ \textbf{then}
+
+\quad \quad \textbf{while} untried $\neq \{\}$ \textbf{do}
+
+\quad \quad \quad \textbf{begin} $e$ \textbf{from} untried;
+
+\quad \quad \quad \quad save $2\coloneq$ untried $\wedge$ incompat$(e)$;
+
+\quad \quad \quad \quad untried:$-$ save 2;
+
+\quad \quad \quad \quad trial:$\vee\ \{e\}$;
+
+\quad \quad \quad \quad \textbf{if} sessioncount(trial) $<$ hallsize \textbf{then} gensupersets;
+
+\quad \quad \quad \quad untried:$\vee$ save 2;
+
+\quad \quad \quad \quad trial:$-\ \{e\}$
+
+\quad \quad \quad \textbf{end};
+
+\quad \quad \quad untried $\coloneq$ save 1
+
+\quad \textbf{end} gensupersets.
+
+The validity of this program depends on the fact that trial invariantly satisfies all conditions \ref{en:examination-4} \ref{en:examination-5} and \ref{en:examination-6} for sessions of the timetable, as well as always being a subset of remaining.
+
+The reasoning is as follows:
+
+for \ref{en:examination-4}: gensupersets never generates a superset except when the size of the trial is strictly less than $k$.
+
+for \ref{en:examination-5}: gensupersets is never entered when the sessioncount of trial is greater than the hall size (we assume that no examcount is greater than hallsize).
+
+for \ref{en:examination-6}: removal of incompatible sets from untried ensures that at all times all exams remaining in untried are compatible with all exams of trial. Therefore, transfer of an arbitrary exam from untried to trial can never cause \ref{en:examination-6} to be violated.
+
+Finally, at the initial call of gensupersets, untried $\subset$ remaining. Untried is an essentially non-increasing quantity: every addition of members to it has always been preceded by removal of those very same members. Untried is therefore always a subset of remaining; and trial, which is constructed only from members of untried, must also always be a subset of remaining.
+
+This completes our first version of an abstract program to construct examination timetables. Collecting all the material together, it looks like this:
+
+hallsize, $k$:integer, initially given;
+
+load:\textbf{array} student \textbf{of powerset} exam, initially given;
+
+\textbf{type} session $=$ \textbf{powerset} exam;
+
+timetable:\textbf{powerset} session, initially $\{\}$;
+
+examcount:\textbf{array} exam \textbf{of} integer, initially all $(0)$;
+
+incompat:\textbf{array} exam \textbf{of powerset} exam, initially constant $(\{\})$;
+
+\textbf{function} sessioncount($s$:session):integer;
+
+\quad \textbf{begin} sum:integer, initially 0;
+
+\quad \quad \textbf{for} $e$ \textbf{in} $s$ \textbf{do} sum:$+$ examcount$(e)$;
+
+\quad \quad sessioncount $\coloneq$ sum
+
+\quad \textbf{end};
+
+\quad remaining:\textbf{powerset} exam, initially exam.all;
+
+\textbf{function} suitable:session;
+
+\quad \textbf{begin} bestsofar, trial:session; untried:\textbf{powerset} exam;
+
+\quad \quad $e$:exam; $e$ \textbf{from} remaining; bestsofar $\coloneq \{e\}$;
+
+\quad \quad trial $\coloneq \{e\}$; untried $\coloneq$ remaining $-$ trial $-$ incompat$(e)$;
+
+\quad \quad gensupersets;
+
+\quad \quad suitable $\coloneq$ bestsofar
+
+\quad \textbf{end};
+
+\noindent
+The following two procedures are local to suitable:
+
+\quad \textbf{procedure} record ;
+
+\quad \quad \textbf{if} sessioncount (bestsofar) $<$ sessioncount$($trial$)$ \textbf{then} 
+
+\quad \quad \quad bestsofar $\coloneq$ trial;
+
+\quad \textbf{procedure} gensupersets;
+
+\quad \quad \textbf{begin} $e$:exam; save 1, save 2:\textbf{powerset} exam;
+
+\quad \quad \quad record; save 1 $\coloneq$ untried;
+
+\quad \quad \quad \textbf{if} size$($trial$) < k$ \textbf{then}
+
+\quad \quad \quad \quad \textbf{while} untried $\neq \{\}$ \textbf{do}
+
+\quad \quad \quad \quad \quad \textbf{begin} $e$ \textbf{from} untried;
+
+\quad \quad \quad \quad \quad \quad save 2 $\coloneq$ untried $\wedge$ incompat$(e)$;
+
+\quad \quad \quad \quad \quad \quad untried: $-$ save 2;
+
+\quad \quad \quad \quad \quad \quad trial: $\vee\ \{e\}$;
+
+\quad \quad \quad \quad \quad \quad \textbf{if} sessioncount$($trial$) <$ hallsize \textbf{then} gensupersets;
+
+\quad \quad \quad \quad \quad \quad untried: $\vee$ save 2;
+
+\quad \quad \quad \quad \quad \quad trial:$-\ \{e\}$
+
+\quad \quad \quad \quad \quad \textbf{end};
+
+\quad \quad \quad \quad untried $\coloneq$ save 1
+
+\quad \textbf{end} gensupersets;
+
+\noindent
+The main program is as follows:
+
+\quad \textbf{for} $st$:student \textbf{do}
+
+\quad \quad \textbf{for} $e$ \textbf{in} load$(st)$ \textbf{do}
+
+\quad \quad \quad \textbf{begin} examcount$(e)$: $+\ 1$; incompat$(e)$: $\vee\ ($load$(st) - \{e\})$ \textbf{end};
+
+\quad \textbf{while} remaining $\neq \{\}$ \textbf{do}
+
+\quad \quad \quad \textbf{begin} $s$:session;
+
+\quad \quad \quad \quad $s\coloneq$ suitable;
+
+\quad \quad \quad \quad timetable: $\vee\ \{s\}$;
+
+\quad \quad \quad \quad remaining: $-\ s$
+
+\quad \quad \quad \textbf{end};
+
+\quad print timetable
+
+Before spending any more effort on developing this program, it would be advisable to subject it to a critical examination, to ensure that it will be successful. Now the most obvious reasons why the program might fail are:
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\item The size of the timetable turns out to be unacceptably large; we have agreed that nothing can be done about this, until we know more about the data.
+
+	\item The amount of time taken to generate all trials at each step is excessive. This will be particularly serious when the remainder is still large at the beginning of the program, and if the untried set remains large on every recursion of gensupersets. The main way in which the untried set is reduced is by removing all exams incompatible with the trial. This suggests that we should always prefer to add first to the trial those exams which have the largest incompatible sets, so that untried is reduced as quickly as possible. Among sets equal according to this criterion, the exam with the largest examcount would be selected first. The exact weighting between these criteria may have to be adjusted later in the light of experience; meanwhile, the simplest implementation of this policy is to presort the exams in accordance with the criterion, and implement $e$ \textbf{from} untried by selecting the first member.
+\end{enumerate}
+
+If it turns out that this elementary strategy is insufficient we may have to artificially curtail the number of iterations of the loop in gensupersets. But we would probably need some practical experience in order to select a suitable strategy; and for the time being, let us hope it will not be necessary.
+
+\subsubsection{Data representation}
+
+In order to design a successful data representation, it is necessary to know
+something of the likely size of the problem. In this example, we will make the
+following assumptions:
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\item There are not more than 500 exams, each taken by less than 1000 students (typically 50).
+	\item There are about 5000 students.
+	\item Each student takes less than ten exams, and typically five.
+	\item The examination hall will take about 1000 students.
+	\item An acceptable limit on the number of concurrent exams is 30, and the typical number is 10.
+	\item Manual timetabling methods have succeeded in constructing timetables with not more than 50 sessions.
+\end{enumerate}
+
+We will consider the individual items of data.
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\item \textbf{type} \textit{exam}
+\end{enumerate}
+
+\noindent
+The obvious representation is as an integer subrange: $0\,.\,.\,500$.
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\setcounter{enumi}{1}
+	\item \textbf{type} \textit{session}
+\end{enumerate}
+
+\noindent
+There is obviously a choice between a bitpattern representation (500 bits), and an array of 30 nine-bit elements ($+\ \text{pointer}$) ($270 \text{ bits } + \text{ one word}$). The number of sessions to be stored is not great, so considerations of storage  economy are not significant. The main operations on a session are the insertion of an exam which is known not to be in it already, and the removal of an exam, which is the most recently inserted. Thus the array method would be the best, since the insertion and removal of members can be accomplished by stack methods.
+
+Since we frequently wish to know the session-count, it would pay to record this together with the session, and keep it up to date as members are inserted and removed.
+
+This representation is used for trial and bestsofar.
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\setcounter{enumi}{2}
+	\item \textit{timetable}
+\end{enumerate}
+
+\noindent
+The only operation on the timetable is the insertion of new sessions. Since sessions are of variable length, the timetable could be organized as a sequence of variable-length sequences. Since each exam occurs exactly once in the timetable, the maximum size of the timetable is $500 \times \text{nine}$ bits, plus perhaps sixty words to indicate the separation of the sessions (if there are more than sixty sessions, the program will have failed anyway).
+
+An alternative and much simpler representation is simply to record for each exam which session it occurs in. This requires only
+
+\quad \textbf{array} exam \textbf{of} $1\,.\,.\,60$
+
+\noindent
+This representation is made possible only by the fact that the sessions of the timetable are mutually exclusive.
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\setcounter{enumi}{3}
+	\item \textit{examcount}:\textbf{array} \textit{exam} \textbf{of} \textit{integer}
+\end{enumerate}
+
+\noindent
+A standard representation is the obvious choice.
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\setcounter{enumi}{4}
+	\item \textit{remaining}, \textit{untried}, \textit{save} 1, \textit{save} 2
+\end{enumerate}
+
+\noindent
+These variables start rather full, and get emptier as the program progresses.
+Their average density is therefore about fifty percent, and there is no point
+in adopting a sparse representation. Furthermore, the frequency of standard
+set operations applied to them indicate a standard bitpattern representation.
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\setcounter{enumi}{5}
+	\item \textit{incompat}
+\end{enumerate}
+
+\noindent
+The most frequent use of elements of incompat is to subtract them from untried. They should therefore also use the bitpattern representation. This will require $500 \times 500 \text{ bits}$, of the order of 10000 words. This is by far the largest data structure required, but its total size is probably fully justified by the extra speed which it imparts to the program, and since it is acceptable on most computers on which this program will run, it does not seem worth while to seek a more compact representation.
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\setcounter{enumi}{6}
+	\item \textit{load}
+\end{enumerate}
+
+\noindent
+The load of each student is the primary input data for the problem; it may also be extremely voluminous. It is therefore doubly fortunate that the program only needs to make a single scan of the data; for not only will this enable the data to be presented as an external sequence; it also means that the representation can be designed to be suitable for human reading, writing, and punching.
+
+We therefore allocate one card for each student, and use ten columns of six characters each to hold the examination numbers. To save unnecessary punching, the first blank column will signify the end of the examination set. For identification purposes, each card should also contain the student number; fortunately this can be wholly ignored by the program, though it should probably be checked to avoid duplication or omissions.
+
+\noindent
+\textit{Exercise}
+\nopagebreak
+
+\noindent
+Code the abstract program described above using the recommended data representations.
+
+\section{Axiomatization}
+
+The preceding sections have introduced a number of methods of constructing data spaces (types), and have explained some useful operations defined over these spaces. But the description has been essentially intuitive and informal, and the question arises whether all the relevant information about the data spaces has been communicated, or whether there remains some possibility of misunderstanding of the details.
+
+In order to remove such misunderstanding, or check that it has not occurred, it is desirable to give a rigorous mathematical specification of each data space, and the operators defined over it; and we follow what is now a customary mathematical practice of defining rigorously the subject matter of our reasoning, not by traditional definitions, but by sets of axioms.
+
+In view of the role which axioms play in the theory of data structuring, it may be helpful to summarize their intended properties.
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\item Axioms are a formal statement of those properties which are shared by the real world and by its representation inside a computer, in virtue of which manipulation of the representation by a computer program will yield results which can be successfully applied back to the real world.
+	\item They establish a conceptual framework covering those aspects of the real world which are believed to be relevant to the programmer's task, and thereby assist in his constructive and inventive thinking.
+	\item They state rigorously those assumptions about the real world on which the computer program will be based.
+	\item They state the necessary properties which must be possessed by any computer representation of the data, in a manner free from detail which is in initial stages irrelevant.
+	\item They offer a carefully circumscribed freedom to the programmer or high-level language implementor to choose a representation most suitable for his application and hardware available.
+	\item They form the basis of any proof of correctness of a program.
+\end{enumerate}
+
+The axioms given here are not intended to be used directly in the proof of non-trivial programs, since such proofs would be excessively long-winded. Rather they may be used to establish the familiar properties of the data spaces they describe, and these properties can then be used informally in proofs. Eventually it may be possible to get computers to check such proofs; but this will require the development of much more powerful formal languages for expressing proofs than are at present provided by logicians, and the use of powerful decision procedures for large subclasses of theorems, to assist in verification of the individual steps of a proof.
+
+The axioms applicable to a given type depend on how that type has been defined. Thus it is not possible to give in each case a fixed set of axioms like those for integers; instead we give a pattern or schema which shows how a particular axiom set may be derived from the general form of the corresponding type definition.
+
+\subsection{Enumerations and subranges}
+
+The following axioms are common to both enumerations and subranges. They are modeled on the familiar axioms for natural numbers. The type name is assumed to be $T$, and all variables are assumed to be of this type.
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\item \label{en:enumerate-1}
+	$T$.min is a $T$
+	
+	\item \label{en:enumerate-2}
+	If $x$ is a $T$, and $x\neq T$.max
+
+	\quad then succ$(x)$ is a $T$
+
+	\item The only elements of Tare as specified in \ref{en:enumerate-1} and \ref{en:enumerate-2}
+
+	\item $\text{succ}(x) = \text{succ}(y) \supset x = y$
+
+	\item succ$(x) \neq T$.min
+
+	\item $\text{pred}(\text{succ}(x)) = x$
+\end{enumerate}
+
+\noindent
+The following three axioms apply only to ordered types
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\setcounter{enumi}{6}
+	\item $T$.min $\leqslant x$
+
+	\item $x \leqslant T$.min $\supset x = T$.min
+
+	\item \label{en:enumerate-9}
+	$\text{succ}(x) \leqslant \text{succ}(y) \equiv x \leqslant y$
+\end{enumerate}
+
+\noindent
+Note: succ$(T$.max$)$ and pred$(T$.min$)$ are not defined.
+
+The general form of definition of a type by enumeration is
+
+\quad \textbf{type} $T = (k_1, k_2, \dots, k_n)$;
+
+\noindent
+where $T$ is the type name and $k_1, k_2 , \dots, k_n$ are names of all values of the type.
+
+The additional axiom for this type is:
+
+(10)\tabto*{3.5em} $k_1 = T$.min
+
+\tabto*{2.5em}\& $k_2 = \text{succ}(k_1)$
+
+\tabto*{2.5em}\& $k_3 = \text{succ}(k_2)$
+
+\tabto*{3.5em}\dots
+
+\tabto*{2.5em}\& $k_n = \text{succ}(k_{n-1}) = T$.max.
+
+The general form of a definition of a type as a subrange is
+
+\quad \textbf{type} $T=k\,.\,.\,l;$
+
+\noindent
+where $k$ and $l$ are of the base type $T_0$.
+
+The additional axioms for this type are:
+
+(10) $T$.min $= k$
+
+\tabto*{2.5em}\& $T$.max $= l$.
+
+\begin{enumerate}[leftmargin=2.4\parindent, label=(\arabic*)]
+	\setcounter{enumi}{10}
+	\item $T(T_0(x)) = x$.
+
+	\item $k \leqslant x_0\ \&\ x_0 \leqslant l \supset T_0(T(x_0)) = x_0$.
+
+	\item $x \leqslant y \equiv T_0(x) \leqslant T_0(y).$
+\end{enumerate}
+
+Using axioms \ref{en:enumerate-1} to \ref{en:enumerate-9} it is possible to prove the following properties of ordering:
+
+\begin{enumerate}[leftmargin=2.4\parindent, label=(T\arabic*)]
+	\item $x \leqslant x$.
+
+	\item \label{en:enumeration-axiom-2}
+	$x \leqslant \text{succ}(y) \supset x = \text{succ}(y) \vee x \leqslant y$.
+	
+	\item \label{en:enumeration-axiom-3}
+	$z \leqslant y\ \&\ y \leqslant x \supset z \leqslant x.$
+	
+	\item $x \leqslant y\ \&\ y \leqslant x \supset x = y.$
+\end{enumerate}
+
+\noindent
+\textit{Hint}: Use induction on $x$. Proof of \ref{en:enumeration-axiom-2} requires \ref{en:enumeration-axiom-3}.
+
+\noindent
+Abbreviations:
+
+\noindent
+If $\ominus$ is a monadic operator and $\oplus$ is a dyadic operator, both taking operands from the base type $T_0$, then the following abbreviations permit omission of the transfer function, if $a$ is of type $T_0$ and $x$, $y$ are of type $T$:
+
+\begin{enumerate}[leftmargin=2.4\parindent, label=(\arabic*)]
+	\setcounter{enumi}{13}
+	
+	\item ~ $\ominus\ x$ stands for $\ominus\ T_0(x)$.
+
+	\item $x \oplus y$ \tabto*{3.2em},, \tabto*{5.4em},, \tabto*{7.4em}$T_0(x) \oplus T_0(y)$.
+	
+	\item $x \oplus a$ \tabto*{3.2em},, \tabto*{5.4em},, \tabto*{7.4em}$T_0(x) \oplus a.$
+
+	\item $a \oplus x$ \tabto*{3.2em},, \tabto*{5.4em},, \tabto*{7.4em}$a \oplus T_0(x).$
+
+	\item $a \coloneq x$ \tabto*{3.2em},, \tabto*{5.4em},, \tabto*{7.4em} $a\coloneq T_0(x)$.
+\end{enumerate}
+
+\subsection{Cartesian products}
