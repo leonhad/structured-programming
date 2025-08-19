@@ -2574,13 +2574,192 @@ If $\ominus$ is a monadic operator and $\oplus$ is a dyadic operator, both takin
 	
 	\item ~ $\ominus\ x$ stands for $\ominus\ T_0(x)$.
 
-	\item $x \oplus y$ \tabto*{3.2em},, \tabto*{5.4em},, \tabto*{7.4em}$T_0(x) \oplus T_0(y)$.
+	\item $x \oplus y$ stands for $\ominus\ T_0(x) \oplus T_0(y)$.
 	
-	\item $x \oplus a$ \tabto*{3.2em},, \tabto*{5.4em},, \tabto*{7.4em}$T_0(x) \oplus a.$
+	\item $x \oplus a$ stands for $\ominus\ T_0(x) \oplus a.$
 
-	\item $a \oplus x$ \tabto*{3.2em},, \tabto*{5.4em},, \tabto*{7.4em}$a \oplus T_0(x).$
+	\item $a \oplus x$ stands for $\ominus\ a \oplus T_0(x).$
 
-	\item $a \coloneq x$ \tabto*{3.2em},, \tabto*{5.4em},, \tabto*{7.4em} $a\coloneq T_0(x)$.
+	\item $a \coloneq x$ stands for $\ominus\ a\coloneq T_0(x)$.
 \end{enumerate}
 
 \subsection{Cartesian products}
+
+The general form of the definition of a type as a Cartesian product is
+
+\quad \textbf{type} $T = (s_1 : T_1;\ s_2: T_2; \dots ;\ s_n: T_n);$
+
+\noindent
+where $s_1 > s_2, \dots , s_n$ are the selectors of the components, and $T_1, T_2, \dots, T_n$ are the types of the corresponding components.
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\item \label{en:cartesian-1}
+	If $x_1$ is a $T_1$ and $x_2$ is a $T_2$ and \dots and $x_n$ is a $T_n$
+
+	\quad then $T(x_1, x_2, \dots, x_n)$ is a $T$.
+
+	\item The only elements of $T$ are as specified in \ref{en:cartesian-1}.
+
+	\item If $x = T(x_1, x_2, \dots, x_n) $then
+
+	\quad $x.s_1 = x_1\ \&\ x.s_2 = x_2\ \& \dots \&\ x.s_n = x_n$.
+
+\end{enumerate}
+
+\noindent
+Abbreviations:
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\setcounter{enumi}{3}
+	\item $x.s_1 \coloneq x_1$ stands for $x\coloneq T(x_1, x.s_2, \dots, x.s_n)$
+
+	$x.s_2 \coloneq x_2$ stands for $x\coloneq T(x.s_1, x_2, \dots, x.s_n)$
+
+	\qquad \dots
+
+	$x.s_n \coloneq x_n$ stands for $x\coloneq T(x.s_1, x.s_2, \dots, x_n)$
+
+	\item If $x$ is a $T$ then
+	
+	\textbf{with} $x$ \textbf{do} $S$ or \textbf{with} $x$ \textbf{take} $S$ stands for
+	
+	\quad $S_{x.s_1, x.s_2, \dots, x.s_n}^{s_1, s_2, \dots, s_n}$
+\end{enumerate}
+
+\noindent
+which means that each of the subscripts of $S$ replaces all free occurrences of the corresponding superscript in $S$.
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\setcounter{enumi}{5}
+	\item $(x_1, x_2, \dots, x_n)$ stands for $T(x_1, x_2, \dots, x_n)$ in those contexts where an expression of type $T$ is expected.
+\end{enumerate}
+
+The following axiom applies if the Cartesian product type is to be regarded as ordered:
+	
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\setcounter{enumi}{6}
+	\item $x \leqslant y \equiv$\quad $x.s_1 < y.s_1$
+		
+	\tabto*{3.2em}$\vee\ x.s_1 = y.s_1\ \&\ (x.s_2 < y.s_2$
+	
+	\tabto*{3.2em}$\vee\ x.s_2 = y.s_2\ \&\ (x.s_3 < y.s_3$
+	
+	\tabto*{3.2em}$\vee\ \dots$ \tabto*{8.6em}$\&\ (x.s_{n - 1} < y.s_{n-1}$
+	
+	\tabto*{3.2em}$\vee\ x.s_{n-1} = y.s_{n-1}\ \&\ x.s_n \leqslant y.s_n)\dots)).$
+\end{enumerate}
+
+\subsection{Discriminated unions}
+
+The general form of the definition is:
+
+\quad \textbf{type} $T = (s_1: T_1; s_2: T_2; \dots ; s_n:T_n; k_1: T'_1, k_2:T'_2, \dots , k_m: T'_m)$
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\item \label{en:distriminated-1}
+	if $x_1$ is a $T_1, x_2$ is a $T_2, \dots, x_n$ is a $T_n$
+	
+	and $x'_1$ is a $T'_1, x_2$ is a $T'_2, \dots, x'_m$ is a $T'_m$
+	
+	then the following are distinct elements of $T$
+	
+	$T(x_1, x_2, \dots, x_n, k_1(x'_1))$
+	
+	$T(x_1, x_2, \dots, x_n, k_2(x'_2))$
+	
+	\quad \dots
+	
+	$T(x_1, x_2, \dots, x_n, k_2(x'_n))$
+
+	\item The only elements of $T$ are as specified in \ref{en:distriminated-1}
+	
+	\item\label{en:distriminated-3}
+	If $x = T(x_1, x_2, \dots, x_n, k_i(x'_i))$ for each $i$ between 1 and $m$
+	
+	\quad $x.s_1 = x_1\ \&\ x.s_2 = x_2\ \& \dots \&\ x.s_n = x_n$
+	
+	\& $x.k_i = x'_i$
+\end{enumerate}
+
+\textit{Note}:\quad $x.k_1$ is undefined for $l \neq i.$
+
+\noindent
+Abbreviations:
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\setcounter{enumi}{3}
+	\item Under the same condition as \ref{en:distriminated-3} 
+	
+	\textbf{with} $x$ \textbf{do} $\{k_1:S_1, k_2:S_2, \dots, k_n:S_n\}$ means
+
+	\textbf{with} $x'_i$ \textbf{do} $(S_i)_{x_1, x_2, \dots, x_n}^{s_1, s_2, \dots, s_n}$;
+
+	and similarly with \textbf{take} instead of \textbf{do}.
+
+	\item If $n = 0$, $k_i(x'_i)$ stands for $T(k_i(x'_i)).$
+\end{enumerate}
+
+\subsection{Arrays}
+
+The general form of an array definition is:
+
+\quad \textbf{type} $T =$ \textbf{array} $D$ \textbf{of} $R$
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\item \label{en:arrays-1}
+	If $r$ is an $R$ then $T(r)$ is a $T$
+
+	\item \label{en:arrays-2}
+	If $x$ is a $T$, $d$ is a $D$, and $r$ is an $R$
+
+	\quad then $T(x, d:r)$ is a $T$
+
+	\item The only elements of $T$ are as specified in \ref{en:arrays-1} and \ref{en:arrays-2}.
+
+	\item $T(T(x, d:r), d':r') =$
+
+	\textbf{if} $d = d'$ \textbf{then} $T(x, d':r')$
+
+	\tabto*{3.7em}\textbf{else} $T(T(x, d':r'), d:r).$
+
+	\item $T(r)[d] = r.$
+
+	\item $T(x, d:r)[d'] =$ \textbf{if} $d' = d$ \textbf{then} $r$ \textbf{else} $x[d'].$
+
+	\item $($\textbf{for} $i:D$ \textbf{take} $E(i))[j] = E(j).$
+\end{enumerate}
+
+\noindent
+Abbreviations:
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\setcounter{enumi}{7}
+	\item $x[d] \coloneq r$ means $x \coloneq T(x, d:r)$.
+
+	\item\label{en:arrays-9}
+	 $T(x, d_1:r_1, d_2 : r_2, \dots, d_n:v_n)$ stands for
+
+	\quad $T(T(\dots T(T(x), d_1:v_1), d_2:v_2)\dots), d_n:r_n)$
+
+	\item in \ref{en:arrays-9}, the $x$ may be omitted, if $d_1, d_2, \dots, d_n$ exhaust the domain type. Similarly, the T may be omitted in suitable contexts.
+\end{enumerate}
+
+If the array type is ordered, the following axiom applies:
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\setcounter{enumi}{10}
+	\item $x \leqslant y \equiv \forall d: D(y[d] < x[d] \supset \exists d':D(d' < d\ \&\ x[d'] < y[d']))$
+\end{enumerate}
+
+\noindent
+Theorem:
+
+$x = y \equiv \forall d:D(x[d] = y[d])$
+
+\subsection{Powersets}
+
+The axioms given below for sets apply only to \textit{finite} sets of hierarchically ordered type. It is therefore possible to avoid the paradoxes which endanger axiomatizations of more powerful versions of set theory.
+
+The general form of a powerset definition is:
+
+Page 171
