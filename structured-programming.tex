@@ -40,6 +40,7 @@
 \usepackage[para]{footmisc}
 \usepackage{titlecaps}
 \usepackage{sectsty}
+\usepackage{backnaur}
 
 \graphicspath{ {./images/} }
 
@@ -53,15 +54,17 @@
 \titlespacing{\chapter}{0pt}{0cm}{.5cm}
 
 \sectionfont{\normalfont\normalsize\centering\scshape\titlecap}
-
 \subsectionfont{\normalfont\footnotesize\scshape\uppercase}
+\subsubsectionfont{\normalfont\footnotesize\itshape}
 
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
 \renewcommand{\thechapter}{\Roman{chapter}.}
 \renewcommand\thesection{\arabic{section}.}
 \renewcommand\thesubsection{\thesection\arabic{subsection}.}
+\renewcommand\thesubsubsection{\thesubsection\arabic{subsubsection}.}
 
 \setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{3}
 
 \renewcommand{\contentsname}{CONTENTS}
 
@@ -91,6 +94,9 @@
 \counterwithout{figure}{chapter}
 \renewcommand{\figurename}{Fig.}
 \usepackage[labelsep=quad]{caption}
+
+\DeclareSymbolFont{yhlargesymbols}{OMX}{yhex}{m}{n}
+\DeclareMathAccent{\wideparen}{\mathord}{yhlargesymbols}{"F3}
 
 \begin{document}
 

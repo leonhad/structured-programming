@@ -181,6 +181,7 @@ Unfortunately, indirect representations often involve the additional expense and
 This chapter describes only a small but useful range of the possible representations of data, and the skillful programmer could readily add to the selection. In many cases, the representation of an abstract data type can be constructed by means of a more elaborate but more efficient data type definition; for instance a large set may be represented as a sequence of items of some suitable type. Examples of this are given in later sections.
 
 \section{Unstructured data types}
+\label{sec:unstructured-data-types}
 
 All structured data must in the last analysis be built up from unstructured components, belonging to a primitive or unstructured type. Some of these unstructured types (for example, reals and integers) may be taken as given by a programming language or the hardware of the computer. Although these primitive types are theoretically adequate for all purposes, there are strong practical reasons for encouraging a programmer to define his own unstructured types, both to clarify his intentions about the potential range of values of a variable, and the interpretation of each such value; and to permit subsequent design of an efficient representation.
 
@@ -540,7 +541,7 @@ where $sv$ names the structured variable (or expression) and $S$ is a program st
 
 \quad \quad \quad \textbf{if} day > 30 \textbf{then go} to invalid,
 
-\quad \quad \quad Feb:\textbf{if} day $> (\text{\textbf{if }} (y + 4) \times 4 = y \text{ \textbf{then} } 29 \text{ \textbf{else} } 28)$
+\quad \quad \quad Feb:\textbf{if} day $> (\text{\textbf{if }} (y \div 4) \times 4 = y \text{ \textbf{then} } 29 \text{ \textbf{else} } 28)$
 
 \quad \quad \quad \quad then go to invalid,
 
@@ -958,8 +959,745 @@ The character set of an input device includes only thirty characters, defined by
 
 \quad read next character.
 
+\noindent
 They should be assembled line by line into an array
 
-Page 122
-
 \quad page:display page,
+
+\noindent
+and on receipt of a newpage character, this should be output to a display device by the instruction
+
+\quad outpage.
+
+\noindent
+The display device does \textit{not} recognize the characters newline or newpage; consequently the ends of lines and pages have to be filled up with spaces.
+
+Write a program in a suitable language to perform this operation, using a selection of representations for the display page, e.g.
+
+\quad unpacked
+
+\quad loosely packed
+
+\quad tightly packed
+
+\quad indirect.
+
+\noindent
+Rewrite the program, using different representations. Compare the lengths and speeds of the code and data involved in the different representations.
+
+Write the corresponding programs to read a page from the display, and output the individual characters, taking care to eliminate redundant spaces at the ends of each line and blank lines at the end of each page wherever possible.
+
+\section{The powerset}
+
+The powerset of a given set is defined as the set of all subsets of that set; and a powerset type is a type whose values are sets of values selected from some other type known as the \textit{base} of the powerset. For example, the primary colors have been defined by enumeration as red, yellow and blue. The other main colors are made up as a mixture of two or three of these colors: orange is a mixture of red and yellow; brown is a mixture of all three primary colors. Thus each main color (including the primary colors) can be specified as that subset of the primary colors out of which it can be mixed. For example, orange may be regarded as the set with just two members, red and yellow. Using the traditional notation for sets defined by enumeration, this may be written: \{red, yellow\}. The pure color red may be regarded as the set whose only member is the primary color red, i.e. \{red\}. In this way it is possible to represent the seven main colors, red, orange, yellow, green, blue, purple and brown. When no primary color is present (i.e. the null or empty set) this may be regarded as denoting the absence of color, i.e. perhaps white. The type whose values range over the colors may be declared as the power set of the type primary color:
+
+\quad \textbf{type} color $=$ \textbf{powerset} primary color.
+
+A second example is provided by considering a data structure required to represent the status of the request buttons in a lift. A simple variable of type floor (see Section \ref{sec:unstructured-data-types}) is capable of indicating one particular stop of a lift.  But if we wish to record the status of the whole panel of buttons inside a lift, it would be necessary to represent this as a subset of all possible floors in the building, namely, the subset consisting of those floors for which a request button has been depressed. Thus the type liftcall may be defined as the powerset of the floor type:
+
+\quad \textbf{type} liftcall $=$ \textbf{powerset} floor.
+
+A third example is provided by a hand of cards in some card game, for example, poker or bridge. A hand is a subset of playing cards, without repetitions, and is therefore conveniently represented by a value from the powerset type:
+
+\quad \textbf{type} hand $=$ \textbf{powerset} cardface;
+
+\noindent
+This type covers all hands of up to fifty-two cards, even though for a particular game there may be standard size of a hand, or a limit less than fifty-two.
+
+A final example expresses the status of a computer peripheral device, for example, a paper tape reader. There are a number of exception conditions which can arise on attempted input of a character:
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\item Device switched to ``manual'' by operator.
+	\item No tape loaded.
+	\item Parity error on last character read.
+	\item Skew detected on last character read.
+\end{enumerate}
+
+\noindent
+These conditions can be defined as an enumeration
+
+\quad \textbf{type} exception $=$ (manual, unloaded, parity, skew); 
+
+\noindent
+and since several of these conditions can be detected simultaneously, the status of the reader can be specified as a value of a powerset type:
+
+\quad \textbf{type} statusword $=$ \textbf{powerset} exception.
+
+The cardinality of the powerset type is two raised to the power of the cardinality of the base type, i.e.
+
+\quad cardinality $(\text{\textbf{powerset} } D) = 2^{\text{cardinality} (D)}$
+
+This may be proved by considering the number of decisions which have to be made to specify completely a value of the type. For each value of the base type there are two alternatives, either it is in the set or it is not. This decision may be made independently cardinality $(D)$ times.
+
+\subsection{Manipulation}
+
+The basic construction operation on sets is the one that takes a number of values from the domain type, and converts them into a set containing just those values as members. As in the case of the Cartesian Product, the type name is used as the transfer function, but for sets, the number of arguments is variable from zero upwards. For example:
+
+\quad primary color (red, yellow) \tabto*{14em} i.e. orange
+
+\quad liftcall (ground) \tabto*{14em}  i.e. only a single button has been pressed
+
+\quad statusword () \tabto*{14em} i.e. no exception condition.
+
+\noindent
+The last two examples illustrate the concept of a \textit{unit set} (which must be clearly distinguished from its only member) and the null or \textit{empty set}, which contains no member at all. If the type name is omitted in this construction, curly brackets should be used instead of round ones in the normal way.
+
+The converse of the null set is the universal set, which contains all values from the base type. This may be denoted
+
+\quad $T$.all.
+
+\noindent
+However, this universal set exists as a storable data value only when the base type is finite.
+
+The basic operations on sets are very familiar to mathematicians and logicians.
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\item Test of membership: If $x$ is in the set $s$, the Boolean expression ``$x$ \textbf{in} $s$'' yields the value true, otherwise the value false.
+	\item Equality: two sets are equal if and only if they have the same members.
+	\item Intersection: $s_1 \wedge s_2$ contains just those values which are in both $s_1$ and $s_2$.
+	\item Unions: $s_1 \vee s_2$ contain just those values which are either in $s_1$ or $s_2$, or both.
+	\item Relative complement: $s_1 - s_2$ contains just those members of $s_1$ which are not in $s_2$.
+	\item Test of inclusion: $s_1 \subset s_2$ yields the value true whenever all members of $s_1$ are also members of $s_2$, and false otherwise.
+	\item The size of a set tells how many members it has.
+\end{enumerate}
+
+If the domain type of a set has certain operators defined upon it, it is often useful to construct corresponding operations on sets. In particular, if the domain type of a set is ordered, the following operators apply:
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\setcounter{enumi}{7}
+	
+	\item $\min(s)$ the smallest member of $s$; undefined if $s$ is empty.
+	\item $s \text{ \textbf{down} } n$ is a set containing just those values whose nth successors are in $s$.
+	\item $s \text{ \textbf{up} } n$ is a set containing just those values whose $n$th predecessors are in $s$.
+	\item Range$(a, b)$ is the set containing a, succ$(a), \dots, b$ if $a \leqslant b$, and which is empty otherwise.
+\end{enumerate}
+
+The most useful selective updating operations on sets are:
+
+\noindent
+$x:\vee\ y$; \tabto*{5em} join the set $y$ to $x$
+
+\noindent
+$x:\vee\ T(a)$ \tabto*{5em} add the member $a$ to $x$
+
+\noindent
+$x:\wedge\ y$; \tabto*{5em} exclude from $x$ all members which are not also members of $y$
+
+\noindent
+$x:-\ y$ \tabto*{5em} exclude from $x$ all members which are also members of $y$
+
+\noindent
+\hangindent=3.2\parindent$x:\text{\textbf{down} }n$ \tabto*{5em} subtract n from every member of x and exclude members for which this is not possible
+
+\noindent
+\hangindent=3.2\parindent$x:\text{\textbf{up} } n$ \tabto*{5em} add $n$ to every member of $x$, and exclude members for which this is not possible
+
+\noindent
+It is also sometimes useful to select some member from $x$ and simultaneously remove it from $x$. This operation can be expressed by the notation:
+
+\quad $a$ \textbf{from} $x$.
+
+\noindent
+If the domain type of $x$ is ordered, it is natural that the selected member should be the minimum member of $x$; otherwise the selection should be regarded as arbitrary.
+
+It is often useful to define the value of a set by giving some condition $B$ which is satisfied by just those values of the domain type which are intended to be members of the set. This may be denoted:
+
+\quad $\{i:D \mid B\}$
+
+\noindent
+where \tabto*{3em} $i$ is a variable of type $D$ regarded as local to $B$,
+
+\noindent
+and \tabto*{3em} $B$ is a Boolean expression usually containing and depending on $i$.
+
+\noindent
+In order for this expression to denote a value of the powerset type it is essential that the cardinality of $D$ be finite, and that $B$ is defined over all values of the type.
+
+Finally, it is frequently required to perform some operation on each member of some set, that is to execute a loop with a counting variable which takes on successively all values in the set. A suitable notation for expressing this is:
+
+\quad \textbf{for} $x$ \textbf{in} $s$ \textbf{do} \dots
+
+\noindent
+If the base type of $s$ is an ordered type, it seems reasonable to postulate that the elements will be taken in the natural order, starting with the lowest. For an unordered base type, the programmer does not care in which order the members are taken, and he leaves open the option to choose an order that contributes best to efficiency.
+
+\subsection{Representation}
+
+In choosing a computer representation for powersets, it is desirable to ensure that all the basic operations can be executed simply by single machine code instructions; and further, that the amount of store occupied is minimized. For most data structure storage methods, there is a fundamental conflict between these two objectives, and consequently a choice between representation methods must be made by the programmer; but in the case of powersets the two objectives can be fully reconciled, provided that the base type is not too large.
+
+The recommended method of representation is to allocate as many bits in the store as there are potential members in the set. Thus to each value of the base type there is a single bit which takes the value one if it is in fact a member, or zero if it is not. For example, each value of type color can be represented in three bits; the most significant corresponding to the primary color red, and the least significant corresponding to blue. Thus the orange color is represented as 110 and red as 100. Each set of size $n$ is represented as a bit pattern with exactly $n$ ones in the appropriate positions. The null set is accordingly represented as an all-zero bit pattern.
+
+Another example is afforded by the ``hand'' type, which requires fifty-two bits for its representation, one corresponding to each value of type cardface. In this case, it is advisable to use the minimal representation of the base type, to avoid unused gaps in the bit pattern representation.
+
+Since the number of values of a powerset type is always an exact power of two, for powersets of small base there can be no more economical method of utilizing storage on a binary computer than that of the bit pattern representation. It remains to show that the operations defined over the powerset type can be executed with high efficiency.
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\item The unitset of $x$ may be obtained by loading a single 1 into the signbit position, and shifting it right $x$ places. On computers on which shifting is slow, the same effect may be obtained by table lookup. The construction of a set out of components may be achieved by taking the logical union of all the corresponding unit sets.
+
+	\item A membership test $x$ \textbf{in} $s$ may be made by shifting $s$ up $x$ places and looking at the most significant bit: 1 stands for \textbf{true} and 0 for \textbf{false}.
+
+	\item Logical intersection, union, and complementation are often available as single instructions on binary computers.
+
+	\item The size of a set can sometimes be discovered by a builtin machine code instruction for counting the bits in a word. Otherwise the size can be determined by repeated standardization, masking off the next-to-sign bit on each occasion. A third method is to split the bitpattern into small parts, and use table lookup on each part, adding together the results.
+
+	\item The \textbf{up} and \textbf{down} operations can obviously be accomplished by right or left shifts.
+
+	\item The min of a set can be efficiently discovered by a standardize instruction, which automatically counts the number of shifts required to move the first one-bit into the position next to the sign.
+
+	\item The for statement may also be efficiently constructed using standardization, masking off each one-bit as it is reached.
+
+	\item The range operation can be accomplished by two shifts, the first of which regenerates the sign bit.	
+\end{enumerate}
+
+Thus when the cardinality of the domain type is not greater than the number of bits. in the largest computer word to which logical and shift operations can be applied, all these operations can be carried out with great efficiency. If significantly more than one such word is involved, it will usually pay to use selective updating operations rather than the normal result-producing operators. Furthermore, operations such as size and min can become rather inefficient, and it will often pay to store these values redundantly together with the set, and keep them up to date whenever the value of the set is updated, rather than recomputing them whenever they are required.
+
+When it is known that the cardinality of the base type is very large (perhaps even infinite) compared with the size of the typical set, the bitpattern representation altogether loses its attraction, since it no longer pays to store and operate upon large areas of zeroes. The treatment of such sparse sets is postponed to Section 10.
+
+\subsection{Example}
+
+\noindent
+\textit{Problem}: Write a program to construct a set
+
+\quad primes:\textbf{powerset} $2\,.\,.\,N$;
+
+\noindent
+containing all prime numbers in its base type.
+
+\noindent
+Use the method of Eratosthenes' sieve to avoid all multiplications and divisions.
+
+The method of Eratosthenes is first to put all numbers in the ``sieve'' and repeat the following until the sieve is empty:
+
+\noindent
+Select and remove the smallest number remaining in the sieve (necessarily a prime), and then step through the sieve, removing all multiples of that number.
+
+The program can be written easily
+
+\noindent
+\textbf{begin} $n$, next:$2\,.\,.\,N$; sieve:\textbf{powerset} $2\,.\,.\,N$;
+
+\noindent
+\quad sieve $\coloneq$ range$(2, N)$;
+
+\noindent
+\quad primes $\coloneq$ \{\};
+
+\noindent
+\quad \textbf{while} sieve $\neq$ empty \textbf{do}
+
+\noindent
+\quad \quad \textbf{begin} next $\coloneq$ min(sieve);
+
+\noindent
+\quad \quad \quad primes:$\vee$ \{next\};
+
+\noindent
+\quad \quad \quad \textbf{for} $n\coloneq$ next \textbf{step} next \textbf{until} $N$ \textbf{do}
+
+\noindent
+\quad \quad \quad \quad sieve:$-\ \{n\}$
+
+\noindent
+\quad \quad \textbf{end}
+
+\noindent
+\textbf{end} primefinder.
+
+But if $N$ is significantly large, say of the order of 10\,000, this program cannot be directly executed with any acceptable degree of efficiency. The solution is to use this program as an abstract model of the algorithm, and rewrite it in a more efficient fashion, using only operations on sets not exceeding the word-length of the computer. We therefore need to declare an array of words to represent the two sets, assuming that ``wordlength'' is an environment inquiry giving the number of bits in a word:
+
+\quad primes, sieve:\textbf{array} $0\,.\,.\,W$ \textbf{of powerset} $0\,.\,.\,\text{wordlength} - 1$
+
+\noindent
+where $W = (N + 1) \div \text{wordlength} + 1$.
+
+\noindent
+This means that the two sets may be slightly larger than $N$, but for convenience we shall accept that harmless extension.
+
+In order to access an individual bit of these sets, it is necessary to know both the wordnumber and the bitnumber. Since we do not wish to use division to find these, we will represent the counting variables $n$ and next as Cartesian products
+
+\quad $n$, next:$(w,\ b$:integer$)$;
+
+\noindent
+where $w$ indicates the wordnumber and $b$ indicates the bitnumber.
+
+It is now as well to check the efficiency of this representation by recoding the innermost loop first.
+
+\quad \textbf{for} $n\coloneq$ next \textbf{step} next \textbf{until} $N$ \textbf{do} sieve:$-\ \{n\}$;
+
+\noindent
+is recoded as :
+
+\quad $n\coloneq$ next;
+
+\quad \textbf{while} $n.w \leqslant W$ \textbf{do}
+
+\quad \quad \textbf{begin} sieve$[n.w]$:$-\ \{n.b\}$;
+
+\quad \quad \quad $n.b\coloneq n.b + \text{next}.b$;
+
+\quad \quad \quad $n.w\coloneq n.w + \text{next}.w;$
+
+\quad \quad \quad \textbf{if} $n.b \geqslant$ wordlength \textbf{then begin} $n.w \coloneq n.w + 1$;
+
+\quad \quad \quad \quad $n.b \coloneq n.b - \text{wordlength}$
+
+\quad \quad \quad \textbf{end}
+
+\quad \quad \textbf{end}
+
+\noindent
+Since this appears acceptably efficient we will code the other operations of the outer loop, starting with the most difficult:
+
+\quad next $\coloneq$ min(sieve);
+
+\noindent
+Here we do not wish to start our search for the minimum at the beginning of the sieve set each time, since towards the end of the process this would involve scanning many empty words. We therefore take advantage of the fact that the new value of next must be larger than the old value.
+
+The search consists of two parts, first finding a nonempty word, and then its first bit. But if the search for a word reaches the end of the array, the whole program is completed
+
+\quad \textbf{while} sieve$[\text{next}.w] = \{\}$ \textbf{do} $\{\text{next}.w \coloneq \text{next}.w +1$;
+
+\quad \quad \textbf{if} next.$w > W$ \textbf{then exit} primefinder$\}$;
+
+\quad \quad next.$b\coloneq$ min$(\text{sieve}[\text{next}.w])$;
+
+The remaining operations are trivial. Since the outer loop is terminated by an exit, there is no need to test a separate while condition; and the statement
+
+\quad primes:$\vee$ \{next\};
+
+\noindent
+can be coded as
+
+\quad primes$[\text{next}.w]$:$\vee\ \{\text{next}.b\}$.
+
+The whole program including initialisation is as follows:
+
+\quad primes, sieve: \textbf{array} $0\,.\,.\,W$ \textbf{of powerset} $0\,.\,.\,\text{wordlength} - 1$;
+
+\quad \textbf{begin} primefinder;
+
+\quad \quad $n$, next:$(w, b$:integer$)$;
+
+\quad \quad \textbf{for} $t$:$0\,.\,.\,W$ \textbf{do begin} primes$[t] \coloneq \{\}$;
+
+\quad \quad \quad sieve$[t] \coloneq$ range $(0\,.\,.\, \text{wordlength} - 1)$
+
+\quad \quad \textbf{end};
+
+\quad \quad sieve$[0]$:$-\ \{0, 1\}$;
+
+\quad \quad next.$w\coloneq 0$;
+
+\quad \quad \textbf{while} true \textbf{do}
+
+\quad \quad \quad \textbf{begin while} sieve$[\text{next}.w] = \{\}$ \textbf{do}
+
+\quad \quad \quad \quad \textbf{begin} next.$w\coloneq$ next.$w + 1$;
+
+\quad \quad \quad \quad \quad \textbf{if} next.$w > W$ \textbf{then exit} primefinder
+
+\quad \quad \quad \quad \textbf{end};
+
+\quad \quad \quad \quad next.$b\leqslant$ min(sieve$[\text{next}.w])$;
+
+\quad \quad \quad \quad primes$[\text{next}.w]$:$\vee\ \{\text{next}.b\}$;
+
+\quad \quad \quad \quad $n\leqslant$ next;
+
+\quad \quad \quad \quad \textbf{while} $n.w \leqslant W$ \textbf{do}
+
+\quad \quad \quad \quad \quad \textbf{begin} sieve$[n.w]$:$-\ \{n.b\}$;
+
+\quad \quad \quad \quad \quad \quad $n.b\coloneq n.b + \text{next}.b$;
+
+\quad \quad \quad \quad \quad \quad $n.w\coloneq n. w + \text{next}.w$;
+
+\quad \quad \quad \quad \quad \quad \textbf{if} $n.b \geqslant$ wordlength \textbf{then}
+
+\quad \quad \quad \quad \quad \quad \textbf{begin} $n.w\coloneq n.w + 1$;
+
+\quad \quad \quad \quad \quad \quad \quad $n.b\coloneq n.b - \text{wordlength}$
+
+\quad \quad \quad \quad \quad \quad \textbf{end}
+
+\quad \quad \quad \quad \quad \textbf{end}
+
+\quad \quad \quad \textbf{end}
+
+\quad \textbf{end} primefinder
+
+One feature of this program is that it uses an environment inquiry word length to achieve the full efficiency of which a machine is capable, and yet does so in a completely machine-independent fashion. The program will not only work, but work with high efficiency, on machines with widely varying word lengths.
+
+But the most interesting feature about the program is the way in which it is related to the previous version. From an abstract point of view it expresses an identical algorithm; all that has changed is the manner in which the data has been represented on the computer. The original design acted as a framework or pattern, on which the more intricate coding of the second version was structured. By carrying out the design in two stages, we simplify the task of ensuring that each part of the final program works successfully in conjunction with the other parts.
+
+\noindent
+\textit{Exercise}
+\nopagebreak
+
+\noindent
+Rewrite the program using sets representing only the odd numbers. (Hint: rewrite tile more abstract program first.)
+
+\section{The sequence}
+
+The previous chapters have dealt with the topic of elementary data structures, which are of great importance in practical programming,  and present very little problem for representation and manipulation on modern digital computers. Furthermore, they provide the essential basis on which all other more advanced structures are built.
+
+The most important distinction between elementary structured types and types of advanced structure is that in the former case the cardinality of the type is strictly finite, provided that the cardinality of the constituent types is. The distinction between a finite and an infinite set is one of profound mathematical significance, and it has many consequences relating to methods of representation and manipulation.
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\item Since the number of potential values of the type may be infinite, the amount of storage allocated to hold a value of an advanced structure is not determinable from the declaration itself. It is normally only determined when the program is actually running, and in many cases, varies during the execution of the program. In the case of an elementary structure, the number of different potential values is finite, and the maximum amount of storage required to hold any value is fixed and determinable from the form of the declaration.
+
+	\item When the size of a structured value is fairly large, it is more efficient to update individual components of the structure separately, rather than to assign a fresh value to the entire structure. Even for elementary types, it has been found sometimes more efficient to perform selective updating, particularly for unpacked representations of Cartesian products and for arrays. The increased efficiency of selective updating is usually even more pronounced in the case of advanced data structures.
+
+	\item Advanced data structures, whose size varies dynamically, require some scheme of dynamic storage allocation and relinquishment. The units of storage which are required are usually linked together by pointers, sometimes known as references or addresses; and their release is accomplished either by explicitly programmed operations, or by some form of general garbage collection. The use of dynamic storage allocation and pointers leads to a significant complexity of processing, and the problems can be particularly severe when the data has to be transferred between the main and backing store of a computer. No problems of this kind need arise in the case of elementary data structures.
+
+	\item The choice of a suitable representation for an advanced data structure is often far more difficult than for an elementary structure; the efficiency of the various primitive operations depends critically on the choice of representation, and therefore a sensible choice of representation requires a knowledge of the relative frequency with which these operations will be invoked. This knowledge is especially important when a part or all of the structure is held on a backing store; and in this case, the choice of re presentation should take into account the characteristics of the hardware device; that is, arrangement of tracks and cylinders on a rotating medium, and times of head movement and rotational delay. In the case of elementary structures, the primitive operations are of roughly comparable efficiency for most representations.
+\end{enumerate}
+
+Thus the differences between advanced and elementary structures are quite pronounced, and the problems involved are significantly greater in the advanced case. This suggests that the practical programmer would be well advised to confine himself to the use of elementary structures wherever possible, and to resort to the use of advanced structures only when the nature of his application forces him to do so.
+
+The first and most familiar example of an advanced data structure is the sequence. This is regarded as nothing but a sequence of an arbitrary number of items of some given type. The use of the term ``sequence'' is intended to cover sequences on magnetic tapes, disc, or drum, or in the main store. Sequences in the main store have sometimes been known as streams, lists, strings, stacks, deques, queues, or even sets. The term file (or sequential file) is often used for sequences held on backing store. The concept of a sequence is an abstraction, and all these structures may be regarded as its various representations.
+
+Our first example of a sequence is the string, familiar to programmers in ALGOL and SNOBOL. Since a string is constructed as a sequence of characters of arbitrary length, it may be defined:
+
+\quad \textbf{type} string $=$ \textbf{sequence} character.
+
+The next example is drawn from a data processing application; the maintenance of a file of data on cars. Each item of the file (sometimes known as a record) represents a single car, and is therefore of type car; an example of a possible definition of the car type has been given previously:
+
+\quad \textbf{type} car file $=$ \textbf{sequence} car.
+
+The third example gives an alternative method of dealing with a pack of cards. This may be regarded as just a sequence of cards, of length which perhaps varies as the cards are dealt:
+
+\quad \textbf{type} deck $=$ \textbf{sequence} cardface;
+
+\noindent
+Of course, not all card-sequences represent actual decks of cards in real life; for example, sequences which contain the same card twice are invalid, and should be avoided by the programmer. Thus the maximum length of a valid deck is 52, although this fact is not expressed in the declaration.
+
+The next example is drawn from the processing of a particular class of symbolic expression, namely the polynomial. A polynomial
+
+$a_n x^n + a_{n-1}x^{n-i}\dots a_1 x + a_0$
+
+\noindent
+can be represented as the sequence of its coefficients a1• If the degree n of the polynomial is unpredictable or variable during the course of a calculation, a sequence is the most appropriate method of defining it:
+
+\quad \textbf{type} polynomial $=$ \textbf{sequence} integer.
+
+Our final example shows how it is possible to represent the programming language concept of the identifier. Since in theory an identifier may be of arbitrary length, a sequence is required. The items of the sequence are either letters or digits. However, the first character is always alphabetic and may be separated from the rest. Thus an exact definition of a data structure corresponding to the identifier is:
+
+\quad \textbf{type} identifier $= ($first:letter; rest:\textbf{sequence} $(l$:letter, $d$:digit$))$.
+
+\subsection{Manipulation}
+
+The zero element of a sequence type $T$ is the sequence that contains no items --- this is known as the null or empty sequence, and is denoted by $T()$. For each value $v$ of the domain type, there is a sequence whose only item is $v$; this is known as the \textit{unit sequence} of $v$ and is denoted by $T(v)$. Finally, if $v_1, v_2, \dots, v_n$ are values from the base type (possibly with repetition),
+$T(v_1, v_2, \dots, v_n)$ denotes the sequence consisting of these values in the stated order. If for convenience the type name $T$ is omitted, we will use square brackets to surround the sequence:
+
+\quad $[v],$\qquad $[v_1, v_2, \dots, v_n]$
+
+\noindent
+However, a sequence of characters is normally denoted by enclosing them in quotes.
+
+The basic operation on sequences is concatenation, that is, adjoining two sequences one after the other. Thus if $x$ is the sequence of characters ``PARIS IN THE'' and $y$ is the sequence ``THE SPRING'', their concatenation $\wideparen{xy}$ is the sequence
+
+\quad $z =$ ``PARIS IN THETHE SPRING''
+
+\noindent
+Unless the operands are exceptionally small, concatenation is very inefficient on a computer, since it usually involves making fresh copies of both operands. The programmer should therefore make every effort to replace concatenation by selective updating.
+
+The basic operators for breaking down a sequence into its component parts are those that yield the first and last items of a non-empty sequence
+
+\quad $x$.first, $x$.last
+
+\noindent
+and those that remove the last or first items of a non-empty sequence, yielding the initial or final segments.
+
+\quad initial$(x)$, final$(x)$.
+
+An important relationship between sequences is that one sequence $x$ is equal to some initial or final subsequence of a sequence $y$:
+
+\quad $x$ \textbf{begins} $y$
+
+\quad or $x$ \textbf{ends} $y$.
+
+\noindent
+In our previous example, ``PARIS'' \textbf{begins} $z$ and ``RING'' \textbf{ends} $z$. These two tests can be rather time-consuming in a running program, and should be avoided wherever possible.
+
+A significant property of sequences is their length, i.e. the number of items they contain; this may be found for a sequence $x$ by the function length$(x)$.
+
+For some purposes (e.g. the construction of a dictionary) it is useful to regard a sequence type as ordered in accordance with traditional lexicographic principles: as in the case of arrays, the order of two sequences is determined by the ordering of the first item in which they differ; or if there is no such item, a shorter sequence precedes the longer sequence which it begins, for example:
+
+\quad ``ALPHA'' $<$ ``ALPHABET''.
+
+\noindent
+In this ordering every sequence has a successor, but only a small proportion have predecessors.
+
+A most important selective updating operation on sequences is the appending of a new value $v$ to the end of an existing sequence $x$. This may be written:
+
+
+\quad $x\wideparen{\text{: } T}(v)$;
+
+\noindent
+and corresponds to the familiar concept of writing a value v to a sequential file $x$. The operation corresponding to reading the beginning of a file $x$ is one which removes the first item of $x$ and assigns its value to some variable $v$. This may be written:
+
+\quad $v$ \textbf{from} $x$;
+
+\noindent
+In some applications, it is useful to be able to read back the most recently written item from a sequence; this may be expressed
+
+\quad $v$ \textbf{back from} $x$;
+
+\noindent
+and it removes the last item from $x$. This operation can be used to ``pop up'' the top item of a stack which has been ``pushed down'' by an ordinary writing operation:
+
+\quad $x\wideparen{\text{: } T}(v).$
+
+\noindent
+If desired, it is possible to define the fourth updating operation, that of attaching a new value to the beginning of a sequence. (putback($x$, $v$)).
+
+In some cases, it is more efficient to avoid the copying of an item which is involved in the \textbf{from} operation. These cases may be dealt with by merely omitting the left hand variable, e.g.
+
+\quad \textbf{from} $x$
+
+\quad \textbf{back from} $x$.
+
+\noindent
+In this case, access to the items of the sequence will usually be made by the selectors $x$. first and$/$or $x$. last.
+
+It is very common to wish to scan all the items of a sequence in succession; a suitable notation for this is modeled on the for statement:
+
+\quad \textbf{for} $v$ \textbf{in} $x$ \textbf{do} $S$;
+
+\noindent
+If $x$ is empty, the statement is omitted. Otherwise the variable $v$ (regarded as local to $S$) takes in succession the values of all items from the sequence $x$, and $S$ is executed once for each value. In this construction neither $x$ nor $v$ should be updated within $S$.
+
+A similar construction can be used for defining a sequence as an item-by-item transformation $E(v)$ of items $v$ in sequences.
+
+\quad \textbf{for} $v$ \textbf{in} $s$ \textbf{take} $E(v)$.
+
+In deciding a representation for a sequence, it is most important to know which of the selective updating operations are going to be carried out upon it.
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\item If the only operation is \textbf{from}, the sequence is known as an \textit{input} sequence; obviously in order to have any value at all, an input sequence must be initialized to some value existing in the outer environment in which it is declared. The association of a sequence local to a program with some file existing more or less permanently on backing store is often known as ``opening'' the file for input, and we assume that this operation is invoked implicitly on declaration of a local input sequence. The reverse operation of ``closing'' the file is invoked implicitly on exit from the block to which the sequence is local.
+
+	\item If the only operation is writing to the file, the sequence is known as an \textit{output} sequence. An output sequence may be initialized from the environment in the same way as an input sequence; or more commonly, it may take an empty initial value. In either case, in order to serve any useful purpose, the final value of the sequence on exit from the block must be assigned to some variable existing in the outer environment in which the sequence is declared. The identity of this outer variable should be declared together with the sequence; if this outer variable is held more or less permanently on backing store, it is known as an output file; and the rules for implicit invocation of opening and closing of the file on entry and exit to the block are similar to those for input files.
+
+	\item If the only operations are writing and reading back (push down and 	pop up), the sequence is known as a \textit{stack}; the initial value of a stack is always empty, and the final value is not usually preserved. 
+
+	\item If the only operations are writing to the end and reading from the beginning, the sequence is known as a \textit{queue}; again, the initial value is always empty, and the final value is not usually preserved.
+
+	\item If reading and writing at both ends of a sequence are permitted, the sequence is sometimes known as a \textit{deque} (double-ended queue). However, to make all four operations equally efficient requires some complexity of representation, so it is fortunate that most programs can get by without using deques.
+\end{enumerate}
+
+\subsection{Representation}
+
+\subsubsection{Contiguous representation}
+
+The simplest method of representing a sequence is to allocate to it a fixed contiguous area of storage, adequate to hold all items actually required. This method is suitable if the value (or at least the length) of the sequence is constant throughout the execution of the program --- for example, a string of characters intended to be used as an output message or title.
+
+In some cases, the length of the sequence is unknown at the time the program is written, but is known on entry to the block in which the sequence is declared, and this length remains constant throughout the existence of the sequence. In such cases, it is possible to allocate a contiguous area of storage in the local workspace of the block, using the standard stack method of store allocation and deallocation.
+
+Even if the length of the sequence is subject to variation, it is sometimes possible to place an acceptably small upper bound on its length, and allocate permanently this maximum area. If the limit is exceeded during a run of the program, the programmer must be willing to accept its immediate termination. In addition to the fixed area, a pointer or count is required to indicate the current beginning and end of the sequence. In the case of a stack, the first item is always at the beginning, and only one pointer to the top of the stack is required. In the case of a queue, the sequence will at times overlap the end of the store area, and be continued again at the beginning. Such a representation is known as a cyclic buffer, and may be used in a parallel programming situation to communicate information between processes running in parallel. In this case, when a writing process finds the buffer full, it has to wait until a reading process reduces the size of the sequence again. Similarly, the reading process must wait when the buffer is empty.
+
+Another case where the contiguous representation is the best is when the program requires only a single sequence, which may therefore occupy the whole of the remaining store available after allocation to other purposes; and if overflow occurs, the program could not have been run anyway. If two stacks are required, they can both be accommodated by arranging that one of them starts at one end of remaining available store and grows upwards, and the other starts at the other end and grows downwards. If the stacks meet, the program cannot continue.
+
+If many sequences are to be represented, it is possible to set up a scheme in which they are spread through the remaining available store; and if any of them grows to meet its neighbor, it is possible to reshuffle some or all of the sequences, so that they all have sufficient room to grow again for a bit. For each sequence there must be a \textit{base location} pointing to its beginning, through which that sequence is always addressed. In addition, the actual length of the sequence must be stored. The base location and length of the neighboring sequence must always be inspected when the sequence is extended. When reshuffling takes place, the base locations of all moved sequences are updated to point to the new position of the sequence. This is quite a useful ad hoc scheme in cases where the reshuffling is known to be relatively infrequent; otherwise non-contiguous representations are to be preferred.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{chap2/fig5}
+	\caption{Sequences (Contiguous representation)}
+\end{figure}
+
+When the individual items of a sequence are of variable length, there is usually no need to pad the shorter items out to the maximum length, since the use of the tag field, or other technique, will indicate the length of any given item, and this can be used to step the pointer by the right amount when the item is read. But this requires that the direction of reading be known at the time of writing, as in a stack or a queue. If reading is to be carried out from both ends, it will be necessary to ensure that the length of an item can be deduced from its bottom as well as its top, which will involve storing redundant information (e.g. length of previous item) between each item in the sequence.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{chap2/fig6}
+	\caption{Sequences (variable length items)}
+\end{figure}
+
+When a sequence is itself a part of an item of some other sequence, the contiguous representation of the item-sequence may be used. This will normally be accompanied by a count giving the length of the sequence, so that the actual size of each item can be computed when the item is read.
+
+\subsubsection{Chained representation}
+
+In order to avoid reshuffling problems mentioned in the previous section, it is usual to introduce indirect or chained methods of storage allocation, using either fixed length or variable length units of allocation. The available store is split into areas, some of which will be in use for storing items of some sequence, and others will be free. The free areas are also linked together as a chained sequence. Whenever a programmer's sequence requires extension, an area (or part of an area) is acquired from the free chain; and whenever a sequence is shortened by reading, an area can be returned to the free chain. In the case of fixed-length items, the administration of dynamic storage allocation with explicit deallocation presents no problems. The problems of variable length allocation will not be treated here; they are best avoided by the use of blocking (see next section).
+
+The simplest form of chain is the single linked chain. Each item of the sequence has adjoined to it, in a link location, the address of the next item in the chain. The empty sequence is represented by a value which could not possibly be an address (say zero or minus one); and the link location of the last item in the sequence contains this value. The first item in the chain is pointed to by the base location of the sequence.
+
+A single linked chain is useful when the direction in which the sequence will be read is known; for the links have to point in this direction. In the case of a stack they will point backwards, and in the case of input and output sequences and queues they will point forwards. In the case of an input or output sequence, the base location of the external variable which is to hold the initial and$/$or final value of the sequence points permanently at the beginning of the chain, while the base location of the sequence itself steps through the sequence. In the case of a queue, two base locations are used, to point to each end of the sequence.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{chap2/fig7}
+	\caption{Sequences (Chained representation)}
+\end{figure}
+
+One possible advantage of the single-chained representation in the case of stacks is that several stacks can share the same initial segments, which may save space and time in some applications. However, when an item is popped up from such a stack, the storage space which it occupies cannot be immediately returned to the free chain, since it may be in use as part of another stack. One solution to this problem is never to return storage explicitly, but to wait until the free chain is exhausted. Then all currently allocated sequences are scanned, and all blocks currently in use are marked. Then all unmarked blocks are collected onto the free chain. This is known as a scan-mark-collect garbage collection. Although it appears to relieve the programmer of the responsibility of explicit control of main store allocation and deallocation, this can be dangerous in non-trivial computer applications where the responsibility is one that cannot so lightly be evaded.
+
+In the case of a deque, when reading is required in both directions, a single-linked chain is no longer adequate; and the usual solution is to adjoin \textit{two} pointers to each item in the chain, one pointing to the previous item and one pointing to the following item. In fact these two pointers can be compressed into a single word containing only the difference between them. Since in the first and last items one of the pointers is a standard null value, the value of the other pointer from these items can always be obtained by subtraction. On reading or writing, the value of the link location for the new first or last item can be readily adjusted, since at this stage the address of the previous first or last item is still known. The detailed working out of this scheme is left as an exercise.
+
+An alternative method of linking the items of a chain is to collect all links together in a single contiguous table, preferably of fixed length. This gives a form of tree representation for the sequence, and permits ready scanning in both directions. But it places an upper bound on the number of items in the sequence; and it means that the locations used for links must be permanently allocated, even at times when the sequence is relatively short. This problem can be mitigated by the use of blocking.
+
+\subsubsection{Blocked representation}
+
+One disadvantage of chaining is the amount of extra storage required to hold the links, and the time taken to administer the free store chain on each operation. These problems are particularly severe when the size of the individual items of the sequence are small and the sequence is long. The method of solving this problem is to use blocking; that is, a combination of the contiguous and chained techniques.
+
+In this technique, a fixed-length block of storage is allocated, sufficient to hold perhaps between ten and a hundred items. When this block is filled, a new block is chained to it, using any of the methods described in the previous section. On input, a block is not released to free store until all the items it contains have been scanned. Thus the amount of store used on links can be reduced to negligible proportions. This can be of particular benefit in the tree representation of the chain.
+
+As mentioned above, the use of blocking can also avoid the problems arising from variable-length dynamic storage allocation, since the size of the block may be held constant for all sequences, independent of the size of their items. Furthermore, in cases where part or all of the sequence is to be held on backing store, the use of blocking is almost universally indicated, since backing store transfers can be very inefficient if the unit of transfer is too small. The only (dubious) disadvantage of blocking is that it inhibits effective sharing of the tails of stacks.
+
+The only remaining problem is to choose a size of block suitable for all purposes. It must obviously be large enough to accommodate the largest item of any sequence. In fact, it should be large enough to accommodate at least ten typical items; otherwise the space left over at the end of a block which is not large enough to accommodate the next item may reach significant proportions. Also, if the sequence is to be held partially or wholly on backing store, the block should be long enough to ensure that not too much space is wasted on interblock gaps, and the frequency of transfers is low enough to ensure that not too much time is spent in start-stop, latency, or head movement delays.
+
+On the other hand, if the block size is too large, the space wasted at the beginning of the first block $\text{and}/\text{or}$ the end of the last block will become significant; thus the block size should be small enough to ensure that the typical sequence occupies at least ten blocks.
+
+In the presence of so many conflicting considerations, it is not easy to select a standard block size for sequences of differing length and item size, and all forms of backing store, with different methods of access. However, an acceptable compromise can often be made, and on present-day computer designs, a block size of between 128 and 1024 words will often be a suitable choice. Probably in most cases the size chosen is not critical within a factor of two either way.
+
+\subsubsection{Backing store representation}
+
+In processing a sequence, a program normally requires access to one of its ends, and all the material in the middle and other end is unused for relatively long periods of time. If main storage is at all scarce, it is very profitable to transfer this material to backing store, so that the space it occupies in main store may be used for other purposes. In the case of input and output sequences, which have a lifetime greater than the program which reads or writes them, the use of backing store for long-term storage is almost obligatory.
+
+When using backing store, efficiency of processing and representation demands that transfers should occur in blocks of reasonable size. The block which contains an active end of a sequence is always held in main store; and to permit overlap of input$/$output with computing, the previous block (on writing) or the next block (on reading) also remains allocated during the transfer operation. This is known as double-buffering. It is possible to hold even more buffers in store to smooth out variations in the speed of processing and the speed of transfer; but the program designer must not fall into the trap of supposing that this will help when there is a basic mismatch in the speeds of processing and transfer. In general, if double or triple buffering is inadequate, it is not worth while filling the store with any further extra buffers.
+
+In a machine which is endowed with an automatic paging scheme, the problems of representing sequences are very much reduced. As far as the programmer is concerned, he need only allocate the amount of storage required for the longest possible sequence, using the contiguous representation. This should not actually cause any waste of storage, since the paging system should delay allocation of store until it is first used. As the sequence expands, new blocks of store will be allocated, but the addressing of these blocks will appear contiguous to the programmer, so there is no problem of leaving unused space at the end of blocks which are not large enough to hold the next item. Shortly after a block has been filled, it will automatically migrate to backing store; and it will be brought back again automatically as soon as it is required. On input sequences, a block which has been scanned will also be removed shortly afterwards from main store; but this will not involve an unnecessary backing store transfer if the material has not been changed since the last input took place. The only operation which a paging system will not perform automatically is to read a block of an input sequence into store ahead of its actual requirement.
+
+\section{Recursive data structures}
+
+There are certain close analogies between the methods used for structuring data and the methods for structuring a program which processes that data. Thus, a Cartesian product corresponds to a compound statement, which assigns values to its components. Similarly, a discriminated union corresponds to a conditional or case construction, selecting an appropriate processing method for each alternative. Arrays and powersets correspond to for statements sequencing through their elements, with an essentially bounded number of iterations.
+
+The sequence structure is the first that permits construction of types of infinite cardinality, with values of unbounded length; and it corresponds to the unbounded form of looping, with a \textbf{while} condition to control termination. The reason why the sequence is unbounded is that one of its components (i.e. the initial segment) from which it is built up belongs to the same type as itself, in the same way as the statement which remains to be obeyed after any iteration of a \textbf{while} loop is the same statement as before.
+
+The question naturally arises whether the analogy can be extended to a data structure corresponding to recursive procedures. A value of such a type would be permitted to contain more than one component that belongs to the same data type as itself; in the same way that a recursive procedure can call itself recursively from more than one place in its own body. As in the case of recursive procedures such a structure can conveniently be defined by writing the name of the type being defined actually inside its own definition; or in the case of mutually recursive definition, in the definition of some preceding type.
+
+The most obvious examples of recursive data structures are to be found in the description of arithmetic or logical expressions, programming languages, where the recursion reflects the possibility of nesting one expression inside another. For example, an arithmetic expression might be defined as follows:
+
+``An expression is a series of terms, each of which consists of a sign $(+ \text{ or } -)$ followed by a sequence of factors. Each factor except the first consists of a sign $(x \text{ or } /)$ followed by a primary. A primary is either a constant, a variable, or an expression surrounded by brackets. An initial plus sign in an expression may be omitted.''
+
+A structured data type whose values comprise such expressions may be defined using only techniques already familiar, plus recursion:
+
+\quad \textbf{type} expression $=$ \textbf{sequence} term;
+
+\quad \textbf{type} term $=$ (addop:operator; $f$:\textbf{sequence} factor);
+
+\quad \textbf{type} factor $=$ (mulop:operator; $p$:primary);
+
+\quad \textbf{type} primary $=$ (const:(val:real),
+
+\tabto*{9.3em}var:($id$:identifier),
+
+\tabto*{9.3em}bracketed:($e$:expression));
+
+\quad type operator = (plus, minus, times, div);
+
+This definition expresses the abstract structure of an arithmetic expression, but not the details of its concrete representation as a string of characters. For example, it does not specify the symbols used for brackets or operators, nor does it state whether an infix, prefix or postfix notation is used for them. It does not state how the three kinds of primary are to be distinguished. It does not even represent the optional omission of plus on the first term of an expression, and the necessary omission of $x$ on the first factor of a term. Apart from this degree of abstraction and representation-independence, this type definition would correspond to a set of BNF syntax equations:
+\begin{bnf*}
+	\bnfprod{expression}
+	{\bnfpn{term} \bnfor \bnfpn{addop}\bnfpn{term} \bnfor \bnfpn{expression}\bnfpn{addop}\bnfpn{term}}\\
+	\bnfprod{term}
+	{\bnfpn{primary} \bnfor \bnfpn{term}\bnfpn{mulop}\bnfpn{primary}\\
+	\bnfprod{primary}
+	{\bnfpn{unsigned real number} \bnfor \bnfpn{variable} \bnfor (\bnfpn{expression})}}
+\end{bnf*}
+
+Note how we have used sequences to replace the recursion wherever possible. In fact this can be done whenever a type name occurs recursively only once at the beginning or at the end of its definition. For example:
+
+\quad \textbf{type} expression $=$ \textbf{sequence} term;
+
+\noindent
+might have been formulated recursively:
+
+\quad \textbf{type} expression $=$ (empty:(), non-empty:(first:term; final:expression)).
+
+\noindent
+A similar alternative formulation permits \textbf{while} loops to be expressed as recursive procedures.
+
+The construction of values of a recursively defined type requires no new operators or transfer functions; all that is needed is recursive use of the methods defined for the other relevant structuring methods. For example, the expression
+$$
+3/(b - 2)
+$$
+
+\noindent
+could be specified by the cumbersome construction:
+
+\quad [term {plus, [factor (times, primary (const(3))),
+
+\quad \quad factor (div, primary (bracketed (
+
+\quad \quad \quad [term (plus, [factor (times, primary (var(``$b$'')))]),
+
+\quad \quad \quad\hspace{.1em} term (minus, [factor (times, primary (const(2)))])])))
+
+\quad \quad ])
+
+\quad ].
+
+\noindent
+An effective method of getting the computer itself to translate expressions into abstract structures will be given as an example in (\ref{sec:example-9-2})
+
+Another familiar example of recursively defined data is the family tree. A family tree (excluding information about marriage) can be defined by associating with each person the family trees of all his$/$her offspring. We assume that certain additional personal details are required to be held: 
+
+\quad \textbf{type} family $=$ (head:person; offspring:\textbf{sequence} family);
+
+A person with no children is an ultimate component of the family tree, and may be represented:
+
+\quad family(Tom, [])
+
+\noindent
+A family with three children may be represented:
+
+\noindent
+family (Jill, [family (Tom, []),
+
+\tabto{3.2em} family (Joanna, []),
+
+\tabto{3.2em} family (Matthew, [])]).
+
+The final example shows how the binary forking tree familiar to LISP programmers may be defined as a recursive data structure.
+
+\quad \textbf{type} list = (atom:\textbf{sequence} character, cons:(car, cdr:list)).
+
+\noindent
+A list which in LISP dot-notation would be expressed
+
+\quad ((A.(B.NIL)).NIL)
+
+\noindent
+can be expressed as a value of type list in almost exactly the same way as it is in LISP:
+
+\quad cons (cons (atom (``A''),
+
+\tabto{5em} cons (atom (``B''), atom (``NIL''))),
+
+\tabto{5em} atom (``NIL'')
+
+\tabto{4.8em} );
+
+\noindent
+where the type transfer to list type is left implicit.
+
+As an example of the processing of a list, we write a function to reverse a complete tree, so that every ``left fork'' in it becomes a ``right fork'' and vice-versa.
+
+\quad \textbf{function} reverse$(l$:list$)$: list;
+
+\quad \quad \textbf{with} $l$ \textbf{do}
+
+\quad \quad \quad \{atom:reverse$\coloneq l$,
+
+\quad \quad \quad cons: reverse $\coloneq$ cons(reverse(cdr), reverse (car))\}
+
+\subsection{Representation}
+
+The standard representation of a recursive type is also very similar to that of a similarly structured non-recursive type, with the exception that each component specified as belonging to the recursive type itself is represented by a location containing a pointer to its value, rather than the value itself. This use of a pointer is motivated by the fact that the component value may be of arbitrary size; and it is not possible to allocate any fixed amount of storage to contain it. This is known as the ``tree representation'', and is similar to the tree representation of an array or sequence, except that the branches may grow to arbitrary and varying heights.
+
+An alternative method of representation is the linear sequence or \textit{bitstrcam}. In this representation it is possible to avoid the use of pointers, and place the values of recursive substructures contiguous with the rest of the information, just as they are in the familiar bracketed character representations of expressions. However instead of using brackets, we can reestablish the bracketing structure by context, and if necessary by scanning the tag of union values. This method is usually associated with packed representations of the other components, and a very significant reduction in storage may be achieved, at the expense of enforcing serial access to the components of the structure. In many circumstances, a bitstream representation is some ten times more compact than the tree representation.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=.8\textwidth]{chap2/fig8}
+	\caption{Representation of (($A$\,.\,($B$.NIL))\,.\,($B$\,.\,$A$)}
+\end{figure}
+
+The choice between tree and linear representation is usually obvious. If the structure is being processed by the program, usually by means of recursive procedures, the needs of ready access to any component of the structure dictate a tree representation. In addition, some of the space lost may be regained by sharing common branches among several trees; such commonality of branches is a feature of the processing of symbolic expressions. However, if the structure has to be output and subsequently re-input, the linear structure is vastly preferable. Not only does the reduction in volume reduce transfer time, but the linearization avoids a number of tricky problems of representing pointers in backing store. In many cases, a structure which passes through several phase~ of processing and input-output will be translated between the two representations at each phase; and this is standard practice in a multipass translator for a high-level programming language.
+
+It is important to note that the sharing of the recursive sub-structure is nothing but a means of saving time and storage, and has no effect on the running of the program. This means that the sharing must be avoided whenever there is any danger that the shared sub-structure might be selectively updated as part of one of its owners. In principle, all values are entirely disjoint from all other values, and there is no way in which the programmer could either know or care how far his structures are shared. Furthermore, there is no way whatsoever in which a pointer can be made to point back to a structure of which it is a component; since this would mean that the structure was identical to one of its own components. Only an infinite structure can have this property; and infinite structures do not satisfy the axiom of exclusion on which the important principle of induction for recursive structures is based.
+
+\subsection{Example}
+\label{sec:example-9-2}
+
+Page 147
