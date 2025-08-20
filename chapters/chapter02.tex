@@ -2514,15 +2514,15 @@ where $T$ is the type name and $k_1, k_2 , \dots, k_n$ are names of all values o
 
 The additional axiom for this type is:
 
-(10)\tabto*{3.5em} $k_1 = T$.min
+\tabto*{.9em}(10) $k_1 = T$.min
 
-\tabto*{2.5em}\& $k_2 = \text{succ}(k_1)$
+\tabto*{1.8em}\& $k_2 = \text{succ}(k_1)$
 
-\tabto*{2.5em}\& $k_3 = \text{succ}(k_2)$
+\tabto*{1.8em}\& $k_3 = \text{succ}(k_2)$
 
-\tabto*{3.5em}\dots
+\tabto*{3.8em}\dots
 
-\tabto*{2.5em}\& $k_n = \text{succ}(k_{n-1}) = T$.max.
+\tabto*{1.8em}\& $k_n = \text{succ}(k_{n-1}) = T$.max.
 
 The general form of a definition of a type as a subrange is
 
@@ -2533,11 +2533,11 @@ where $k$ and $l$ are of the base type $T_0$.
 
 The additional axioms for this type are:
 
-(10) $T$.min $= k$
+\tabto*{.9em}(10) $T$.min $= k$
 
-\tabto*{2.5em}\& $T$.max $= l$.
+\tabto*{1.8em}\& $T$.max $= l$.
 
-\begin{enumerate}[leftmargin=2.4\parindent, label=(\arabic*)]
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
 	\setcounter{enumi}{10}
 	\item $T(T_0(x)) = x$.
 
@@ -2548,7 +2548,7 @@ The additional axioms for this type are:
 
 Using axioms \ref{en:enumerate-1} to \ref{en:enumerate-9} it is possible to prove the following properties of ordering:
 
-\begin{enumerate}[leftmargin=2.4\parindent, label=(T\arabic*)]
+\begin{enumerate}[leftmargin=2\parindent, label=(T\arabic*)]
 	\item $x \leqslant x$.
 
 	\item \label{en:enumeration-axiom-2}
@@ -2569,7 +2569,7 @@ Abbreviations:
 \noindent
 If $\ominus$ is a monadic operator and $\oplus$ is a dyadic operator, both taking operands from the base type $T_0$, then the following abbreviations permit omission of the transfer function, if $a$ is of type $T_0$ and $x$, $y$ are of type $T$:
 
-\begin{enumerate}[leftmargin=2.4\parindent, label=(\arabic*)]
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
 	\setcounter{enumi}{13}
 	
 	\item ~ $\ominus\ x$ stands for $\ominus\ T_0(x)$.
@@ -2858,3 +2858,31 @@ Theorems:
 \end{eqnarray*}
 
 \subsection{Sequences}
+
+The general form of a sequence definition is:
+
+\quad \textbf{type} $T =$ \textbf{sequence} $D$;
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\item \label{en:sequence-1}
+	$T()$ is a $T$
+	
+	\item \label{en:sequence-2}
+	If $x$ is a $T$ and $d$ is a $D$
+	
+	\quad then $\wideparen{x\ T}(d)$ is a $T$
+
+	\item The only elements of $T$ are as specified in \ref{en:sequence-1} and \ref{en:sequence-2}
+
+	\item $(\wideparen{x\ T}(d))$.last $= d$
+
+	\item initial$(\wideparen{x\ T}(d)) = x$
+	\item $\wideparen{x\ \ }(\wideparen{y\ z}) = (\wideparen{x\ y})\wideparen{\ z}$
+	\item $T(d)$.first $= d$
+	\item $x \neq T() \supset (\wideparen{x\ T}(d))$.first $= x$.first
+	\item final $(T(d)) = T()$
+	\item $x \neq T() \supset$ final$(\wideparen{x\ T}(d)) =$ final$(x)\wideparen{\ \ T}(d)$
+\end{enumerate}
+
+\noindent
+\textit{Note}: last, initial, first, and final are not defined for $T()$
