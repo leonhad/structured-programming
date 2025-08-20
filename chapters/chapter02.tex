@@ -2762,4 +2762,99 @@ The axioms given below for sets apply only to \textit{finite} sets of hierarchic
 
 The general form of a powerset definition is:
 
-Page 171
+\quad \textbf{type} $T =$ \textbf{powerset} $T_0$,
+
+\noindent
+where $T_0$ is the base type.
+
+\noindent
+let $a$, $b$, be values of type $T_0$
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\item \label{en:powerset-1}
+	$T()$ is a $T$
+	\item \label{en:powerset-2}
+	If $x$ is a $T$ and $a$ is a $T_0$ then $x \vee T(a)$ is a $T$
+	\item The only members of $T$ are as specified in \ref{en:powerset-1} and \ref{en:powerset-2}.
+	\item $\neg a$ \textbf{in} $T()$
+	\item $a$ \textbf{in} $(y \lor T(a))$
+	\item $a \neq b \supset (a \text{ \textbf{in} } (x \lor T(b)) \equiv (a \text{ \textbf{in} } x)$
+	\item $T() \subset x$
+	\item $(y \lor T(a)) \subset x \equiv (y \subset x\ \&\ a \text{ \textbf{in} } x)$
+	\item $x = y \equiv (x \subset y)\ \&\ (y \subset x)$
+	\setcounter{enumi}{9}
+	\item $x \lor T() = x$
+	\item $x \lor (y \lor T(a)) = (x \lor T(a)) \lor y$
+	\item $x \land T() = T()$
+	\item $x \land T(a) =$ \textbf{if} $a$ \textbf{in} $x$ \textbf{then} $T(a)$ \textbf{else} $T()$
+	\item $x \land (y \lor T(a)) = (x \land y) \lor (x \land T(a))$
+	\item $T() - x = T()$
+	\item $T(a) - x =$ \textbf{if} $a$ \textbf{in} $x$ \textbf{then} $T()$ \textbf{else} $T(a)$
+	\item $(x \lor T(a)) - y = (x - y) \lor (T(a) - y)$
+	\item size$(T()) = 0$
+	\item size$(x \lor T(a)) =$ \textbf{if} $a$ \textbf{in} $x$ \textbf{then} size$(x)$ \textbf{else} succ$(\text{size}(x))$
+\end{enumerate}
+
+The following apply if the domain type $T_0$ is ordered:
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\setcounter{enumi}{19}	
+	\item min$(T(a)) = T(a)$
+	\item $x \neq T() \supset$ min$(x \lor T(a)) =$ \textbf{if} $a <$ min$(x)$ \textbf{then} $a$ \textbf{else} min$(x)$
+\end{enumerate}
+
+\noindent
+Note: $min(T())$ is not defined
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\setcounter{enumi}{21}
+	\item $x \text{ \textbf{down} } 0 = x \text{ \textbf{up} } 0 = x$
+	\item $x$ \textbf{down} succ$(n) = (x$ \textbf{down} $n)$ \textbf{down} 1
+	\item $T()$ \textbf{down} $1 = T()$
+	\item $(x \lor T(a))$ \textbf{down} $1 = (x$ down $1\ \lor$
+	
+	\quad \textbf{if} $a \neq T_0$.min \textbf{then} $T($pred$(a))$ \textbf{else} $T()$
+\end{enumerate}
+
+\tabto*{0.9em}(27)--(28) \textbf{up} is similarly defined, with succ for pred and max for min.
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]	
+	\setcounter{enumi}{28}
+	\item $b < a \supset$ range$(a, b) = T()$
+	\item $a \leqslant b \supset$ range$(a, b) = T(a)$
+	\item $a < b \supset$ range$(a, b) =$ range$(a$, pred$(b)) \lor T(b)$
+	\item $j$ \textbf{in} $\{i:D \mid B(i)\} \equiv B(j)$
+\end{enumerate}
+
+\noindent
+Abbreviations:
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]	
+	\setcounter{enumi}{32}
+	
+	\item $T(a_1, a_2, \dots, a_n)$ stands for $T(a_1) \lor T(a_2) \lor \dots \lor T(a_n)$
+	\item $\{a_1, a_2, \dots, a_n\}$ stands for $T(a_1, a_2, \dots, a_n)$
+	\item $x$: $\land\ y$ stands for $x \coloneq x \land y$
+	\item $x$: $\lor\ y$ stands for $x \coloneq x \lor y$
+	\item $a$ \textbf{from} $x$ stands for $a \coloneq$ one of $(x)$; $x: - \{a\}$
+	\item \textbf{if} $x = \{a_1, a_2, \dots, a_n\}$ \textbf{then}
+	
+	\quad \textbf{for} $a$ \textbf{in} $x$ \textbf{do} $S$ stands for
+	
+	\quad \quad $S_{a_1}^a; S_{a_2}^a ; \dots; S_{a_n}^a$
+	
+	where the $a_i$ are in natural order if the base type is ordered, and are in arbitrary order otherwise; and they do not contain repetitions.
+	
+	\item $x: -\ y$ stands tor $x \coloneq x - y$
+\end{enumerate}
+
+\noindent
+Theorems:
+\begin{eqnarray*}
+	x = y &\equiv& \forall a:T_0(a \text{ \textbf{in} } x \equiv a \text{ \textbf{in} } y)\\
+	&&a \text{ \textbf{in} } (x \lor y) \equiv (a \text{ \textbf{in} } x \lor a \text{ \textbf{in} } y) \\
+	&&a \text{ \textbf{in} } (x \land y) \equiv (a \text{ \textbf{in} } x\ \&\ a \text{ \textbf{in} } y) \\
+	&&a \text{ \textbf{in} } (x - y) \equiv (a \text{ \textbf{in} } x\ \&\ \neg a \text{ \textbf{in} } y) \\
+\end{eqnarray*}
+
+\subsection{Sequences}
