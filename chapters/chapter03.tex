@@ -20,9 +20,25 @@ Our subject matter as programmers is a special class of dynamic system, which we
 
 The following are some of the basic concepts provided by ALGOL 60.
 
-Page 176
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
+	\item A \textit{type} is a class of \textit{values}. Associated with each type there are a number of operations which apply to such values, e.g. arithmetic operations and relations for values of type \textbf{integer}.
+	\item A \textit{variable} is a class of values of a given type ordered in a time sequence. The associated operations are accessing and assigning its current value. Both can be understood as \textit{copying} operations.
+	\item An \textit{array} is a class of variables ordered in a spatial pattern. Associated is the operation of \textit{subscripting}.
+\end{enumerate}
 
+Notice that each of the concepts includes a data structure as well as one or more associated operations.
 
+As another example consider machine level programming. The fundamental data structure is a bit string, which is not itself a very meaningful thing. However, combined with an appropriate sensing mechanism it has the significance of a sequence of Boolean values. In connection with a binary adder the bit string has the meaning of a number in some range, each bit being a digit in the base two number system. An output channel coupled to a line printer turns the bit string into a sequence of characters, and so forth. Thus the meaning of the data structure critically depends on the kind of operations associated with it.
+
+On the other hand, no data process is conceivable which does not involve some data. In short, data and operations on data seem to be so closely connected in our minds, that it takes elements of both kinds to make up any concept useful for understanding computing processes.
+
+\subsection{Higher level concepts}
+
+As the result of the large capacity of computing instruments, we have to deal with computing processes of such complexity that they can hardly be constructed and understood in terms of basic general purpose concepts. The limit is set by the nature of our own intellect: precise thinking is possible only in terms of a \textit{small} number of elements at a time.
+
+The only efficient way to deal with complicated systems is in a hierarchical fashion. The dynamic system is constructed and understood in terms of high level concepts, which are in turn constructed and understood in terms of lower level concepts, and so forth. This must be reflected in the \textit{structure} of the program which defines the dynamic system; in some way or another the higher level concepts will correspond to program components.
+
+Page 177
 
 
 
