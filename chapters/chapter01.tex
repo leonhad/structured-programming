@@ -58,8 +58,7 @@ But how is the correctness established in a convincing manner? As long as the mu
 The straightforward conclusion is the following: a convincing demonstration of correctness being impossible as long as the mechanism is regarded
 as a black box, our only hope lies in not regarding the mechanism as a black box. I shall call this ``taking the structure of the mechanism into account''.
 
-From now onward the type of mechanisms we are going to deal with are programs. (In many respects, programs are mechanisms much easier to deal
-with than circuitry, which is really an analogue device and subject to wear and tear.) And also with programs it is fairly hopeless to establish the correctness beyond even the mildest doubt by testing, without taking their structure into account. In other words, we remark that the extent to which the program correctness can be established is not purely a function of the program's external specifications and behavior but depends critically upon its internal structure.
+From now onward the type of mechanisms we are going to deal with are programs. (In many respects, programs are mechanisms much easier to deal with than circuitry, which is really an analogue device and subject to wear and tear.) And also with programs it is fairly hopeless to establish the correctness beyond even the mildest doubt by testing, without taking their structure into account. In other words, we remark that the extent to which the program correctness can be established is not purely a function of the program's external specifications and behavior but depends critically upon its internal structure.
 
 Recalling that our true concern is with really large programs, we observe as an aside that the size itself requires a high confidence level for the individual program components. If the chance of correctness of an individual component equals p, the chance of correctness of a whole program, composed of $N$ such components, is something like
 $$
@@ -313,7 +312,7 @@ Of course I would not dare to suggest (at least at present!) that it is the prog
 
 My moral is threefold. Firstly, when a programmer considers a construction like (\ref{eq:program-while-non-prop}) as obviously correct, he can do so because he is familiar with the construction. I prefer to regard his behavior as an unconscious appeal to a theorem he \textit{knows}, although perhaps he has never bothered to formulate it; and once in his life he has convinced himself of its truth, although he has probably forgotten in which way he did it and although the way was (probably) unfit for print. But we could call our assertions about program (\ref{eq:program-while-non-prop}), say, ``The Linear Search Theorem'' and knowing such a name it is much easier (and more natural) to appeal to it consciously.
 
-Secondly, to the best of my knowledge, there is no set of theorems of the type illustrated above, whose usefulness has been generally accepted. But we should not be amazed about that, for the absence of such a set of theorems is a direct consequence of the fact that the type of object --- i.e. programs --- has not settled down. The kind of object the programmer is dealing with, viz. programs, is much less well-established than the kind of object that is dealt with in plane geometry. In the meantime the intuitively competent programmer is probably the one who confines himself, whenever acceptable, to program structures with which he is very familiar, while becoming very alert and careful whenever he constructs something unusual (for him). For an established style of programming, however, it might be a useful activity to look for a body of theorems pertinent to such programs.
+Secondly, to the best of my knowledge, there is no set of theorems of the type illustrated above, whose usefulness has been generally accepted. But we should not be amazed about that, for the absence of such a set of theorems is a direct consequence of the fact that the type of object \textemdash{}  i.e. programs \textemdash{}  has not settled down. The kind of object the programmer is dealing with, viz. programs, is much less well-established than the kind of object that is dealt with in plane geometry. In the meantime the intuitively competent programmer is probably the one who confines himself, whenever acceptable, to program structures with which he is very familiar, while becoming very alert and careful whenever he constructs something unusual (for him). For an established style of programming, however, it might be a useful activity to look for a body of theorems pertinent to such programs.
 
 Thirdly, the length of the proof we needed in our last example is a warning that should not be ignored. There is of course the possibility that a better mathematician will do a much shorter and more elegant job than I have done. Personally I am inclined to conclude from this length that programming is more difficult than is commonly assumed: let us be honestly humble and interpret the length of the proof as an urgent advice to restrict ourselves to simple structures whenever possible and to avoid in all intellectual modesty ``clever constructions'' like the plague.
 
@@ -321,7 +320,7 @@ Thirdly, the length of the proof we needed in our last example is a warning that
 
 At this stage I find it hard to be very explicit about the role of abstraction, partly because it permeates the whole subject. Consider an algorithm and all possible computations it can evoke: starting from the computations the algorithm is what remains when one abstracts from the specific values manipulated this time. The concept of ``a variable'' represents an abstraction from its current value. It has been remarked to me (to my great regret I cannot remember by whom and so I am unable to give credit where it seems due) that once a person has understood the way in which variables are used in programming, he has understood the quintessence of programming. We can find a confirmation for this remark when we return to our use of mathematical induction with regard to the repetition: on the one hand it is by abstraction that the concepts are introduced in terms of which the induction step can be formulated; on the other hand it is the repetition that really calls for the concept of ``a variable''. (Without repetition one can restrict oneself to ``quantities'' the value of which has to be defined as most once but never has to be redefined as in the case of a variable.)
 
-There is also an abstraction involved in naming an operation and using it on account of ``what it does'' while completely disregarding ``how it works''. (In the same way one should state that a programming manual describes an abstract machine: the specific piece of hardware delivered by the manufacturer is nothing but a --- usually imperfect! --- mechanical model of this abstract machine.) There is a strong analogy between using a named operation in a program regardless of ``how it works'' and using a theorem regardless of how it has been proved. Even if its proof is highly intricate, it may be a very convenient theorem to use!
+There is also an abstraction involved in naming an operation and using it on account of ``what it does'' while completely disregarding ``how it works''. (In the same way one should state that a programming manual describes an abstract machine: the specific piece of hardware delivered by the manufacturer is nothing but a \textemdash{}  usually imperfect! \textemdash{}  mechanical model of this abstract machine.) There is a strong analogy between using a named operation in a program regardless of ``how it works'' and using a theorem regardless of how it has been proved. Even if its proof is highly intricate, it may be a very convenient theorem to use!
 
 Here, again, I refer to our inability to do much. Enumerative reasoning is all right as far as it goes, but as we are rather slow-witted it does not go very
 far. Enumerative reasoning is only an adequate mental tool under the severe boundary condition that we use it only very moderately. We should appreciate
@@ -530,7 +529,7 @@ $$
 
 In the previous section I have assumed ``perfect arithmetic'' and in my experience the validity of such proofs often gets questioned by people who argue that in practice one never has perfect arithmetic at ones disposal: admissible integer values usually have an absolute upper bound, real numbers are only represented to a finite accuracy etc. So what is the validity of such proofs?
 
-The answer to this question seems to be the following. If one proves the correctness of a program assuming an idealized, perfect world, one should not be amazed if something goes wrong when this ideal program gets executed by an ``imperfect'' implementation. Obviously! Therefore, if we wish to prove program correctness in a more realistic world, the thing to do is to acknowledge right at the start that all operations appealed to in the program (in particular all arithmetic operations) need not be perfect, provided we state --- rather axiomatically --- the properties they have to satisfy for the proper execution of the program, i.e. the properties on which the correctness proof relies. (In the example of the previous section this requirement is simply exact integer arithmetic in the range $[0, 2a]$.)
+The answer to this question seems to be the following. If one proves the correctness of a program assuming an idealized, perfect world, one should not be amazed if something goes wrong when this ideal program gets executed by an ``imperfect'' implementation. Obviously! Therefore, if we wish to prove program correctness in a more realistic world, the thing to do is to acknowledge right at the start that all operations appealed to in the program (in particular all arithmetic operations) need not be perfect, provided we state \textemdash{}  rather axiomatically \textemdash{}  the properties they have to satisfy for the proper execution of the program, i.e. the properties on which the correctness proof relies. (In the example of the previous section this requirement is simply exact integer arithmetic in the range $[0, 2a]$.)
 
 When writing a program operating on real numbers with rounded operations, one must be aware of the assumptions one makes, such as
 \smallskip
@@ -550,7 +549,7 @@ When writing a program operating on real numbers with rounded operations, one mu
  
 Very often the validity of such relations is essential to the logic of the program. For the sake of compatibility, the programmer would be wise to be as undemanding as possible, whereas a good implementation should satisfy as many reasonable requirements as possible.
 
-This is the place to confess one of my blunders. In implementing ALGOL 60 we decided that ``$x = y$'' would deliver the value \textbf{true} not only in the case of exact equality, but also when the two values differed only in the least significant digit represented, because otherwise it was so very improbable that the value \textit{true} would ever be computed. We were thinking of converging iterations that could oscillate within rounding accuracy. While we had been generous (with the best of intentions!) in regarding real numbers as equal, it quickly turned out that the chosen operation was so weak as to be hardly of any use at all. What it boiled down to was that the established truth of $a = b$ \textbf{and} $b = c$ did not allow the programmer to conclude the truth of $a = c$. The decision was quickly changed. It is because of that experience that I know that the programmer can only use his tool by virtue of (a number of) its properties; conversely, the programmer must be able to state which properties he requires. (Usually programmers don't do so because, for lack of tradition as to what properties can be taken for granted, this would require more explicitness than is otherwise desirable. The proliferation of machines with lousy floating-point hardware --- together with the misapprehension that the automatic computer is primarily the tool of the numerical analyst --- has done much harm to the profession!)
+This is the place to confess one of my blunders. In implementing ALGOL 60 we decided that ``$x = y$'' would deliver the value \textbf{true} not only in the case of exact equality, but also when the two values differed only in the least significant digit represented, because otherwise it was so very improbable that the value \textit{true} would ever be computed. We were thinking of converging iterations that could oscillate within rounding accuracy. While we had been generous (with the best of intentions!) in regarding real numbers as equal, it quickly turned out that the chosen operation was so weak as to be hardly of any use at all. What it boiled down to was that the established truth of $a = b$ \textbf{and} $b = c$ did not allow the programmer to conclude the truth of $a = c$. The decision was quickly changed. It is because of that experience that I know that the programmer can only use his tool by virtue of (a number of) its properties; conversely, the programmer must be able to state which properties he requires. (Usually programmers don't do so because, for lack of tradition as to what properties can be taken for granted, this would require more explicitness than is otherwise desirable. The proliferation of machines with lousy floating-point hardware \textemdash{}  together with the misapprehension that the automatic computer is primarily the tool of the numerical analyst \textemdash{}  has done much harm to the profession!)
 
 \section[On understanding programs]{On Understanding Programs}
 \label{sec:undertanding-programs}
@@ -558,7 +557,7 @@ This is the place to confess one of my blunders. In implementing ALGOL 60 we dec
 In my life I have seen many programming courses that were essentially like the usual kind of driving lessons, in which one is taught how to handle a car
 instead of how to use a car to reach one's destination.
 
-My point is that a program is never a goal in itself; the purpose of a program is to evoke computations and the purpose of the computations is to establish a desired effect. Although the program is the final product made by the programmer, the possible computations evoked by it --- the ``making'' of which is left to the machine! --- are the true subject matter of his trade. For instance, whenever a programmer states that his program is correct, he really makes an assertion about the computations it may evoke.
+My point is that a program is never a goal in itself; the purpose of a program is to evoke computations and the purpose of the computations is to establish a desired effect. Although the program is the final product made by the programmer, the possible computations evoked by it \textemdash{}  the ``making'' of which is left to the machine! \textemdash{}  are the true subject matter of his trade. For instance, whenever a programmer states that his program is correct, he really makes an assertion about the computations it may evoke.
 
 The fact that the last stage of the total activity, viz. the transition from the (static) program text to the (dynamic) computation, is essentially left to the machine is an added complication. In a sense the making of a program is therefore more difficult than the making of a mathematical theory: both program and theory are structured, timeless objects. But while the mathematical theory makes sense as it stands, the program only makes sense via its execution.
 
@@ -635,7 +634,7 @@ The alternative clause has been generalized by C. A. R. Hoare whose ``case-of'' 
 	\includegraphics[width=.8\textwidth]{chap1/fig3}
 \end{figure}
 
-These flowcharts share the property that they have a single entry at the top and a single exit at the bottom: as indicated by the dotted block they can again be interpreted (by disregarding what is inside the dotted lines) as a single action in a sequential computation. To be a little bit more precise: we are dealing with a great number of possible computations, primarily decomposed into the same time-succession of subactions and it is only on closer inspection --- i.e. by looking inside the dotted block --- that it is revealed that over the collection of possible computations such a sub-action may take one of an enumerated set of distinguished forms.
+These flowcharts share the property that they have a single entry at the top and a single exit at the bottom: as indicated by the dotted block they can again be interpreted (by disregarding what is inside the dotted lines) as a single action in a sequential computation. To be a little bit more precise: we are dealing with a great number of possible computations, primarily decomposed into the same time-succession of subactions and it is only on closer inspection \textemdash{}  i.e. by looking inside the dotted block \textemdash{}  that it is revealed that over the collection of possible computations such a sub-action may take one of an enumerated set of distinguished forms.
 
 The above is sufficient to consider a class of computations that are primarily decomposed into the same set of enumerated sub-actions; they are insufficient to consider a class of computations that are primarily decomposed into a varying number of sub-actions (i.e. varying over the class of computations considered). It is here that the usefulness of the repetition clauses becomes apparent. We mention ``\textbf{while} condition \textbf{do} statement'' and ``\textbf{repeat} statement \textbf{until} condition'' that may be represented in flowchart form as follows.
 
@@ -658,7 +657,7 @@ We can understand a decomposition by concatenation via enumerative reasoning. (W
 
 As a corollary: if on closer inspection a sub-action is controlled by a selective clause the specific path taken is always irrelevant at the primary level (the only thing that matters is that the correct path has been taken). And also: if on closer inspection a sub-action is controlled by a repetitive clause, the number of times the repeated statement has been executed is, as such, irrelevant (the only thing that matters is that it has been repeated the correct number of times).
 
-We can also understand the selective clauses as such, viz. by enumerative reasoning; we can also understand the repetition clause, viz. by mathematical induction. For all three types of decomposition --- and this seems to me a great help --- we know the appropriate pattern of reasoning.
+We can also understand the selective clauses as such, viz. by enumerative reasoning; we can also understand the repetition clause, viz. by mathematical induction. For all three types of decomposition \textemdash{}  and this seems to me a great help \textemdash{}  we know the appropriate pattern of reasoning.
 
 There is a further benefit to be derived from the proposed sequencing discipline. In understanding programs we establish relations. In our example on enumerative reasoning we established that the program part
 \medskip
@@ -850,7 +849,7 @@ The task is to instruct a computer to print a table of the first thousand prime 
 \begin{enumerate}[leftmargin=*, itemindent=2.2\parindent, label=\textit{Note }\arabic*.]
 	\item This example has been chosen because on the one hand.it is sufficiently difficult to serve as a model for some of the problems encountered in programming, and on the other hand its mathematical background is so simple and familiar that our attention is not usurped by the problem.
 	
-	\item I do not claim that my final program will be ``the best one'', measured by whatever yardstick any of my readers might care to choose. At least two readers of a previous version of this presentation --- in which remainders were computed via a divide operation --- reacted quite vehemently to it: ``But everyone knows that the most efficient way to generate prime numbers is by using the Sieve of Eratosthenes.'' thereby blocking their ability to read any further!
+	\item I do not claim that my final program will be ``the best one'', measured by whatever yardstick any of my readers might care to choose. At least two readers of a previous version of this presentation \textemdash{}  in which remainders were computed via a divide operation \textemdash{}  reacted quite vehemently to it: ``But everyone knows that the most efficient way to generate prime numbers is by using the Sieve of Eratosthenes.'' thereby blocking their ability to read any further!
 \end{enumerate}
 
 The basic pattern of my approach will be to compose the program in minute steps, deciding each time as little as possible. As the problem analysis proceeds, so does the further refinement of my program.
@@ -897,7 +896,7 @@ Alternatively, we can try to decide, here and now, upon the structure of ``table
 
 Both ways are equally tricky, for what will be an attractive algorithm for, say, the first sub-computation will greatly depend on the ease and elegance with which the assumed operations on ``table $p$'' can be realized, and if one or more turn out to be prohibitively clumsy, the whole edifice falls to pieces. Alternatively, if we decide prematurely upon a structure for ``table $p$'' we may well discover that the sub-computations then turn out to be awkward. There is no way around it: in an elegant program the structure of ``table $p$'' and the computations referring to it must be well-matched. I think that the behavior of the efficient programmer can be described as trying to take the easiest decision first, that is the decision that requires the minimum amount of investigation (trial and error, iterative mutual adjustment etc.) for the maximum justification of the hope that he will not regret it.
 
-In order not to make this treatment unduly lengthy we assume that the programmer finds the courage to decide that now the structure of ``table $p$'' is the first thing to be decided upon. Once this position has been taken, two alternatives immediately present themselves. On the one hand we can try to exploit that ``a table of the first 1000 primes'' is not just a table of a thousand numbers --- as would be a table of the monthly wages of 1000 employees in a factory --- but that all these numbers are different from each other. Using this we can arrange the information with a linear boolean array (with consecutive elements associated with consecutive natural numbers) indicating whether the natural number in question is a prime number or not. Number theory gives us an estimation of the order of magnitude of the thousandth prime number and thereby a boundary of the length of the array that will suffice. If we arrange our material in that way we have prepared an easy mechanism to answer the question ``is $n$ (less than the maximum) prime or not?''. Alternatively, we can choose an integer array in which the successive prime numbers will be listed. (Here the same estimate, obtained by means of number theory, will be used, viz. when a maximum value of the integer array elements needs to be given \textit{a priori}.) In the latter form we create a mechanism suited to answer the question ``what is the value of the $k$th prime number, for $k \leqslant 1000$?''.
+In order not to make this treatment unduly lengthy we assume that the programmer finds the courage to decide that now the structure of ``table $p$'' is the first thing to be decided upon. Once this position has been taken, two alternatives immediately present themselves. On the one hand we can try to exploit that ``a table of the first 1000 primes'' is not just a table of a thousand numbers \textemdash{}  as would be a table of the monthly wages of 1000 employees in a factory \textemdash{}  but that all these numbers are different from each other. Using this we can arrange the information with a linear boolean array (with consecutive elements associated with consecutive natural numbers) indicating whether the natural number in question is a prime number or not. Number theory gives us an estimation of the order of magnitude of the thousandth prime number and thereby a boundary of the length of the array that will suffice. If we arrange our material in that way we have prepared an easy mechanism to answer the question ``is $n$ (less than the maximum) prime or not?''. Alternatively, we can choose an integer array in which the successive prime numbers will be listed. (Here the same estimate, obtained by means of number theory, will be used, viz. when a maximum value of the integer array elements needs to be given \textit{a priori}.) In the latter form we create a mechanism suited to answer the question ``what is the value of the $k$th prime number, for $k \leqslant 1000$?''.
 
 We grant the programmer the courage to choose the latter representation. It seems attractive in the printing operation in which it is requested to print the prime numbers and not to print natural numbers with an indication whether they are prime or not. It also seems attractive for the computing stage, if we grant the programmer the clairvoyance that the analysis of whether a given natural number is a prime number or not, will have something to do with the question of whether prime factors of the number to be investigated can be found.
 
@@ -909,7 +908,7 @@ When we now want to describe this new refinement we are faced with a new difficu
 
 For the continuation of our discussion we make a very tentative proposal. We say: \ref{tx:description-0} is a valid text expressed in terms of a single named action ``print first thousand prime numbers''; let this be identified by the code $0a$.
 
-\hyperref[tx:description-1]{Description 1} is called ``\hyperref[tx:description-1]{1}'' because it is the next refinement of \ref{tx:description-0}; it contains a refinement of $0a$ --- the only term in which \ref{tx:description-0} is expressed --- and is itself expressed in terms of three named entities to which we attach the codes:
+\hyperref[tx:description-1]{Description 1} is called ``\hyperref[tx:description-1]{1}'' because it is the next refinement of \ref{tx:description-0}; it contains a refinement of $0a$ \textemdash{}  the only term in which \ref{tx:description-0} is expressed \textemdash{}  and is itself expressed in terms of three named entities to which we attach the codes:
 
 \noindent
 ``table $p$''\hfill 1a
@@ -982,7 +981,7 @@ The first prime number being given $(=2)$, the thousandth being assumed unknown 
 
 By identifying $k$ as the number of primes found and by verifying that our first prime number $(=2)$ is indeed the smallest prime number larger than 1 ($=$ the initial value of $j$), the correctness of 2b1(2) is easily proved by mathematical induction (assuming the existence of a sufficient number of primes).
 
-Description 2b1(2) is a perfect program when the operation described by ``increase $j$ until next prime number'' --- call it 2b1(2)a --- occurs among the repertoire, but let us suppose that it does not. In that case we have to express in a next refinement how $j$ is increased (and, again, preferably nothing more). We arrive at a description of level 2b2(2)
+Description 2b1(2) is a perfect program when the operation described by ``increase $j$ until next prime number'' \textemdash{}  call it 2b1(2)a \textemdash{}  occurs among the repertoire, but let us suppose that it does not. In that case we have to express in a next refinement how $j$ is increased (and, again, preferably nothing more). We arrive at a description of level 2b2(2)
 
 \noindent
 2b1(2)a $=$
@@ -1029,7 +1028,7 @@ Again its correctness can hardly be subject to doubt. If, however, we assume tha
 \textbf{end}
 
 \noindent
-where the analogous refinement of the operation between quotes --- ``2b1(3)a'' say --- leads to the description on level 2b2(3):
+where the analogous refinement of the operation between quotes \textemdash{}  ``2b1(3)a'' say \textemdash{}  leads to the description on level 2b2(3):
 
 \noindent
 2b1(3)a $=$
@@ -1074,11 +1073,11 @@ sequence, I see no other way: we can regard our efforts as experiments to explor
 \textbf{end}
 
 \noindent
-but we shall not do this as the sequencing in the two versions differs (see ``\nameref{sec:comparing-programs}'') and we regard them as ``incomparable''. By choosing 2b1(3) we decide that our trial 2b1(2) --- as 2b1(1) --- is no longer applicable and therefore rejected.
+but we shall not do this as the sequencing in the two versions differs (see ``\nameref{sec:comparing-programs}'') and we regard them as ``incomparable''. By choosing 2b1(3) we decide that our trial 2b1(2) \textemdash{}  as 2b1(1) \textemdash{}  is no longer applicable and therefore rejected.
 
 The change from 2b1(2) to 2b1(3) is justified by the efficiency gain at the levels of higher refinement. This efficiency gain is earned at level 2b2, because now $j$ can be increased by 2 at a time. It will also manifest itself in the still open primitive at level 2b2(3) where the algorithm for ``give for odd $j$ to $j$prime the meaning: $j$ is a prime number'' has only to cater for the analysis of odd values of $j$.
 
-Again: in 2b2(3) we have refined 2b1(3) with an algorithm which solves our problem when ``give for odd $j$ to $j$prime the meaning: $j$ is a prime number'' --- call it ``2b2(3)a'' --- occurs among the well-understood repertoire. We now assume that it does not, in other words we have to evoke a computation deciding whether a given odd value of $j$ has a factor. It is only at this stage that the algebra really enters the picture. Here we make use of our knowledge that we only need to try prime factors: furthermore we shall use the fact that the prime numbers to be tried can already be found in the filled portion of the array $p$.
+Again: in 2b2(3) we have refined 2b1(3) with an algorithm which solves our problem when ``give for odd $j$ to $j$prime the meaning: $j$ is a prime number'' \textemdash{}  call it ``2b2(3)a'' \textemdash{}  occurs among the well-understood repertoire. We now assume that it does not, in other words we have to evoke a computation deciding whether a given odd value of $j$ has a factor. It is only at this stage that the algebra really enters the picture. Here we make use of our knowledge that we only need to try prime factors: furthermore we shall use the fact that the prime numbers to be tried can already be found in the filled portion of the array $p$.
 
 We use the facts that
 
@@ -1261,7 +1260,7 @@ expressed in terms of
 \noindent
 2b3(4)c\tabto{5em} ``give to $j$prime the meaning: $p[n]$ is not a factor of $j$''. 
 
-In our next level we give two independent refinements. (Note. We could have given them in successive levels, but then we should have to introduce an arbitrary ordering to these two levels. We could also try to treat the refinements separately --- i.e. as separately as 2b and 2c --- but we feel that it is a little premature for this drastic decision.) We are going to express
+In our next level we give two independent refinements. (Note. We could have given them in successive levels, but then we should have to introduce an arbitrary ordering to these two levels. We could also try to treat the refinements separately \textemdash{}  i.e. as separately as 2b and 2c \textemdash{}  but we feel that it is a little premature for this drastic decision.) We are going to express
 
 \begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
 	\item that, ord being a non-decreasing function of $j$ and $j$ only increasing in value, adjustment of ord implies a conditional increase;
@@ -1443,7 +1442,7 @@ In an earlier section (``\nameref{sec:realiability-of-mechanisms}'') the need fo
 
 In present-day sequential computers (spring 1969) we can distinguish two main components, an active one (the processor) and a passive one (the store). The active component has the specific function to be fast, the passive one has the specific function to be large. The following is written on the assumption that this functional division is here to stay for a sufficient period of time to make a study of its consequences relevant.
 
-From the point of view of the programmer, storage space and computation time are then two distinct resources and I regard it as one of the responsibilities of the programmer --- rather than of the system --- to allocate them, i.e. to divide the load between them. It is to the consequences of this responsibility that the present section is devoted. This section is not devoted to techniques of estimating the various loads, i.e. to give quantitative criteria by which to influence the programmer's choice: it is devoted to the logical relation between the alternatives between which the programmer may choose.
+From the point of view of the programmer, storage space and computation time are then two distinct resources and I regard it as one of the responsibilities of the programmer \textemdash{}  rather than of the system \textemdash{}  to allocate them, i.e. to divide the load between them. It is to the consequences of this responsibility that the present section is devoted. This section is not devoted to techniques of estimating the various loads, i.e. to give quantitative criteria by which to influence the programmer's choice: it is devoted to the logical relation between the alternatives between which the programmer may choose.
 
 \noindent
 \textit{Note}. It is not inconceivable that some of the choices can be left to the system. In all but the most trivial cases, however, design and establishment of the equivalence seem to require mathematical invention from the side of the programmer. All efforts to automate this problem-solving activity fall outside the scope of this monograph.
@@ -1525,7 +1524,7 @@ In my understanding of programs I want such additional variables that store redu
 \section[On a program model]{On A Program Model}
 \label{eq:program-model}
 
-Before we have a program we must have composed it; after we have a program --- if there was any sense in making it --- we shall have it executed. In this section I shall not stress the activities of program composition and of program execution too much, and I shall try to view the program as a static object. We want to view it as a highly structured object and our main question is: what kind of structures do we envisage and why? Our hope is that eventually we shall arrive at a program structure that is both nice to compose and nice to execute. Mentally, of course, I am unable to ignore these processes, but at present I do not want to discuss them; in particular: I do not want to discuss a design methodology (whether to work ``from outside inwards'' or the other way round), nor do I want to discuss implementation consequences now. Again, in order not to complicate matters too much, I shall restrict myself to sequential programs.
+Before we have a program we must have composed it; after we have a program \textemdash{}  if there was any sense in making it \textemdash{}  we shall have it executed. In this section I shall not stress the activities of program composition and of program execution too much, and I shall try to view the program as a static object. We want to view it as a highly structured object and our main question is: what kind of structures do we envisage and why? Our hope is that eventually we shall arrive at a program structure that is both nice to compose and nice to execute. Mentally, of course, I am unable to ignore these processes, but at present I do not want to discuss them; in particular: I do not want to discuss a design methodology (whether to work ``from outside inwards'' or the other way round), nor do I want to discuss implementation consequences now. Again, in order not to complicate matters too much, I shall restrict myself to sequential programs.
 
 If I judge a program by itself, my central theme, I think, is that I want the program written down as I can understand it, I want it written down as I would like to explain it to someone. However, without further qualification these are just motherhood statements, so let me try and see whether I can be more specific.
 
@@ -1621,7 +1620,7 @@ output:\tabto{10em} \quad\textbf{begin} \tabto{14em}\dots
 \tabto{10em}\textbf{end}
 
 \noindent
-where the labels are considered less as markers of points in the program text than as names of regions --- as indicated by the bracket pairs ``\textbf{begin} -- \textbf{end}'' --- that follow the label, or as names of the three actions in which the computation has been decomposed. However, if we take this point of view, the three ``labels'' are still comments, i.e. explanatory noise for the benefit of the interested (human) reader, whereas I would like to consider them as an integral part of the program. I want my program text to reflect somewhere the fact that the computation has been decomposed into a time-succession of the three actions, whatever form these might take upon closer inspection. A way of doing this is to write somewhere the (textual) succession of the three (abstract) statements
+where the labels are considered less as markers of points in the program text than as names of regions \textemdash{}  as indicated by the bracket pairs ``\textbf{begin} \textendash  \textbf{end}'' \textemdash{}  that follow the label, or as names of the three actions in which the computation has been decomposed. However, if we take this point of view, the three ``labels'' are still comments, i.e. explanatory noise for the benefit of the interested (human) reader, whereas I would like to consider them as an integral part of the program. I want my program text to reflect somewhere the fact that the computation has been decomposed into a time-succession of the three actions, whatever form these might take upon closer inspection. A way of doing this is to write somewhere the (textual) succession of the three (abstract) statements
 \medskip
 
 {
@@ -1635,15 +1634,15 @@ on the understanding that the time-succession of these three actions will indeed
 
 Well, if closed subroutines had not been invented more than twenty years ago, this would have been the time to do it! In other words: we are returning to familiar grounds, to such an extent that many of my readers will even feel cheated! I don't, because one should never be ashamed of sticking to a proven method as long as it is satisfactory. But we should get a clear picture of the benefits we should like to derive from it, if necessary we should adjust it, and finally we should create a discipline for using it. Let me therefore review the subroutine concept, because my appreciation for it has changed in the course of the last year.
 
-I was introduced to the concept of the closed subroutine in connection with the EDSAC\footnote{``The Preparation of Programs for an Electronic Digital Computer; with Special Reference to the EDSAC and the use of a Library of Subroutines'', M. V. Wilkes, D. J. Wheeler and S. Gill, Addison-Wesley Press, 1951.}, where the subroutine concept served as the basis for a library of standard routines. Those were the days when the construction of hardware was a great adventure and many of the standard routines were means by which (scarce!) memory and computation time could be traded for circuitry: as the order code did not comprise a divide instruction, they had subroutines for division. Yet I do not remember having appreciated subroutines as a means for ``rebuilding'' a given machine into a more suitable one, curiously enough. Nor do I remember from those days subroutines as objects to be conceived and constructed by the user to reflect his analysis: they were more the standard routines to be used by the user. Eventually I saw them mainly as a device for the reduction of program length. But the whole program as such remained conceived as acting in a single homogeneous store, in an unstructured state space; the whole computation remained conceived as a single sequential process performed by a single processor. In the following years, in the many programming courses I gave, I preached the gospel faithfully and I have often explained how the calling sequence handed over the return address and how the subroutine would then begin by setting ``the link'' --- i.e. the return jump --- at its own end. At present I would rather view the main program as having its own instruction counter that just continues ``counting'' upon the completion of the subroutine execution and would certainly not regard the ``sleeping value'' as a parameter handed over to the subroutine. (Still the old view has found its way into the hardware of many machines. We have seen machines in which a subroutine jump stored the link at ``address zero'' of the subroutine and ordered instruction fetch to be resumed at ``address one'', an arrangement which makes re-entrant code and recursive subroutines somewhat hard to implement. And even in this decade we find machines which store at program interrupt the ``program status'' of the interrupted program at a location associated with the interrupt rather than with the interrupted program!)
+I was introduced to the concept of the closed subroutine in connection with the EDSAC\footnote{``The Preparation of Programs for an Electronic Digital Computer; with Special Reference to the EDSAC and the use of a Library of Subroutines'', M. V. Wilkes, D. J. Wheeler and S. Gill, Addison-Wesley Press, 1951.}, where the subroutine concept served as the basis for a library of standard routines. Those were the days when the construction of hardware was a great adventure and many of the standard routines were means by which (scarce!) memory and computation time could be traded for circuitry: as the order code did not comprise a divide instruction, they had subroutines for division. Yet I do not remember having appreciated subroutines as a means for ``rebuilding'' a given machine into a more suitable one, curiously enough. Nor do I remember from those days subroutines as objects to be conceived and constructed by the user to reflect his analysis: they were more the standard routines to be used by the user. Eventually I saw them mainly as a device for the reduction of program length. But the whole program as such remained conceived as acting in a single homogeneous store, in an unstructured state space; the whole computation remained conceived as a single sequential process performed by a single processor. In the following years, in the many programming courses I gave, I preached the gospel faithfully and I have often explained how the calling sequence handed over the return address and how the subroutine would then begin by setting ``the link'' \textemdash{}  i.e. the return jump \textemdash{}  at its own end. At present I would rather view the main program as having its own instruction counter that just continues ``counting'' upon the completion of the subroutine execution and would certainly not regard the ``sleeping value'' as a parameter handed over to the subroutine. (Still the old view has found its way into the hardware of many machines. We have seen machines in which a subroutine jump stored the link at ``address zero'' of the subroutine and ordered instruction fetch to be resumed at ``address one'', an arrangement which makes re-entrant code and recursive subroutines somewhat hard to implement. And even in this decade we find machines which store at program interrupt the ``program status'' of the interrupted program at a location associated with the interrupt rather than with the interrupted program!)
 
 Ten years later, when ALGOL 60 emerged, the scene changed and we did not talk any more about closed subroutines: we called them ``procedures'' instead. They remained to be appreciated by the programmer as a very handy means for shortening the program text, and more and more programmers started to use them for the purpose of structuring, so that program adaptation to foreseen changes in problem specification could be confined to the replacement of one or more procedure bodies, or to a procedure call with some actual parameters changed. But the main novelty was the concept of the local variables.
 
 This was reflected in two important aspects. The first one was the concept of ``scope'', i.e. the idea that not all variables are homogeneously accessible all through the program: local variables of a procedure are inaccessible from  outside the procedure body, because outside it they are irrelevant. What local variables a procedure needs to do its private task is its private concern; it is no concern of the calling main program and the fact that the main program can (and must!) be conceived independently of these local variables is judiciously reflected. We may have some misgivings about the specific scope rules, as embodied in ALGOL 60, but we should appreciate them as a very significant step in the right direction.
 
-The second aspect of the novelty was given by the fact that procedures could be used recursively, more precisely, that a procedure was allowed to call itself, either directly or indirectly. The virtue of this facility has been the subject of many hot debates; as far as I can see the discussion has died down. The argument against recursive procedures was always an efficiency argument: non-re-entrant code could be executed so much more efficiently.But with the advent of multi programming another need for flexible storage allocation has emerged. And if there are still machines in which non-re-entrant code can be executed much more efficiently, i.e. in which the use of recursive routines is punished by too heavy a penalty, then I would venture the opinion that the structure of such a machine should now be called somewhat old-fashioned. The recursive procedure, however, forced upon us the recognition of the difference between its (static) text and its (dynamic) activation --- its ``incarnation'' as it has been called. The procedure text is one thing; the set of local variables it operates upon this time is quite another matter.
+The second aspect of the novelty was given by the fact that procedures could be used recursively, more precisely, that a procedure was allowed to call itself, either directly or indirectly. The virtue of this facility has been the subject of many hot debates; as far as I can see the discussion has died down. The argument against recursive procedures was always an efficiency argument: non-re-entrant code could be executed so much more efficiently.But with the advent of multi programming another need for flexible storage allocation has emerged. And if there are still machines in which non-re-entrant code can be executed much more efficiently, i.e. in which the use of recursive routines is punished by too heavy a penalty, then I would venture the opinion that the structure of such a machine should now be called somewhat old-fashioned. The recursive procedure, however, forced upon us the recognition of the difference between its (static) text and its (dynamic) activation \textemdash{}  its ``incarnation'' as it has been called. The procedure text is one thing; the set of local variables it operates upon this time is quite another matter.
 
-So far, so good, but now some of its shortcomings (and I don't care, whether you call them linguistic or conceptual). Local variables are ``created'' upon procedure entry, and are ``annihilated'' upon procedure exit. It is precisely this automatic control over the life-time of variables pertaining to a procedure incarnation that allows us to implement the (recursive) procedures by means of a stack (i.e. a last-in-first-out storage arrangement). The fact that local variables pertaining to an incarnation only exist during the incarnation make it impossible for the procedure to transmit information behind the scenes from one incarnation to the next. To overcome this the concept ``own'' has been introduced, but this is no solution to the problem: what own variables are really good for becomes very unclear in the case of recursion and, secondly, it is impossible to write a set of procedures sharing a number of own variables. (We can simulate this by declaring them in an outer block, embracing the procedure declarations, but then the scope rules make them too generally accessible: they can then no longer be regarded as ``behind the scenes''.) Our conclusion --- by no means new and by no means only mine! --- is that the concept ``own'' as introduced in ALGOL 60 must be regarded as ill-considered, and that we must look for new ways to control and describe life-time, accessibility and identity of local variables.
+So far, so good, but now some of its shortcomings (and I don't care, whether you call them linguistic or conceptual). Local variables are ``created'' upon procedure entry, and are ``annihilated'' upon procedure exit. It is precisely this automatic control over the life-time of variables pertaining to a procedure incarnation that allows us to implement the (recursive) procedures by means of a stack (i.e. a last-in-first-out storage arrangement). The fact that local variables pertaining to an incarnation only exist during the incarnation make it impossible for the procedure to transmit information behind the scenes from one incarnation to the next. To overcome this the concept ``own'' has been introduced, but this is no solution to the problem: what own variables are really good for becomes very unclear in the case of recursion and, secondly, it is impossible to write a set of procedures sharing a number of own variables. (We can simulate this by declaring them in an outer block, embracing the procedure declarations, but then the scope rules make them too generally accessible: they can then no longer be regarded as ``behind the scenes''.) Our conclusion \textemdash{}  by no means new and by no means only mine! \textemdash{}  is that the concept ``own'' as introduced in ALGOL 60 must be regarded as ill-considered, and that we must look for new ways to control and describe life-time, accessibility and identity of local variables.
 
 But I have still another complaint about the procedure concept, and that is that it is still primarily regarded as a means for shortening the program text (although it may be a text of unknown length as in the case of recursion). The semantics of the procedure call are described in terms of the famous ``copy rule'': the procedure call is to be understood as a short-hand, because, semantically speaking, we should replace it with a copy of the text of the procedure body (with suitable adjustments of identifiers and substitutions for parameters) whereupon the thus modified text will be executed by the same machine as the one executing the main program. It remains (a representation for) a single program text to be executed by a single sequential machine. And it is precisely this picture of a single machine that does not satisfy me any longer.
 
@@ -1652,7 +1651,7 @@ need to have it, I only need to have its specifications as far as relevant for t
 
 For me, the conception of this virtual machine is an embodiment of my powers of abstraction, not unlike the way in which I can understand a program written in a so-called higher level language, without knowing how all kinds of operations (such as multiplication and subscription) are implemented and without knowing such irrelevant details as the number system used in the hardware that is eventually responsible for the program execution.
 
-In actual practice, of course, this ideal machine will turn out not to exist, so our next task --- structurally similar to the original one --- is to program the simulation of the ``upper'' machine. In programming this simulation we have to decide upon data structures to provide for the state space of the upper machine; furthermore we have to make a bunch of algorithms, each of them providing an implementation of an instruction assumed for the order code of the upper machine. Finally, the ``lower'' machine may have a set of private variables, introduced for its own benefit and completely outside the realm and scope of the upper machine. But this bunch of programs is written for a machine that in all probability will not exist, so our next job will be to simulate it in terms of programs for a next-lower machine, etc. until finally we have a program that can be executed by our hardware.
+In actual practice, of course, this ideal machine will turn out not to exist, so our next task \textemdash{}  structurally similar to the original one \textemdash{}  is to program the simulation of the ``upper'' machine. In programming this simulation we have to decide upon data structures to provide for the state space of the upper machine; furthermore we have to make a bunch of algorithms, each of them providing an implementation of an instruction assumed for the order code of the upper machine. Finally, the ``lower'' machine may have a set of private variables, introduced for its own benefit and completely outside the realm and scope of the upper machine. But this bunch of programs is written for a machine that in all probability will not exist, so our next job will be to simulate it in terms of programs for a next-lower machine, etc. until finally we have a program that can be executed by our hardware.
 
 If we succeed in building up our program along the lines just given, we have arranged our program in layers. Each program layer is to be understood all by itself, under the assumption of a suitable machine to execute it, while the function of each layer is to simulate the machine that is assumed to be available on the level immediately above it.
 
@@ -1663,9 +1662,9 @@ Why this model? What are the benefits we hope to derive from it? Let me try to l
 
 	\item It is not vain to hope that many a program modification can now be presented as replacement of one (virtual) machine by a compatible one.
 
-	\item We may hope that the model will give us a better grip on the problems that arise when a program has to be modified while it is in action. If a machine at a given level is stopped between two of its instructions, all lower  machines are completely passive and can be replaced, while all higher machines must be regarded as engaged in the middle of an instruction: their state must be considered as being in transition. In a sequential machine the state can only be interpreted in between instruction executions and the picture of this hierarchy of machines, each having its own instruction counter --- ``counting its instructions'' --- seems more profitable if we wish to decide at any given moment, what interpretations are valid. In the usual programming language in which computational progress is measured in a homogeneous measure --- say ``the grain'' of one statement --- I feel somewhat helpless when faced with the question of which interpretations are valid when.
+	\item We may hope that the model will give us a better grip on the problems that arise when a program has to be modified while it is in action. If a machine at a given level is stopped between two of its instructions, all lower  machines are completely passive and can be replaced, while all higher machines must be regarded as engaged in the middle of an instruction: their state must be considered as being in transition. In a sequential machine the state can only be interpreted in between instruction executions and the picture of this hierarchy of machines, each having its own instruction counter \textemdash{}  ``counting its instructions'' \textemdash{}  seems more profitable if we wish to decide at any given moment, what interpretations are valid. In the usual programming language in which computational progress is measured in a homogeneous measure \textemdash{}  say ``the grain'' of one statement \textemdash{}  I feel somewhat helpless when faced with the question of which interpretations are valid when.
 	
-	\item We may hope that the model will even assist us in recovery problems 	--- total or partial --- when some malfunctioning has been detected. (Recently I have been involved in the design and construction of a multi programming system, but one of the most annoying things was our total inability to estimate (mechanically) the scope of the disaster when a memory cell gave a parity alarm. The only safe reaction we could implement was instantaneous machine stop, hardly a solution to be proud of!)
+	\item We may hope that the model will even assist us in recovery problems 	\textemdash{}  total or partial \textemdash{}  when some malfunctioning has been detected. (Recently I have been involved in the design and construction of a multi programming system, but one of the most annoying things was our total inability to estimate (mechanically) the scope of the disaster when a memory cell gave a parity alarm. The only safe reaction we could implement was instantaneous machine stop, hardly a solution to be proud of!)
 	
 	\item The picture of a layered hierarchy of machines provides a counter 	poison to one of the dangers evoked by ruthless application of the principle ``Divide and Rule'', viz. that different components are programmed so independently of each other that duplication of work (or worse) takes place. The fact that a layer contains ``a bunch of programs'' to be executed by some conceptual machine stresses the fact that the programs of this bunch are invited to share the same primitives. Separation of tasks is a good thing, on the other hand we have to tie the loose ends together again!
 \end{enumerate}
@@ -1795,7 +1794,7 @@ would, because the second action ``setmarks'' would only add marks to the pictur
 
 Furthermore, ``build'' being a one-parameter operation no separate identifier for its formal parameter has been introduced. Also this abbreviation on my part could turn out to be very unwise.)
 
-The next step in the design of the computation --- because it can be made without any further commitments --- is to describe how the thousand marks of the curve will be dealt with in turn. For the time being I propose the following write-up:
+The next step in the design of the computation \textemdash{}  because it can be made without any further commitments \textemdash{}  is to describe how the thousand marks of the curve will be dealt with in turn. For the time being I propose the following write-up:
 
 ISCANNER
 
@@ -1812,7 +1811,7 @@ This algorithm is to be understood in a machine whose instruction repertoire com
 
 But this is not all: a new variable (viz. ``$i$'') has been introduced, the algorithm appeals to a set of actions referring to this variable (``$i \coloneq 0$'', \mbox{``$i < 1000$''} and ``$i$ \textbf{plus} 1'') and if I were completely consistent, it seems that I should list them at the bottom, as possibly requiring further clarification at a later stage, just as ``add mark''. I have not done so (I have treated them along the same lines as the \textbf{while-do} clause). From the point of view of language semantics this separate treatment of an implicitly understood type \textbf{integer} does not seem attractive, and it seems hard to justify, why the type \textbf{integer} is treated differently from the type ``image'': both are implicitly understood in this machine.
 
-Yet I have done it. All the time I design programs for non-existing machines and add: ``if we now had a machine comprising the primitives here assumed, then the job is done''. This is, logically speaking, correct; in practice it is a joke, because we know very well that we cannot assume a general purpose machine to be available whose instruction code is so very well tailored to our needs. We should not close our eyes --- nor feign to do so! --- to our responsibility to provide such primitives in a later stage of the design. When I now appeal to a well-understood type ``integer'' and the operations defined on variables of such a type in this exceptional manner, I lo so with the intention of expressing that --- although these facilities have to be provided in some form or another --- providing these facilities fall outside the scope of the programmer's responsibility and also that the programmer will accept any reasonable implementation of them.
+Yet I have done it. All the time I design programs for non-existing machines and add: ``if we now had a machine comprising the primitives here assumed, then the job is done''. This is, logically speaking, correct; in practice it is a joke, because we know very well that we cannot assume a general purpose machine to be available whose instruction code is so very well tailored to our needs. We should not close our eyes \textemdash{}  nor feign to do so! \textemdash{}  to our responsibility to provide such primitives in a later stage of the design. When I now appeal to a well-understood type ``integer'' and the operations defined on variables of such a type in this exceptional manner, I lo so with the intention of expressing that \textemdash{}  although these facilities have to be provided in some form or another \textemdash{}  providing these facilities fall outside the scope of the programmer's responsibility and also that the programmer will accept any reasonable implementation of them.
 
 Again we are left with a primitive that admits further refinement without commitments regarding the other primitives. We have to describe how dealing with mark no. $i$ can be expressed in terms of dealing with a position on the page: we create the machine dealing with the computation of this position.
 
@@ -1868,7 +1867,7 @@ In the last line but one we have introduced a type called ``line''; a type, I re
 
 Then, ``print'', ``clear'', and ``mark pos'', being operations that were understood as operating on an ``image'' are translated in algorithms expressed in terms of operations on a line. In the code of these algorithms, the (true) actual parameter specifies which line; at the end of the description we give the instruction list, indicating that the actions operate on ``a line''; we have given the type, but not the parameter.
 
-This level introduces some new features. To start with (as in explaining ``image'') we treat the structural refinement of a data type on a footing very similar to the algorithmic refinements (as applied to ``print'', ``clear'' and ``mark pos''). Before this level, our approach could have been regarded as an effort to establish a discipline for ``subroutinization'' --- if the reader will excuse this horrible term! --- now we observe that that characterization of  our effort covers only half of what we are trying to do, as we are trying to apply a similar technique to data structures as well. Secondly, our previous machine explained just one entity (instruction or data type) in contrast to ``LINER'', which explains a whole bunch of them. The point is that we try to associate with each level a separate design decision; the decision taken here is to understand the image from now onwards in terms of lines, and therefore all operations dealing with an image as such have to be translated in terms of operations dealing with its lines. The image has been ``explained away'', the only unusual type we still have to deal with is the type ``line'' and that is what we are going to do now. I draw your attention to the fact that in the level to come, we have to deal with lines: that lines are used to compose images from is no longer relevant!
+This level introduces some new features. To start with (as in explaining ``image'') we treat the structural refinement of a data type on a footing very similar to the algorithmic refinements (as applied to ``print'', ``clear'' and ``mark pos''). Before this level, our approach could have been regarded as an effort to establish a discipline for ``subroutinization'' \textemdash{}  if the reader will excuse this horrible term! \textemdash{}  now we observe that that characterization of  our effort covers only half of what we are trying to do, as we are trying to apply a similar technique to data structures as well. Secondly, our previous machine explained just one entity (instruction or data type) in contrast to ``LINER'', which explains a whole bunch of them. The point is that we try to associate with each level a separate design decision; the decision taken here is to understand the image from now onwards in terms of lines, and therefore all operations dealing with an image as such have to be translated in terms of operations dealing with its lines. The image has been ``explained away'', the only unusual type we still have to deal with is the type ``line'' and that is what we are going to do now. I draw your attention to the fact that in the level to come, we have to deal with lines: that lines are used to compose images from is no longer relevant!
 
 To represent a line we have many different possibilities, e.g. a list of the the $x$-coordinates of the positions where a mark should be printed (possibly sorted in order of increasing $x$-value), a boolean array of 100 elements, each element indicating whether the corresponding position on the line of the picture should be marked, or an integer array of 100 elements, each element having the value ``mark'' or ``space'' of the PRSYM-parameter for the corresponding printable position. The last representation caters for extension when different curves (with different marks) have to be printed in the same picture ; therefore we select the last one.
 
@@ -1999,14 +1998,14 @@ Changing a program will be treated as replacing one or more pearls of the origin
 
 The reasons for this two-stage approach are many. In designing a program we have to consider many, many alternative programs and once our program is finished, we will have to change it (into one of the alternative ones). As long as programs are regarded as linear strings of basic symbols of a programming language and, accordingly, program modification is treated as text manipulation on that level, then each program modification must be understood in the universe of all programs (right or wrong!) that can be written in that programming language. No wonder that program modification is then a most risky operation! The basic symbol is too small and meaningless a unit in terms of which to describe this. The pearl, embodying the independent design decision or, as the case may be, an isolated aspect of the original problem statement, is meant to be the natural unit for such modifications.
 
-To rephrase the same argument: with the birth of ALGOL 60, syntax was discovered as a powerful means for expressing structure in a program text. (Syntax became so glorified that many workers in the field identified Computing Science with Syntactic Analysis!) It was slightly overlooked, however, that by expressing structure via syntax, this structure is only given very indirectly, i.e. to be derived by means of a parsing algorithm to be applied to a linear sequence of basic symbols. This hurts if we realize that many a program modification leaves large portions of the structure unaffected, so that after painful re-parsing of the modified text the same structure re-emerges! I have a strong feeling that the adequacy of context-free methods for the representation of structure has been grossly over-estimated. (In my immediate environment the following program bug in an ALGOL 60 program was brought to my attention. A program produced erroneous output with a completely checking implementation which in addition to the program text requires a final ``\textbf{progend}'' after the last ``\textbf{end}''; this additional character is refused everywhere else so that a correct ``\textbf{begin} -- \textbf{end}'' bracketing can be established. It turned out that
+To rephrase the same argument: with the birth of ALGOL 60, syntax was discovered as a powerful means for expressing structure in a program text. (Syntax became so glorified that many workers in the field identified Computing Science with Syntactic Analysis!) It was slightly overlooked, however, that by expressing structure via syntax, this structure is only given very indirectly, i.e. to be derived by means of a parsing algorithm to be applied to a linear sequence of basic symbols. This hurts if we realize that many a program modification leaves large portions of the structure unaffected, so that after painful re-parsing of the modified text the same structure re-emerges! I have a strong feeling that the adequacy of context-free methods for the representation of structure has been grossly over-estimated. (In my immediate environment the following program bug in an ALGOL 60 program was brought to my attention. A program produced erroneous output with a completely checking implementation which in addition to the program text requires a final ``\textbf{progend}'' after the last ``\textbf{end}''; this additional character is refused everywhere else so that a correct ``\textbf{begin} \textendash  \textbf{end}'' bracketing can be established. It turned out that
 
 \begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item somewhere in the program a closing string quote was omitted;
 	
 	\item somewhere further down in the program text an opening string quote was omitted;
 	
-	\item the ``\textbf{begin} -- \textbf{end}'' structure of the resulting program was syntactically correct;
+	\item the ``\textbf{begin} \textendash  \textbf{end}'' structure of the resulting program was syntactically correct;
 	
 	\item the identifiers declared between the two omissions were only used 	between the two omissions, so that even context-dependent checks were 	unable to give alarm.
 \end{enumerate}
@@ -2020,7 +2019,7 @@ Also, the pearl gives a clear status to an ``incomplete'' program, consisting of
 
 Another remark concerns the range of validity of concepts along the necklace. For instance, the concept ``image'' is introduced in our top pearl ``COMPFIRST'' and is explained away in our bottom pearl but one, viz. ``LINER''. If we now come to the conclusion that the program as envisaged is too demanding on storage space so that we cannot afford to introduce the variable ``image'', we are faced with a major program revision and we have to replace the top five pearls by other ones, because that is the range of validity of the concept ``image''! The bottom pearl (either ``LONGREP'' or ``SHORTREP''), however, can be retained. (I mention this as an example of the fact that pearl exchange is by no means restricted to exchange of the bottom pearl.)
 
-With respect to the validity range of concepts along the necklace I would like to ask your attention for an observation which thrilled me the first time I made it. (In retrospect it is pretty obvious and that is exactly why it may be worth-while to be explicit about it.) With each pearl we associate ``an independent design decision'' and the ordering of the pearls along the necklace therefore implies an ordering of the design decisions. Can we change this order? Yes, we can, although we then have different pearls. By way of experiment I have followed the well-known advice: if you are faced with two primitives --- in our case ``build'' and ``print'' --- decide immediately upon their interface --- in our example ``image'' --- so that the two primitives can now be refined independently of each other. So I did, and I came to the following form of necklace
+With respect to the validity range of concepts along the necklace I would like to ask your attention for an observation which thrilled me the first time I made it. (In retrospect it is pretty obvious and that is exactly why it may be worth-while to be explicit about it.) With each pearl we associate ``an independent design decision'' and the ordering of the pearls along the necklace therefore implies an ordering of the design decisions. Can we change this order? Yes, we can, although we then have different pearls. By way of experiment I have followed the well-known advice: if you are faced with two primitives \textemdash{}  in our case ``build'' and ``print'' \textemdash{}  decide immediately upon their interface \textemdash{}  in our example ``image'' \textemdash{}  so that the two primitives can now be refined independently of each other. So I did, and I came to the following form of necklace
 
 COMPFIRST
 
@@ -2039,9 +2038,9 @@ SHORTREP
 
 Along the necklace we can indicate for each concept its range of validity: of course they overlap and we can view them as the individual threads from which the whole explanation is twined, as a kind of ``logical rope''. The messy version has a logical rope twined from more and sometimes longer individual threads: its logical rope is thicker, the whole construction is more tightly interconnected. The observation thrilled me because it gave a very convincing demonstration (at least for me!) that elegance, clarity and the like have indeed marked quantitative aspects (as Mozart knew: many of his compositions that make one catch one's breath are misleadingly simple, they seem to be made just out of practically nothing!).
 
-We can phrase the observation in more technical terms. The primed version is messy because the image is explained away in terms of lines at too early a stage, thereby forcing us to explain ``CLEARFIRST'', ``ISCANNER'' and ``COMPPOS'' in terms of lines, while they could still be explained in terms of the image, i.e. independent of the representation to be chosen for it. Or, in other words, in the original version we have made a more judicious exploitation of our power of abstraction than in the primed one. The larger the number of pearls independent of the particular representation, the more adaptable one's program and the more easily understandable --- because that set of pearls can be understood at a higher level of abstraction. The experience seems to indicate that the goals of adaptability and clarity have been given some substance and (what is more) go by their very nature hand in hand. This is very encouraging (although not surprising).
+We can phrase the observation in more technical terms. The primed version is messy because the image is explained away in terms of lines at too early a stage, thereby forcing us to explain ``CLEARFIRST'', ``ISCANNER'' and ``COMPPOS'' in terms of lines, while they could still be explained in terms of the image, i.e. independent of the representation to be chosen for it. Or, in other words, in the original version we have made a more judicious exploitation of our power of abstraction than in the primed one. The larger the number of pearls independent of the particular representation, the more adaptable one's program and the more easily understandable \textemdash{}  because that set of pearls can be understood at a higher level of abstraction. The experience seems to indicate that the goals of adaptability and clarity have been given some substance and (what is more) go by their very nature hand in hand. This is very encouraging (although not surprising).
 
-It also gives --- me at least --- a somewhat clearer picture of the scope of my present efforts. Whatever I shall develop, it will not be a General Problem Solver, not a mechanical one, not even one written for the benefit of the human problem solver. But it may give the human some appreciation for the various aspects of ``elegance'' of a solution when he succeeds in finding one. And as such it may give him a guide line.
+It also gives \textemdash{}  me at least \textemdash{}  a somewhat clearer picture of the scope of my present efforts. Whatever I shall develop, it will not be a General Problem Solver, not a mechanical one, not even one written for the benefit of the human problem solver. But it may give the human some appreciation for the various aspects of ``elegance'' of a solution when he succeeds in finding one. And as such it may give him a guide line.
 
 \section[On grouping and sequencing]{On Grouping And Sequencing}
 \label{sec:grouping-and-sequencing}
@@ -2138,9 +2137,9 @@ I found the majority of my students inclined to make a program with the followin
 
 \textbf{until} length $= 101$''
 
-Although a program along these lines produces the correct output, objections can --- and to my taste: should --- be made against it. The first objections regards the stopping criterion: when a solution of length 100 has been printed, \textit{we} (knowing the algorithm) can deduce that after that for the first time the trial sequence will have length $= 101$ and this is now the criterion to stop, but this is a rather indirect and tortuous way to establish the stopping criterion. (How tortuous it is was clearly demonstrated by those students who did not see that an unnecessary trial sequence was generated and declared for the trial sequence an array of 100 elements instead of 101.) The second objection is that the operation ``increase trial sequence'' never increases its length: after rejection of a trial sequence a superfluous test on the length is performed. (When I used this example for student examination examinations I had not stressed very explicitly in my lectures any problem solving principles, so my disappointment was not too severe. In a sense I am glad to have observed these examinations, for it was for me an incentive to stress problem solving principles as far as I could find, formulate and teach them.)
+Although a program along these lines produces the correct output, objections can \textemdash{}  and to my taste: should \textemdash{}  be made against it. The first objections regards the stopping criterion: when a solution of length 100 has been printed, \textit{we} (knowing the algorithm) can deduce that after that for the first time the trial sequence will have length $= 101$ and this is now the criterion to stop, but this is a rather indirect and tortuous way to establish the stopping criterion. (How tortuous it is was clearly demonstrated by those students who did not see that an unnecessary trial sequence was generated and declared for the trial sequence an array of 100 elements instead of 101.) The second objection is that the operation ``increase trial sequence'' never increases its length: after rejection of a trial sequence a superfluous test on the length is performed. (When I used this example for student examination examinations I had not stressed very explicitly in my lectures any problem solving principles, so my disappointment was not too severe. In a sense I am glad to have observed these examinations, for it was for me an incentive to stress problem solving principles as far as I could find, formulate and teach them.)
 
-The program to which the above objections do not apply treats the empty sequence as a virtual solution, not to be printed. It has --- to the same level of detail --- the following structure:
+The program to which the above objections do not apply treats the empty sequence as a virtual solution, not to be printed. It has \textemdash{}  to the same level of detail \textemdash{}  the following structure:
 
 \quad \hspace{-.4em}``set trial sequence empty;
 
@@ -2175,7 +2174,7 @@ I owe to Joe Weizenbaum the second example. Make a program that, for given posit
 
 \tabto{2em}$n = 4$\tabto{6em}$s = 635318657 = 59^4 + 158^4 = 133^4 + 134^4)$
 
-When I first used this example in an oral examination, it took the student twenty minutes to get somewhat familiar with the problem and he then sketched a searching algorithm which --- when patched up --- could indeed find a number that allowed multiple decompositions into sums of two nth powers, but he could not prove that when his algorithm produced a value $s$ that it would be the minimum value. (As a matter of fact he had, up till then, ignored that part of the problem statement.)
+When I first used this example in an oral examination, it took the student twenty minutes to get somewhat familiar with the problem and he then sketched a searching algorithm which \textemdash{}  when patched up \textemdash{}  could indeed find a number that allowed multiple decompositions into sums of two nth powers, but he could not prove that when his algorithm produced a value $s$ that it would be the minimum value. (As a matter of fact he had, up till then, ignored that part of the problem statement.)
 
 He then regrouped his forces and made a program of the following form:
 
@@ -2210,7 +2209,7 @@ By storing a collection of triples (number pairs with their corresponding $s$-va
 
 \section[Design considerations in more detail]{Design Considerations In More Detail}
 
-Preceding sections --- in particular ``\nameref{sec:first-example-step-wise-program-composition}'' have evoked the criticism that I have oversimplified the design process almost to the extent of dishonesty; I don't think this criticism fully unjustified and to remedy the situation I shall treat two examples in greater detail. The first example is my own invention; I have tried it out in a few oral examinations and finally I have used it at the end of my course ``An introduction into the Art of Programming'' in the classroom. I posed the problem to an audience of fifty students and together, with me as leader of the discussion, they solved the problem in 90 minutes.
+Preceding sections \textemdash{}  in particular ``\nameref{sec:first-example-step-wise-program-composition}'' have evoked the criticism that I have oversimplified the design process almost to the extent of dishonesty; I don't think this criticism fully unjustified and to remedy the situation I shall treat two examples in greater detail. The first example is my own invention; I have tried it out in a few oral examinations and finally I have used it at the end of my course ``An introduction into the Art of Programming'' in the classroom. I posed the problem to an audience of fifty students and together, with me as leader of the discussion, they solved the problem in 90 minutes.
 
 We consider a character set consisting of letters, a space(sp) and a point(pnt). Words consist of one or more, but at most twenty letters. An input text consists of one or more words, separated from each other by one or more spaces and terminated by zero or more spaces followed by a point. With the character valued function RNC (Read Next Character) the input text should be read from and including the first letter of the first words up to and including the terminating point. An output text has to be produced using the primitive PNC($x$) (i.e. Print Next Character) with a character valued parameter. If the function of the program were to copy the text, the following program would do (assuming character valued variables at our disposal)
 
@@ -2220,20 +2219,20 @@ We consider a character set consisting of letters, a space(sp) and a point(pnt).
 
 In this example, however, the text is to be subjected to the following transformation:
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item in the output text, successive words have to be separated by a single space
 	\item in the output text, the last word has to be followed by a single point
 	\item when we number the words $0,\ 1,\ 2,\ 3,\ \dots$ in the order from left to right (i.e. in which they are scanned by repeated evaluation of RNC), the words with an even ordinal number have to be copied, while the letters of the words with an odd ordinal number have to be printed in the reverse order.
 \end{enumerate}
 
-For instance (using ``--'' to represent a space) the input text
+For instance (using ``\textendash'' to represent a space) the input text
 
-\quad ``this---is---a---silly---program---.''
+\quad ``this\textemdash{}is\textemdash{}a\textemdash{}silly\textemdash{}program\textemdash{}.''
 
 \noindent
 has to be transformed into
 
-\quad ``this--si--a--yllis--program.''
+\quad ``this\textendash si\textendash a\textendash yllis\textendash program.''
 
 My reader is cordially invited to try this program himself, before reading on and to record his considerations so as to enable himself to compare them with the sequel. (It should take an experienced programmer much less than 90 minutes!)
 
@@ -2248,14 +2247,14 @@ The unknown length of the non-empty input text suggested a program of the struct
 \noindent
 but immediately this question turned up: ``With how much do we deal during a single execution of ``something''?''. Four suggestions turned up:
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item a single character of the input text
 	\item a single character of the output text
 	\item a word (of both texts)
 	\item two successive words (of both texts)
 \end{enumerate}
 
-The first two suggestions were rejected very quickly and without much explicit motivation, although --- or because? --- it is not too difficult to provide it. (The first one is unattractive because the amount of output that can be produced on account of the next character of the input text varies wildly; for the second suggestion a similar objection holds. Apart from that, a program with a loop in a loop is in general cleaner: this suggests to look for larger portions.) The audience rejected the fourth suggestion on account of the remark that the terminating point could come equally well after an even number of words as after an odd number of words. To make the selection of the third suggestion explicit, we wrote on the blackboard:
+The first two suggestions were rejected very quickly and without much explicit motivation, although \textemdash{}  or because? \textemdash{}  it is not too difficult to provide it. (The first one is unattractive because the amount of output that can be produced on account of the next character of the input text varies wildly; for the second suggestion a similar objection holds. Apart from that, a program with a loop in a loop is in general cleaner: this suggests to look for larger portions.) The audience rejected the fourth suggestion on account of the remark that the terminating point could come equally well after an even number of words as after an odd number of words. To make the selection of the third suggestion explicit, we wrote on the blackboard:
 
 \quad prelude;
 
@@ -2276,17 +2275,17 @@ $$
 
 For me it was very gratifying to see that they introduced the variable ``forward'' before bothering about the details of word separation, which then became their next worry. It took them more time to realize that a further refinement of ``process next word'' required exact specification of which characters of the input text were going to be read and which characters of the output text were going to be printed at each execution of the repeatable statement. In fact, I had to pose the question to them and, after having done so, I asked them in which of the two texts the grouping presented itself most naturally. They selected the output text and chose the following grouping (indicating separation with a vertical bar):
 
-\quad $\mid$this--$\mid$si--$\mid$a--$\mid$yllis--$\mid$program.$\mid$
+\quad $\mid$this\textendash $\mid$si\textendash $\mid$a\textendash $\mid$yllis\textendash $\mid$program.$\mid$
 
 \noindent
 i.e. in units of a word followed by a proper terminator. I then asked for the corresponding grouping of the input characters. When their attention had been brought to the terminators, they suggested (from right to left!) the following separation of the input characters:
 
-\quad $\mid$this--i$\mid$s--a$\mid$--s$\mid$illy--p$\mid$rogram--.$\mid$,
+\quad $\mid$this\textemdash{}i$\mid$s\textemdash{}a$\mid$\textemdash{}s$\mid$illy\textemdash{}p$\mid$rogram\textemdash{}.$\mid$,
 
 \noindent
 as soon as one of them had remarked that the program could only ``know'' that an output word should be followed by a space after having ``seen'' the first letter of the next input word. I then remained silent, leaving them gazing at their grouping of the symbols until one of them discovered that the exceptional grouping of the characters of the first input word was inelegant, that the grouping should be
 
-\quad t$\mid$his--i$\mid$s--a$\mid$--s$\mid$illy--p$\mid$rogram--.$\mid$,
+\quad t$\mid$his\textemdash{}i$\mid$s\textemdash{}a$\mid$\textemdash{}s$\mid$illy\textemdash{}p$\mid$rogram\textemdash{}.$\mid$,
 
 \noindent
 i.e. that the first character of the first word should be read in the prelude. Another variable was introduced and we arrived at
@@ -2313,7 +2312,7 @@ Unanimously they decided to introduce a
 \noindent
 to store the letters of the word. (No one discovered that reading the letters and printing them in the reverse order could be done by a recursive routine!) Essentially, four things have to be done: the letters of the word have to be read, the letters of the word have to be printed, enough has to be read to decide which terminator is to be printed and the terminator has to be printed. I did not list these four actions, I did not ask for an explicit decision on how to group and/or combine them. The audience decided that first all reading should be done and thereafter all printing. (From their side this was hardly a conscious decision.)
 
-Trying to refine the reading and the printing process they hit an unsuspected barrier: they were --- at least for me, surprisingly --- slow in discovering that they still had to define an interface between reading and printing through which to transmit the word to be processed, no matter how obvious this interface was. It took a long time before anyone formulated that $c[i]$ should equal the $i$th character of the word when read from left to right. Perhaps half of the audience was wondering what all the fuss was about, but it took an equally long time to discover that the length of the word needed some form of representation as well. No one suggested to do this by storing a terminator, they introduced a separate integer ``$l$'', counting the number of letters of the word. They decided that the first word ``this'' should be represented by
+Trying to refine the reading and the printing process they hit an unsuspected barrier: they were \textemdash{}  at least for me, surprisingly \textemdash{}  slow in discovering that they still had to define an interface between reading and printing through which to transmit the word to be processed, no matter how obvious this interface was. It took a long time before anyone formulated that $c[i]$ should equal the $i$th character of the word when read from left to right. Perhaps half of the audience was wondering what all the fuss was about, but it took an equally long time to discover that the length of the word needed some form of representation as well. No one suggested to do this by storing a terminator, they introduced a separate integer ``$l$'', counting the number of letters of the word. They decided that the first word ``this'' should be represented by
 
 \quad $c[1] = $``$t$'', $c[2] = $``$h$'', $c[3] = $``$i$'', $c[4] = $``$s$'' and $l = 4$
 
@@ -2332,7 +2331,7 @@ When we turned our attention to the printing process, they were more productive.
 
 \quad \textbf{if} forward \textbf{then begin} $k \coloneq 0$; inc $\coloneq + 1$; term $\coloneq l$ \textbf{end}
 
-\tabto{5.8em}\quad \textbf{else begin} $k \coloneq l + 1$; inc $\coloneq -1$; term $\coloneq 1$ \textbf{end};
+\tabto{5.8em}\quad \textbf{else begin} $k \coloneq l + 1$; inc $\coloneq - 1$; term $\coloneq 1$ \textbf{end};
 
 \quad \textbf{repeat} $k \coloneq k + \text{inc}$; $\text{PNC}(c[k])$ \textbf{until} $k =$ term
 
@@ -2365,15 +2364,15 @@ Thus we arrived at the following program:
 
 \quad \textbf{until} $x =$ pnt
 
-This section has not been included because the problem tackled in it is very exciting. On the contrary, I feel tempted to remark that the problem is perhaps too trivial to act as a good testing ground for an orderly approach to the problem of program composition. This section has been included because it contains a true eye-witness account of what happened in the classroom. It should be interpreted as a partial answer to the question that is often posed to me, viz. to what extent I can teach programming style. (I never used the ``Notes on Structured Programming'' --- mainly addressed to myself and perhaps to my colleagues --- in teaching. The classroom experiment described in this section took place at the end of a course entitled ``Introduction into the Art of Programming'', for which separate lecture notes --- with exercises and all \mbox{that ---} were written. As at the moment of writing the students that followed this course have still to pass their examination, it is for me still an open question how successful I have been. They liked the course, I have heard that they described my programs as ``logical poems'', so I have the best of hopes.)
+This section has not been included because the problem tackled in it is very exciting. On the contrary, I feel tempted to remark that the problem is perhaps too trivial to act as a good testing ground for an orderly approach to the problem of program composition. This section has been included because it contains a true eye-witness account of what happened in the classroom. It should be interpreted as a partial answer to the question that is often posed to me, viz. to what extent I can teach programming style. (I never used the ``Notes on Structured Programming'' \textemdash{}  mainly addressed to myself and perhaps to my colleagues \textemdash{}  in teaching. The classroom experiment described in this section took place at the end of a course entitled ``Introduction into the Art of Programming'', for which separate lecture notes \textemdash{}  with exercises and all \mbox{that \textemdash{} } were written. As at the moment of writing the students that followed this course have still to pass their examination, it is for me still an open question how successful I have been. They liked the course, I have heard that they described my programs as ``logical poems'', so I have the best of hopes.)
 
 \section[The problem of the eight queens]{The Problem Of The Eight Queens}
 
-This last section is adapted from my lecture notes ``Introduction into the Art of Programming''. I owe the example --- as many other good ones --- to Niklaus Wirth. This last section is added for two reasons.
+This last section is adapted from my lecture notes ``Introduction into the Art of Programming''. I owe the example \textemdash{}  as many other good ones \textemdash{}  to Niklaus Wirth. This last section is added for two reasons.
 
 Firstly, it is a second effort to do more justice to the process of invention. (As a matter of fact I start where the student is not familiar with the concept of backtracking and aim at discovering it as I go along.)
 
-Secondly, and that is more important, it deals with recursion as a programming technique. In preceding sections (particularly in ``\nameref{eq:program-model}'') I have reviewed the subroutine concept; there it emerged as an embodiment of what I have also called ``operational abstraction''. In the relation between main program and subroutine we can distinguish quite clearly two different semantic levels. On the level of the main program the subroutine represents a primitive action; on that level it is used on account of ``what it does for us'' and on that same level it is irrelevant ``how it works''. On the level of the subroutine body we are concerned with how it works but can --- and should --- abstract from how it is used. This clear separation of the two semantic levels ``what it does'' and ``how it works'' is denied to the designer of a recursive procedure. As a result of this circumstance the design of a recursive routine requires a different mental skill, justifying the inclusion of the current section in this manuscript. The recursive procedure has to be understood and conceived on a single semantic level: as such it is more like a sequencing device, comparable to the repetitive clauses.
+Secondly, and that is more important, it deals with recursion as a programming technique. In preceding sections (particularly in ``\nameref{eq:program-model}'') I have reviewed the subroutine concept; there it emerged as an embodiment of what I have also called ``operational abstraction''. In the relation between main program and subroutine we can distinguish quite clearly two different semantic levels. On the level of the main program the subroutine represents a primitive action; on that level it is used on account of ``what it does for us'' and on that same level it is irrelevant ``how it works''. On the level of the subroutine body we are concerned with how it works but can \textemdash{}  and should \textemdash{}  abstract from how it is used. This clear separation of the two semantic levels ``what it does'' and ``how it works'' is denied to the designer of a recursive procedure. As a result of this circumstance the design of a recursive routine requires a different mental skill, justifying the inclusion of the current section in this manuscript. The recursive procedure has to be understood and conceived on a single semantic level: as such it is more like a sequencing device, comparable to the repetitive clauses.
 
 It is requested to make a program generating all configurations of eight queens on a chessboard of $8\times 8$ squares such that no queen can take any of the others. This means that in the configurations sought, no two queens may be on the same row, on the same column or on the same diagonal.
 
@@ -2381,7 +2380,7 @@ We don't have an operator generating all these configurations, this operator is 
 
 Call the set of configurations to be generated: set $A$. Look for a set $B$ of configurations with the following properties:
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item \label{en:first-item-eight-queen}
 	set $A$ is a subset of set $B$
 	
@@ -2396,7 +2395,7 @@ With the aid of the generator \ref{en:third-item-eight-queen} for the elements o
 
 Three remarks are in order.
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item If the whole approach is to make sense, set $B$ is not identical to set $A$, and as it must contain set $A$ as a (true) subset, it must be larger than set $A$. For reasons of efficiency, however, it is advisable to choose set $B$ ``as small as possible'': the more elements it has, the more elements of it have to be skipped on account of the decision criterion \ref{en:criterion-2-eight-queen}.
 	
 	\item \label{en:criterion-2-eight-queen}
@@ -2409,14 +2408,14 @@ Above, we have sketched a very general approach, applicable to many, very differ
 
 In a moment of optimism one could think that this is an easy matter, as we might consider the following technique. We list all the mutually independent conditions that our elements of set $A$ must satisfy and omit one of them. Sometimes this works but as a general technique it is too naïve: its short-comings become apparent when we apply it blindly to the problem of the eight queens. We can characterize our solutions by the two conditions
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item there are 8 queens on the board
 	\item no two of the queens can take each other.
 \end{enumerate}
 
 Omitting either of them gives for set $B$ the alternatives
 
-\begin{enumerate}[leftmargin=2.2\parindent, label=B\arabic*:]
+\begin{enumerate}[leftmargin=*, itemindent=1.9em, label=B\arabic*:]
 	\item \label{en:b1-eight-queens}
 	all configurations with $N$ queens on the board such that no two queens can take each other
 	\item \label{en:b2-eight-queens}
@@ -2431,17 +2430,16 @@ Well, at this stage of our considerations, being slightly at a loss, we are not 
 
 Well, let us go ahead and let us list the obvious properties we can think of.
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\alph*)]
+\begin{enumerate}[wide, nosep, label=(\alph*)]
 	\item \label{en:property-a}
 	No row may contain more than one queen, 8 queens are to be placed and the chessboard has exactly 8 rows. As a result we conclude that each row will contain precisely one queen.
 	\item Similarly we conclude that each column will contain precisely on queen.
 	\item There are 15 ``upward'' diagonals, each of them containing at most one queen, i.e. 8 upward diagonals contain precisely one queen and 7 upward
 	\item Similarly we conclude that 8 downward diagonals contain precisely one queen and 7 are empty.
 	\item Given any non-empty configuration of queens such that no two of them can take each other, removal of any one of these queens will result in a configuration sharing that property.
-diagonals are empty.
 \end{enumerate}
 
-Now the last property is very important. (To be quite honest: here I feel unable to buffer the shock of invention!) In our earlier terminology it tells us something about any non-empty configuration from set \hyperref[en:b1-eight-queens]{B1}. If we start with a solution (which is an 8-queen configuration from set \hyperref[en:b1-eight-queens]{B1}) and take away one queen we get a 7-queen configuration from set \hyperref[en:b1-eight-queens]{B1}; taking away a next queen will leave again a configuration from set \hyperref[en:b1-eight-queens]{B1} and we can repeat this process until the chessboard is empty. We could have taken a motion picture of this process: playing it back backwards it would show how, starting from an empty board, via configurations from set \hyperref[en:b1-eight-queens]{B1} that solution can be built up by adding one queen at a time. (Whether the trick of the motion picture played backwards is of any assistance for my readers is not for me to judge; I only mention it because I know that such devices help me.) When making the picture, any solution could be reduced to the empty board in many ways, in exactly the same number of ways --- while playing it backwards --- each solution can be built up. Can we exploit this freedom? We have rejected set \hyperref[en:b1-eight-queens]{B1} because it is too large, but maybe we can find a suitable subset of it, such that each non-empty configuration of the subset is a one-queen extension of only one other configuration of the subset. The ``extension property'' suggests that we are willing to consider configurations with less than 8 queens on the board and that we would like to form new configurations by adding a queen to an existing configuration-a relatively simple operation presumably. Well, this draws our attention immediately to the \textit{generation} of the elements of the (still mysterious) set $B$. For instance, in what order? And this again raises a question to which, as yet, we have not paid the slightest attention: in what order are we to generate the solutions, i.e. the elements of set $A$? Can we make a reasonable suggestion in the hope of deriving a clue from it? (In my experience such a question about order is usually very illuminating. It is not only that we have to make a sequential program that by definition will generate the solutions in some order, so that the decision about the order will have to be taken at some stage of the game. The decision about the order usually provides the clue to the proof that the program will generate \textit{all} solutions and each solution only \textit{once}.)
+Now the last property is very important. (To be quite honest: here I feel unable to buffer the shock of invention!) In our earlier terminology it tells us something about any non-empty configuration from set \hyperref[en:b1-eight-queens]{B1}. If we start with a solution (which is an 8-queen configuration from set \hyperref[en:b1-eight-queens]{B1}) and take away one queen we get a 7-queen configuration from set \hyperref[en:b1-eight-queens]{B1}; taking away a next queen will leave again a configuration from set \hyperref[en:b1-eight-queens]{B1} and we can repeat this process until the chessboard is empty. We could have taken a motion picture of this process: playing it back backwards it would show how, starting from an empty board, via configurations from set \hyperref[en:b1-eight-queens]{B1} that solution can be built up by adding one queen at a time. (Whether the trick of the motion picture played backwards is of any assistance for my readers is not for me to judge; I only mention it because I know that such devices help me.) When making the picture, any solution could be reduced to the empty board in many ways, in exactly the same number of ways \textemdash{}  while playing it backwards \textemdash{}  each solution can be built up. Can we exploit this freedom? We have rejected set \hyperref[en:b1-eight-queens]{B1} because it is too large, but maybe we can find a suitable subset of it, such that each non-empty configuration of the subset is a one-queen extension of only one other configuration of the subset. The ``extension property'' suggests that we are willing to consider configurations with less than 8 queens on the board and that we would like to form new configurations by adding a queen to an existing configuration \textemdash{}  a relatively simple operation presumably. Well, this draws our attention immediately to the \textit{generation} of the elements of the (still mysterious) set $B$. For instance, in what order? And this again raises a question to which, as yet, we have not paid the slightest attention: in what order are we to generate the solutions, i.e. the elements of set $A$? Can we make a reasonable suggestion in the hope of deriving a clue from it? (In my experience such a question about order is usually very illuminating. It is not only that we have to make a sequential program that by definition will generate the solutions in some order, so that the decision about the order will have to be taken at some stage of the game. The decision about the order usually provides the clue to the proof that the program will generate \textit{all} solutions and each solution only \textit{once}.)
 
 Prior to that we should ask ourselves: how do we characterize solutions once we have them? To characterize a solution we must give the positions of 8 queens. The queens themselves are unordered, but the rows and the columns are not: we may assume them to be numbered from 0 through 7. Thanks to property \ref{en:property-a} which tells us that each row contains precisely one queen, we can order the queens according to the number of the row they occupy. Then each configuration of 8 queens can be given by the value of the \textbf{integer array} $x[0:7]$, where
 
@@ -2455,7 +2453,7 @@ Each solution is then a ``8-digit word'' ($x[0] \dots x[7]$) and the only sensib
 
 Returning to the alphabetical order: now we are approaching familiar ground. If the elements of set $A$ are to be generated in alphabetical order and they have to be generated by selection from a larger set $B$, then the standard technique is to generate the elements of set $B$ in alphabetical order as well and to produce the elements of the subset in the order in which they occur in set $B$.
 
-First we have to generate all solutions with $x[0] = 0$ (if any), then those with $x[0] = 1$ (if any) etc.; of the solutions with $x[0]$ fixed, those with $x[1] = 0$ (if any) have to be generated first, followed by those with $x[1] = 1$ (if any) etc. In other words: the queen of row 0 is placed in column 0 --- say the square in the bottom left corner --- and remains there until all elements of $A$ (and $B$) with queen 0 in that position have been generated and only then is she moved one square to the right to the next column. For each position of queen 0, queen 1 will walk from left to right in row 1 --- skipping the squares that are covered by queen 0 --- for each combined position of the first two queens, queen 2 walks along row 2 from left to right, skipping all squares covered by the preceding queens, etc.
+First we have to generate all solutions with $x[0] = 0$ (if any), then those with $x[0] = 1$ (if any) etc.; of the solutions with $x[0]$ fixed, those with $x[1] = 0$ (if any) have to be generated first, followed by those with $x[1] = 1$ (if any) etc. In other words: the queen of row 0 is placed in column 0 \textemdash{}  say the square in the bottom left corner \textemdash{}  and remains there until all elements of $A$ (and $B$) with queen 0 in that position have been generated and only then is she moved one square to the right to the next column. For each position of queen 0, queen 1 will walk from left to right in row 1 \textemdash{}  skipping the squares that are covered by queen 0 \textemdash{}  for each combined position of the first two queens, queen 2 walks along row 2 from left to right, skipping all squares covered by the preceding queens, etc.
 
 But now we have found set $B$! It is indeed a subset of \hyperref[en:b1-eight-queens]{B1}, set $B$ consists of all configurations with one queen in each of the first $N$ rows, such that no two queens can take each other.
 
@@ -2478,21 +2476,21 @@ But for two reasons a program of the above structure is less attractive. Firstly
 
 So that is not too attractive. What can we do about it? As long as we regard the sequence of configurations of set $B$ as a single, monotonous sequence, not subdivided into a succession of subsequences, the corresponding program structure will be a single loop as in the program just sketched. If we are looking for an alternative program structure, we must \textit{therefore} ask ourselves ``How can we group the sequence of configurations from set $B$ into a succession of subsequences?''.
 
-Realizing that the sequence ot configurations from set $B$ have to be generated in alphabetical order and thinking about the main subdivision in a dictionary --- viz. by first letter --- the first grouping is obvious: by position of queen 0.
+Realizing that the sequence ot configurations from set $B$ have to be generated in alphabetical order and thinking about the main subdivision in a dictionary \textemdash{}  viz. by first letter \textemdash{}  the first grouping is obvious: by position of queen 0.
 
-Generating all elements of set $B$ --- for the moment we forget about the printing of those: configurations that belong to set $A$ as well --- then presents itself as
+Generating all elements of set $B$ \textemdash{}  for the moment we forget about the printing of those: configurations that belong to set $A$ as well \textemdash{}  then presents itself as
 
 INITIALIZE EMPTY BOARD;
 
-h $\coloneq 0$;
+$h \coloneq 0$;
 
-\textbf{repeat} SET QUEEN ON SQUARE$[0,h]$;
+\textbf{repeat} SET QUEEN ON SQUARE$[0,\ h]$;
 
 \quad GENERATE ALL CONFIGURATIONS WITH QUEEN 0
 
 \quad\quad FIXED;
 
-\quad REMOVE QUEEN FROM SQUARE$[0,h]$;
+\quad REMOVE QUEEN FROM SQUARE$[0,\ h]$;
 
 \quad $h \coloneq h + 1$
 
@@ -2500,28 +2498,28 @@ h $\coloneq 0$;
 
 But now the question repeats itself: how do we group all configurations with queen 0 fixed? We have already given the answer: in order of increasing column number of queen 1, i.e.
 
-$h_1 \coloneq 0$;
+$h1 \coloneq 0$;
 
-\textbf{repeat if} SQUARE$[1, h_1]$ FREE \textbf{do}
+\textbf{repeat if} SQUARE$[1,\ h1]$ FREE \textbf{do}
 
-\quad \textbf{begin} SET QUEEN ON SQUARE$[1, h_1]$;
+\quad \textbf{begin} SET QUEEN ON SQUARE$[1,\ h1]$;
 
 \quad \quad GENERATE ALL CONFIGURATIONS WITH FIRST
 
 \quad \quad \quad 2 QUEENS FIXED;
 
-\quad \quad REMOVE QUEEN FROM SQUARE$[1, h_1]$
+\quad \quad REMOVE QUEEN FROM SQUARE$[1,\ h1]$
 
 \quad \textbf{end};
 
-\quad $h_1 \coloneq h_1 + 1$
+\quad $h1 \coloneq h1 + 1$
 
-\textbf{until} $h_1 = 8$.
+\textbf{until} $h1 = 8$.
 
 For ``GENERATE ALL CONFIGURATIONS WITH FIRST 2 QUEENS FIXED'' we could write a similar piece of program and so on; inserting
 them inside each other would result in a correct program with eight nested loops, but they would all be very, very similar. To do so has two disadvantages
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item it takes a cumbersome amount of writing
 	\item it gives a program solving the problem for a chessboard of $8\times 8$ squares, but to solve the same puzzle for a board of, say, $10\times 10$ squares would require a new, still longer program.
 \end{enumerate}
@@ -2530,9 +2528,9 @@ We are looking for a way in which all the loops can be executed under control of
 
 Well, to start with, we observe that the outermost and the innermost loops are exceptional.
 
-The outermost loop is exceptional in the sense that it does not test whether square$[0,h]$ is free because we know it is free. But because we know it is free, there is no harm in inserting the conditional clause
+The outermost loop is exceptional in the sense that it does not test whether square$[0,\ h]$ is free because we know it is free. But because we know it is free, there is no harm in inserting the conditional clause
 
-\quad \textbf{if} SQUARE$[0,h]$ FREE \textbf{do}
+\quad \textbf{if} SQUARE$[0,\ h]$ FREE \textbf{do}
 
 \noindent
 and this gives the outermost loop the same pattern as the next six loops.
@@ -2562,15 +2560,15 @@ while ``generate'' is recursively defined as follows:
 
 $h \coloneq 0$;
 
-\textbf{repeat if} SQUARE$[n,h]$ FREE \textbf{do}
+\textbf{repeat if} SQUARE$[n,\ h]$ FREE \textbf{do}
 
-\quad \textbf{\textbf{begin}} SET QUEEN ON SQUARE$[n,h]$; $n \coloneq n + 1$;
+\quad \textbf{\textbf{begin}} SET QUEEN ON SQUARE$[n,\ h]$; $n \coloneq n + 1$;
 
 \quad \quad \textbf{if} $n = 8$ \textbf{then} PRINT CONFIGURATION
 
 \quad \quad \textbf{else} generate;
 
-\quad \quad $n \coloneq n - 1$; REMOVE QUEEN FROM SQUARE$[n,h]$
+\quad \quad $n \coloneq n - 1$; REMOVE QUEEN FROM SQUARE$[n,\ h]$
 
 \quad \textbf{end};
 
@@ -2580,9 +2578,9 @@ $h \coloneq 0$;
 
 \textbf{end}
 
-Each activation of ``generate'' will introduce its private local variable $h$, thus catering for $h,\ h_1,\ \dots,\ h_8$ that we would need when writing eight nested loops.
+Each activation of ``generate'' will introduce its private local variable $h$, thus catering for $h,\ h1,\ \dots,\ h8$ that we would need when writing eight nested loops.
 
-Our program --- although correct to this level of detail --- is not yet complete, i.e. it has not been refined up to the standard degree of detail that is required by our programming language. In our next refinement we should decide upon the conventions according to which we represent the configurations on the board. We have already decided more or less that we shall use the
+Our program \textemdash{}  although correct to this level of detail \textemdash{}  is not yet complete, i.e. it has not been refined up to the standard degree of detail that is required by our programming language. In our next refinement we should decide upon the conventions according to which we represent the configurations on the board. We have already decided more or less that we shall use the
 
 \quad \textbf{integer array} $x[0:7]$
 
@@ -2598,13 +2596,13 @@ $n =$ the number of queens on the board
 
 \hangindent=2\parindent $x[i]$ for $0 \leqslant i < n =$ the number of the column occupied by the queen in the $i$th row.
 
-The array $x$ and the scalar n are together sufficient to fix any configuration of the set $B$ and those will be the only ones on the chessboard. As a result we have no \textit{logical} need for more variables; yet we shall introduce a few more, because from a practical point of view we can make good use of them. The problem is that with only the above material the (frequent) analysis whether a given square in the next free row is uncovered is rather painful and time-consuming. It is here that we look for the standard technique as described in the section ``\nameref{sec:trading-storage-for-computation-speed}'' (see page \pageref{sec:trading-storage-for-computation-speed}). The role of the stored argument is here played by the configuration of queens on the board, but this value does not change wildly --- oh no; the only thing we do is to add or remove a queen. And we are looking for additional tables (whose contents are a function of the current configuration) such that they will assist us in deciding whether a square is free, and also such that they can be updated easily when a queen is added to or removed from a configuration.
+The array $x$ and the scalar n are together sufficient to fix any configuration of the set $B$ and those will be the only ones on the chessboard. As a result we have no \textit{logical} need for more variables; yet we shall introduce a few more, because from a practical point of view we can make good use of them. The problem is that with only the above material the (frequent) analysis whether a given square in the next free row is uncovered is rather painful and time-consuming. It is here that we look for the standard technique as described in the section ``\nameref{sec:trading-storage-for-computation-speed}'' (see page \pageref{sec:trading-storage-for-computation-speed}). The role of the stored argument is here played by the configuration of queens on the board, but this value does not change wildly \textemdash{} oh no; the only thing we do is to add or remove a queen. And we are looking for additional tables (whose contents are a function of the current configuration) such that they will assist us in deciding whether a square is free, and also such that they can be updated easily when a queen is added to or removed from a configuration.
 
 How? Well, we might think of a boolean array of $8\times 8$, indicating for each square whether it is free or not. If we do this for the full board, adding a queen might imply dealing with 28 squares. Removing a queen, however, is then a painful process, because it does not follow that all squares no longer covered by \textit{her} are indeed free: they might be covered by one or more of the other queens that remain in the configuration. There is a remedy (again standard) for this, viz. associating with each square not a boolean variable, but an integer counter, counting the number of queens covering the square. Adding a queen then means increasing up to 28 counters by 1, removing a queen means decreasing them by 1 and a square is free when its associated counter equals zero. We could do it that way, but the question is whether this is not overdoing it: 28 adjustments is indeed quite a heavy overhead on setting or removing a queen.
 
 Each square in the freedom of which we are interested covers a row (which is free by definition, so we need not bother about that), covers one of the 8 columns (which must still be empty), covers one of the 15 upward diagonals (which must still be empty) and one of the 15 downward diagonals (which must still be empty). This suggests that we should keep track of
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item the columns that are free
 	\item the upward diagonals that are free
 	\item the downward diagonals that are free.
@@ -2624,7 +2622,7 @@ How do we identify the diagonals? Well, along an upward diagonal the difference 
 \noindent
 to keep track of which diagonals are free.
 
-The question whether square$[n,h]$ is free becomes
+The question whether square$[n,\ h]$ is free becomes
 
 \quad col$[h]$ \textbf{and} up$[n-h]$ \textbf{and} down$[n+h]$,
 
@@ -2636,8 +2634,7 @@ In the final program the variable ``$k$'' is introduced for general counting pur
 With the final program we come to the end of the last section. We have attempted to show the pattern of reasoning by which one could discover backtracking as a technique, and also the pattern of reasoning by which one could discover a recursive procedure describing it. The most important moral of this section is perhaps that all that analysis and synthesis could be carried out before we had decided how (and how redundantly) a configuration would be represented inside the machine. It is true that such considerations only bear fruit when eventually a convenient representation for configurations can be found. Yet the mental isolation of a level of abstraction in which we allow ourselves not to bother about it seems crucial.
 
 Finally, I would like to thank the reader that has followed me up till here for his patience.
-
-\newpage
+\bigskip
 
 \noindent
 \textbf{begin} \textbf{integer} $n$, $k$; \textbf{integer array} $x[0:7]$;

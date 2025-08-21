@@ -16,7 +16,7 @@ The last stage in the process of abstraction is very much more sophisticated; it
 
 The process of abstraction may thus be summarized in four stages:
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item Abstraction: the decision to concentrate on properties which are shared  by many objects or situations in the real world, and to ignore the differences between them.
 	\item Representation: the choice of a set of symbols to stand for the abstraction; this may be used as a means of communication.
 	\item Manipulation: the rules for transformation of the symbolic representations as a means of predicting the effect of similar manipulation of the real world.
@@ -24,7 +24,7 @@ The process of abstraction may thus be summarized in four stages:
 \end{enumerate}
 
 \subsection{Numbers and Numerals}
-Let us illustrate this rather abstract description by means of a relatively concrete example --- the number four. In the real world, it is noticed that objects can be grouped together in collections, for example four apples. This already requires a certain act of abstraction, that is a decision to ignore (for the time being) the differences between the individual apples in the collection --- for example, one of them is bad, two of them unripe, and the fourth already partly eaten by birds.
+Let us illustrate this rather abstract description by means of a relatively concrete example \textemdash{} the number four. In the real world, it is noticed that objects can be grouped together in collections, for example four apples. This already requires a certain act of abstraction, that is a decision to ignore (for the time being) the differences between the individual apples in the collection \textemdash{} for example, one of them is bad, two of them unripe, and the fourth already partly eaten by birds.
 
 Now one may consider several different collections, each of them with four items; for example, four oranges, four pears, four bananas, etc. If we choose to ignore the differences between these collections and concentrate on their similarity, then we can form a relatively abstract concept of the number four. The same process could lead to the concept of the number 3, 15, and so on; and a yet further stage of abstraction would lead to the development of the concept of a natural number.
 
@@ -42,13 +42,13 @@ It is my belief that the process of abstraction, which underlies attempts to app
 
 The next stage in program design is the decision of the manner in which the abstracted information is to be represented in the computer. An elasticity function may be represented by its values at a suitable number of discrete points; and these may be represented in a variety of ways as a two-dimensional array. Alternatively, the elasticity might be given by a computed function, and the data be held as a vector of polynomial or chebyshev coefficients for the function. A payroll file on a computer consists of a number of records, one relating to each employee. The choice of representation within the record of each relevant attribute must be made as part of the design of the program.
 
-The stage of axiomatization is not usually regarded as a separate stage in programming; and is often left implicit. In the case of aircraft flutter, the axiomatization is the formulation of the differential equations which are presumed to describe the reaction of the real wing to certain kinds of stresses, and which (it is hoped) also describe the process of approximate solution on the computer. In the case of a payroll, the axioms correspond to the descriptions of various aspects of the real world which need to be embodied in the program --- for example, the fact that net pay equals gross pay minus deductions.
+The stage of axiomatization is not usually regarded as a separate stage in programming; and is often left implicit. In the case of aircraft flutter, the axiomatization is the formulation of the differential equations which are presumed to describe the reaction of the real wing to certain kinds of stresses, and which (it is hoped) also describe the process of approximate solution on the computer. In the case of a payroll, the axioms correspond to the descriptions of various aspects of the real world which need to be embodied in the program \textemdash{} for example, the fact that net pay equals gross pay minus deductions.
 
 Finally there comes the task of programming the computer to get it to carry out those manipulations on the representation of the data that correspond to the manipulations in the real world in which we are interested. 
 
 The success of a program is dependent on three basic conditions:
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item The axiomatisation is a correct description of those aspects of the real world with which it is concerned.
 	\item The axiomatisation is a correct description of the behavior of the program, i.e., that the program contains no errors.
 	\item The choice of representation and the method of manipulation are such that the cost of running the program on the computer is acceptable.
@@ -69,7 +69,7 @@ Another major advantage of the use of high-level programming languages, namely m
 
 A third major advantage of the use of a high-level language is that it significantly reduces the scope for programming error. In machine code programming it is all too easy to make stupid mistakes, such as using fixed point addition on floating point numbers, performing arithmetic operations on Boolean markers, or allowing modified addresses to go out of range. When using a high-level language, such errors may be prevented by three means:
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item Errors involving the use of the wrong arithmetic instructions are logically impossible; no program expressed, for example in ALGOL, could ever cause such erroneous code to be generated.
 	\item Errors like performing arithmetic operations on Boolean markers will be immediately detected by a compiler, and can never cause trouble in an executable program.
 	\item Errors like the use of a subscript out of range can be detected by runtime checks on the ranges of array subscripts.
@@ -130,7 +130,7 @@ In general, mathematicians do not use type conventions of this sort to make dist
 \noindent
 It turns out that whether you answer yes or no, you can be immediately proved wrong.
 
-Russell's solution to the paradox is to associate with each logical or mathematical variable a \textit{type}, which defines whether it is an individual, a set, a set of sets, etc. Then he states that any proposition of the form ``$x$ is a member of $y$'' is grammatically meaningful only if $x$ is a variable of type individual and $y$ a variable of type set, or if $x$ is of type set and $y$ is of type set of sets, and so on. Any proposition that violates this rule is regarded as meaningless --- the question of its truth or falsity just does not arise, it is just a jumble of letters. Thus any proposition involving sets that are or are not members of themselves can simply be ruled out.
+Russell's solution to the paradox is to associate with each logical or mathematical variable a \textit{type}, which defines whether it is an individual, a set, a set of sets, etc. Then he states that any proposition of the form ``$x$ is a member of $y$'' is grammatically meaningful only if $x$ is a variable of type individual and $y$ a variable of type set, or if $x$ is of type set and $y$ is of type set of sets, and so on. Any proposition that violates this rule is regarded as meaningless \textemdash{} the question of its truth or falsity just does not arise, it is just a jumble of letters. Thus any proposition involving sets that are or are not members of themselves can simply be ruled out.
 
 Russell's theory of types leads to certain complexities in the foundation of mathematics, which are not relevant to describe here. Its interesting features for our purposes are that types are used to prevent certain erroneous expressions from being used in logical and mathematical formulae; and that a check against violation of type constraints can be made merely by scanning the text, without any knowledge of the value which a particular symbol might happen to stand for.
 
@@ -138,7 +138,7 @@ Russell's theory of types leads to certain complexities in the foundation of mat
 
 Thus there is a high degree of commonality in the use of the concept of type by mathematicians, logicians and programmers. The salient characteristics of the concept of type may be summarized:
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item A type determines the class of values which may be assumed by a variable or expression.
 	\item Every value belongs to one and only one type.
 	\item The type of a value denoted by any constant, variable, or expression may be deduced from its form or context, without any knowledge of its value as computed at run time.
@@ -188,31 +188,31 @@ All structured data must in the last analysis be built up from unstructured comp
 In particular, in many computer programs an integer is used to stand not for a numeric quantity, but for a particular choice from a relatively small number of alternatives. In such cases, the annotation of the program usually lists all the possible alternative values, and gives the intended interpretation of each of them. It is possible to regard such a quantity as belonging to a separate type, quite distinct from the integer type, and quite distinct from any other similar set of markers which have a different interpretation. Such a type is said to be an \textit{enumeration}, and we suggest a standard notation for declaring the name of the type and associating a name with each of its alternative values:
 \medskip
 
-\tabto{3.7em}\textbf{type} suit $=$ (club, diamond, heart, spade);
+\tabto{3.7em}\textbf{type} suit $= ($club, diamond, heart, spade$)$;
 
 \noindent
-\hangindent=5.6\parindent\textbf{ordered} \tabto{3.7em}\textbf{type} rank = (two, three, four, five, six, seven, eight, nine, ten, Jack, Queen, King, Ace);
+\hangindent=5.6\parindent\textbf{ordered} \tabto{3.7em}\textbf{type} rank $= ($two, three, four, five, six, seven, eight, nine, ten, Jack, Queen, King, Ace$)$;
 \medskip
 
-\tabto{3.7em}\textbf{type} primary color $=$ (red, yellow, blue);
+\tabto{3.7em}\textbf{type} primary color $= ($red, yellow, blue$)$;
 
 \noindent
-\hangindent=7.4\parindent\textbf{ordered} \tabto{3.7em}\textbf{type} day of week $=$ (Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday);
+\hangindent=7.4\parindent\textbf{ordered} \tabto{3.7em}\textbf{type} day of week $= ($Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday$)$;
 \medskip
 
 \tabto{3.7em}\textbf{type} day of month $= 1\,.\,.\,31$;
 
 \noindent
-\hangindent=6.2\parindent\textbf{ordered} \tabto{3.7em}\textbf{type} month $=$ (Jan, Feb, March, April, May, June, July, Aug, Sept, Oct, Nov, Dec);
+\hangindent=6.2\parindent\textbf{ordered} \tabto{3.7em}\textbf{type} month $= ($Jan, Feb, March, April, May, June, July, Aug, Sept, Oct, Nov, Dec$)$;
 \medskip
 
 \tabto{3.7em}\textbf{type} year $= 1900\,.\,.\,1969$;
 
-\tabto{3.7em}\textbf{type} Boolean $=$ (false, true);
+\tabto{3.7em}\textbf{type} Boolean $= ($false, true$)$;
 \medskip
 
 \noindent
-\hangindent=5.6\parindent\textbf{ordered} \tabto{3.7em}\textbf{type} floor $=$ (basement, ground, mezzanine, first, second);
+\hangindent=5.6\parindent\textbf{ordered} \tabto{3.7em}\textbf{type} floor $= ($basement, ground, mezzanine, first, second$)$;
 
 \tabto{3.7em}\textbf{type} coordinate $= 0\,.\,.\,1023$;
 \medskip
@@ -249,7 +249,7 @@ The cardinality of a type defined by enumeration is obviously equal to the lengt
 
 The operations required for successful manipulation of values of enumeration types and subranges are:
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item test of equality, for example:
 
 	\quad \textbf{if} arrival $=$ departure \textbf{then go to} transit desk;
@@ -265,12 +265,13 @@ The operations required for successful manipulation of values of enumeration typ
 	\item \label{en:manipulation-3}
 	case discrimination, for example:
 
-	\quad \textbf{case} $p$c \textbf{of} (red: \dots,
+	\quad \textbf{case} $pc$ \textbf{of} $($red: \dots,
 
 	\tabto{5.7em}yellow: \dots,
 
-	\tabto{5.7em}blue: \dots)
+	\tabto{5.7em}blue: \dots$)$
 	
+	\noindent
 	where $pc$ is a variable or expression of type primary color, and the limbs of the discrimination are indicated by lacunae. A case discrimination may be either a statement, in which case the limbs must be statements; or it may be an expression, in which case the limbs must be all expressions of the same type.
 	
 	The effect of a case discrimination is to select for execution (or evaluation) that single statement (or expression) which is prefixed by the constant equal to the current value of the case expression. In some cases, it may be convenient to prefix several constants to the same limb, or even to indicate a subrange of values which would select the corresponding limb; but of course each value must be mentioned exactly once:
@@ -300,10 +301,11 @@ The operations required for successful manipulation of values of enumeration typ
 	
 	form of for statement or loop
 	
-	\quad \textbf{for} $a:\text{alpha}$ \textbf{do} \dots;
+	\quad \textbf{for} $a$: alpha \textbf{do} \dots;
 	
-	\quad \textbf{for} $i:1\,.\,.\,99$ \textbf{do} \dots;
+	\quad \textbf{for} $i$: $1\,.\,.\,99$ \textbf{do} \dots;
 	
+	\noindent
 	In this construction, the counting variable ($a$ or $i$) is taken to belong to the type indicated, and to be declared locally to the construction, in the sense that its value does not exist before or after the loop, and its name is not accessible outside the loop. In addition, the value of the counting variable is not allowed to be changed inside the body of the loop, since this would frustrate the whole intention of declaring the variable by means of the \textbf{for} construction.
 	
 	In the case of an ordered type, it is natural to assume that the counting variable sequences through the values of the type in the defined order, $T.$min, succ($T.$min), \dots, $T.$max. But if the type is an unordered one, it is assumed that the sequence of the scan does not matter at the current level of abstraction, and will be defined at some later stage in the development of a concrete program.
@@ -314,6 +316,7 @@ The operations required for successful manipulation of values of enumeration typ
 	
 	\quad $z \coloneq$ coordinate$($integer$(z) + x$distance$)$;
 	
+	\noindent
 	where $x$distance is an integer variable. Of course, this is an excessively cumbersome notation, and one would certainly wish to adopt the convention of omitting the conversions, where the need for their re-insertion can be established from the context:
 	
 	$x$distance $\coloneq x - y$;
@@ -341,11 +344,11 @@ The case discrimination can be most efficiently carried out by a switch-jump. Fo
 
 \quad \quad \textbf{go to} $ss[pc + 1]$;
 
-\quad \quad red:\textbf{begin} \dots; \textbf{go to} end \textbf{end};
+\quad \quad red:\textbf{begin}\dots; \textbf{go to} end \textbf{end};
 
-\quad \quad yellow:\textbf{begin} \dots; \textbf{go to} end \textbf{end};
+\quad \quad yellow:\textbf{begin}\dots; \textbf{go to} end \textbf{end};
 
-\quad \quad blue:\textbf{begin} \dots; \textbf{go to} end \textbf{end};
+\quad \quad blue:\textbf{begin}\dots; \textbf{go to} end \textbf{end};
 
 \quad end:\textbf{end}. 
 
@@ -410,7 +413,7 @@ read first character;
 
 \textbf{repeat case} buffer \textbf{of}
 
-\quad (alphabet:scan identifier,
+\quad $($alphabet:scan identifier,
 
 \quad digit:point:subten:scan number,
 
@@ -432,7 +435,7 @@ read first character;
 
 \quad \textbf{end}
 
-\quad)
+\quad $)$
 
 \textbf{until} end of tape
 
@@ -559,7 +562,7 @@ Write functions to represent the four standard arithmetic operations on complex 
 
 The standard method of representing a value of Cartesian product type is simply by juxtaposing the values of its components in a consecutive region of store, usually in the order indicated. However, there is considerable variation in the amount of packing and padding which may be involved in the juxtaposition. In the standard unpacked representation, each component value is made to occupy an integral number of words, where a word is the smallest conveniently addressable and efficiently accessible unit of storage on the computer.
 
-If the values can fit into less storage than one word, there is the option of packing more than one component into a word. In a tight packed representation, the bit patterns of the components are directly juxtaposed. In a loosely packed representation, the components may be fitted within certain subdivisions of a word, which are ``natural'' in the sense that special machine code instructions are available for selecting or updating particular parts of a word --- for example, character boundaries, or instruction fields of a word.
+If the values can fit into less storage than one word, there is the option of packing more than one component into a word. In a tight packed representation, the bit patterns of the components are directly juxtaposed. In a loosely packed representation, the components may be fitted within certain subdivisions of a word, which are ``natural'' in the sense that special machine code instructions are available for selecting or updating particular parts of a word \textemdash{} for example, character boundaries, or instruction fields of a word.
 
 The sequence of the components may be rearranged to fit them conveniently within such boundaries; but such rearrangement is usually inadvisable if the type is ordered.
 
@@ -1386,7 +1389,7 @@ Our final example shows how it is possible to represent the programming language
 
 \subsection{Manipulation}
 
-The zero element of a sequence type $T$ is the sequence that contains no items --- this is known as the null or empty sequence, and is denoted by $T()$. For each value $v$ of the domain type, there is a sequence whose only item is $v$; this is known as the \textit{unit sequence} of $v$ and is denoted by $T(v)$. Finally, if $v_1, v_2, \dots, v_n$ are values from the base type (possibly with repetition),
+The zero element of a sequence type $T$ is the sequence that contains no items \textemdash{} this is known as the null or empty sequence, and is denoted by $T()$. For each value $v$ of the domain type, there is a sequence whose only item is $v$; this is known as the \textit{unit sequence} of $v$ and is denoted by $T(v)$. Finally, if $v_1, v_2, \dots, v_n$ are values from the base type (possibly with repetition),
 $T(v_1, v_2, \dots, v_n)$ denotes the sequence consisting of these values in the stated order. If for convenience the type name $T$ is omitted, we will use square brackets to surround the sequence:
 
 \quad $[v],$\qquad $[v_1, v_2, \dots, v_n]$
@@ -1489,7 +1492,7 @@ In deciding a representation for a sequence, it is most important to know which 
 
 \subsubsection{Contiguous representation}
 
-The simplest method of representing a sequence is to allocate to it a fixed contiguous area of storage, adequate to hold all items actually required. This method is suitable if the value (or at least the length) of the sequence is constant throughout the execution of the program --- for example, a string of characters intended to be used as an output message or title.
+The simplest method of representing a sequence is to allocate to it a fixed contiguous area of storage, adequate to hold all items actually required. This method is suitable if the value (or at least the length) of the sequence is constant throughout the execution of the program \textemdash{} for example, a string of characters intended to be used as an output message or title.
 
 In some cases, the length of the sequence is unknown at the time the program is written, but is known on entry to the block in which the sequence is declared, and this length remains constant throughout the existence of the sequence. In such cases, it is possible to allocate a contiguous area of storage in the local workspace of the block, using the standard stack method of store allocation and deallocation.
 
@@ -1869,7 +1872,7 @@ The next example is taken from the field of the translation of programming langu
 \noindent
 Of course, the translator is interested in the decode only of those identifiers actually declared in the source program. For the vast majority of possible identifiers, the value given by any dictionary of this type will be that value of the decode type which indicates that the identifier was undeclared.
 
-The final example is of a type that causes familiar problems in a commercial filing system and in real life --- that of multidimensional cross-classification. The customers of a firm are split up into a number of geographical areas; they are also classified in a number of classes, in accordance with the kind of product they purchase. On occasions it is required to access all customers in an area, sequencing through all classes; on other occasions to access all customers in a class, sequencing through the areas; and finally, it is sometimes required to process all customers of a given class in a given area. The abstract structure required to deal with this situation is a two-dimensional sparse array of sparse sets:
+The final example is of a type that causes familiar problems in a commercial filing system and in real life \textemdash{} that of multidimensional cross-classification. The customers of a firm are split up into a number of geographical areas; they are also classified in a number of classes, in accordance with the kind of product they purchase. On occasions it is required to access all customers in an area, sequencing through all classes; on other occasions to access all customers in a class, sequencing through the areas; and finally, it is sometimes required to process all customers of a given class in a given area. The abstract structure required to deal with this situation is a two-dimensional sparse array of sparse sets:
 
 \quad \textbf{sparse array} $(c$:class; $a$:area$)$ \textbf{of sparse powerset} customer.
 
@@ -2809,7 +2812,7 @@ Note: $min(T())$ is not defined
 	\quad \textbf{if} $a \neq T_0$.min \textbf{then} $T($pred$(a))$ \textbf{else} $T()$
 \end{enumerate}
 
-\tabto*{0.9em}(27)--(28) \textbf{up} is similarly defined, with succ for pred and max for min.
+\tabto*{0.9em}(27)\textendash{}(28) \textbf{up} is similarly defined, with succ for pred and max for min.
 
 \begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]	
 	\setcounter{enumi}{28}
@@ -2951,7 +2954,7 @@ I am also deeply indebted to Professor N. Wirth for many fruitful discussions an
 \medskip
 
 \noindent
-Dijkstra, E. W. (1972). Notes on Structured Programming. ``Structured Programming''. pp. 1--82. Academic Press, London.
+Dijkstra, E. W. (1972). Notes on Structured Programming. ``Structured Programming''. pp. 1\textendash{}82. Academic Press, London.
 \medskip
 
 \noindent
@@ -2963,7 +2966,7 @@ McCarthy, J. (1963). ``A Basis for a Mathemetical Theory of Computation in Compu
 \medskip
 
 \noindent
-Mealy, G. H. (1967). Another Look at Data. \textit{A.F.I.P.S. Fall Joint Computer Conference Proceedings}. \textbf{31}, pp. 525--534.
+Mealy, G. H. (1967). Another Look at Data. \textit{A.F.I.P.S. Fall Joint Computer Conference Proceedings}. \textbf{31}, pp. 525\textendash{}534.
 \medskip
 
 \noindent
@@ -2971,8 +2974,8 @@ Wirth, N. (1970). Programming and Programming Languages. Contribution to Confere
 \medskip
 
 \noindent
-Wirth, N. (1971). Program Development by Stepwise Refinement. \textit{Comm. A.C.M.} \textbf{14}, 4, pp. 221--227.
+Wirth, N. (1971). Program Development by Stepwise Refinement. \textit{Comm. A.C.M.} \textbf{14}, 4, pp. 221\textendash{}227.
 \medskip
 
 \noindent
-Wirth, N. (1971). The Programming Language PASCAL. \textit{Acta Informatica}, \textbf{1}, 1, pp. 35--63.
+Wirth, N. (1971). The Programming Language PASCAL. \textit{Acta Informatica}, \textbf{1}, 1, pp. 35\textendash{}63.
