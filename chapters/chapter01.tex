@@ -91,7 +91,6 @@ Let me end this section with a final aside on the significance of computers. Com
 \textit{Corollary of the first part of this section:}
 \nopagebreak
 
-\noindent
 Program testing can be used to show the presence of bugs, but never to show their absence!
 
 \section[On our mental aids]{On Our Mental Aids}
@@ -103,7 +102,7 @@ But how do we convince? And how do we convince ourselves? What are the typical p
 
 Among the mental aids available to understand a program (or a proof of its correctness) there are three that I should like to mention explicitly:
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 \item Enumeration
 \item Mathematical induction
 \item Abstraction.
@@ -212,7 +211,7 @@ We now consider the following program part:
 \end{equation}
 
 \noindent
-in which the first line represents the initialization and the second one the loop, controlled by the (hopefully self-explanatory) repetition clause \textbf{while} \dots\ \textbf{do}. (In terms of the conditional clause \textbf{if} \dots\ \textbf{do}, used in our previous example, a more formal definition of the semantics of the repetition clause is by stating
+in which the first line represents the initialization and the second one the loop, controlled by the (hopefully self-explanatory) repetition clause \textbf{while}\dots\textbf{do}. (In terms of the conditional clause \textbf{if}\dots\textbf{do}, used in our previous example, a more formal definition of the semantics of the repetition clause is by stating
 that
 \medskip
 
@@ -246,7 +245,7 @@ Calling in the construction ``\textbf{while} $B$ \textbf{do} $S$'' the statement
 		\label{eq:n-execution-prop-a}
 		&d=d_k& \\
 		\label{eq:n-execution-prop-b}
-		\text{and}\quad &\text{\textbf{non} prop }(d_1) &\text{ for all } i \text{ satisfying } 0 \leqslant i < n.
+		\text{and}\quad &\text{\textbf{non} prop }(d_i) &\text{ for all } i \text{ satisfying } 0 \leqslant i < n.
 	\end{align}
 \end{subequations}
 
@@ -438,7 +437,8 @@ Our next step is to verify, that after the initial assignment to $r$ the relatio
 
 \noindent
 holds.
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item It holds after the initial assignments.
 	\item The repeated statement of the first clause (``$dd \coloneq 2\times dd$'') maintains the invariance of (\ref{eq:example-a-equiv-r-mod-d}) and therefore the whole first repetition maintains the validity of (\ref{eq:example-a-equiv-r-mod-d}). 
 	\item The second repeated statement consists of two statements. The first (``$dd \coloneq dd/2$'') leaves (\ref{eq:example-a-equiv-r-mod-d}) invariant, the second one also leaves (\ref{eq:example-a-equiv-r-mod-d}) invariant for either it leaves $r$ untouched or it decreases $r$ by the current value of $dd$, an operation which on account of (\ref{eq:example-dd-equiv-0-mod-d}) also maintains the validity of (\ref{eq:example-a-equiv-r-mod-d}). Therefore the whole second repeated statement leaves (\ref{eq:example-a-equiv-r-mod-d}) invariant and therefore the whole repetition leaves (\ref{eq:example-a-equiv-r-mod-d}) invariant. Combining (\ref{eq:example-r-interval}) and (\ref{eq:example-a-equiv-r-mod-d}), the final value	therefore satisfies
@@ -451,7 +451,7 @@ $$
 \noindent
 i.e. $r$ is the smallest non-negative remainder of the division of $a$ by $d$.
 
-\begin{enumerate}[leftmargin=*, itemindent=3\parindent, label=\textit{Remark }\arabic*.]
+\begin{enumerate}[wide, nosep, label=\textit{Remark }\arabic*.]
 	\item The program
 	
 	{
@@ -484,20 +484,24 @@ assigns to $q$ the value of the corresponding quotient. The proof can be establi
 		\text{``\textbf{while} } B \text{ \textbf{do} } S\text{''}
 	$$	
 	
+	\noindent
 	one has to show that $S$ is such that the truth of
 	$$
 	P \text{ \textbf{and} } B
 	$$
 	
+	\noindent
 	prior to the execution of $S$ implies the truth of
 	$$ P $$
 	
+	\noindent
 	after its execution.)
 	\item As an exercise for the reader (for which acknowledgment is due to James King, CMU, Pittsburgh, USA), prove that with integer $A$, $B$, $x$, $y$ and $z$ and
 	$$
 	A > 0\quad \text{and}\quad B\geqslant 0
 	$$
 	
+	\noindent
 	after the execution of the program section
 	
 	{
@@ -513,9 +517,9 @@ assigns to $q$ the value of the corresponding quotient. The proof can be establi
 		\quad\textbf{end}''
 	}
 	
+	\noindent
 	finally $z = A^B$ will hold.
 \end{enumerate}
-
 
 The proof has to show that (in spite of ``$y: = y/2$'') all variables keep integer values; the method shows the invariance of
 $$
@@ -529,16 +533,21 @@ In the previous section I have assumed ``perfect arithmetic'' and in my experien
 The answer to this question seems to be the following. If one proves the correctness of a program assuming an idealized, perfect world, one should not be amazed if something goes wrong when this ideal program gets executed by an ``imperfect'' implementation. Obviously! Therefore, if we wish to prove program correctness in a more realistic world, the thing to do is to acknowledge right at the start that all operations appealed to in the program (in particular all arithmetic operations) need not be perfect, provided we state --- rather axiomatically --- the properties they have to satisfy for the proper execution of the program, i.e. the properties on which the correctness proof relies. (In the example of the previous section this requirement is simply exact integer arithmetic in the range $[0, 2a]$.)
 
 When writing a program operating on real numbers with rounded operations, one must be aware of the assumptions one makes, such as
-\begin{align*}
-		&b > 0\quad \text{implies}\quad a + b \geqslant a\\
-		&a\times b =\ b\times a\\
-		&-(a \times  b) =\ (-a)\times b\\
-		&0\times  x =\ 0\\
-		&0 + x =\ x\\
-		&1\times x =\ x\quad\text{etc. etc.}
-\end{align*}
+\smallskip
 
+\tabto*{10em}$b > 0\quad \text{implies}\quad a + b \geqslant a$
 
+\tabto*{10em}$a\times b =\ b\times a$
+
+\tabto*{10em}$-(a \times  b) =\ (-a)\times b$
+
+\tabto*{10em}$0\times  x =\ 0$
+
+\tabto*{10em}$0 + x =\ x$
+
+\tabto*{10em}$1\times x =\ x$\quad etc. etc.
+\smallskip
+ 
 Very often the validity of such relations is essential to the logic of the program. For the sake of compatibility, the programmer would be wise to be as undemanding as possible, whereas a good implementation should satisfy as many reasonable requirements as possible.
 
 This is the place to confess one of my blunders. In implementing ALGOL 60 we decided that ``$x = y$'' would deliver the value \textbf{true} not only in the case of exact equality, but also when the two values differed only in the least significant digit represented, because otherwise it was so very improbable that the value \textit{true} would ever be computed. We were thinking of converging iterations that could oscillate within rounding accuracy. While we had been generous (with the best of intentions!) in regarding real numbers as equal, it quickly turned out that the chosen operation was so weak as to be hardly of any use at all. What it boiled down to was that the established truth of $a = b$ \textbf{and} $b = c$ did not allow the programmer to conclude the truth of $a = c$. The decision was quickly changed. It is because of that experience that I know that the programmer can only use his tool by virtue of (a number of) its properties; conversely, the programmer must be able to state which properties he requires. (Usually programmers don't do so because, for lack of tradition as to what properties can be taken for granted, this would require more explicitness than is otherwise desirable. The proliferation of machines with lousy floating-point hardware --- together with the misapprehension that the automatic computer is primarily the tool of the numerical analyst --- has done much harm to the profession!)
@@ -562,9 +571,9 @@ When we do take a number of intermediate states into consideration this means th
 
 The simplest case is a parsing, a decomposition, into a fixed number of sub-actions that can be enumerated. In flowchart form this can be represented as follows. 
 
-\begin{figure}[h]
+\begin{figure}[ht!]
 	\centering
-	\includegraphics[scale=0.6]{chap1/fig1}
+	\includegraphics[scale=0.4]{chap1/fig1}
 \end{figure}
 
 The validity of this decomposition has to be established by enumerative reasoning. In this case, shortening of the conceptual gap between program and computation can be achieved by requiring that a linear piece of program text contains names or descriptions of the sub-actions in the order in which they have to take place. In our earlier example (invariance of $0 \leqslant r < dd$)
@@ -618,12 +627,12 @@ The alternative clause has been generalized by C. A. R. Hoare whose ``case-of'' 
 
 \begin{figure}[ht!]
 	\centering
-	\includegraphics[width=\textwidth]{chap1/fig2}
+	\includegraphics[width=.7\textwidth]{chap1/fig2}
 \end{figure}
 
 \begin{figure}[ht!]
 	\centering
-	\includegraphics[width=\textwidth]{chap1/fig3}
+	\includegraphics[width=.8\textwidth]{chap1/fig3}
 \end{figure}
 
 These flowcharts share the property that they have a single entry at the top and a single exit at the bottom: as indicated by the dotted block they can again be interpreted (by disregarding what is inside the dotted lines) as a single action in a sequential computation. To be a little bit more precise: we are dealing with a great number of possible computations, primarily decomposed into the same time-succession of subactions and it is only on closer inspection --- i.e. by looking inside the dotted block --- that it is revealed that over the collection of possible computations such a sub-action may take one of an enumerated set of distinguished forms.
@@ -707,9 +716,9 @@ Excluding side-effects of the boolean inspections and assuming the value ``$B2$'
 	\label{eq:comparing-example-1}
 	\begin{split}
 	&\text{\hspace{-.4em}``\textbf{if }} B2\text{ \textbf{then}}\\
-	&\text{\textbf{begin while} } B1\text{ \textbf{do} } S1 \text{ \textbf{end}}\\
-	&\qquad\text{\textbf{else}}\\
-	&\text{\textbf{begin while} } B1\text{ \textbf{do} } S2\text{ \textbf{end}''}
+	&\quad \text{\textbf{begin while} } B1\text{ \textbf{do} } S1 \text{ \textbf{end}}\\
+	&\text{\textbf{else}}\\
+	&\quad \text{\textbf{begin while} } B1\text{ \textbf{do} } S2\text{ \textbf{end}''}
 	\end{split}
 \end{equation}
 
