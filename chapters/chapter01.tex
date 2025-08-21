@@ -1082,7 +1082,7 @@ Again: in 2b2(3) we have refined 2b1(3) with an algorithm which solves our probl
 
 We use the facts that
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item $j$ being an odd value, the smallest potential factor to be tried is $p[2]$, i.e. the smallest prime number larger than 2
 
 	\item the largest prime number to be tried is $p[\text{ord} - 1]$ when $p[\text{ord}]$ is the smallest prime number whose square exceeds $j$.
@@ -1420,7 +1420,7 @@ The naïve approach to this situation is that we must be able to modify an exist
 
 If a program has to exist in two different versions, I would rather not regard (the text of) the one program as a modification of (the text of) the other. It would be much more attractive if the two different programs could, in some sense or another, be viewed as, say, different children from a common ancestor, where the ancestor represents a more or less abstract program, embodying what the two versions have in common. Hopefully, this common ancestor can be readily recognized in the (pre-)documentation. The intentions are
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item that the two versions share their respective correctness proofs as far as possible;
 
 	\item that the two versions share (mechanically) as far as possible the common (or ``equal'') coding;
@@ -1658,7 +1658,7 @@ If we succeed in building up our program along the lines just given, we have arr
 
 Why this model? What are the benefits we hope to derive from it? Let me try to list them.
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item Our experience as recorded in ``\nameref{sec:first-example-step-wise-program-composition}'' strongly suggests that the arrangement of various layers, corresponding to different levels of abstraction, is an attractive vehicle for program composition.
 
 	\item It is not vain to hope that many a program modification can now be presented as replacement of one (virtual) machine by a compatible one.
@@ -1674,7 +1674,7 @@ Why this model? What are the benefits we hope to derive from it? Let me try to l
 
 With a picture of program structure as a layered hierarchy of machines emerging, my fingers are itching to play with it, i.e. to make another program. The notational techniques employed should not be regarded as a well-considered proposal: they have been chosen to suit my fancy and should be regarded as part of the experiment.
 
-The problem is the following one. There is given a line printer which is controlled by two commands ``NLCR'' (New Line Carriage Return) which defines the utmost left position of the next line as the ``currently printable position'', and the command ``PRSYM($n$)'' which prints a character identified by the value of the integer parameter $n$ on the currently printable position and defines the position immediately to the right of the printed position as the new currently printable position. (For our discussion we can regard lines of infinite length as permissible.) We shall only make use of two specific values of $n$, called ``space'' and ``mark'' respectively. ``PRSYM(space)'' causes the currently printable position to remain blank, ``PRSYM(mark)'' will print a given, visible character, some sort of asterisk say.
+The problem is the following one. There is given a line printer which is controlled by two commands ``NLCR'' (New Line Carriage Return) which defines the utmost left position of the next line as the ``currently printable position'', and the command ``PRSYM$(n)$'' which prints a character identified by the value of the integer parameter $n$ on the currently printable position and defines the position immediately to the right of the printed position as the new currently printable position. (For our discussion we can regard lines of infinite length as permissible.) We shall only make use of two specific values of $n$, called ``space'' and ``mark'' respectively. ``PRSYM$($space$)$'' causes the currently printable position to remain blank, ``PRSYM$($mark$)$'' will print a given, visible character, some sort of asterisk say.
 
 Furthermore two integer function of an integer argument are given, satisfying
 $$
@@ -1697,11 +1697,11 @@ COMPFIRST
 
 \textbf{begin}
 
-\quad draw: \{build; print\};
+\quad draw: $\{$build; print$\}$;
 
 \quad\textbf{var} image;
 
-\quad\textbf{instr} build(image), print(image)
+\quad\textbf{instr} build$($image$)$, print$($image$)$
 
 \textbf{end}
 
@@ -1727,7 +1727,7 @@ expressing that the state space comprises two variables (called ``imagel'' and `
 The last line contains the code of instructions which are like the procedure heading. In general they contain the type of the parameters, where the call contains the variables as actual parameters. Again this seems foolish if the parameter is uniquely given by its type and for this reason we have mentioned the actual parameter in the declaration, and have omitted the mentioning of ``image'' in the code describing the algorithm ``draw''. Thus we can reserve the explicitly mentioned actual parameters for the case where this combinatorial freedom is actually used.
 
 Before proceeding, I would like to stress that our little algorithm named ``draw'' can and should be regarded as a program written for a machine. We should write the manual for this machine; in it we have to state 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item that the operation ``build'' assigns a value to the variable ``image'' specifying the image to be printed on paper as given by the functions $f_x$ and $f_y$.
 
 	\item that the operation ``print'' prints the picture on paper as specified by the current value of the variable ``image''.
@@ -1735,17 +1735,17 @@ Before proceeding, I would like to stress that our little algorithm named ``draw
 
 The fact that it can really be regarded as an algorithm for a machine is perhaps most easily seen when we consider alternative algorithms for ``draw'' e.g.
 
-draw: \{print; build\}
+draw: $\{$print; build$\}$
 
 \noindent
 is wrong, because now the action ``print'' is undefined;
 
-draw: \{build; build; print\}
+draw: $\{$build; build; print$\}$
 
 \noindent
 is correct but unnecessarily time-consuming, because the second action ``build'' assigns to ``image'' the value it already has;
 
-draw: \{build; print; print\}
+draw: $\{$build; print; print$\}$
 
 \noindent
 would make sense: it would print the picture twice.
@@ -1760,9 +1760,9 @@ CLEARFIRST
 
 \textbf{begin}
 
-\quad build: \{clear; setmarks\};
+\quad build: $\{$clear; setmarks$\}$;
 
-\quad \textbf{instr} clear(image), setmarks(image)
+\quad \textbf{instr} clear$($image$)$, setmarks$($image$)$
 
 \textbf{end}
 
@@ -1771,22 +1771,22 @@ where the action ``clear'' assigns to image the value corresponding to a picture
 
 Again, CLEARFIRST is a machine for which alternative programs could have been written, e.g.
 
-build: \{clear\}
+build: $\{$clear$\}$
 
 \noindent
 would make sense, but would produce fifty blank lines as output;
 
-build: \{setmarks; clear\}
+build: $\{$setmarks; clear$\}$
 
 \noindent
 would contain an undefined operation;
 
-build: \{clear; clear; setmarks\}
+build: $\{$clear; clear; setmarks$\}$
 
 \noindent
 would contain a superfluous operation, just as
 
-build: \{clear; setmarks; setmarks\}
+build: $\{$clear; setmarks; setmarks$\}$
 
 \noindent
 would, because the second action ``setmarks'' would only add marks to the picture that would already be there and therefore would not change the value of ``image''.
@@ -1801,9 +1801,9 @@ ISCANNER
 
 \textbf{begin integer} $i$;
 
-\quad setmarks: \{$i \coloneq 0$; \textbf{while} $i < 1000$ \textbf{do} \{add mark; $i$ \textbf{plus} 1\}\};
+\quad setmarks: $\{i \coloneq 0$; \textbf{while} $i < 1000$ \textbf{do} $\{$add mark; $i$ \textbf{plus} $1\}\}$;
 
-\quad \textbf{instr} add mark($i$, image)
+\quad \textbf{instr} add mark$(i$, image$)$
 
 \textbf{end}
 
@@ -1822,9 +1822,9 @@ COMPPOS
 \textbf{begin integer} $x$, $y$;
 \nopagebreak
 
-\quad add mark: \{$x \coloneq f_x(i)$; $y \coloneq f_y(i)$; mark pos\};
+\quad add mark: $\{x \coloneq f_x(i)$; $y \coloneq f_y(i)$; mark pos$\}$;
 
-\quad\textbf{instr} mark pos($x$, $y$, image)
+\quad\textbf{instr} mark pos$(x$, $y$, image$)$
 
 \textbf{end}
 
@@ -1850,17 +1850,17 @@ LINER
 
 \textbf{begin integer} $j$;
 
-\quad image: \{\textbf{array} line$[0: 49]$\};
+\quad image: $\{$\textbf{array} line$[0: 49]\}$;
 
-\quad print: \{$j \coloneq 49$; \textbf{while} $j \geqslant 0$ \textbf{do} \{lineprint(line$[j]$); $j$ \textbf{minus} 1\}\};
+\quad print: $\{j \coloneq 49$; \textbf{while} $j \geqslant 0$ \textbf{do} $\{$lineprint$($line$[j])$; $j$ \textbf{minus} $1\}\}$;
 
-\quad clear: \{$j \coloneq 49$; \textbf{while} $j \geqslant 0$ \textbf{do} \{lineclear(line$[j]$); $j$ \textbf{minus} 1\}\};
+\quad clear: $\{j \coloneq 49$; \textbf{while} $j \geqslant 0$ \textbf{do} $\{$lineclear$($line$[j])$; $j$ \textbf{minus} $1\}\}$;
 
-\quad mark pos: \{linemark(line$[y]$)\} ;
+\quad mark pos: $\{$linemark$($line$[y])\}$;
 
 \quad \textbf{type} line;
 
-\quad \textbf{instr} lineprint(line), lineclear(line), linemark($x$, line)
+\quad \textbf{instr} lineprint$($line$)$, lineclear$($line$)$, linemark$(x$, line$)$
 
 \textbf{end}
 
@@ -1881,16 +1881,16 @@ LONGREP
 \textbf{begin integer} $k$;
 
 \noindent
-\quad line: \{\textbf{integer array} sym$[0 : 99]$\};
+\quad line: $\{$\textbf{integer array} sym$[0 : 99]\}$;
 
 \noindent
-\quad lineprint: \{$k \coloneq 0$; \textbf{while} $k < 100$ \textbf{do} \{PRSYM(sym[k$]$); $k$ \textbf{plus} 1\}; NLCR\};
+\quad lineprint: $\{k \coloneq 0$; \textbf{while} $k < 100$ \textbf{do} $\{$PRSYM$($sym$[k]$); $k$ \textbf{plus} $1\}$; NLCR$\};$
 
 \noindent
-\quad lineclear: \{$k \coloneq 0$; \textbf{while} $k < 100$ \textbf{do} \{sym$[k]$ $\coloneq$ space; $k$ \textbf{plus} 1\}\};
+\quad lineclear: $\{k \coloneq 0$; \textbf{while} $k < 100$ \textbf{do} $\{$sym$[k]\ \coloneq$ space; $k$ \textbf{plus} $1\}\};$
 
 \noindent
-\quad linemark: \{sym$[x]$ $\coloneq$ mark\}
+\quad linemark: $\{$sym$[x]$ $\coloneq$ mark$\}$
 
 \noindent
 \textbf{end}
@@ -1906,22 +1906,22 @@ SHORTREP
 \textbf{begin integer} $k$;
 
 \noindent
-\quad line: \{\textbf{integer} $f$; \textbf{integer array} sym$[0 : 99]$\};
+\quad line: $\{$\textbf{integer} $f$; \textbf{integer array} sym$[0 : 99]\}$;
 
 \noindent
-\quad lineprint: \{k $\coloneq$ 0; \textbf{while} $k < f$ \textbf{do} \{PRSYM(sym$[k]$); $k$ \textbf{plus} 1\}; NLCR\};
+\quad lineprint: $\{k \coloneq$ 0; \textbf{while} $k < f$ \textbf{do} $\{$PRSYM$($sym$[k])$; $k$ \textbf{plus} $1\}$; NLCR$\}$;
 
 \noindent
-\quad lineclear: \{$f \coloneq 0$\} ;
+\quad lineclear: $\{f \coloneq 0\}$;
 
 \noindent
-\quad linemark: \{sym$[x] \coloneq$ mark;
+\quad linemark: $\{$sym$[x] \coloneq$ mark;
 
 \noindent
-\quad \textbf{if} $f \leqslant x$ \textbf{do} \{$k \coloneq f$; \textbf{while} $k < x$ \textbf{do} \{sym$[k] \coloneq$ space; $k$ \textbf{plus} 1\};
+\quad \textbf{if} $f \leqslant x$ \textbf{do} $\{k \coloneq f$; \textbf{while} $k < x$ \textbf{do} $\{$sym$[k] \coloneq$ space; $k$ \textbf{plus} $1\}$;
 
 \noindent
-\quad \quad $f \coloneq x + 1$\}\}
+\quad \quad $f \coloneq x + 1\}\}$
 
 \noindent
 \textbf{end}
@@ -1931,9 +1931,9 @@ SHORTREP
 
 The above program is essentially the program as I have shown it to at least five different audiences. Now, two months later, while thinking at leisure about correctness proofs, I suddenly realize that the given algorithm for ``linemark'' betrays my past, for it is a piece of lousy coding, compared with the following alternative:
 
-linemark: \{\textbf{while} $f \leqslant x$ \textbf{do} \{sym$[f] \coloneq$ space; $f$ \textbf{plus} 1\};
+linemark: $\{$\textbf{while} $f \leqslant x$ \textbf{do} $\{$sym$[f] \coloneq$ space; $f$ \textbf{plus} $1\};$
 	
-\quad sym$[x] \coloneq$ mark\}
+\quad sym$[x] \coloneq$ mark$\}$
 
 \noindent
 a version which guarantees that whenever ``sym$[x] \coloneq$ mark'' is executed, the relation ``$x < f$'' will always be satisfied: it is precisely the function of the first line to see to this. The reader is invited to try to understand both versions of linemark and to compare both reasonings. He will then agree with my judgment that the original version is lousy.
@@ -2001,7 +2001,7 @@ The reasons for this two-stage approach are many. In designing a program we have
 
 To rephrase the same argument: with the birth of ALGOL 60, syntax was discovered as a powerful means for expressing structure in a program text. (Syntax became so glorified that many workers in the field identified Computing Science with Syntactic Analysis!) It was slightly overlooked, however, that by expressing structure via syntax, this structure is only given very indirectly, i.e. to be derived by means of a parsing algorithm to be applied to a linear sequence of basic symbols. This hurts if we realize that many a program modification leaves large portions of the structure unaffected, so that after painful re-parsing of the modified text the same structure re-emerges! I have a strong feeling that the adequacy of context-free methods for the representation of structure has been grossly over-estimated. (In my immediate environment the following program bug in an ALGOL 60 program was brought to my attention. A program produced erroneous output with a completely checking implementation which in addition to the program text requires a final ``\textbf{progend}'' after the last ``\textbf{end}''; this additional character is refused everywhere else so that a correct ``\textbf{begin} -- \textbf{end}'' bracketing can be established. It turned out that
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item somewhere in the program a closing string quote was omitted;
 	
 	\item somewhere further down in the program text an opening string quote was omitted;
@@ -2016,11 +2016,11 @@ Having already my doubts as to the adequacy of context-free methods for expressi
 
 The more I think about pearls, the more I feel that something like them is the only way out of it, if we recognize our responsibility to take (for a large program) say a thousand (possible) versions into consideration. You cannot expect the programmer to make all these thousand versions from scratch, independent of each other. The only way I see to produce such a potential variety is by a combinatorial technique, i.e. by making more pearls (say 250) than needed for a single necklace (say 200) and stringing a necklace from a particular selection. I see no other feasible way. The other mechanism to achieve great variety by combinatorial means is permutation, but this is denied to us because the final necklace must be a fitting necklace and, given the pearls, the order in which they have to be strung on the thread to produce a fitting necklace is pretty well defined. And also: if it is not, the permissible change of order is pretty irrelevant!
 
-Also, the pearl gives a clear status to an ``incomplete'' program, consisting of the top half of a necklace: it can be regarded as a complete program to be executed by a suitable machine (of which the bottom half of the necklace gives a feasible implementation). As such, the correctness of the upper half of the necklace can be established regardless the choice of the bottom half. Between two successive pearls we can make a ``cut'' which is a manual for a machine, provided by the part of the necklace below the cut and used by the program represented by the part of the necklace above the cut. This manual serves as an interface between the two parts of the necklace. We.feel this form of interface more helpful than regarding data-representation as an interface between operations, in particular more helpful towards ensuring the combinatorial freedom required when a program has to be adapted.
+Also, the pearl gives a clear status to an ``incomplete'' program, consisting of the top half of a necklace: it can be regarded as a complete program to be executed by a suitable machine (of which the bottom half of the necklace gives a feasible implementation). As such, the correctness of the upper half of the necklace can be established regardless the choice of the bottom half. Between two successive pearls we can make a ``cut'' which is a manual for a machine, provided by the part of the necklace below the cut and used by the program represented by the part of the necklace above the cut. This manual serves as an interface between the two parts of the necklace. We feel this form of interface more helpful than regarding data-representation as an interface between operations, in particular more helpful towards ensuring the combinatorial freedom required when a program has to be adapted.
 
 Another remark concerns the range of validity of concepts along the necklace. For instance, the concept ``image'' is introduced in our top pearl ``COMPFIRST'' and is explained away in our bottom pearl but one, viz. ``LINER''. If we now come to the conclusion that the program as envisaged is too demanding on storage space so that we cannot afford to introduce the variable ``image'', we are faced with a major program revision and we have to replace the top five pearls by other ones, because that is the range of validity of the concept ``image''! The bottom pearl (either ``LONGREP'' or ``SHORTREP''), however, can be retained. (I mention this as an example of the fact that pearl exchange is by no means restricted to exchange of the bottom pearl.)
 
-With respect to the validity range of concepts along the necklace I would like to ask your attention for an observation which thrilled me the first time I made it. (In retrospect it is pretty obvious and that is exactly why it may be worth-while to be explicit about it.) With each pearl we associate ``an independent design decision'' and the ordering of the pearls along the necklace therefore implies an ordering of the design decisions. Can we change this order? Yes, we can, although we then have different pearls. By way of experiment I have followed the well-known advice: if you are faced with two primitives-in our case ``build'' and ``print'' --- decide immediately upon their interface-in our example ``image'' --- so that the two primitives can now be refined independently of each other. So I did, and I came to the following form of necklace
+With respect to the validity range of concepts along the necklace I would like to ask your attention for an observation which thrilled me the first time I made it. (In retrospect it is pretty obvious and that is exactly why it may be worth-while to be explicit about it.) With each pearl we associate ``an independent design decision'' and the ordering of the pearls along the necklace therefore implies an ordering of the design decisions. Can we change this order? Yes, we can, although we then have different pearls. By way of experiment I have followed the well-known advice: if you are faced with two primitives --- in our case ``build'' and ``print'' --- decide immediately upon their interface --- in our example ``image'' --- so that the two primitives can now be refined independently of each other. So I did, and I came to the following form of necklace
 
 COMPFIRST
 
@@ -2126,7 +2126,7 @@ We are looking for the ``good'' sequences, we assume a primitive available for t
 
 I found the majority of my students inclined to make a program with the following structure:
 
-``set trial sequence to single zero;
+\hspace{-.4em}``set trial sequence to single zero;
 
 \textbf{repeat if} good \textbf{then}
 
@@ -2142,25 +2142,25 @@ Although a program along these lines produces the correct output, objections can
 
 The program to which the above objections do not apply treats the empty sequence as a virtual solution, not to be printed. It has --- to the same level of detail --- the following structure:
 
-``set trial sequence empty;
+\quad \hspace{-.4em}``set trial sequence empty;
 
-\textbf{repeat} extend trial sequence with zero;
+\quad \textbf{repeat} extend trial sequence with zero;
 
-\quad \textbf{while} no good \textbf{do} increase trial sequence;
+\quad \quad \textbf{while} no good \textbf{do} increase trial sequence;
 
-\quad print trial sequence
+\quad \quad print trial sequence
 
-\textbf{until} length $= 100$''
+\quad \textbf{until} length $= 100$''
 
 Here length is the length of the solution printed (if any), thus avoiding the tortuous reasoning for the stopping criterion. Also no superfluous last trial sequence (never to be investigated) will be generated, thanks to the fact that we have two loops inside each other, superfluous length testing no longer occurs. Those for whom efficiency is the main criterion will probably be most convinced by the last observation. I myself, who attach considerable importance to understandability, am attracted to the latter program because I can interpret it as a further refinement of the program structure
 
-``set sequence empty;
+\quad \hspace{-.4em}``set sequence empty;
 
-\textbf{repeat} transform sequence to next solution;
+\quad \textbf{repeat} transform sequence to next solution;
 
-\quad print sequence
+\quad \quad print sequence
 
-\textbf{until} length $= 100$''
+\quad \textbf{until} length $= 100$''
 
 This (more abstract) program is only concerned with sequences that are solutions: on this level of description one can ignore that the transition from one solution to the next takes place via a sequence of trial solutions that turn out to be failures.
 
@@ -2179,32 +2179,32 @@ When I first used this example in an oral examination, it took the student twent
 
 He then regrouped his forces and made a program of the following form:
 
-``\textbf{integer} $s$, $k$;
+\quad \hspace{-.4em}``\textbf{integer} $s$, $k$;
 
-$s:= 1$;
+\quad $s:= 1$;
 
-\textbf{repeat} $s\coloneq s + 1$;
+\quad \textbf{repeat} $s\coloneq s + 1$;
 
-\quad $k\coloneq$ ``the number of ways in which $s$ can be decomposed as the sum
+\quad \quad $k\coloneq$ ``the number of ways in which $s$ can be decomposed as the sum
 
-\quad\quad of two $n$th powers''
+\quad \quad\quad of two $n$th powers''
 
-\textbf{until} $k > 1$
+\quad \textbf{until} $k > 1$
 
 \noindent
 thus arriving at a hopelessly inefficient algorithm. The error he made was the decision at too early a stage to investigate the natural numbers in succession, the overwhelming majority of which are not decomposable at all. Reasoning that the value we are looking for is the smallest decomposable number satisfying an additional property, one comes to an algorithm whose first sketch could be
 
-``\textbf{integer} $k$, $s$, $t$;
+\quad \hspace{-.4em}``\textbf{integer} $k$, $s$, $t$;
 
-$t \coloneq 1$ (and further initialisation);
+\quad $t \coloneq 1$ (and further initialisation);
 
-\textbf{repeat} $s \coloneq$ ``smallest decomposable value larger than $t$'';
+\quad \textbf{repeat} $s \coloneq$ ``smallest decomposable value larger than $t$'';
 
-\quad $k \coloneq$ ``the number of ways the above minimum is obtained''
+\quad \quad $k \coloneq$ ``the number of ways the above minimum is obtained''
 
-\quad $t \coloneq s$
+\quad \quad $t \coloneq s$
 
-\textbf{until} $k > 1$''
+\quad \textbf{until} $k > 1$''
 
 By storing a collection of triples (number pairs with their corresponding $s$-value), among which each time the pair(s) with minimum $s$-value exceeding $t$ will occur and adjusting this collection each time $t$ is increased, a program emerges that is orders of magnitude more efficient, $t$ jumping from decomposable value to the next decomposable value. Programming (or problem solving in general?) as the judicious postponement of decisions and commitments!
 
