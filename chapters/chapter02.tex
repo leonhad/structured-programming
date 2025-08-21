@@ -103,7 +103,7 @@ Subsequent sections deal with particular methods of structuring data, progressin
 
 Each structure is explained informally with the aid of examples. Then the manipulation of the structure is defined by specifying the set of basic operations which may be validly applied to the structure. Finally, a range of possible computer representations is given, together with the criteria which should influence the selection of a suitable representation on each occasion.
 
-Section 11 is devoted to an example, a program for constructing an examination timetable. The last section puts the whole exposition on a rigorous theoretical basis by formulating the axioms which express the basic properties of data structures. This section may be used as a summary of the theory, as a reference to refine the understanding, or as a basis for the proof of correctness of programs.
+Section \ref{sec:example-examination} is devoted to an example, a program for constructing an examination timetable. The last section puts the whole exposition on a rigorous theoretical basis by formulating the axioms which express the basic properties of data structures. This section may be used as a summary of the theory, as a reference to refine the understanding, or as a basis for the proof of correctness of programs.
 
 \section[The concept of type]{The Concept Of Type}
 
@@ -252,7 +252,7 @@ The operations required for successful manipulation of values of enumeration typ
 \begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
 	\item test of equality, for example:
 
-	\quad \textbf{if} arrival $=$ departure \textbf{then go} to transit desk;
+	\quad \textbf{if} arrival $=$ departure \textbf{then go to} transit desk;
 
 	\quad \textbf{if} trumps $=$ spade \textbf{then} \dots
 
@@ -300,9 +300,9 @@ The operations required for successful manipulation of values of enumeration typ
 	
 	form of for statement or loop
 	
-	\textbf{for} $a:\text{alpha}$ \textbf{do} \dots;
+	\quad \textbf{for} $a:\text{alpha}$ \textbf{do} \dots;
 	
-	\textbf{for} $i:1\,.\,.\,99$ \textbf{do} \dots;
+	\quad \textbf{for} $i:1\,.\,.\,99$ \textbf{do} \dots;
 	
 	In this construction, the counting variable ($a$ or $i$) is taken to belong to the type indicated, and to be declared locally to the construction, in the sense that its value does not exist before or after the loop, and its name is not accessible outside the loop. In addition, the value of the counting variable is not allowed to be changed inside the body of the loop, since this would frustrate the whole intention of declaring the variable by means of the \textbf{for} construction.
 	
@@ -310,9 +310,9 @@ The operations required for successful manipulation of values of enumeration typ
 	
 	\item For subrange types, particularly integer subranges, it is sometimes required to perform operations which are defined for the original larger type. In principle, it is simple to accomplish this by first converting the subrange value to the corresponding value of the larger type, and then performing the operation, and finally converting back again if necessary. This requires a type transfer function; and for this purpose it is convenient to use the name of the destination type, for example:
 	
-	\quad $x$distance $\coloneq$ integer($x$) - integer($y$);
+	\quad $x$distance $\coloneq$ integer$(x)\ -$ integer$(y)$;
 	
-	\quad z $\coloneq$ coordinate(integer($z$) $+$ $x$distance);
+	\quad $z \coloneq$ coordinate$($integer$(z) + x$distance$)$;
 	
 	where $x$distance is an integer variable. Of course, this is an excessively cumbersome notation, and one would certainly wish to adopt the convention of omitting the conversions, where the need for their re-insertion can be established from the context:
 	
@@ -358,14 +358,14 @@ The implementation of the for statement corresponds in an obvious way to the for
 
 The character set of a computer peripheral is defined by enumeration:
 
-\quad \textbf{type} character $=$ ( \dots ) ;
+\quad \textbf{type} character $= (\dots)$;
 
 \noindent
 The set includes the subranges
 
 \quad \textbf{type} digit $=$ nought\,.\,.\,nine;
 
-\quad \textbf{type} alphabet= $A\,.\,.\,Z$;
+\quad \textbf{type} alphabet $= A\,.\,.\,Z$;
 
 \noindent
 as well as individual symbols, point, equals, subten, colon, newline, space, as well as a number of other single-character operators and punctuation marks.
@@ -410,7 +410,7 @@ read first character;
 
 \textbf{repeat case} buffer \textbf{of}
 
-\quad (alphabet: scan identifier,
+\quad (alphabet:scan identifier,
 
 \quad digit:point:subten:scan number,
 
@@ -458,13 +458,13 @@ We will deal first with elementary data structures, Cartesian products and union
 
 The first data structuring method which we shall discuss is the Cartesian product. A familiar example of a Cartesian product is the space of complex numbers, each of which is constructed as a pair of floating point numbers, one considered as its real part and the other as its imaginary part. The declaration of the complex type might take the form
 
-\quad \textbf{type} complex $=$ (real part:real; imagpart:real);
+\quad \textbf{type} complex $= ($real part:real; imagpart:real$)$;
 \nopagebreak
 
 or more briefly:
 \nopagebreak
 
-\quad \textbf{type} complex $=$ (realpart, imagpart:real).
+\quad \textbf{type} complex $= ($realpart, imagpart:real$)$.
 
 The names realpart and imagpart are introduced by this definition to provide a means of selecting the components of a complex number. For example, if $n$ is of type complex defined above, $n$. realpart will denote its real part and $n$. imagpart its imaginary part.
 
@@ -475,11 +475,11 @@ A constant denoting a value from a Cartesian product type may be defined in term
 \noindent
 Another example of a Cartesian product is the declaration of a type whose values represent playing cards. Each card can be specified by giving first its suit (for example, heart) and then its rank, say Jack. Both items of information are required uniquely to specify a given card. Thus the type cardface can be defined as the Cartesian product of the types suit and rank:
 
-\quad \textbf{type} cardface $=$ ($s$:suit; $r$:rank).
+\quad \textbf{type} cardface $= (s$:suit; $r$:rank$)$.
 
 Typical constants of this type are:
 
-\quad cardface(club, two), cardface(heart, Jack).
+\quad cardface$($club, two$)$, cardface$($heart, Jack$)$.
 
 Another simple example of a Cartesian product, this time with three
 components, is the date. In the normal way, this can be specified by three
@@ -488,20 +488,20 @@ month, say the seventh; the second from among the possible values of the
 type month, say March; and the third from among the values of the type
 year, say 1908. This date can be written:
 
-\quad date(7, March, 1908).
+\quad date$(7$, March, $1908)$.
 
 \noindent
 It belongs to the type declared thus:
 
-\quad \textbf{type} date $=$ (day:day of month; $m$:month; $y$:year);
+\quad \textbf{type} date $= ($day:day of month; $m$:month; $y$:year$)$;
 
-The defining feature of the Cartesian product type is that it comprises every possible combination of values of its component types, even if some of them should never be encountered in practice. So date (31, Feb, 1931) is a normal value of type date, even though in the real world no such date exists. However date (28, Feb, 1899) is \textit{not} a value of type date, since 1899 is not a value of type year, as defined above. Thus the definition of the type date does not correspond exactly to the real world situation, but the correspondence is close enough for most purposes; and it is the responsibility of the programmer to ensure that the manipulation of the variables of this type will never cause them to take values which he would regard as meaningless.
+The defining feature of the Cartesian product type is that it comprises every possible combination of values of its component types, even if some of them should never be encountered in practice. So date $(31$, Feb, $1931)$ is a normal value of type date, even though in the real world no such date exists. However date $(28$, Feb, $1899)$ is \textit{not} a value of type date, since 1899 is not a value of type year, as defined above. Thus the definition of the type date does not correspond exactly to the real world situation, but the correspondence is close enough for most purposes; and it is the responsibility of the programmer to ensure that the manipulation of the variables of this type will never cause them to take values which he would regard as meaningless.
 
 This example shows that the means provided for defining new types in terms of other types are simpler and less powerful than the general mathematical techniques for defining new sets in terms of other sets; for it certainly is possible to define a set which excludes all unwanted dates. In fact, when declaring a type or variable, it is good documentation practice to specify rigorously the properties which will be possessed by every meaningful value.
  
 The last example shows how the set of point positions on a two-dimensional raster can be declared as the Cartesian product of one-dimensional coordinates:
 
-\quad \textbf{type} raster $=$ ($x$, $y$:coordinate)
+\quad \textbf{type} raster $= (x$, $y$:coordinate$)$
 
 This is the standard method by which two-dimensional spaces are constructed out of a single-dimension by the method of Cartesian coordinates; for every point in two-dimensional space can be named as an ordered pair of simple one-dimensional numbers. This explains the use of the term ``Cartesian product'' to apply to the given method of defining types. If $r$ is a variable of type raster, $r$. $x$ and $r$. $y$ are commonly known as the projections of $r$ onto the $x$ and $y$ axes respectively; however, we shall refer to the functions $x$ and $y$ as selectors rather than projections.
 
@@ -509,9 +509,9 @@ The cardinality of a Cartesian product type is obtained by multiplying together 
 
 \subsection{Manipulation}
 
-Apart from assignment and test of equality, which are common to all types, the main operations defined for a product type are just those of constructing a value in terms of component values, and of selecting the components. When constructing a value of a Cartesian product type, it is in principle necessary to quote the name of the type as a transfer function. However, it is often more convenient to follow the traditional mathematical practice, and leave the transfer function implicit in cases where no confusion would arise. This is in any case necessary when a type is not even given an explicit name. For example, one may write (heart, Jack) instead of cardface (heart, Jack).
+Apart from assignment and test of equality, which are common to all types, the main operations defined for a product type are just those of constructing a value in terms of component values, and of selecting the components. When constructing a value of a Cartesian product type, it is in principle necessary to quote the name of the type as a transfer function. However, it is often more convenient to follow the traditional mathematical practice, and leave the transfer function implicit in cases where no confusion would arise. This is in any case necessary when a type is not even given an explicit name. For example, one may write $($heart, Jack$)$ instead of cardface $($heart, Jack$)$.
 
-For selection of a component, a dot-notation has been used, e.g., $n$. imagpart. This is more convenient than the normal functional notation imagpart($n$), since it avoids unnecessarily deep nesting of brackets. Another most important operation is the selective updating of the components of a variable. This may be denoted by placing the component name on the left of an assignment
+For selection of a component, a dot-notation has been used, e.g., $n$. imagpart. This is more convenient than the normal functional notation imagpart$(n)$, since it avoids unnecessarily deep nesting of brackets. Another most important operation is the selective updating of the components of a variable. This may be denoted by placing the component name on the left of an assignment
 
 \quad $u$.imagpart $\coloneq$ 0;
 
@@ -537,15 +537,15 @@ where $sv$ names the structured variable (or expression) and $S$ is a program st
 
 \quad \textbf{with} today \textbf{do case} $m$ \textbf{of}
 
-\quad \quad \{Sept:April:June:Nov:
+\quad \quad $\{$Sept:April:June:Nov:
 
-\quad \quad \quad \textbf{if} day > 30 \textbf{then go} to invalid,
+\quad \quad \quad \textbf{if} day $>$ 30 \textbf{then go} to invalid,
 
 \quad \quad \quad Feb:\textbf{if} day $> (\text{\textbf{if }} (y \div 4) \times 4 = y \text{ \textbf{then} } 29 \text{ \textbf{else} } 28)$
 
 \quad \quad \quad \quad then go to invalid,
 
-\quad \quad \quad else do nothing\}.
+\quad \quad \quad else do nothing$\}$.
 
 \noindent
 \textit{Exercise}
@@ -595,23 +595,23 @@ write a program to assign the value of the next following date to the variable t
 
 \section[The discriminated union]{The Discriminated Union}
 
-In defining sets of objects, it is often useful to define one set as the union of two previously known sets. For example, when jokers are added to a standard pack of cards, the extended set may be described as the union of the standard set plus the set consisting of the ``wild'' cards, joker I and joker 2. A type whose values range over the members of this set may be declared as the union of two alternatives, the card type, and an enumeration type with two distinct values:
+In defining sets of objects, it is often useful to define one set as the union of two previously known sets. For example, when jokers are added to a standard pack of cards, the extended set may be described as the union of the standard set plus the set consisting of the ``wild'' cards, joker 1 and joker 2. A type whose values range over the members of this set may be declared as the union of two alternatives, the card type, and an enumeration type with two distinct values:
 
-\quad \textbf{type} pokercard $=$ (normal:($s$:suit; $r$:rank),
+\quad \textbf{type} pokercard $= ($normal:$(s$:suit; $r$:rank$)$,
 
-\tabto{10.2em}wild:(joker I, joker 2)).
+\tabto{10.2em}wild:$($joker 1, joker 2$))$.
 
 \noindent
 Each value of type pokercard corresponds either to an ordered pair with components indicating suit and rank; or else it corresponds to one of the two jokers in the enumeration type.
 
 In specifying a constant of a discriminated union type, it is necessary to indicate to which of the alternative types the value denoted is intended to belong. This is done by writing the name of the alternative explicitly, for example:
 
-\quad pokercard(normal(heart, Jack))
+\quad pokercard$($normal$($heart, Jack$))$
 
 \noindent
 denotes a value from the first alternative, whereas
 
-\quad pokercard(wild(joker 2))
+\quad pokercard$($wild$($joker 2$))$
 
 \noindent
 denotes a value from the second alternative. In general, it is convenient to omit the type name, where the type can be inferred from context.
@@ -639,11 +639,11 @@ But here it is inconvenient to define the structure of local and foreign cars se
 
 \tabto{7.5em}regnumber:carnumber;
 
-\tabto{7.5em}(local: (owner:person;
+\tabto{7.5em}(local:(owner:person;
 
 \tabto{7.8em}first registration:date),
 
-\tabto{7.8em}foreign: (origin:country))
+\tabto{7.8em}foreign:(origin:country))
 
 \tabto{7.1em}).
 
@@ -652,22 +652,22 @@ Every car has a make and regnumber but only local cars have an owner or first re
 
 A third example is the definition of geometric figures, which in some application might be categorized as either rectangles, triangles, or circles
 
-\quad \textbf{type} figure $=$ (position:point; rect:$R$, tri:$T$, circ:$C$).
+\quad \textbf{type} figure $= ($position:point; rect:$R$, tri:$T$, circ:$C)$.
 
 \noindent
 The method of specifying the figure varies in each case. For a rectangle, the angle of inclination of one of the sides is given, together with the two lengths of the sides:
 
-\quad \textbf{type} $R =$ (inclination:angle; side1, side2: real).
+\quad \textbf{type} $R = ($inclination:angle; side1, side2:real$)$.
 
 \noindent
 A triangle is specified by the angle of inclination and length of one of its sides together with the angles formed between it and the other two sides:
 
-\quad \textbf{type} $T =$ (inclination:angle; side:real; angle1, angle2:angle).
+\quad \textbf{type} $T = ($inclination:angle; side:real; angle1, angle2:angle$)$.
 
 \noindent
 For a circle, all that is necessary is to specify the diameter as a real number.
 
-\quad \textbf{type} C $=$ (diameter:real).
+\quad \textbf{type} C $= ($diameter:real$)$.
 
 When a type is defined as the union of several other types, it is important to recognize that its values must be considered wholly distinct from those of any of the types in terms of which it is defined. Otherwise there would be an immediate violation of the rule that each value belongs to only one type. Thus the union of types must be clearly distinguished from the normal concept of set union. Furthermore, for each element of the union type, it is possible to determine from which of the constituent types it originated, even if the same type has been repeated several times. For example, a double pack of cards used for playing patience may be defined as the union of two packs, i.e.,
 
@@ -683,7 +683,7 @@ Any value of a discriminated union carries with it a \textit{tag} field indicati
 On constructing a value of a discriminated union type, it is necessary to name the alternative type from which the value originated:
 \smallskip
 
-\quad patience card(red(spade, Jack)).
+\quad patience card$($red$($spade, Jack$))$.
 \smallskip
 
 \noindent
@@ -692,14 +692,14 @@ This will automatically cause the value ``red'' to be assigned to the tag field 
 A particular car may be denoted by
 \smallskip
 
-\quad car(Ford, ``RUR157D'', local(me, date(1, Sept, 1968))).
+\quad car$($Ford, ``RUR157D'', local$($me, date$($1, Sept, 1968$)))$.
 \smallskip
 
 In order to access and operate on the information encoded as a discriminated union, it is necessary to convert it back to its original type. This may be accomplished by the convention of using the label of this type as if it were a selector, e.g.:
 
-card1.wild \tabto*{8em} is of type (joker 1, joker 2)
+card1.wild \tabto*{8em} is of type $($joker 1, joker 2$)$
 
-car1.foreign \tabto*{8em} is of type (origin:country)
+car1.foreign \tabto*{8em} is of type $($origin:country$)$
 
 fig1.tri \tabto*{8em} is of type $T$
 
@@ -717,17 +717,17 @@ error, which could lead to meaningless results. This error can be detected only 
 
 The proposed notational technique is a mixture between the \textbf{with} construction for Cartesian products and the case construction for discrimination. Suppose that a value $sv$ of union type is to be processed in one of several ways in accordance with which of the alternative types it came from. Then one may write
 
-\quad \textbf{with} $sv$ \textbf{do} \{$a1:S_1$
+\quad \textbf{with} $sv$ \textbf{do} $\{a1:S_1$
 
 \tabto*{7.6em}$a2:S_2$,
 \smallskip
 
 \tabto*{8.85em}\vdots
 
-\tabto*{7.6em}$an:S_n$\};
+\tabto*{7.6em}$an:S_n\}$;
 
 \noindent
-where $S_i$ is the statement to be selected for execution whenever the value of the tag field of $sv$ is $a_i$. Within $S_1$ it is guaranteed safe to assume that the value came from the corresponding alternative type, provided that the value of $sv$ remains unchanged. Consequently it is safe to use the component selectors which are defined for that alternative type by themselves to refer to the components of $sv$, just as in the case of a simple \textbf{with} statement described previously for a Cartesian product.
+where $S_i$ is the statement to be selected for execution whenever the value of the tag field of $sv$ is $a_i$. Within $S_i$ it is guaranteed safe to assume that the value came from the corresponding alternative type, provided that the value of $sv$ remains unchanged. Consequently it is safe to use the component selectors which are defined for that alternative type by themselves to refer to the components of $sv$, just as in the case of a simple \textbf{with} statement described previously for a Cartesian product.
 
 If it is desired to regard a union type as ordered, the most natural ordering is that defined by taking all values corresponding to earlier alternatives in the list before any of the values of the later alternatives.
 
@@ -803,11 +803,11 @@ An example of a finite mapping is a monthtable, which specifies for each month o
 \noindent
 The domain is the month type and the range type consists of the integers between 28 and 31 inclusive. A typical value of this type may be simply specified by listing the values of $M(x)$ as $x$ ranges over its domain. Thus if $M$:monthtable is specified as
 
-\quad monthtable(Jan:31, Feb:28, March:31, April:30,
+\quad monthtable$($Jan:31, Feb:28, March:31, April:30,
 
 \quad May:31, June:30, July:31, Aug:31,
 
-\quad Sept:30, Oct:31, Nov:30, Dec:31)
+\quad Sept:30, Oct:31, Nov:30, Dec:31$)$
 
 \noindent
 then $M[\text{Jan}] = 31,\, M[\text{Feb}] = 28$, and so on.
@@ -823,14 +823,14 @@ Arrays with elements that are of Cartesian product type are sometimes known as \
 
 A third example of an array is that which represents all possible con- figurations of character punching on a conventional punched card. This may be regarded as a mapping $M$ which maps each column number into a character, namely the character punched in that column.
 
-\quad \textbf{type} punchcard = array $1\,.\,.\,80$ \textbf{of} character.
+\quad \textbf{type} punchcard = \textbf{array} $1\,.\,.\,80$ \textbf{of} character.
 
 \noindent
 Any possible text punched into a card may be regarded as a single value of type punchcard.
 
 A fourth example shows an array which represents a possible value of a page on a cathode ray tube display device. There are assumed to be 40 rows and 27 character positions in each row. The effect of two dimensions can be achieved by specifying the domain of the mapping as a Cartesian product of the possible rows and the possible character positions within each row. This is written as follows:
 
-\quad \textbf{type} spot $=$ (row:$1\,.\,.\,40$; column:$1\,.\,.\,27$);
+\quad \textbf{type} spot $= ($row:$1\,.\,.\,40$; column:$1\,.\,.\,27)$;
 
 \quad \textbf{type} display page $=$ \textbf{array} spot of character.
 
@@ -859,7 +859,7 @@ A mapping which maps all values of its domain onto the same value of its range i
 \noindent
 is an array such that $M[m] = 31$ for all months m.
 
-\quad card pack(cardface(heart, King))
+\quad card pack$($cardface$($heart, King$))$
 
 \noindent
 is obviously a conjuror's pack.
@@ -989,7 +989,7 @@ Write the corresponding programs to read a page from the display, and output the
 
 \section[The powerset]{The Powerset}
 
-The powerset of a given set is defined as the set of all subsets of that set; and a powerset type is a type whose values are sets of values selected from some other type known as the \textit{base} of the powerset. For example, the primary colors have been defined by enumeration as red, yellow and blue. The other main colors are made up as a mixture of two or three of these colors: orange is a mixture of red and yellow; brown is a mixture of all three primary colors. Thus each main color (including the primary colors) can be specified as that subset of the primary colors out of which it can be mixed. For example, orange may be regarded as the set with just two members, red and yellow. Using the traditional notation for sets defined by enumeration, this may be written: \{red, yellow\}. The pure color red may be regarded as the set whose only member is the primary color red, i.e. \{red\}. In this way it is possible to represent the seven main colors, red, orange, yellow, green, blue, purple and brown. When no primary color is present (i.e. the null or empty set) this may be regarded as denoting the absence of color, i.e. perhaps white. The type whose values range over the colors may be declared as the power set of the type primary color:
+The powerset of a given set is defined as the set of all subsets of that set; and a powerset type is a type whose values are sets of values selected from some other type known as the \textit{base} of the powerset. For example, the primary colors have been defined by enumeration as red, yellow and blue. The other main colors are made up as a mixture of two or three of these colors: orange is a mixture of red and yellow; brown is a mixture of all three primary colors. Thus each main color (including the primary colors) can be specified as that subset of the primary colors out of which it can be mixed. For example, orange may be regarded as the set with just two members, red and yellow. Using the traditional notation for sets defined by enumeration, this may be written: $\{$red, yellow$\}$. The pure color red may be regarded as the set whose only member is the primary color red, i.e. $\{$red$\}$. In this way it is possible to represent the seven main colors, red, orange, yellow, green, blue, purple and brown. When no primary color is present (i.e. the null or empty set) this may be regarded as denoting the absence of color, i.e. perhaps white. The type whose values range over the colors may be declared as the power set of the type primary color:
 
 \quad \textbf{type} color $=$ \textbf{powerset} primary color.
 
@@ -1025,19 +1025,19 @@ and since several of these conditions can be detected simultaneously, the status
 
 The cardinality of the powerset type is two raised to the power of the cardinality of the base type, i.e.
 
-\quad cardinality $(\text{\textbf{powerset} } D) = 2^{\text{cardinality} (D)}$
+\quad cardinality$(\text{\textbf{powerset} } D) = 2^{\text{cardinality} (D)}$
 
-This may be proved by considering the number of decisions which have to be made to specify completely a value of the type. For each value of the base type there are two alternatives, either it is in the set or it is not. This decision may be made independently cardinality $(D)$ times.
+This may be proved by considering the number of decisions which have to be made to specify completely a value of the type. For each value of the base type there are two alternatives, either it is in the set or it is not. This decision may be made independently cardinality$(D)$ times.
 
 \subsection{Manipulation}
 
 The basic construction operation on sets is the one that takes a number of values from the domain type, and converts them into a set containing just those values as members. As in the case of the Cartesian Product, the type name is used as the transfer function, but for sets, the number of arguments is variable from zero upwards. For example:
 
-\quad primary color (red, yellow) \tabto*{14em} i.e. orange
+\quad primary color$($red, yellow$)$ \tabto*{14em} i.e. orange
 
-\quad liftcall (ground) \tabto*{14em}  i.e. only a single button has been pressed
+\quad liftcall$($ground$)$ \tabto*{14em}  i.e. only a single button has been pressed
 
-\quad statusword () \tabto*{14em} i.e. no exception condition.
+\quad statusword$()$ \tabto*{14em} i.e. no exception condition.
 
 \noindent
 The last two examples illustrate the concept of a \textit{unit set} (which must be clearly distinguished from its only member) and the null or \textit{empty set}, which contains no member at all. If the type name is omitted in this construction, curly brackets should be used instead of round ones in the normal way.
@@ -1105,10 +1105,10 @@ It is often useful to define the value of a set by giving some condition $B$ whi
 \quad $\{i:D \mid B\}$
 
 \noindent
-where \tabto*{3em} $i$ is a variable of type $D$ regarded as local to $B$,
+where \tabto*{4em} $i$ is a variable of type $D$ regarded as local to $B$,
 
 \noindent
-and \tabto*{3em} $B$ is a Boolean expression usually containing and depending on $i$.
+and \tabto*{4em} $B$ is a Boolean expression usually containing and depending on $i$.
 
 \noindent
 In order for this expression to denote a value of the powerset type it is essential that the cardinality of $D$ be finite, and that $B$ is defined over all values of the type.
@@ -1179,7 +1179,7 @@ The program can be written easily
 \quad sieve $\coloneq$ range$(2, N)$;
 
 \noindent
-\quad primes $\coloneq$ \{\};
+\quad primes $\coloneq \{\}$;
 
 \noindent
 \quad \textbf{while} sieve $\neq$ empty \textbf{do}
@@ -1188,7 +1188,7 @@ The program can be written easily
 \quad \quad \textbf{begin} next $\coloneq$ min(sieve);
 
 \noindent
-\quad \quad \quad primes:$\vee$ \{next\};
+\quad \quad \quad primes: $\vee\ \{$next$\}$;
 
 \noindent
 \quad \quad \quad \textbf{for} $n\coloneq$ next \textbf{step} next \textbf{until} $N$ \textbf{do}
@@ -1247,7 +1247,7 @@ is recoded as :
 \noindent
 Since this appears acceptably efficient we will code the other operations of the outer loop, starting with the most difficult:
 
-\quad next $\coloneq$ min(sieve);
+\quad next $\coloneq$ min$($sieve$)$;
 
 \noindent
 Here we do not wish to start our search for the minimum at the beginning of the sieve set each time, since towards the end of the process this would involve scanning many empty words. We therefore take advantage of the fact that the new value of next must be larger than the old value.
@@ -1262,7 +1262,7 @@ The search consists of two parts, first finding a nonempty word, and then its fi
 
 The remaining operations are trivial. Since the outer loop is terminated by an exit, there is no need to test a separate while condition; and the statement
 
-\quad primes:$\vee$ \{next\};
+\quad primes:$\vee\ \{$next$\}$;
 
 \noindent
 can be coded as
@@ -1297,11 +1297,11 @@ The whole program including initialisation is as follows:
 
 \quad \quad \quad \quad \textbf{end};
 
-\quad \quad \quad \quad next.$b\leqslant$ min(sieve$[\text{next}.w])$;
+\quad \quad \quad \quad next.$b\leqslant$ min$($sieve$[\text{next}.w])$;
 
 \quad \quad \quad \quad primes$[\text{next}.w]$:$\vee\ \{\text{next}.b\}$;
 
-\quad \quad \quad \quad $n\leqslant$ next;
+\quad \quad \quad \quad $n\coloneq$ next;
 
 \quad \quad \quad \quad \textbf{while} $n.w \leqslant W$ \textbf{do}
 
@@ -1373,10 +1373,10 @@ Of course, not all card-sequences represent actual decks of cards in real life; 
 
 The next example is drawn from the processing of a particular class of symbolic expression, namely the polynomial. A polynomial
 
-$a_n x^n + a_{n-1}x^{n-i}\dots a_1 x + a_0$
+$a_n x^n + a_{n-1}x^{n-1}\dots a_1 x + a_0$
 
 \noindent
-can be represented as the sequence of its coefficients a1• If the degree n of the polynomial is unpredictable or variable during the course of a calculation, a sequence is the most appropriate method of defining it:
+can be represented as the sequence of its coefficients $a_i$. If the degree $n$ of the polynomial is unpredictable or variable during the course of a calculation, a sequence is the most appropriate method of defining it:
 
 \quad \textbf{type} polynomial $=$ \textbf{sequence} integer.
 
@@ -1394,7 +1394,7 @@ $T(v_1, v_2, \dots, v_n)$ denotes the sequence consisting of these values in the
 \noindent
 However, a sequence of characters is normally denoted by enclosing them in quotes.
 
-The basic operation on sequences is concatenation, that is, adjoining two sequences one after the other. Thus if $x$ is the sequence of characters ``PARIS IN THE'' and $y$ is the sequence ``THE SPRING'', their concatenation $\wideparen{xy}$ is the sequence
+The basic operation on sequences is concatenation, that is, adjoining two sequences one after the other. Thus if $x$ is the sequence of characters ``PARIS IN THE'' and $y$ is the sequence ``THE SPRING'', their concatenation $\wideparen{x\ y}$ is the sequence
 
 \quad $z =$ ``PARIS IN THETHE SPRING''
 
@@ -1449,7 +1449,7 @@ and it removes the last item from $x$. This operation can be used to ``pop up'' 
 \quad $x\wideparen{\text{: } T}(v).$
 
 \noindent
-If desired, it is possible to define the fourth updating operation, that of attaching a new value to the beginning of a sequence. (putback($x$, $v$)).
+If desired, it is possible to define the fourth updating operation, that of attaching a new value to the beginning of a sequence. $($putback$(x$, $v))$.
 
 In some cases, it is more efficient to avoid the copying of an item which is involved in the \textbf{from} operation. These cases may be dealt with by merely omitting the left hand variable, e.g.
 
@@ -1458,7 +1458,7 @@ In some cases, it is more efficient to avoid the copying of an item which is inv
 \quad \textbf{back from} $x$.
 
 \noindent
-In this case, access to the items of the sequence will usually be made by the selectors $x$. first and$/$or $x$. last.
+In this case, access to the items of the sequence will usually be made by the selectors $x$. first and$/$or $x$.last.
 
 It is very common to wish to scan all the items of a sequence in succession; a suitable notation for this is modeled on the for statement:
 
@@ -1573,19 +1573,19 @@ A structured data type whose values comprise such expressions may be defined usi
 
 \quad \textbf{type} expression $=$ \textbf{sequence} term;
 
-\quad \textbf{type} term $=$ (addop:operator; $f$:\textbf{sequence} factor);
+\quad \textbf{type} term $= ($addop:operator; $f$:\textbf{sequence} factor$)$;
 
-\quad \textbf{type} factor $=$ (mulop:operator; $p$:primary);
+\quad \textbf{type} factor $= ($mulop:operator; $p$:primary$)$;
 
-\quad \textbf{type} primary $=$ (const:(val:real),
+\quad \textbf{type} primary $= ($const:$($val:real$)$,
 
-\tabto*{9.3em}var:($id$:identifier),
+\tabto*{9.3em}var:$(id$:identifier$)$,
 
-\tabto*{9.3em}bracketed:($e$:expression));
+\tabto*{9.3em}bracketed:$(e$:expression$))$;
 
-\quad type operator = (plus, minus, times, div);
+\quad \textbf{type} operator $= ($plus, minus, times, div$)$;
 
-This definition expresses the abstract structure of an arithmetic expression, but not the details of its concrete representation as a string of characters. For example, it does not specify the symbols used for brackets or operators, nor does it state whether an infix, prefix or postfix notation is used for them. It does not state how the three kinds of primary are to be distinguished. It does not even represent the optional omission of plus on the first term of an expression, and the necessary omission of $x$ on the first factor of a term. Apart from this degree of abstraction and representation-independence, this type definition would correspond to a set of BNF syntax equations:
+This definition expresses the abstract structure of an arithmetic expression, but not the details of its concrete representation as a string of characters. For example, it does not specify the symbols used for brackets or operators, nor does it state whether an infix, prefix or postfix notation is used for them. It does not state how the three kinds of primary are to be distinguished. It does not even represent the optional omission of plus on the first term of an expression, and the necessary omission of $\times$ on the first factor of a term. Apart from this degree of abstraction and representation-independence, this type definition would correspond to a set of BNF syntax equations:
 \begin{bnf*}
 	\bnfprod{expression}
 	{\bnfpn{term} \bnfor \bnfpn{addop}\bnfpn{term} \bnfor \bnfpn{expression}\bnfpn{addop}\bnfpn{term}}\\
@@ -1602,84 +1602,83 @@ Note how we have used sequences to replace the recursion wherever possible. In f
 \noindent
 might have been formulated recursively:
 
-\quad \textbf{type} expression $=$ (empty:(), non-empty:(first:term; final:expression)).
+\quad \textbf{type} expression $= ($empty:$()$, non-empty:$($first:term; final:expression$))$.
 
 \noindent
 A similar alternative formulation permits \textbf{while} loops to be expressed as recursive procedures.
 
 The construction of values of a recursively defined type requires no new operators or transfer functions; all that is needed is recursive use of the methods defined for the other relevant structuring methods. For example, the expression
-$$
-3/(b - 2)
-$$
+
+\quad $3/(b - 2)$
 
 \noindent
 could be specified by the cumbersome construction:
 
-\quad [term {plus, [factor (times, primary (const(3))),
+\quad $[$term $($plus, $[$factor (times, primary $($const$(3)))$,
 
-\quad \quad factor (div, primary (bracketed (
+\quad \quad factor $($div, primary $($bracketed $($
 
-\quad \quad \quad [term (plus, [factor (times, primary (var(``$b$'')))]),
+\quad \quad \quad $[$term $($plus, $[$factor $($times, primary $($var$($``$b$''$)))]),$
 
-\quad \quad \quad\hspace{.1em} term (minus, [factor (times, primary (const(2)))])])))
+\quad \quad \quad\hspace{.1em} term $($minus, $[$factor $($times, primary $($const$(2)))])])))$
 
-\quad \quad ])
+\quad \quad $])$
 
-\quad ].
+\quad $]$.
 
 \noindent
 An effective method of getting the computer itself to translate expressions into abstract structures will be given as an example in (\ref{sec:example-9-2})
 
 Another familiar example of recursively defined data is the family tree. A family tree (excluding information about marriage) can be defined by associating with each person the family trees of all his$/$her offspring. We assume that certain additional personal details are required to be held: 
 
-\quad \textbf{type} family $=$ (head:person; offspring:\textbf{sequence} family);
+\quad \textbf{type} family $= ($head:person; offspring:\textbf{sequence} family$)$;
 
 A person with no children is an ultimate component of the family tree, and may be represented:
 
-\quad family(Tom, [])
+\quad family$($Tom, $[])$
 
 \noindent
 A family with three children may be represented:
 
 \noindent
-family (Jill, [family (Tom, []),
+family $($Jill, $[$family $($Tom, $[])$,
 
-\tabto{3.2em} family (Joanna, []),
+\tabto{3.2em} family $($Joanna, $[])$,
 
-\tabto{3.2em} family (Matthew, [])]).
+\tabto{3.2em} family $($Matthew, $[])])$.
 
 The final example shows how the binary forking tree familiar to LISP programmers may be defined as a recursive data structure.
 
-\quad \textbf{type} list = (atom:\textbf{sequence} character, cons:(car, cdr:list)).
+\quad \textbf{type} list $= ($atom:\textbf{sequence} character, cons:$($car, cdr:list$))$.
 
 \noindent
 A list which in LISP dot-notation would be expressed
 
-\quad ((A.(B.NIL)).NIL)
+\quad $(($A.$($B.NIL$))$.NIL$)$
 
 \noindent
 can be expressed as a value of type list in almost exactly the same way as it is in LISP:
 
-\quad cons (cons (atom (``A''),
+\quad cons $($cons $($atom $($``A''$)$,
 
-\tabto{5em} cons (atom (``B''), atom (``NIL''))),
+\tabto{5em} cons $($atom $($``B''$)$, atom $($``NIL''$)))$,
 
-\tabto{5em} atom (``NIL'')
+\tabto{5em} atom $($``NIL''$)$
 
-\tabto{4.8em} );
+\tabto{4.8em} $)$;
 
 \noindent
 where the type transfer to list type is left implicit.
 
 As an example of the processing of a list, we write a function to reverse a complete tree, so that every ``left fork'' in it becomes a ``right fork'' and vice-versa.
 
-\quad \textbf{function} reverse$(l$:list$)$: list;
+\quad \textbf{function} reverse$(l$:list$)$:list;
 
 \quad \quad \textbf{with} $l$ \textbf{do}
 
-\quad \quad \quad \{atom:reverse$\coloneq l$,
+\quad \quad \quad $\{$atom:reverse $\coloneq l$,
 
-\quad \quad \quad cons: reverse $\coloneq$ cons(reverse(cdr), reverse (car))\}
+\quad \quad \quad cons: reverse $\coloneq$ cons$($reverse$($cdr$)$, reverse $($car$))\}$
 
 \subsection{Representation}
 
@@ -1702,9 +1701,9 @@ It is important to note that the sharing of the recursive sub-structure is nothi
 
 A source text for an expression in a programming language is presented as a sequence of symbols defined:
 
-\quad \textbf{type} symbol $=$ (constant:(value:real), variable:(identifier: ident),
+\quad \textbf{type} symbol $= ($constant:$($value:real$)$, variable:$($identifier: ident$)$,
 
-\tabto*{9.2em}op:operator, leftbracket, rightbracket);
+\tabto*{9.2em}op:operator, leftbracket, rightbracket$)$;
 
 Write a program operating on an input variable
 
@@ -1717,7 +1716,7 @@ The structure of the program closely follows that of the desired result. There a
 
 \quad compile expression
 
-\quad compile term (sign)
+\quad compile term $($sign$)$
 
 \quad compile primary
 
@@ -1737,7 +1736,7 @@ each of which removes from the source the longest expression in its syntactic ca
 \quad \quad \textbf{else} sign $\coloneq$ plus;
 
 \noindent
-\quad \quad \quad compile expression $\leqslant$ [compile term(sign)];
+\quad \quad \quad compile expression $\coloneq [$compile term$($sign$)]$;
 
 \noindent
 \quad \quad \quad \textbf{while} source.first $=$ plus $\vee$ source.first $=$ minus \textbf{do}
@@ -1746,7 +1745,7 @@ each of which removes from the source the longest expression in its syntactic ca
 \quad \quad \quad \quad \textbf{begin} sign \textbf{from} source;
 
 \noindent
-\quad \quad \quad \quad \quad compile expression$\wideparen{\text{: [}}$compile term(sign)]
+\quad \quad \quad \quad \quad compile expression$\wideparen{\text{:\ }[}$compile term$($sign$)]$
 
 \noindent
 \quad \quad \quad \quad \textbf{end}
@@ -1755,7 +1754,7 @@ each of which removes from the source the longest expression in its syntactic ca
 \quad \textbf{end};
 
 \noindent
-\textbf{function} compile term($s$:operator):term;
+\textbf{function} compile term$(s$:operator$)$:term;
 
 \noindent
 \quad \textbf{begin} $p$:primary; sign:operator; $fs$:\textbf{sequence} factor;
@@ -1764,28 +1763,28 @@ each of which removes from the source the longest expression in its syntactic ca
 \quad \quad $p\coloneq$ compile primary;
 
 \noindent
-\quad \quad $fs \coloneq$ [factor(times, $p$)];
+\quad \quad $fs \coloneq [$factor(times, $p)]$;
 
 \noindent
 \quad \quad \textbf{while} source.first $=$ times $\vee$ source.first $=$ div \textbf{do}
 
 \noindent
-\quad \quad \quad \textbf{begin} sign from source:
+\quad \quad \quad \textbf{begin} sign \textbf{from} source:
 
 \noindent
 \quad \quad \quad \quad $p\coloneq$ compile primary;
 
 \noindent
-\quad \quad \quad \quad $fs\wideparen{\text{: [}}$factor(sign, $p$)]
+\quad \quad \quad \quad $fs\wideparen{\text{: }[}$factor$($sign, $p)]$
 
 \noindent
 \quad \quad \quad \textbf{end};
 
 \noindent
-\quad \quad compile term $\coloneq$ term($s$, $fs$)
+\quad \quad compile term $\coloneq$ term$(s$, $fs)$
 
 \noindent
-\textbf{function} compile primary: primary;
+\textbf{function} compile primary:primary;
 
 \noindent
 \quad \textbf{begin} $s$:symbol;
@@ -1794,10 +1793,10 @@ each of which removes from the source the longest expression in its syntactic ca
 \quad \quad $s$ \textbf{from} source;
 
 \noindent
-\quad \quad \textbf{with} $s$ \textbf{do} \{constant:compile primary $\coloneq$ const(value),
+\quad \quad \textbf{with} $s$ \textbf{do} $\{$constant:compile primary $\coloneq$ const$($value$)$,
 
 \noindent
-\quad \quad \quad variable:compile primary $\coloneq$ var(identifier),
+\quad \quad \quad variable:compile primary $\coloneq$ var$($identifier$)$,
 
 \noindent
 \quad \quad \quad leftbracket:
@@ -1806,7 +1805,7 @@ each of which removes from the source the longest expression in its syntactic ca
 \quad \quad \quad \textbf{begin from} source;
 
 \noindent
-\quad \quad \quad \quad compile primary $\coloneq$ bracketed(compile expression);
+\quad \quad \quad \quad compile primary $\coloneq$ bracketed$($compile expression$)$;
 
 \noindent
 \quad \quad \quad \quad $s$ \textbf{from} source;
@@ -1818,7 +1817,7 @@ each of which removes from the source the longest expression in its syntactic ca
 \quad \quad \quad \textbf{end},
 
 \noindent
-\quad \quad \textbf{else go to} error\}
+\quad \quad \textbf{else go to} error$\}$
 
 \noindent
 \quad \textbf{end};
@@ -1841,7 +1840,7 @@ In fact the concept of sparsity is not confined to infinite bases and domains; i
 
 Sparse sets and arrays are frequently encountered in advanced data processing applications, and their representation and manipulation present a number of familiar problems. Our first example is the definition of a type whose values are sets of car numbers. The cardinality of the carnumber type is perhaps something like four thousand million; but the programmer wishes only to deal with sets of cars owned by a single person; most of these will have only one member, and very few will have more than ten. The carset type may therefore be declared as sparse powerset:
 
-\quad \textbf{type} carset $=$ \textbf{sparse} powerset carnumber;
+\quad \textbf{type} carset $=$ \textbf{sparse powerset} carnumber;
 
 As an example of a sparse array, we may take the type of mappings between car owners and the set of cars they own. Each owner is represented by name and address; since these are of arbitrary length, the owner type may be defined:
 
@@ -1861,7 +1860,7 @@ The next two examples are drawn from numerical applications. A vector is a mappi
 \noindent
 A sparse complex matrix may be defined in a similar way:
 
-\quad \textbf{type} irregular matrix $=$ \textbf{sparse array} (row, column:integer) \textbf{of} complex.
+\quad \textbf{type} irregular matrix $=$ \textbf{sparse array} $($row, column:integer$)$ \textbf{of} complex.
 
 The next example is taken from the field of the translation of programming languages to machine code. During the process of translation, the translator needs to know certain information about each identifier declared in the program, such as machine address allocated to the variable, its length and type, etc. This information is assumed to belong to a type decode. The type of an array which associates a decode with each identifier is given the name dictionary and is declared:
 
@@ -1872,11 +1871,11 @@ Of course, the translator is interested in the decode only of those identifiers 
 
 The final example is of a type that causes familiar problems in a commercial filing system and in real life --- that of multidimensional cross-classification. The customers of a firm are split up into a number of geographical areas; they are also classified in a number of classes, in accordance with the kind of product they purchase. On occasions it is required to access all customers in an area, sequencing through all classes; on other occasions to access all customers in a class, sequencing through the areas; and finally, it is sometimes required to process all customers of a given class in a given area. The abstract structure required to deal with this situation is a two-dimensional sparse array of sparse sets:
 
-\quad \textbf{sparse array} ($c$:class; $a$:area) \textbf{of sparse powerset} customer.
+\quad \textbf{sparse array} $(c$:class; $a$:area$)$ \textbf{of sparse powerset} customer.
 
 A similar example may arise in the description of family relationship among persons:
 
-\quad \textbf{type} children $=$ \textbf{sparse array} (mother, father:person) \textbf{of} 
+\quad \textbf{type} children $=$ \textbf{sparse array} $($mother, father:person$)$ \textbf{of} 
 
 \tabto*{9.2em}\textbf{sparse powerset} person:
 
@@ -1901,43 +1900,36 @@ A sparse mapping consists of a number of elements. Each element of the mapping i
 
 The simplest representation of a sparse array type is as a sequence of entries;
 i.e.
-sparse array D of R
+
+\quad \textbf{sparse array} $D$ \textbf{of} $R$
+
+\noindent
 is represented as if it had been declared
-(default:R; s:sequence (key:D; information:R)).
-One of the possible sequence representations must now be chosen, in
-accordance with the same criteria that are used in the case of a sequence.
-But when a sequence is used to represent a sparse array, the order of the
-entries is immaterial, and does not have to reflect the relative times at which
-the entries were made. Thus the entries are often sorted into order of their
-key-value, particularly if this is the order in which they are going to be
-scanned.
-The chief disadvantage of the sequential representation is the length of
-time taken to access the element corresponding to a random subscript. In
-the case of structures of any great size, the program designer usually goes to
-considerable trouble to ensure that entries are accessed in the same standard
-order that they are stored in the sequence; and that if new entries are to be
-inserted, these are also sorted and then merged with the original sequence.
-Thus the standard commercial practice of batch processing and updating of
-sequential files may be regarded as a practical implementation of the abstract
-concept of a sparse array on the rather unsympathetic medium of magnetic
-tape.
+
+\quad $($default:$R$; $s$:sequence $($key:$D$; information:$R))$.
+
+One of the possible sequence representations must now be chosen, in accordance with the same criteria that are used in the case of a sequence. But when a sequence is used to represent a sparse array, the order of the entries is immaterial, and does not have to reflect the relative times at which the entries were made. Thus the entries are often sorted into order of their
+key-value, particularly if this is the order in which they are going to be scanned.
+
+The chief disadvantage of the sequential representation is the length of time taken to access the element corresponding to a random subscript. In the case of structures of any great size, the program designer usually goes to considerable trouble to ensure that entries are accessed in the same standard order that they are stored in the sequence; and that if new entries are to be inserted, these are also sorted and then merged with the original sequence. Thus the standard commercial practice of batch processing and updating of sequential files may be regarded as a practical implementation of the abstract concept of a sparse array on the rather unsympathetic medium of magnetic tape.
 
 \subsubsection{Tabular Representation}
 
 If there is an acceptably low upper limit $N$ to the number of entries in a sparse mapping, a great increase in speed of lookup can be achieved by the tabular representation, in which the sparse mapping
 
-sparse array D of R
+\quad \textbf{sparse array} $D$ \textbf{of} $R$
 
 \noindent
 is represented as a nonsparse array:
 
-(default:R; occupied: powerset 0 . . N;
+\quad $($default:$R$; occupied:\textbf{powerset} $0\,.\,.\,N$;
 
-array 0 .. N of (key: D; information: R) ).
+\tabto*{8em}\textbf{array} $0\,.\,.\,N$ \textbf{of} $($key:$D$; information:$R))$.
 
+\noindent
 If all the significant entries are collected before they are used, the table can be sorted, and then the entry with a given key can be rapidly located by logarithmic search.
 
-If access to the elements of the array is interleaved with addition of new entries, some form of hash-table technique is indicated. For this an arbitrary ``hashing'' function is chosen, which maps the domain type D into an integer in the range $0\,.\,.\,N$. When the entry is inserted, it is placed at this position in the table; so whenever that entry is accessed, use of the same hashing function will find it there. If that position is already occupied by an entry with a different key, some other vacant position in the table must be found. It is quite usual to search for such a vacant position in the next following locations of the table; but when the table is nearly full, this may cause undesirable bunching around an area of the table which happens to be popular. A solution to this problem is to choose $N + 1$ as a prime number, and to use a second hashing function to compute an arbitrary step length from any given key. The next position to try when any given position is full is obtained by adding the step length (modulo $N + 1$) to the previous position.
+If access to the elements of the array is interleaved with addition of new entries, some form of hash-table technique is indicated. For this an arbitrary ``hashing'' function is chosen, which maps the domain type $D$ into an integer in the range $0\,.\,.\,N$. When the entry is inserted, it is placed at this position in the table; so whenever that entry is accessed, use of the same hashing function will find it there. If that position is already occupied by an entry with a different key, some other vacant position in the table must be found. It is quite usual to search for such a vacant position in the next following locations of the table; but when the table is nearly full, this may cause undesirable bunching around an area of the table which happens to be popular. A solution to this problem is to choose $N + 1$ as a prime number, and to use a second hashing function to compute an arbitrary step length from any given key. The next position to try when any given position is full is obtained by adding the step length (modulo $N + 1$) to the previous position.
 
 \subsubsection{Indexed representation}
 
@@ -1947,9 +1939,9 @@ when this is not possible, a mixture of the tabular and sequential methods is
 often used. In this a sparse array is represented as a table, each of whose
 entries is a sequence:
 
-\quad (default:$R$; table:\textbf{array} $1\,.\,.\,N$ \textbf{of}
+\quad $($default:$R$; table:\textbf{array} $1\,.\,.\,N$ \textbf{of}
 
-\tabto*{10em}(max:$D$; seq:\textbf{sequence} (key:$D$; information:$R$))).
+\tabto*{10em}$($max:$D$; seq:\textbf{sequence} $($key:$D$; information:$R)))$.
 
 \noindent
 Every entry is placed on that sequence $i$ such that its key fails between table $[i - 1]$.max (or $D$.min if $i = 1$) and table $[i]$.max. The table is sorted so that the appropriate sequence can be quickly located. This technique may be likened to the organization of a multi-volume encyclopedia, in which the keys of the first and last entries of each volume are indicated on the spine, so that the right volume can he quickly identified, without extracting the volumes from the shelf.
@@ -1970,12 +1962,12 @@ Each access to the array involves first ``interleaving'' the bit values of the t
 
 The phenomenon of cross-classification of files causes as many problems in a computer as it does in real life. It is usually solved by standardizing on one of the classifications which is most convenient, and accepting the extra cost of processing in accordance with the other classification, even if this involves resorting the file. Thus the sparse mapping
 
-\quad \textbf{sparse array} ($i$:$D_1$; $j$:$D_2$) \textbf{of} $R$
+\quad \textbf{sparse array} $(i:D_1; j:D_2)$ \textbf{of} $R$
 
 \noindent
 is represented as:
 
-\quad \textbf{sparse array} $D_1$ \textbf{of} (\textbf{sparse array} $D_2$ \textbf{of} $R$)
+\quad \textbf{sparse array} $D_1$ \textbf{of} $($\textbf{sparse array} $D_2$ \textbf{of} $R)$
 
 However, it is also possible to deal with the two dimensions in a more symmetric fashion, using a method based on the chained representation of sequences. In this representation, each actually used value of $D_1$ is placed in one chain, and each actually used value of $D_2$ is placed in another. These are called \textit{border chains}. Each element of either border chain contains a base location pointing to a chained sequence of all elements with key values which fall into the class. Now each actual entry of the array has \textit{two} addresses attached; one points to the next item of the sequence which has the same classification according to $D_1$, and the other to the next item which has the same classification according to $D_2$. Thus each item may be pictured as residing on an intersection of the lines of a two-dimensional grid, with pointers leading across and downwards to the next item on the same row or the same column.
 
@@ -1988,6 +1980,7 @@ However, it is also possible to deal with the two dimensions in a more symmetric
 This grid representation is unfortunately suitable only when the entire structure will fit into main store. If the main part of the sequences have to be held on backing store, some sort of blocking of adjacent elements would be desirable in the interests of efficiency.
 
 \section[Example: Examination timetables]{Example: Examination Timetables}
+\label{sec:example-examination}
 
 In an educational establishment which offers students a wide choice of course combinations, there arises the problem of designing an examination timetable in which each examination is conducted in a single session, and yet each student can attend the examination for each course that he has taken. This can always be arranged by allocating a separate session for each examination; but the interests of examiner and student alike dictate that the total examination period be as short as possible. This means that each session should contain as many examinations as possible, subject to some limit $k$. An additional constraint is imposed by the size of the examination hall, which can only accommodate a certain maximum number of students.
 
@@ -2012,8 +2005,7 @@ We next attempt to formalize the properties which the input and output data are 
 	\item \label{en:examination-2}
 	Each exam is scheduled for one of the sessions
 
-	$\displaystyle\bigcup_{s\text{ \textbf{in} timetable}}$ $s =$ exam.all
-	s in timetable
+	$\displaystyle\bigcup_{s\text{ \textbf{in} timetable}} s =$ exam.all
 
 	\item \label{en:examination-3}
 	No exam is scheduled for more than one session:
@@ -2028,7 +2020,7 @@ Conditions \ref{en:examination-2} and \ref{en:examination-3} effectively state t
 	\setcounter{enumi}{3}
 	
 	\item \label{en:examination-4}
-	No session includes more thank exams
+	No session includes more than $k$ exams
 
 	\quad $s$ \textbf{in} timetable $\supset$ size$(s) \leqslant k$
 
@@ -2039,23 +2031,24 @@ Conditions \ref{en:examination-2} and \ref{en:examination-3} effectively state t
 	
 	Now the number of students involved in a session is
 	
-	\quad session count$(s\text{:session}) = \displaystyle\sum_{e \text{ \textbf{in} } s}$ examcount($e$)
+	\quad session count$(s\text{:session}) = \displaystyle\sum_{e \text{ \textbf{in} } s}$ examcount$(e)$
 	
 	The condition may be formalized:
 	
 	\quad $s$ \textbf{in} timetable $\supset$ sessioncount$(s) \leqslant$ hallsize.
 	
 	\item \label{en:examination-6}
-	No student takes more than one exam in a session. To formalize this we introduce the concept of incompatibility of exams: two exams are incompatible if some student is taking both of them. For each exam el there is a set incompat$(e1)$ of exams which are incompatible with it:
+	No student takes more than one exam in a session. To formalize this we introduce the concept of incompatibility of exams:two exams are incompatible if some student is taking both of them. For each exam el there is a set incompat$(e1)$ of exams which are incompatible with it:
 	
-	\quad incompat$(e1)= \{e2\text{:exam}\ |\ e2 \neq e1\ \&\ \exists\ st$:student$(e1 \text{ \textbf{in}}$
+	\quad incompat$(e1)= \{e2\text{:exam}\ |\ e2 \neq e1\ \&\ \exists\ st$:student$(e1 \text{ \textbf{in}}$ load$(st)$
 		
-	\tabto*{8.2em} load$(st)\ \&\ e2$ \textbf{in} load$(st))\}$
-	
-	Now we can define that every pair of exams in a session must be compatible:
-	
-	\quad $s$ \textbf{in} timetable \& $e1$, $e2$ \textbf{in} $s \supset\neg e1$ \textbf{in} incompat$(e2)$.
+	\tabto*{8.2em} \& $e2$ \textbf{in} load$(st))\}$
 \end{enumerate}
+
+\noindent
+Now we can define that every pair of exams in a session must be compatible:
+
+\quad $s$ \textbf{in} timetable \& $e1$, $e2$ \textbf{in} $s \supset\neg e1$ \textbf{in} incompat$(e2)$.
 
 These six conditions, defined in terms of load, hallsize, and $k$, must be possessed by any successful timetable in the real world, and by any successful computer representation of the timetable. They serve to define the objectives and criterion of correctness of our timetabling program.
 
@@ -2117,7 +2110,7 @@ which is defined by the invariant relation:
 \noindent
 The structure of the program as a whole now takes the form:
 
-\quad timetable $\coloneq$ \{\};
+\quad timetable $\coloneq \{\}$;
 
 \quad remaining $\coloneq$ exam.all;
 
@@ -2153,9 +2146,9 @@ in accordance with the current value of a variable:
 
 \quad \textbf{procedure} record
 
-\quad \textbf{if} sessioncount (bestsofar) $<$ sessioncount $($trial$)$ \textbf{then}
+\quad \quad \textbf{if} sessioncount$($bestsofar$) <$ sessioncount $($trial$)$ \textbf{then}
 
-\quad \quad bestsofar $\coloneq$ trial.
+\quad \quad \quad bestsofar $\coloneq$ trial.
 
 \noindent
 The result of suitable is going to be the final value of bestsofar:
@@ -2176,19 +2169,19 @@ which generates and records all possible supersets of trial by adding one or mor
 
 \quad \textbf{function} suitable:session;
 
-\quad \textbf{begin} trial, bestsofar:session; $e$:exam; untried:\textbf{powerset} exam;
+\quad \quad \textbf{begin} trial, bestsofar:session; $e$:exam; untried:\textbf{powerset} exam;
 
-\quad \quad $e$ \textbf{from} remaining;
+\quad \quad \quad $e$ \textbf{from} remaining;
 
-\quad \quad trial $\coloneq$ bestsofar $\coloneq$ $\{e\}$;
+\quad \quad \quad trial $\coloneq$ bestsofar $\coloneq$ $\{e\}$;
 
-\quad \quad untried $\coloneq$ remaining $-$ trial $-$ incompat$(e)$;
+\quad \quad \quad untried $\coloneq$ remaining $-$ trial $-$ incompat$(e)$;
 
-\quad \quad gensupersets;
+\quad \quad \quad gensupersets;
 
-\quad \quad suitable $\coloneq$ bestsofar
+\quad \quad \quad suitable $\coloneq$ bestsofar
 
-\quad \textbf{end};
+\quad \quad \textbf{end};
 
 \noindent
 Note that the first value of the trial is the unitset of some exam chosen from the remainder according to some as yet undefined criterion. The justification for this is that the chosen exam must eventually feature in some session of the timetable, and it might as well be this one. If this prior choice were not made, gensupersets would keep on generating the same supersets on every cycle of the major loop of the timetabling program.
@@ -2197,7 +2190,7 @@ As another significant optimization, we have removed from untried any exams whic
 
 The generation of supersets of a given trial may proceed by selecting each exam from untried, and adding it to trial. If the result is still valid, it should be recorded, and the new value of trial is then a suitable session to act as a basis for further superset generation. This suggests a recursive program structure. Of course, the exam added to trials should also be subtracted from untried, to avoid unnecessary repetitions; and it is very advantageous to remove from untried any exams which are incompatible with the exam just added to the trial, so that these do not have to be considered again in future. Also, the values of trial and untried must be left unchanged by each call, so any change made to them must be recorded and restored in variables save 1 and save 2.
 
-\quad \textbf{procedure} gensupersets;
+\textbf{procedure} gensupersets;
 
 \quad \textbf{begin} $e$:exam; save 1, save 2:\textbf{powerset} exam;
 
@@ -2282,7 +2275,7 @@ incompat:\textbf{array} exam \textbf{of powerset} exam, initially constant $(\{\
 \noindent
 The following two procedures are local to suitable:
 
-\quad \textbf{procedure} record ;
+\quad \textbf{procedure} record;
 
 \quad \quad \textbf{if} sessioncount (bestsofar) $<$ sessioncount$($trial$)$ \textbf{then} 
 
@@ -2302,9 +2295,9 @@ The following two procedures are local to suitable:
 
 \quad \quad \quad \quad \quad \quad save 2 $\coloneq$ untried $\wedge$ incompat$(e)$;
 
-\quad \quad \quad \quad \quad \quad untried: $-$ save 2;
+\quad \quad \quad \quad \quad \quad untried: $\vee$ save 2;
 
-\quad \quad \quad \quad \quad \quad trial: $\vee\ \{e\}$;
+\quad \quad \quad \quad \quad \quad trial: $-\ \{e\}$;
 
 \quad \quad \quad \quad \quad \quad \textbf{if} sessioncount$($trial$) <$ hallsize \textbf{then} gensupersets;
 
@@ -2590,7 +2583,7 @@ The general form of the definition of a type as a Cartesian product is
 \quad \textbf{type} $T = (s_1 : T_1;\ s_2: T_2; \dots ;\ s_n: T_n);$
 
 \noindent
-where $s_1 > s_2, \dots , s_n$ are the selectors of the components, and $T_1, T_2, \dots, T_n$ are the types of the corresponding components.
+where $s_1, s_2, \dots , s_n$ are the selectors of the components, and $T_1, T_2, \dots, T_n$ are the types of the corresponding components.
 
 \begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
 	\item \label{en:cartesian-1}
@@ -2600,7 +2593,7 @@ where $s_1 > s_2, \dots , s_n$ are the selectors of the components, and $T_1, T_
 
 	\item The only elements of $T$ are as specified in \ref{en:cartesian-1}.
 
-	\item If $x = T(x_1, x_2, \dots, x_n) $then
+	\item If $x = T(x_1, x_2, \dots, x_n)$ then
 
 	\quad $x.s_1 = x_1\ \&\ x.s_2 = x_2\ \& \dots \&\ x.s_n = x_n$.
 
@@ -2669,7 +2662,7 @@ The general form of the definition is:
 	
 	\quad \dots
 	
-	$T(x_1, x_2, \dots, x_n, k_2(x'_n))$
+	$T(x_1, x_2, \dots, x_n, k_n(x'_n))$
 
 	\item The only elements of $T$ are as specified in \ref{en:distriminated-1}
 	
@@ -2681,7 +2674,7 @@ The general form of the definition is:
 	\& $x.k_i = x'_i$
 \end{enumerate}
 
-\textit{Note}:\quad $x.k_1$ is undefined for $l \neq i.$
+\textit{Note}:\, $x.k_l$ is undefined for $l \neq i.$
 
 \noindent
 Abbreviations:
@@ -2811,7 +2804,7 @@ Note: $min(T())$ is not defined
 	\item $x \text{ \textbf{down} } 0 = x \text{ \textbf{up} } 0 = x$
 	\item $x$ \textbf{down} succ$(n) = (x$ \textbf{down} $n)$ \textbf{down} 1
 	\item $T()$ \textbf{down} $1 = T()$
-	\item $(x \lor T(a))$ \textbf{down} $1 = (x$ down $1\ \lor$
+	\item $(x \lor T(a))$ \textbf{down} $1 = (x$ \textbf{down} $1\ \lor$
 	
 	\quad \textbf{if} $a \neq T_0$.min \textbf{then} $T($pred$(a))$ \textbf{else} $T()$
 \end{enumerate}
@@ -2880,9 +2873,105 @@ The general form of a sequence definition is:
 	\item $\wideparen{x\ \ }(\wideparen{y\ z}) = (\wideparen{x\ y})\wideparen{\ z}$
 	\item $T(d)$.first $= d$
 	\item $x \neq T() \supset (\wideparen{x\ T}(d))$.first $= x$.first
-	\item final $(T(d)) = T()$
+	\item final$(T(d)) = T()$
 	\item $x \neq T() \supset$ final$(\wideparen{x\ T}(d)) =$ final$(x)\wideparen{\ \ T}(d)$
 \end{enumerate}
 
 \noindent
 \textit{Note}: last, initial, first, and final are not defined for $T()$
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\setcounter{enumi}{10}
+	\item $T()$ \textbf{ends} $y$
+	\item $\wideparen{x\  T}(d)$ \textbf{ends} $y \equiv y \neq T()\ \&\ y$.last $= d\ \&\ x$ \textbf{ends} initial$(y)$
+	\item $x$ \textbf{begins} $T() \equiv x = T()$
+	\item $x$ \textbf{begins} $\wideparen{y\ T}(d) \equiv x = \wideparen{y\ T}(d) \lor x$ \textbf{begins} $y$
+	\item length$(T()) = 0$
+	\item length$(\wideparen{x\ T}(d)) = \text{succ}(\text{length}(x))$
+\end{enumerate}
+
+\noindent
+For an ordered sequence type we have:
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\setcounter{enumi}{16}
+	\item $T() \leqslant y$
+	\item $x \leqslant T() \supset x = T()$
+	\item $x, y \neq T() \supset (x \leqslant y \equiv x.\text{first} < y.\text{first} \lor (x.\text{first} = y.\text{first}$
+	
+	\tabto*{8.9em}\& $\text{final}(x) \leqslant \text{final}(y)))$
+\end{enumerate}
+
+\noindent	
+Abbreviations:
+
+\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+	\setcounter{enumi}{19}
+	\item  $x\wideparen{\text{:} \ T}(d)$ \tabto*{7em} means $x \coloneq \wideparen{x\ T}(d)$
+	\item $d$ \textbf{from} $x$\tabto*{7em} means $d\coloneq x.\text{first};\ x\coloneq \text{final}(x)$
+	\item $d$ \textbf{back from} $x$\tabto*{7em} means $d\coloneq x.\text{last};\ x\coloneq \text{initial}(x)$
+	\item \textbf{from} $x$\tabto*{7em} means $x\coloneq \text{final}(x)$
+	\item \textbf{back from} $x$\tabto*{7em} means $x\coloneq \text{initial}(x)$
+	\item $T(d_1, d_2, \dots, d_n)$ stands for
+	
+	\quad $(T()\wideparen{\ \ T}(d_1)\wideparen{\ \ T}(d_2\wideparen{)\ \ }\dots\wideparen{\ \ T}(d_n)$
+	
+	\item $[d_1, d_2, \dots, d_n]$ stands for $T(d_1, d_2, \dots, d_n)$
+	\item If $x = [d_1, d_2, \dots, d_n]$ then
+	
+	\quad \textbf{for} $d$ \textbf{in} $x$ \textbf{do} $S$ stands for
+
+	\qquad \qquad $S_{d_1}^d; S_{d_2}^d; \,.\,.\,; S_{d_n}^d$.
+
+
+	\quad \textbf{for} $d$ \textbf{in} $x$ \textbf{take} $E$ stands for
+	
+	\qquad \qquad $[E_{d_1}^d, E_{d_2}^d, \dots, E_{d_n}^d]$
+
+\end{enumerate}
+
+\noindent
+Theorems
+
+	\quad $x = y \equiv (x = y = T() \lor x.\text{first} = y.\text{first}\ \&\ x.\text{final} = y.\text{final})$
+
+	\tabto*{4.9em} $\equiv (x = y = T() \lor x.\text{last} = y.\text{last}\ \&\ x.\text{initial} = y.\text{initial})$
+	\bigskip
+
+\noindent
+\textbf{REFERENCES}
+\addcontentsline{toc}{section}{References}
+\medskip
+
+\noindent
+The following works have acted as an inspiration and guide for this chapter, and they are recommended for further reading.
+
+I am also deeply indebted to Professor N. Wirth for many fruitful discussions and suggestions, and for his willingness to test several of the ideas of the paper in his design and implementation of PASCAL; and to Professor E.W. Dijkstra for his perpetual inspiration.
+\medskip
+
+\noindent
+Dijkstra, E. W. (1972). Notes on Structured Programming. ``Structured Programming''. pp. 1--82. Academic Press, London.
+\medskip
+
+\noindent
+Knuth, D. E. (1968). ``The Art of Computer Programming'' Vol. 1, Chapter 2. Addison-Wesley, Reading, Mass.
+\medskip
+
+\noindent
+McCarthy, J. (1963). ``A Basis for a Mathemetical Theory of Computation in Computer Programming and Formal Systems'' (eds. Braffort, P. \& Hirschberg D.). North-Holland Publishing Company, Amsterdam.
+\medskip
+
+\noindent
+Mealy, G. H. (1967). Another Look at Data. A.F.l.P.S. \textit{Fall Joint Computer Conference Proceedings}. \textbf{31}, pp. 525--534.
+\medskip
+
+\noindent
+Wirth, N. (1970). Programming and Programming Languages. Contribution to Conference of European Chapter of \textit{A.C.M}, Bonn.
+\medskip
+
+\noindent
+Wirth, N. (1971). Program Development by Stepwise Refinement. Comm. A.C.M. 14, 4, pp. 221--227.
+\medskip
+
+\noindent
+Wirth, N. (1971). The Programming Language PASCAL. \textit{Acta Informatica}, \textbf{1}, 1, pp. 35--63.

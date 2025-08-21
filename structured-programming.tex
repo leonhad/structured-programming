@@ -22,7 +22,7 @@
 	pdfcreator={pdflatex},
 	colorlinks,
 	bookmarksopen=true,
-	bookmarksopenlevel=2,
+	bookmarksopenlevel=1,
 	citecolor = {blue},
 	linkcolor = {blue},
 	urlcolor  = {blue}
@@ -60,12 +60,11 @@
 
 \titleformat{\section}[hang]{\normalsize\centering\scshape}{\thesection{}}{.5em}{}
 \titlespacing{\section}{0pt}{1em}{.6em}
-%\counterwithout*{section}{chapter}
 
 \titleformat{\subsection}[hang]{\footnotesize\scshape\uppercase}{\thesubsection{}}{.5em}{}
 \titlespacing{\subsection}{0pt}{.8em}{.2em}
 
-\titleformat{\subsubsection}[hang]{\footnotesize\scshape\uppercase}{\thesubsubsection{}}{.5em}{}
+\titleformat{\subsubsection}[hang]{\footnotesize\itshape}{\thesubsubsection{}}{.5em}{}
 \titlespacing{\subsubsection}{0pt}{.8em}{.2em}
 
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
@@ -74,7 +73,7 @@
 \renewcommand\thesubsection{\thesection\arabic{subsection}.}
 \renewcommand\thesubsubsection{\thesubsection\arabic{subsubsection}.}
 
-\setcounter{tocdepth}{1}
+\setcounter{tocdepth}{2}
 \setcounter{secnumdepth}{3}
 
 \renewcommand{\contentsname}{CONTENTS}
@@ -140,7 +139,7 @@
 
 \include{./chapters/chapter01}
 \include{./chapters/chapter02}
-%\include{./chapters/chapter03}
+\include{./chapters/chapter03}
 
 \backmatter
 % bibliography, glossary and index would go here.
