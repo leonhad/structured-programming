@@ -447,7 +447,7 @@ We now turn to deal with data types for which the structure is meaningful to the
 
 We will deal first with elementary data structures, Cartesian products and unions. These elementary structures are almost as simple and familiar to mathematicians and logicians as the natural numbers. Furthermore, from the point of view of the computer programmer, the properties of elementary data structures are very favorable, provided that the constituent types are also elementary.
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item Firstly, each data item occupies a fixed finite, and usually modest amount of core store, which increases only linearly with the size of the definition.
 
 	\item The store required to hold each value can efficiently be allocated either permanently in main storage or on a run-time stack. There is no need for more sophisticated dynamic storage allocation systems.
@@ -464,6 +464,7 @@ The first data structuring method which we shall discuss is the Cartesian produc
 \quad \textbf{type} complex $= ($real part:real; imagpart:real$)$;
 \nopagebreak
 
+\noindent
 or more briefly:
 \nopagebreak
 
@@ -506,9 +507,9 @@ The last example shows how the set of point positions on a two-dimensional raste
 
 \quad \textbf{type} raster $= (x$, $y$:coordinate$)$
 
-This is the standard method by which two-dimensional spaces are constructed out of a single-dimension by the method of Cartesian coordinates; for every point in two-dimensional space can be named as an ordered pair of simple one-dimensional numbers. This explains the use of the term ``Cartesian product'' to apply to the given method of defining types. If $r$ is a variable of type raster, $r$. $x$ and $r$. $y$ are commonly known as the projections of $r$ onto the $x$ and $y$ axes respectively; however, we shall refer to the functions $x$ and $y$ as selectors rather than projections.
+This is the standard method by which two-dimensional spaces are constructed out of a single-dimension by the method of Cartesian coordinates; for every point in two-dimensional space can be named as an ordered pair of simple one-dimensional numbers. This explains the use of the term ``Cartesian product'' to apply to the given method of defining types. If $r$ is a variable of type raster, $r.x$ and $r.y$ are commonly known as the projections of $r$ onto the $x$ and $y$ axes respectively; however, we shall refer to the functions $x$ and $y$ as selectors rather than projections.
 
-The cardinality of a Cartesian product type is obtained by multiplying together the cardinalities of the constituent types. This is fairly obvious from the visualization of a Cartesian product as a rectangle or box with sides equal in length to the cardinalities of the types which form the axes. Thus the cardina1ity of the card type is thirteen times four, i.e., fifty-two, which is, as you might expect, the number of cards in a standard pack. The number of dates is 26 040, which slightly overestimates the actual number of days in the interval, since as explained above, it includes a small number of invalid dates.
+The cardinality of a Cartesian product type is obtained by multiplying together the cardinalities of the constituent types. This is fairly obvious from the visualization of a Cartesian product as a rectangle or box with sides equal in length to the cardinalities of the types which form the axes. Thus the cardina1ity of the card type is thirteen times four, i.e., fifty-two, which is, as you might expect, the number of cards in a standard pack. The number of dates is $26\,040$, which slightly overestimates the actual number of days in the interval, since as explained above, it includes a small number of invalid dates.
 
 \subsection{Manipulation}
 
@@ -529,7 +530,7 @@ In inspecting or processing a structured value, it is often required to make man
 \noindent
 where $sv$ names the structured variable (or expression) and $S$ is a program statement defining what is to be done with it. Within the statement $S$, the components of $sv$ will be referred to simply by their selector names, $s_1, \dots, s_n,$ instead of by the usual construction:$sv.s_1, sv.s_2, \dots sv.s_n$. The reasons for using this construction are:
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item To clarify the purpose of the section of program.
 	\item To abbreviate its formulation.
 	\item To indicate the possibility of improved efficiency of implementation.
@@ -580,7 +581,7 @@ The choice between the various representations depends on the wider context with
 
 A second occasion for using packed representations is when data storage is scarce, either in main store or on external backing stores. However, care must be taken that space saved on data storage is not outweighed by the expansion of the code which results from having to unpack and repack the data whenever it is inspected or updated.
 
-The minimal representation is not often used for data storage, since the small amount of extra space it saves (always less than one bit per component) is usually more than outweighed by the extra time taken by multiplying and dividing on every access to the components, as compared with the more usual shifting and masking. However, the technique can be useful, possibly in conjunction with more conventional packing, if there is no other way of fitting the value within convenient word boundaries. Also, if the value is to be used solely or primarily as an index to a multi-dimensional array, the minimal representation is to be preferred; since this will save a significant amount of space in the representation of the array (see Section \ref{sec:representation-6.2}).
+The minimal representation is not often used for data storage, since the small amount of extra space it saves (always less than one bit per component) is usually more than outweighed by the extra time taken by multiplying and dividing on every access to the components, as compared with the more usual shifting and masking. However, the technique can be useful, possibly in conjunction with more conventional packing, if there is no other way of fitting the value within convenient word boundaries. Also, if the value is to be used solely or primarily as an index to a multi-dimensional array, the minimal representation is to be preferred; since this will save a significant amount of space in the representation of the array (see Section \ref{sec:representation-6.2})
 
 In representing the \textbf{with} construction in machine code, it is sometimes convenient to compute the address of the structure being referenced and store it in a register; this may achieve shorter and faster code for accessing the components. If the components have been packed, it may pay to unpack them into separate words before starting to process them, so that they can be easily referenced or updated; and if they have been updated, they must be packed up again and stored in the structure when the processing is complete. On some machines, it is more economic to pack and unpack a whole structure at the same time, rather than to perform these operations one at a time on the components.
 
@@ -638,17 +639,17 @@ Now it is possible to define a type covering both kinds of car:
 \noindent
 But here it is inconvenient to define the structure of local and foreign cars separately; and we would like to take advantage of the fact that several of their components are the same. This may be done by bringing the common components in front of both alternatives:
 
-\quad \textbf{type} car $=$ (make:manufacturer;
+\quad \textbf{type} car $= ($make:manufacturer;
 
 \tabto{7.5em}regnumber:carnumber;
 
-\tabto{7.5em}(local:(owner:person;
+\tabto{7.5em}$($local:$($owner:person;
 
-\tabto{7.8em}first registration:date),
+\tabto{7.8em}first registration:date$)$,
 
-\tabto{7.8em}foreign:(origin:country))
+\tabto{7.8em}foreign:$($origin:country$))$
 
-\tabto{7.1em}).
+\tabto{7.1em}$)$.
 
 \noindent
 Every car has a make and regnumber but only local cars have an owner or first registration date; and only foreign cars have an origin. 
@@ -753,7 +754,7 @@ In general the values of the different alternative types occupy different amount
 
 \begin{figure}[ht!]
 	\centering
-	\includegraphics[width=.8\textwidth]{chap2/fig2}
+	\includegraphics[width=.9\textwidth]{chap2/fig2}
 	\caption{Representation of cars}
 \end{figure}
 
@@ -765,13 +766,13 @@ We return to the context of the example in section \ref{sec:example-3-3}, the an
 
 \quad \textbf{type} symbol $=$
 
-\tabto*{5.7em}(realconst:real,
+\tabto*{5.6em}$($realconst:real,
 
 \tabto*{6em}integerconst:integer,
 
 \tabto*{6em}identifier:ident,
 
-\tabto*{6em}basic:delimiter);
+\tabto*{6em}basic:delimiter$)$;
 
 \noindent
 where we will leave the type ident undefined for the time being, and assume that the delimiters are defined by enumeration.
@@ -790,6 +791,7 @@ where $D$ is the domain type and $R$ is the range type. An alternative notation 
 
 \quad M:\textbf{array} $D$ \textbf{of} $R$.
 
+\noindent
 This notation is more expressive of the manner in which the data is represented, whereas the mathematical notation emphasizes the abstract character of the structure, independent of its representation.
 
 When a particular value $M$ of a mapping type is applied to a value $x$ of the domain type, it specifies some unique element of the range type, which is known as $M$ of $x$, and is written using either round or square brackets
@@ -835,7 +837,7 @@ A fourth example shows an array which represents a possible value of a page on a
 
 \quad \textbf{type} spot $= ($row:$1\,.\,.\,40$; column:$1\,.\,.\,27)$;
 
-\quad \textbf{type} display page $=$ \textbf{array} spot of character.
+\quad \textbf{type} display page $=$ \textbf{array} spot \textbf{of} character.
 
 An alternative method of dealing with a multidimensional array is to regard it as an array of rows, where each row is an array of characters:
 
@@ -923,7 +925,7 @@ The minimal representation for an array is similar to that for a Cartesian produ
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\textwidth]{chap2/fig3}
+	\includegraphics[width=.9\textwidth]{chap2/fig3}
 	\caption{Representation of $A:\text{\textbf{array} } 0\,.\,.\,7 \text{ \textbf{of} } T$}
 \end{figure}
 
@@ -943,7 +945,7 @@ The choice between representations of multidimensional arrays is made on quite d
 
 There are several other possible reasons for choosing the tree representation:
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item In some computing environments, where dynamic storage allocation is standard, it may be difficult to obtain large consecutive areas, in which case a large two-dimensional array can be split up into a number of smaller rows which can be accommodated without trouble.
 
 	\item It is possible to set up a scheme whereby some rows of the array are held on backing store while other rows are being processed, and then the backing store address of a row replaces the main store address in the base array when that row is absent from store. Thus it is hoped to be able to process arrays which are too large to be wholly accommodated in main store together with the program that processes them. However, the economics of this operation need to be carefully examined to ensure that the number of backing store transfers involved is acceptable.
@@ -1009,7 +1011,7 @@ This type covers all hands of up to fifty-two cards, even though for a particula
 
 A final example expresses the status of a computer peripheral device, for example, a paper tape reader. There are a number of exception conditions which can arise on attempted input of a character:
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item Device switched to ``manual'' by operator.
 	\item No tape loaded.
 	\item Parity error on last character read.
@@ -1019,7 +1021,7 @@ A final example expresses the status of a computer peripheral device, for exampl
 \noindent
 These conditions can be defined as an enumeration
 
-\quad \textbf{type} exception $=$ (manual, unloaded, parity, skew); 
+\quad \textbf{type} exception $= ($manual, unloaded, parity, skew$)$; 
 
 \noindent
 and since several of these conditions can be detected simultaneously, the status of the reader can be specified as a value of a powerset type:
@@ -1054,7 +1056,7 @@ However, this universal set exists as a storable data value only when the base t
 
 The basic operations on sets are very familiar to mathematicians and logicians.
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item Test of membership: If $x$ is in the set $s$, the Boolean expression ``$x$ \textbf{in} $s$'' yields the value true, otherwise the value false.
 	\item Equality: two sets are equal if and only if they have the same members.
 	\item Intersection: $s_1 \wedge s_2$ contains just those values which are in both $s_1$ and $s_2$.
@@ -1062,17 +1064,13 @@ The basic operations on sets are very familiar to mathematicians and logicians.
 	\item Relative complement: $s_1 - s_2$ contains just those members of $s_1$ which are not in $s_2$.
 	\item Test of inclusion: $s_1 \subset s_2$ yields the value true whenever all members of $s_1$ are also members of $s_2$, and false otherwise.
 	\item The size of a set tells how many members it has.
-\end{enumerate}
 
-If the domain type of a set has certain operators defined upon it, it is often useful to construct corresponding operations on sets. In particular, if the domain type of a set is ordered, the following operators apply:
+	If the domain type of a set has certain operators defined upon it, it is often useful to construct corresponding operations on sets. In particular, if the domain type of a set is ordered, the following operators apply:
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
-	\setcounter{enumi}{7}
-	
 	\item $\min(s)$ the smallest member of $s$; undefined if $s$ is empty.
 	\item $s \text{ \textbf{down} } n$ is a set containing just those values whose nth successors are in $s$.
 	\item $s \text{ \textbf{up} } n$ is a set containing just those values whose $n$th predecessors are in $s$.
-	\item Range$(a, b)$ is the set containing a, succ$(a), \dots, b$ if $a \leqslant b$, and which is empty otherwise.
+	\item Range$(a,\ b)$ is the set containing a, succ$(a), \dots, b$ if $a \leqslant b$, and which is empty otherwise.
 \end{enumerate}
 
 The most useful selective updating operations on sets are:
@@ -1090,7 +1088,7 @@ $x:\wedge\ y$; \tabto*{5em} exclude from $x$ all members which are not also memb
 $x:-\ y$ \tabto*{5em} exclude from $x$ all members which are also members of $y$
 
 \noindent
-\hangindent=3.2\parindent$x:\text{\textbf{down} }n$ \tabto*{5em} subtract n from every member of x and exclude members for which this is not possible
+\hangindent=3.2\parindent$x:\text{\textbf{down} }n$ \tabto*{5em} subtract $n$ from every member of $x$ and exclude members for which this is not possible
 
 \noindent
 \hangindent=3.2\parindent$x:\text{\textbf{up} } n$ \tabto*{5em} add $n$ to every member of $x$, and exclude members for which this is not possible
@@ -1133,7 +1131,7 @@ Another example is afforded by the ``hand'' type, which requires fifty-two bits 
 
 Since the number of values of a powerset type is always an exact power of two, for powersets of small base there can be no more economical method of utilizing storage on a binary computer than that of the bit pattern representation. It remains to show that the operations defined over the powerset type can be executed with high efficiency.
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item The unitset of $x$ may be obtained by loading a single 1 into the signbit position, and shifting it right $x$ places. On computers on which shifting is slow, the same effect may be obtained by table lookup. The construction of a set out of components may be achieved by taking the logical union of all the corresponding unit sets.
 
 	\item A membership test $x$ \textbf{in} $s$ may be made by shifting $s$ up $x$ places and looking at the most significant bit: 1 stands for \textbf{true} and 0 for \textbf{false}.
@@ -1188,7 +1186,7 @@ The program can be written easily
 \quad \textbf{while} sieve $\neq$ empty \textbf{do}
 
 \noindent
-\quad \quad \textbf{begin} next $\coloneq$ min(sieve);
+\quad \quad \textbf{begin} next $\coloneq$ min$($sieve$)$;
 
 \noindent
 \quad \quad \quad primes: $\vee\ \{$next$\}$;
@@ -1205,7 +1203,7 @@ The program can be written easily
 \noindent
 \textbf{end} primefinder.
 
-But if $N$ is significantly large, say of the order of 10\,000, this program cannot be directly executed with any acceptable degree of efficiency. The solution is to use this program as an abstract model of the algorithm, and rewrite it in a more efficient fashion, using only operations on sets not exceeding the word-length of the computer. We therefore need to declare an array of words to represent the two sets, assuming that ``wordlength'' is an environment inquiry giving the number of bits in a word:
+But if $N$ is significantly large, say of the order of $10\,000$, this program cannot be directly executed with any acceptable degree of efficiency. The solution is to use this program as an abstract model of the algorithm, and rewrite it in a more efficient fashion, using only operations on sets not exceeding the word-length of the computer. We therefore need to declare an array of words to represent the two sets, assuming that ``wordlength'' is an environment inquiry giving the number of bits in a word:
 
 \quad primes, sieve:\textbf{array} $0\,.\,.\,W$ \textbf{of powerset} $0\,.\,.\,\text{wordlength} - 1$
 
@@ -1300,9 +1298,9 @@ The whole program including initialisation is as follows:
 
 \quad \quad \quad \quad \textbf{end};
 
-\quad \quad \quad \quad next.$b\leqslant$ min$($sieve$[\text{next}.w])$;
+\quad \quad \quad \quad next.$b\coloneq$ min$($sieve$[\text{next}.w])$;
 
-\quad \quad \quad \quad primes$[\text{next}.w]$:$\vee\ \{\text{next}.b\}$;
+\quad \quad \quad \quad primes$[\text{next}.w]$: $\vee\ \{\text{next}.b\}$;
 
 \quad \quad \quad \quad $n\coloneq$ next;
 
@@ -1345,7 +1343,7 @@ The previous chapters have dealt with the topic of elementary data structures, w
 
 The most important distinction between elementary structured types and types of advanced structure is that in the former case the cardinality of the type is strictly finite, provided that the cardinality of the constituent types is. The distinction between a finite and an infinite set is one of profound mathematical significance, and it has many consequences relating to methods of representation and manipulation.
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item Since the number of potential values of the type may be infinite, the amount of storage allocated to hold a value of an advanced structure is not determinable from the declaration itself. It is normally only determined when the program is actually running, and in many cases, varies during the execution of the program. In the case of an elementary structure, the number of different potential values is finite, and the maximum amount of storage required to hold any value is fixed and determinable from the form of the declaration.
 
 	\item When the size of a structured value is fairly large, it is more efficient to update individual components of the structure separately, rather than to assign a fresh value to the entire structure. Even for elementary types, it has been found sometimes more efficient to perform selective updating, particularly for unpacked representations of Cartesian products and for arrays. The increased efficiency of selective updating is usually even more pronounced in the case of advanced data structures.
@@ -1397,7 +1395,7 @@ $T(v_1, v_2, \dots, v_n)$ denotes the sequence consisting of these values in the
 \noindent
 However, a sequence of characters is normally denoted by enclosing them in quotes.
 
-The basic operation on sequences is concatenation, that is, adjoining two sequences one after the other. Thus if $x$ is the sequence of characters ``PARIS IN THE'' and $y$ is the sequence ``THE SPRING'', their concatenation $\wideparen{x\ y}$ is the sequence
+The basic operation on sequences is concatenation, that is, adjoining two sequences one after the other. Thus if $x$ is the sequence of characters ``PARIS IN THE'' and $y$ is the sequence ``THE SPRING'', their concatenation $x\wideparen{\ \ }y$ is the sequence
 
 \quad $z =$ ``PARIS IN THETHE SPRING''
 
@@ -1434,10 +1432,10 @@ In this ordering every sequence has a successor, but only a small proportion hav
 A most important selective updating operation on sequences is the appending of a new value $v$ to the end of an existing sequence $x$. This may be written:
 
 
-\quad $x\wideparen{\text{: } T}(v)$;
+\quad $x\wideparen{\text{: \ } }T(v)$;
 
 \noindent
-and corresponds to the familiar concept of writing a value v to a sequential file $x$. The operation corresponding to reading the beginning of a file $x$ is one which removes the first item of $x$ and assigns its value to some variable $v$. This may be written:
+and corresponds to the familiar concept of writing a value $v$ to a sequential file $x$. The operation corresponding to reading the beginning of a file $x$ is one which removes the first item of $x$ and assigns its value to some variable $v$. This may be written:
 
 \quad $v$ \textbf{from} $x$;
 
@@ -1461,7 +1459,7 @@ In some cases, it is more efficient to avoid the copying of an item which is inv
 \quad \textbf{back from} $x$.
 
 \noindent
-In this case, access to the items of the sequence will usually be made by the selectors $x$. first and$/$or $x$.last.
+In this case, access to the items of the sequence will usually be made by the selectors $x$.first and$/$or $x$.last.
 
 It is very common to wish to scan all the items of a sequence in succession; a suitable notation for this is modeled on the for statement:
 
@@ -1476,7 +1474,7 @@ A similar construction can be used for defining a sequence as an item-by-item tr
 
 In deciding a representation for a sequence, it is most important to know which of the selective updating operations are going to be carried out upon it.
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item If the only operation is \textbf{from}, the sequence is known as an \textit{input} sequence; obviously in order to have any value at all, an input sequence must be initialized to some value existing in the outer environment in which it is declared. The association of a sequence local to a program with some file existing more or less permanently on backing store is often known as ``opening'' the file for input, and we assume that this operation is invoked implicitly on declaration of a local input sequence. The reverse operation of ``closing'' the file is invoked implicitly on exit from the block to which the sequence is local.
 
 	\item If the only operation is writing to the file, the sequence is known as an \textit{output} sequence. An output sequence may be initialized from the environment in the same way as an input sequence; or more commonly, it may take an empty initial value. In either case, in order to serve any useful purpose, the final value of the sequence on exit from the block must be assigned to some variable existing in the outer environment in which the sequence is declared. The identity of this outer variable should be declared together with the sequence; if this outer variable is held more or less permanently on backing store, it is known as an output file; and the rules for implicit invocation of opening and closing of the file on entry and exit to the block are similar to those for input files.
@@ -1570,7 +1568,7 @@ The question naturally arises whether the analogy can be extended to a data stru
 
 The most obvious examples of recursive data structures are to be found in the description of arithmetic or logical expressions, programming languages, where the recursion reflects the possibility of nesting one expression inside another. For example, an arithmetic expression might be defined as follows:
 
-``An expression is a series of terms, each of which consists of a sign $(+ \text{ or } -)$ followed by a sequence of factors. Each factor except the first consists of a sign $(x \text{ or } /)$ followed by a primary. A primary is either a constant, a variable, or an expression surrounded by brackets. An initial plus sign in an expression may be omitted.''
+``An expression is a series of terms, each of which consists of a sign $(+ \text{ or } -)$ followed by a sequence of factors. Each factor except the first consists of a sign $(\times \text{ or } /)$ followed by a primary. A primary is either a constant, a variable, or an expression surrounded by brackets. An initial plus sign in an expression may be omitted.''
 
 A structured data type whose values comprise such expressions may be defined using only techniques already familiar, plus recursion:
 
@@ -1619,13 +1617,13 @@ could be specified by the cumbersome construction:
 
 \quad $[$term $($plus, $[$factor (times, primary $($const$(3)))$,
 
-\quad \quad factor $($div, primary $($bracketed $($
+\tabto*{7.75em} factor $($div, primary $($bracketed $($
 
-\quad \quad \quad $[$term $($plus, $[$factor $($times, primary $($var$($``$b$''$)))]),$
+\tabto*{9em}  $[$term $($plus, $[$factor $($times, primary $($var$($``$b$''$)))]),$
 
-\quad \quad \quad\hspace{.1em} term $($minus, $[$factor $($times, primary $($const$(2)))])])))$
+\tabto*{9.1em}  term $($minus, $[$factor $($times, primary $($const$(2)))])])))$
 
-\quad \quad $])$
+\tabto*{7.55em}  $])$
 
 \quad $]$.
 
@@ -1681,7 +1679,7 @@ As an example of the processing of a list, we write a function to reverse a comp
 
 \quad \quad \quad $\{$atom:reverse $\coloneq l$,
 
-\quad \quad \quad cons: reverse $\coloneq$ cons$($reverse$($cdr$)$, reverse $($car$))\}$
+\quad \quad \quad ~ cons: reverse $\coloneq$ cons$($reverse$($cdr$)$, reverse $($car$))\}$
 
 \subsection{Representation}
 
@@ -1739,19 +1737,19 @@ each of which removes from the source the longest expression in its syntactic ca
 \quad \quad \textbf{else} sign $\coloneq$ plus;
 
 \noindent
-\quad \quad \quad compile expression $\coloneq [$compile term$($sign$)]$;
+\quad \quad compile expression $\coloneq [$compile term$($sign$)]$;
 
 \noindent
-\quad \quad \quad \textbf{while} source.first $=$ plus $\vee$ source.first $=$ minus \textbf{do}
+\quad \quad \textbf{while} source.first $=$ plus $\vee$ source.first $=$ minus \textbf{do}
 
 \noindent
-\quad \quad \quad \quad \textbf{begin} sign \textbf{from} source;
+\quad \quad \quad \textbf{begin} sign \textbf{from} source;
 
 \noindent
-\quad \quad \quad \quad \quad compile expression$\wideparen{\text{:\ }[}$compile term$($sign$)]$
+\quad \quad \quad \quad compile expression$\wideparen{\text{:\ }[}$compile term$($sign$)]$
 
 \noindent
-\quad \quad \quad \quad \textbf{end}
+\quad \quad \quad \textbf{end}
 
 \noindent
 \quad \textbf{end};
@@ -1880,7 +1878,7 @@ A similar example may arise in the description of family relationship among pers
 
 \quad \textbf{type} children $=$ \textbf{sparse array} $($mother, father:person$)$ \textbf{of} 
 
-\tabto*{9.2em}\textbf{sparse powerset} person:
+\tabto*{9.2em}\textbf{sparse powerset} person;
 
 \noindent
 This array caters for multiple marriages better than the more tree-like representations of a family, which can be defined as a recursive structure.
@@ -1909,7 +1907,7 @@ i.e.
 \noindent
 is represented as if it had been declared
 
-\quad $($default:$R$; $s$:sequence $($key:$D$; information:$R))$.
+\quad $($default:$R$; $s$:\textbf{sequence} $($key:$D$; information:$R))$.
 
 One of the possible sequence representations must now be chosen, in accordance with the same criteria that are used in the case of a sequence. But when a sequence is used to represent a sparse array, the order of the entries is immaterial, and does not have to reflect the relative times at which the entries were made. Thus the entries are often sorted into order of their
 key-value, particularly if this is the order in which they are going to be scanned.
@@ -2001,7 +1999,7 @@ A timetable is a set of sessions, where each session consists of a set of exams:
 \noindent
 We next attempt to formalize the properties which the input and output data are required to possess.
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item \label{en:examination-1}
 	We choose not to formalize the condition that the number of sessions be minimized, since in fact we do not want an absolute minimum if this turns out to be too expensive to compute.
 
@@ -2009,19 +2007,16 @@ We next attempt to formalize the properties which the input and output data are 
 	Each exam is scheduled for one of the sessions
 
 	$\displaystyle\bigcup_{s\text{ \textbf{in} timetable}} s =$ exam.all
+	\smallskip
 
 	\item \label{en:examination-3}
 	No exam is scheduled for more than one session:
 
 	\quad $(s1 \wedge s2 = \{\})$ or $(s1 = s2)$
-\end{enumerate}
 
-\noindent
-Conditions \ref{en:examination-2} and \ref{en:examination-3} effectively state that the timetable is a partitioning of the set of all exams into exhaustive and exclusive subsets.
+	\noindent
+	Conditions \ref{en:examination-2} and \ref{en:examination-3} effectively state that the timetable is a partitioning of the set of all exams into exhaustive and exclusive subsets.
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
-	\setcounter{enumi}{3}
-	
 	\item \label{en:examination-4}
 	No session includes more than $k$ exams
 
@@ -2055,7 +2050,7 @@ Now we can define that every pair of exams in a session must be compatible:
 
 These six conditions, defined in terms of load, hallsize, and $k$, must be possessed by any successful timetable in the real world, and by any successful computer representation of the timetable. They serve to define the objectives and criterion of correctness of our timetabling program.
 
-\subsubsection{The abstract program}
+\subsection{The abstract program}
 
 Inspection of the conditions reveals that construction of the timetable does not require full knowledge of the load of each student. All that is needed is the examcount of each exam, and for each exam the set of other exams which are incompatible with it:
 
@@ -2145,7 +2140,7 @@ which selects a suitable session from the remaining set of exams; A possible met
 \noindent
 in accordance with the current value of a variable:
 
-\quad \textbf{trial}:session;
+\quad trial:session;
 
 \quad \textbf{procedure} record
 
@@ -2298,9 +2293,9 @@ The following two procedures are local to suitable:
 
 \quad \quad \quad \quad \quad \quad save 2 $\coloneq$ untried $\wedge$ incompat$(e)$;
 
-\quad \quad \quad \quad \quad \quad untried: $\vee$ save 2;
+\quad \quad \quad \quad \quad \quad untried: $-$ save 2;
 
-\quad \quad \quad \quad \quad \quad trial: $-\ \{e\}$;
+\quad \quad \quad \quad \quad \quad trial: $\vee\ \{e\}$;
 
 \quad \quad \quad \quad \quad \quad \textbf{if} sessioncount$($trial$) <$ hallsize \textbf{then} gensupersets;
 
@@ -2339,7 +2334,7 @@ The main program is as follows:
 
 Before spending any more effort on developing this program, it would be advisable to subject it to a critical examination, to ensure that it will be successful. Now the most obvious reasons why the program might fail are:
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item The size of the timetable turns out to be unacceptably large; we have agreed that nothing can be done about this, until we know more about the data.
 
 	\item The amount of time taken to generate all trials at each step is excessive. This will be particularly serious when the remainder is still large at the beginning of the program, and if the untried set remains large on every recursion of gensupersets. The main way in which the untried set is reduced is by removing all exams incompatible with the trial. This suggests that we should always prefer to add first to the trial those exams which have the largest incompatible sets, so that untried is reduced as quickly as possible. Among sets equal according to this criterion, the exam with the largest examcount would be selected first. The exact weighting between these criteria may have to be adjusted later in the light of experience; meanwhile, the simplest implementation of this policy is to presort the exams in accordance with the criterion, and implement $e$ \textbf{from} untried by selecting the first member.
@@ -2347,13 +2342,13 @@ Before spending any more effort on developing this program, it would be advisabl
 
 If it turns out that this elementary strategy is insufficient we may have to artificially curtail the number of iterations of the loop in gensupersets. But we would probably need some practical experience in order to select a suitable strategy; and for the time being, let us hope it will not be necessary.
 
-\subsubsection{Data representation}
+\subsection{Data representation}
 
 In order to design a successful data representation, it is necessary to know
 something of the likely size of the problem. In this example, we will make the
 following assumptions:
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item There are not more than 500 exams, each taken by less than 1000 students (typically 50).
 	\item There are about 5000 students.
 	\item Each student takes less than ten exams, and typically five.
@@ -2364,74 +2359,54 @@ following assumptions:
 
 We will consider the individual items of data.
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item \textbf{type} \textit{exam}
-\end{enumerate}
 
-\noindent
-The obvious representation is as an integer subrange: $0\,.\,.\,500$.
+	\noindent
+	The obvious representation is as an integer subrange: $0\,.\,.\,500$.
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
-	\setcounter{enumi}{1}
 	\item \textbf{type} \textit{session}
-\end{enumerate}
 
-\noindent
-There is obviously a choice between a bitpattern representation (500 bits), and an array of 30 nine-bit elements ($+\ \text{pointer}$) ($270 \text{ bits } + \text{ one word}$). The number of sessions to be stored is not great, so considerations of storage  economy are not significant. The main operations on a session are the insertion of an exam which is known not to be in it already, and the removal of an exam, which is the most recently inserted. Thus the array method would be the best, since the insertion and removal of members can be accomplished by stack methods.
+	\noindent
+	There is obviously a choice between a bitpattern representation (500 bits), and an array of 30 nine-bit elements ($+\ \text{pointer}$) ($270 \text{ bits } + \text{ one word}$). The number of sessions to be stored is not great, so considerations of storage  economy are not significant. The main operations on a session are the insertion of an exam which is known not to be in it already, and the removal of an exam, which is the most recently inserted. Thus the array method would be the best, since the insertion and removal of members can be accomplished by stack methods.
 
-Since we frequently wish to know the session-count, it would pay to record this together with the session, and keep it up to date as members are inserted and removed.
+	Since we frequently wish to know the session-count, it would pay to record this together with the session, and keep it up to date as members are inserted and removed.
 
-This representation is used for trial and bestsofar.
+	This representation is used for trial and bestsofar.
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
-	\setcounter{enumi}{2}
 	\item \textit{timetable}
-\end{enumerate}
 
-\noindent
-The only operation on the timetable is the insertion of new sessions. Since sessions are of variable length, the timetable could be organized as a sequence of variable-length sequences. Since each exam occurs exactly once in the timetable, the maximum size of the timetable is $500 \times \text{nine}$ bits, plus perhaps sixty words to indicate the separation of the sessions (if there are more than sixty sessions, the program will have failed anyway).
+	\noindent
+	The only operation on the timetable is the insertion of new sessions. Since sessions are of variable length, the timetable could be organized as a sequence of variable-length sequences. Since each exam occurs exactly once in the timetable, the maximum size of the timetable is $500 \times \text{nine}$ bits, plus perhaps sixty words to indicate the separation of the sessions (if there are more than sixty sessions, the program will have failed anyway).
 
-An alternative and much simpler representation is simply to record for each exam which session it occurs in. This requires only
+	An alternative and much simpler representation is simply to record for each exam which session it occurs in. This requires only
 
-\quad \textbf{array} exam \textbf{of} $1\,.\,.\,60$
+	\quad \textbf{array} exam \textbf{of} $1\,.\,.\,60$
 
-\noindent
-This representation is made possible only by the fact that the sessions of the timetable are mutually exclusive.
+	\noindent
+	This representation is made possible only by the fact that the sessions of the timetable are mutually exclusive.
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
-	\setcounter{enumi}{3}
 	\item \textit{examcount}:\textbf{array} \textit{exam} \textbf{of} \textit{integer}
-\end{enumerate}
 
-\noindent
-A standard representation is the obvious choice.
+	\noindent
+	A standard representation is the obvious choice.
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
-	\setcounter{enumi}{4}
 	\item \textit{remaining}, \textit{untried}, \textit{save} 1, \textit{save} 2
-\end{enumerate}
 
-\noindent
-These variables start rather full, and get emptier as the program progresses.
-Their average density is therefore about fifty percent, and there is no point
-in adopting a sparse representation. Furthermore, the frequency of standard
-set operations applied to them indicate a standard bitpattern representation.
+	\noindent
+	These variables start rather full, and get emptier as the program progresses. Their average density is therefore about fifty percent, and there is no point in adopting a sparse representation. Furthermore, the frequency of standard set operations applied to them indicate a standard bitpattern representation.
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
-	\setcounter{enumi}{5}
 	\item \textit{incompat}
-\end{enumerate}
 
-\noindent
-The most frequent use of elements of incompat is to subtract them from untried. They should therefore also use the bitpattern representation. This will require $500 \times 500 \text{ bits}$, of the order of 10000 words. This is by far the largest data structure required, but its total size is probably fully justified by the extra speed which it imparts to the program, and since it is acceptable on most computers on which this program will run, it does not seem worth while to seek a more compact representation.
+	\noindent
+	The most frequent use of elements of incompat is to subtract them from untried. They should therefore also use the bitpattern representation. This will require $500 \times 500 \text{ bits}$, of the order of 10000 words. This is by far the largest data structure required, but its total size is probably fully justified by the extra speed which it imparts to the program, and since it is acceptable on most computers on which this program will run, it does not seem worth while to seek a more compact representation.
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
-	\setcounter{enumi}{6}
 	\item \textit{load}
-\end{enumerate}
 
-\noindent
-The load of each student is the primary input data for the problem; it may also be extremely voluminous. It is therefore doubly fortunate that the program only needs to make a single scan of the data; for not only will this enable the data to be presented as an external sequence; it also means that the representation can be designed to be suitable for human reading, writing, and punching.
+	\noindent
+	The load of each student is the primary input data for the problem; it may also be extremely voluminous. It is therefore doubly fortunate that the program only needs to make a single scan of the data; for not only will this enable the data to be presented as an external sequence; it also means that the representation can be designed to be suitable for human reading, writing, and punching.
+
+\end{enumerate}
 
 We therefore allocate one card for each student, and use ten columns of six characters each to hold the examination numbers. To save unnecessary punching, the first blank column will signify the end of the examination set. For identification purposes, each card should also contain the student number; fortunately this can be wholly ignored by the program, though it should probably be checked to avoid duplication or omissions.
 
@@ -2450,7 +2425,7 @@ In order to remove such misunderstanding, or check that it has not occurred, it 
 
 In view of the role which axioms play in the theory of data structuring, it may be helpful to summarize their intended properties.
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item Axioms are a formal statement of those properties which are shared by the real world and by its representation inside a computer, in virtue of which manipulation of the representation by a computer program will yield results which can be successfully applied back to the real world.
 	\item They establish a conceptual framework covering those aspects of the real world which are believed to be relevant to the programmer's task, and thereby assist in his constructive and inventive thinking.
 	\item They state rigorously those assumptions about the real world on which the computer program will be based.
@@ -2467,14 +2442,14 @@ The axioms applicable to a given type depend on how that type has been defined. 
 
 The following axioms are common to both enumerations and subranges. They are modeled on the familiar axioms for natural numbers. The type name is assumed to be $T$, and all variables are assumed to be of this type.
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item \label{en:enumerate-1}
 	$T$.min is a $T$
 	
 	\item \label{en:enumerate-2}
 	If $x$ is a $T$, and $x\neq T$.max
 
-	\quad then succ$(x)$ is a $T$
+	\qquad~ then succ$(x)$ is a $T$
 
 	\item The only elements of Tare as specified in \ref{en:enumerate-1} and \ref{en:enumerate-2}
 
@@ -2483,12 +2458,10 @@ The following axioms are common to both enumerations and subranges. They are mod
 	\item succ$(x) \neq T$.min
 
 	\item $\text{pred}(\text{succ}(x)) = x$
-\end{enumerate}
 
-\noindent
-The following three axioms apply only to ordered types
+	\noindent
+	The following three axioms apply only to ordered types
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
 	\setcounter{enumi}{6}
 	\item $T$.min $\leqslant x$
 
@@ -2496,44 +2469,42 @@ The following three axioms apply only to ordered types
 
 	\item \label{en:enumerate-9}
 	$\text{succ}(x) \leqslant \text{succ}(y) \equiv x \leqslant y$
-\end{enumerate}
 
-\noindent
-Note: succ$(T$.max$)$ and pred$(T$.min$)$ are not defined.
+	\noindent
+	Note: succ$(T$.max$)$ and pred$(T$.min$)$ are not defined.
 
-The general form of definition of a type by enumeration is
+	The general form of definition of a type by enumeration is
 
-\quad \textbf{type} $T = (k_1, k_2, \dots, k_n)$;
+	\quad \textbf{type} $T = (k_1, k_2, \dots, k_n)$;
 
-\noindent
-where $T$ is the type name and $k_1, k_2 , \dots, k_n$ are names of all values of the type.
+	\noindent
+	where $T$ is the type name and $k_1, k_2 , \dots, k_n$ are names of all values of the type.
+	
+	The additional axiom for this type is:
+	
+	\tabto*{.9em}(10) $k_1 = T$.min
+	
+	\tabto*{1.8em}\& $k_2 = \text{succ}(k_1)$
+	
+	\tabto*{1.8em}\& $k_3 = \text{succ}(k_2)$
+	
+	\tabto*{3.8em}\dots
+	
+	\tabto*{1.8em}\& $k_n = \text{succ}(k_{n-1}) = T$.max.
+	
+	The general form of a definition of a type as a subrange is
+	
+	\quad \textbf{type} $T=k\,.\,.\,l;$
+	
+	\noindent
+	where $k$ and $l$ are of the base type $T_0$.
+	
+	The additional axioms for this type are:
+	
+	\tabto*{.9em}(10) $T$.min $= k$
+	
+	\tabto*{1.8em}\& $T$.max $= l$.
 
-The additional axiom for this type is:
-
-\tabto*{.9em}(10) $k_1 = T$.min
-
-\tabto*{1.8em}\& $k_2 = \text{succ}(k_1)$
-
-\tabto*{1.8em}\& $k_3 = \text{succ}(k_2)$
-
-\tabto*{3.8em}\dots
-
-\tabto*{1.8em}\& $k_n = \text{succ}(k_{n-1}) = T$.max.
-
-The general form of a definition of a type as a subrange is
-
-\quad \textbf{type} $T=k\,.\,.\,l;$
-
-\noindent
-where $k$ and $l$ are of the base type $T_0$.
-
-The additional axioms for this type are:
-
-\tabto*{.9em}(10) $T$.min $= k$
-
-\tabto*{1.8em}\& $T$.max $= l$.
-
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
 	\setcounter{enumi}{10}
 	\item $T(T_0(x)) = x$.
 
@@ -2544,7 +2515,7 @@ The additional axioms for this type are:
 
 Using axioms \ref{en:enumerate-1} to \ref{en:enumerate-9} it is possible to prove the following properties of ordering:
 
-\begin{enumerate}[leftmargin=2\parindent, label=(T\arabic*)]
+\begin{enumerate}[wide, nosep, label=(T\arabic*)]
 	\item $x \leqslant x$.
 
 	\item \label{en:enumeration-axiom-2}
@@ -2565,7 +2536,7 @@ Abbreviations:
 \noindent
 If $\ominus$ is a monadic operator and $\oplus$ is a dyadic operator, both taking operands from the base type $T_0$, then the following abbreviations permit omission of the transfer function, if $a$ is of type $T_0$ and $x$, $y$ are of type $T$:
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\setcounter{enumi}{13}
 	
 	\item ~ $\ominus\ x$ stands for $\ominus\ T_0(x)$.
@@ -2651,7 +2622,7 @@ The general form of the definition is:
 
 \quad \textbf{type} $T = (s_1: T_1; s_2: T_2; \dots ; s_n:T_n; k_1: T'_1, k_2:T'_2, \dots , k_m: T'_m)$
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item \label{en:distriminated-1}
 	if $x_1$ is a $T_1, x_2$ is a $T_2, \dots, x_n$ is a $T_n$
 	
@@ -2672,25 +2643,23 @@ The general form of the definition is:
 	\item\label{en:distriminated-3}
 	If $x = T(x_1, x_2, \dots, x_n, k_i(x'_i))$ for each $i$ between 1 and $m$
 	
-	\quad $x.s_1 = x_1\ \&\ x.s_2 = x_2\ \& \dots \&\ x.s_n = x_n$
+	\qquad~ $x.s_1 = x_1\ \&\ x.s_2 = x_2\ \& \dots \&\ x.s_n = x_n$
 	
-	\& $x.k_i = x'_i$
-\end{enumerate}
+	\quad~ \& $x.k_i = x'_i$
 
-\textit{Note}:\, $x.k_l$ is undefined for $l \neq i.$
-
-\noindent
-Abbreviations:
-
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
-	\setcounter{enumi}{3}
+	\noindent
+	\textit{Note}:\quad~~\, $x.k_l$ is undefined for $l \neq i.$
+	
+	\noindent
+	Abbreviations:
+	
 	\item Under the same condition as \ref{en:distriminated-3} 
 	
-	\textbf{with} $x$ \textbf{do} $\{k_1:S_1, k_2:S_2, \dots, k_n:S_n\}$ means
+	\quad~\, \textbf{with} $x$ \textbf{do} $\{k_1:S_1, k_2:S_2, \dots, k_n:S_n\}$ means
 
-	\textbf{with} $x'_i$ \textbf{do} $(S_i)_{x_1, x_2, \dots, x_n}^{s_1, s_2, \dots, s_n}$;
+	\quad~\, \textbf{with} $x'_i$ \textbf{do} $(S_i)_{x_1, x_2, \dots, x_n}^{s_1, s_2, \dots, s_n}$;
 
-	and similarly with \textbf{take} instead of \textbf{do}.
+	\quad~\, and similarly with \textbf{take} instead of \textbf{do}.
 
 	\item If $n = 0$, $k_i(x'_i)$ stands for $T(k_i(x'_i)).$
 \end{enumerate}
@@ -2701,35 +2670,32 @@ The general form of an array definition is:
 
 \quad \textbf{type} $T =$ \textbf{array} $D$ \textbf{of} $R$
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item \label{en:arrays-1}
-	If $r$ is an $R$ then $T(r)$ is a $T$
+	\textbf{If} $r$ is an $R$ \textbf{then} $T(r)$ is a $T$
 
 	\item \label{en:arrays-2}
-	If $x$ is a $T$, $d$ is a $D$, and $r$ is an $R$
+	\textbf{If} $x$ is a $T$, $d$ is a $D$, \textbf{and} $r$ is an $R$
 
-	\quad then $T(x, d:r)$ is a $T$
+	\qquad\quad \textbf{then} $T(x, d:r)$ is a $T$
 
 	\item The only elements of $T$ are as specified in \ref{en:arrays-1} and \ref{en:arrays-2}.
 
 	\item $T(T(x, d:r), d':r') =$
 
-	\textbf{if} $d = d'$ \textbf{then} $T(x, d':r')$
+	\quad \textbf{if} $d = d'$ \textbf{then} $T(x, d':r')$
 
-	\tabto*{3.7em}\textbf{else} $T(T(x, d':r'), d:r).$
+	\qquad\quad\textbf{else} $T(T(x, d':r'), d:r).$
 
 	\item $T(r)[d] = r.$
 
 	\item $T(x, d:r)[d'] =$ \textbf{if} $d' = d$ \textbf{then} $r$ \textbf{else} $x[d'].$
 
 	\item $($\textbf{for} $i:D$ \textbf{take} $E(i))[j] = E(j).$
-\end{enumerate}
 
-\noindent
-Abbreviations:
+	\noindent
+	Abbreviations:
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
-	\setcounter{enumi}{7}
 	\item $x[d] \coloneq r$ means $x \coloneq T(x, d:r)$.
 
 	\item\label{en:arrays-9}
@@ -2738,12 +2704,9 @@ Abbreviations:
 	\quad $T(T(\dots T(T(x), d_1:v_1), d_2:v_2)\dots), d_n:r_n)$
 
 	\item in \ref{en:arrays-9}, the $x$ may be omitted, if $d_1, d_2, \dots, d_n$ exhaust the domain type. Similarly, the T may be omitted in suitable contexts.
-\end{enumerate}
 
 If the array type is ordered, the following axiom applies:
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
-	\setcounter{enumi}{10}
 	\item $x \leqslant y \equiv \forall d: D(y[d] < x[d] \supset \exists d':D(d' < d\ \&\ x[d'] < y[d']))$
 \end{enumerate}
 
@@ -2766,11 +2729,11 @@ where $T_0$ is the base type.
 \noindent
 let $a$, $b$, be values of type $T_0$
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item \label{en:powerset-1}
 	$T()$ is a $T$
 	\item \label{en:powerset-2}
-	If $x$ is a $T$ and $a$ is a $T_0$ then $x \vee T(a)$ is a $T$
+	\textbf{If} $x$ is a $T$ \textbf{and} $a$ is a $T_0$ \textbf{then} $x \vee T(a)$ is a $T$
 	\item The only members of $T$ are as specified in \ref{en:powerset-1} and \ref{en:powerset-2}.
 	\item $\neg a$ \textbf{in} $T()$
 	\item $a$ \textbf{in} $(y \lor T(a))$
@@ -2789,44 +2752,32 @@ let $a$, $b$, be values of type $T_0$
 	\item $(x \lor T(a)) - y = (x - y) \lor (T(a) - y)$
 	\item size$(T()) = 0$
 	\item size$(x \lor T(a)) =$ \textbf{if} $a$ \textbf{in} $x$ \textbf{then} size$(x)$ \textbf{else} succ$(\text{size}(x))$
-\end{enumerate}
 
-The following apply if the domain type $T_0$ is ordered:
+	The following apply if the domain type $T_0$ is ordered:
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
-	\setcounter{enumi}{19}	
 	\item min$(T(a)) = T(a)$
 	\item $x \neq T() \supset$ min$(x \lor T(a)) =$ \textbf{if} $a <$ min$(x)$ \textbf{then} $a$ \textbf{else} min$(x)$
-\end{enumerate}
 
-\noindent
-Note: $min(T())$ is not defined
+	\noindent
+	Note: $min(T())$ is not defined
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
-	\setcounter{enumi}{21}
 	\item $x \text{ \textbf{down} } 0 = x \text{ \textbf{up} } 0 = x$
 	\item $x$ \textbf{down} succ$(n) = (x$ \textbf{down} $n)$ \textbf{down} 1
 	\item $T()$ \textbf{down} $1 = T()$
 	\item $(x \lor T(a))$ \textbf{down} $1 = (x$ \textbf{down} $1\ \lor$
 	
 	\quad \textbf{if} $a \neq T_0$.min \textbf{then} $T($pred$(a))$ \textbf{else} $T()$
-\end{enumerate}
-
-\tabto*{0.9em}(27)\textendash{}(28) \textbf{up} is similarly defined, with succ for pred and max for min.
-
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]	
+	
+	\item[(27)\textendash{}(28)] \textbf{up} is similarly defined, with succ for pred and max for min.
 	\setcounter{enumi}{28}
+
 	\item $b < a \supset$ range$(a, b) = T()$
 	\item $a \leqslant b \supset$ range$(a, b) = T(a)$
 	\item $a < b \supset$ range$(a, b) =$ range$(a$, pred$(b)) \lor T(b)$
 	\item $j$ \textbf{in} $\{i:D \mid B(i)\} \equiv B(j)$
-\end{enumerate}
 
-\noindent
-Abbreviations:
-
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]	
-	\setcounter{enumi}{32}
+	\noindent
+	Abbreviations:
 	
 	\item $T(a_1, a_2, \dots, a_n)$ stands for $T(a_1) \lor T(a_2) \lor \dots \lor T(a_n)$
 	\item $\{a_1, a_2, \dots, a_n\}$ stands for $T(a_1, a_2, \dots, a_n)$
@@ -2835,10 +2786,11 @@ Abbreviations:
 	\item $a$ \textbf{from} $x$ stands for $a \coloneq$ one of $(x)$; $x: - \{a\}$
 	\item \textbf{if} $x = \{a_1, a_2, \dots, a_n\}$ \textbf{then}
 	
-	\quad \textbf{for} $a$ \textbf{in} $x$ \textbf{do} $S$ stands for
+	\qquad\quad \textbf{for} $a$ \textbf{in} $x$ \textbf{do} $S$ stands for
 	
-	\quad \quad $S_{a_1}^a; S_{a_2}^a ; \dots; S_{a_n}^a$
+	\qquad\quad \quad $S_{a_1}^a; S_{a_2}^a ; \dots; S_{a_n}^a$
 	
+	\noindent
 	where the $a_i$ are in natural order if the base type is ordered, and are in arbitrary order otherwise; and they do not contain repetitions.
 	
 	\item $x: -\ y$ stands tor $x \coloneq x - y$
@@ -2859,77 +2811,68 @@ The general form of a sequence definition is:
 
 \quad \textbf{type} $T =$ \textbf{sequence} $D$;
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
 	\item \label{en:sequence-1}
 	$T()$ is a $T$
 	
 	\item \label{en:sequence-2}
-	If $x$ is a $T$ and $d$ is a $D$
+	\textbf{If} $x$ is a $T$ \textbf{and} $d$ is a $D$
 	
-	\quad then $\wideparen{x\ T}(d)$ is a $T$
+	\qquad\quad \textbf{then} $x\wideparen{\ \ }T(d)$ is a $T$
 
 	\item The only elements of $T$ are as specified in \ref{en:sequence-1} and \ref{en:sequence-2}
 
-	\item $(\wideparen{x\ T}(d))$.last $= d$
+	\item $(x\wideparen{\ \ }T(d))$.last $= d$
 
-	\item initial$(\wideparen{x\ T}(d)) = x$
-	\item $\wideparen{x\ \ }(\wideparen{y\ z}) = (\wideparen{x\ y})\wideparen{\ z}$
+	\item initial$(x\wideparen{\ \ }T(d)) = x$
+	\item $x\wideparen{\ \ }(y\wideparen{\ \ }z) = (x\wideparen{\ \ }y)\wideparen{\ \ }z$
 	\item $T(d)$.first $= d$
-	\item $x \neq T() \supset (\wideparen{x\ T}(d))$.first $= x$.first
+	\item $x \neq T() \supset (x\wideparen{\ \ }T(d))$.first $= x$.first
 	\item final$(T(d)) = T()$
-	\item $x \neq T() \supset$ final$(\wideparen{x\ T}(d)) =$ final$(x)\wideparen{\ \ T}(d)$
-\end{enumerate}
+	\item $x \neq T() \supset$ final$(x\wideparen{\ \ }T(d)) =$ final$(x)\wideparen{\ \ }T(d)$
 
-\noindent
-\textit{Note}: last, initial, first, and final are not defined for $T()$
+	\noindent
+	\textit{Note}: last, initial, first, and final are not defined for $T()$
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
-	\setcounter{enumi}{10}
 	\item $T()$ \textbf{ends} $y$
-	\item $\wideparen{x\  T}(d)$ \textbf{ends} $y \equiv y \neq T()\ \&\ y$.last $= d\ \&\ x$ \textbf{ends} initial$(y)$
+	\item $x\wideparen{\ \ }T(d)$ \textbf{ends} $y \equiv y \neq T()\ \&\ y$.last $= d\ \&\ x$ \textbf{ends} initial$(y)$
 	\item $x$ \textbf{begins} $T() \equiv x = T()$
-	\item $x$ \textbf{begins} $\wideparen{y\ T}(d) \equiv x = \wideparen{y\ T}(d) \lor x$ \textbf{begins} $y$
+	\item $x$ \textbf{begins} $y\wideparen{\ \ }T(d) \equiv x = y\wideparen{\ \ }T(d) \lor x$ \textbf{begins} $y$
 	\item length$(T()) = 0$
-	\item length$(\wideparen{x\ T}(d)) = \text{succ}(\text{length}(x))$
-\end{enumerate}
+	\item length$(x\wideparen{\ \ }T(d)) = \text{succ}(\text{length}(x))$
 
-\noindent
-For an ordered sequence type we have:
+	\noindent
+	For an ordered sequence type we have:
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
-	\setcounter{enumi}{16}
 	\item $T() \leqslant y$
 	\item $x \leqslant T() \supset x = T()$
 	\item $x, y \neq T() \supset (x \leqslant y \equiv x.\text{first} < y.\text{first} \lor (x.\text{first} = y.\text{first}$
 	
-	\tabto*{8.9em}\& $\text{final}(x) \leqslant \text{final}(y)))$
-\end{enumerate}
+	\tabto*{12.6em}\& $\text{final}(x) \leqslant \text{final}(y)))$
 
-\noindent	
-Abbreviations:
+	\noindent	
+	Abbreviations:
 
-\begin{enumerate}[leftmargin=2\parindent, label=(\arabic*)]
-	\setcounter{enumi}{19}
-	\item  $x\wideparen{\text{:} \ T}(d)$ \tabto*{7em} means $x \coloneq \wideparen{x\ T}(d)$
-	\item $d$ \textbf{from} $x$\tabto*{7em} means $d\coloneq x.\text{first};\ x\coloneq \text{final}(x)$
-	\item $d$ \textbf{back from} $x$\tabto*{7em} means $d\coloneq x.\text{last};\ x\coloneq \text{initial}(x)$
-	\item \textbf{from} $x$\tabto*{7em} means $x\coloneq \text{final}(x)$
-	\item \textbf{back from} $x$\tabto*{7em} means $x\coloneq \text{initial}(x)$
+	\item  $x\wideparen{\text{:} \ \ }T(d)$ \tabto*{11em} means $x \coloneq x\wideparen{\ \ }T(d)$
+	\item $d$ \textbf{from} $x$\tabto*{11em} means $d\coloneq x.\text{first};\ x\coloneq \text{final}(x)$
+	\item $d$ \textbf{back from} $x$\tabto*{11em} means $d\coloneq x.\text{last};\ x\coloneq \text{initial}(x)$
+	\item \textbf{from} $x$\tabto*{11em} means $x\coloneq \text{final}(x)$
+	\item \textbf{back from} $x$\tabto*{11em} means $x\coloneq \text{initial}(x)$
 	\item $T(d_1, d_2, \dots, d_n)$ stands for
 	
-	\quad $(T()\wideparen{\ \ T}(d_1)\wideparen{\ \ T}(d_2\wideparen{)\ \ }\dots\wideparen{\ \ T}(d_n)$
+	\qquad\quad $(T()\wideparen{\ \ }T(d_1)\wideparen{\ \ }T(d_2)\wideparen{\ \ }\dots\wideparen{\ \ }T(d_n)$
 	
 	\item $[d_1, d_2, \dots, d_n]$ stands for $T(d_1, d_2, \dots, d_n)$
-	\item If $x = [d_1, d_2, \dots, d_n]$ then
+	\item \textbf{If} $x = [d_1, d_2, \dots, d_n]$ \textbf{then}
 	
-	\quad \textbf{for} $d$ \textbf{in} $x$ \textbf{do} $S$ stands for
+	\qquad \quad \textbf{for} $d$ \textbf{in} $x$ \textbf{do} $S$ stands for
 
-	\qquad \qquad $S_{d_1}^d; S_{d_2}^d; \,.\,.\,; S_{d_n}^d$.
+	\qquad \qquad \qquad $S_{d_1}^d; S_{d_2}^d; \,.\,.\,; S_{d_n}^d$.
 
 
-	\quad \textbf{for} $d$ \textbf{in} $x$ \textbf{take} $E$ stands for
+	\qquad \quad \textbf{for} $d$ \textbf{in} $x$ \textbf{take} $E$ stands for
 	
-	\qquad \qquad $[E_{d_1}^d, E_{d_2}^d, \dots, E_{d_n}^d]$
+	\qquad \qquad \qquad $[E_{d_1}^d, E_{d_2}^d, \dots, E_{d_n}^d]$
 
 \end{enumerate}
 
