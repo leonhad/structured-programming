@@ -1587,14 +1587,12 @@ A structured data type whose values comprise such expressions may be defined usi
 \quad \textbf{type} operator $= ($plus, minus, times, div$)$;
 
 This definition expresses the abstract structure of an arithmetic expression, but not the details of its concrete representation as a string of characters. For example, it does not specify the symbols used for brackets or operators, nor does it state whether an infix, prefix or postfix notation is used for them. It does not state how the three kinds of primary are to be distinguished. It does not even represent the optional omission of plus on the first term of an expression, and the necessary omission of $\times$ on the first factor of a term. Apart from this degree of abstraction and representation-independence, this type definition would correspond to a set of BNF syntax equations:
-\begin{bnf*}
-	\bnfprod{expression}
-	{\bnfpn{term} \bnfor \bnfpn{addop}\bnfpn{term} \bnfor \bnfpn{expression}\bnfpn{addop}\bnfpn{term}}\\
-	\bnfprod{term}
-	{\bnfpn{primary} \bnfor \bnfpn{term}\bnfpn{mulop}\bnfpn{primary}\\
-	\bnfprod{primary}
-	{\bnfpn{unsigned real number} \bnfor \bnfpn{variable} \bnfor (\bnfpn{expression})}}
-\end{bnf*}
+
+	\quad $\langle$expression$\rangle ::= \langle$term$\rangle\ |\ \langle$addop$\rangle \langle$term$\rangle\ |\ \langle$expression$\rangle \langle$addop$\rangle \langle$term$\rangle$
+
+	\quad $\langle$term$\rangle ::= \langle$primary$\rangle\ |\ \langle$term$\rangle\langle$mulop$\rangle\langle$primary$\rangle$
+	
+	\quad $\langle$primary$\rangle ::= \langle$unsigned real number$\rangle\ |\ \langle$variable$\rangle\ |\ (\langle$expression$\rangle)$
 
 Note how we have used sequences to replace the recursion wherever possible. In fact this can be done whenever a type name occurs recursively only once at the beginning or at the end of its definition. For example:
 
