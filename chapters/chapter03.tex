@@ -42,10 +42,74 @@ As the result of the large capacity of computing instruments, we have to deal wi
 
 The only efficient way to deal with complicated systems is in a hierarchical fashion. The dynamic system is constructed and understood in terms of high level concepts, which are in turn constructed and understood in terms of lower level concepts, and so forth. This must be reflected in the \textit{structure} of the program which defines the dynamic system; in some way or another the higher level concepts will correspond to program components.
 
-Page 177
+The construction of concepts suitable in a given situation is a creative process which often requires insights obtained at later stages of the system construction. Therefore, as programmers are painfully aware, any software project tends to be a complicated iterative process involving reconstruction and revision at each stage.
 
+Each concept necessarily concerns a limited aspect of the system and
+should correspond to a piece of program obtained by \textit{decomposition} of the total program. Good decomposition means that each component may be programmed independently and revised with no, or reasonably few, implications for the rest of the system. Thereby the total iteration process may be speeded up.
 
+Any useful concept has some degree of generality, i.e. it is a class of
+specialized instances. In other words one tries to group phenomena occurring in a dynamic system into \textit{classes} of phenomena and to describe each class by a single piece of program.
 
+As an obvious example consider the arithmetic operations involved in a matrix multiplication. They may all be classified as dynamic instances (executions) of the single statement
+$$
+C[i, j] \coloneq C[i,j] + A[i, k] \times B[k, j];
+$$
+
+\noindent
+provided that the matrix coefficients are classified as elements of two-dimensional arrays $A$, $B$, and $C$, and that the variables $i$, $j$, and $k$ are given values according to a certain pattern.
+
+The above statement is not sufficiently well decomposed to be thought of as a ``concept''. The procedure declaration below, however, defines in a concise way the concept of matrix multiplication.
+
+It is important that a concept may be classified as a \textit{syntactic category} (e.g. $\langle$block$\rangle$, $\langle$procedure$\rangle$) in a general language framework. Structured thought in terms of given concepts implies the construction of sentences, where the concepts have syntactic and semantic relationships to one another. The procedure below is related to other program components through calling sequences (procedure statements).
+
+\quad \textbf{procedure} matmult$(A,\ B,\ C,\ m,\ n,\ p)$;
+
+\quad \quad \textbf{array} $A$, $B$, $C$; integer $m$, $n$, $p$;
+
+\quad \textbf{begin integer} $i$, $j$, $k$;
+
+\quad \quad \textbf{for} $i\coloneq 1$ \textbf{step} 1 \textbf{until} $m$ \textbf{do}
+
+\quad \quad \textbf{for} $j\coloneq 1$ \textbf{step} 1 \textbf{until} $n$ \textbf{do}
+
+\quad \quad \textbf{begin} $C[i,\ j]\coloneq 0$;
+
+\quad \quad \quad \textbf{for} $k\coloneq 1$ \textbf{step} 1 \textbf{until} $p$ \textbf{do}
+
+\quad \quad \quad \quad $C[i,\ j]\coloneq C[i,\ j] + A[i,\ k] \times B[k,\ i]$
+
+\quad \quad \textbf{end}
+
+\quad \textbf{end};
+
+The parameter mechanism of procedures in SIMULA deviates somewhat from that of ALGOL 60. The default transmission mode is by value for ordinary simple $\langle$type$\rangle$ parameters, and by ``reference'' for parameters of other kinds. This deviation is introduced for various pragmatic reasons, one of them being the compatibility with class declarations (cf. \ref{sec:frequency-histogram}). Thus, in the above procedure the parameters $i$, $j$, and $k$ are called by value, $A$, $B$, and $C$ by reference.
+
+\subsection{Blocks and block instances}
+
+One of the most powerful mechanisms for program structuring in ALGOL 60 is the block and procedure concept. It has the following useful properties from the standpoint of concept modeling.
+
+\begin{enumerate}[wide, nosep, label=(\arabic*)]
+	\item \textit{Duality}. A block head and block tail together define an entity which \textit{has properties} and \textit{performs actions}. Furthermore the properties may include a data structure as well as associated operators (local procedures).
+	
+	\item \textit{Decomposition}. A block where only local quantities are referenced is a completely self-contained program component, which will function as specified in any context. Through a procedure heading a block (procedure) instance may interact with a calling sequence. Procedures which reference or change non-local variables represent a partial decomposition of the total task, which is useful for direct interaction with the program environment.
+
+	\item \textit{Class of instances}. In ALGOL 60 a sharp distinction is made between a block, which is a piece of program text, and a dynamic block instance, which is (a component of) a computing process. An immediate and useful consequence is that a block may be identified with the \textit{class} of its potential activation. (Strictly speaking a ``block'' in this context means either the outermost block or a block immediately enclosed by a dynamic block instance.) Through the recursion mechanism of ALGOL 60 different instances of the same block may co-exist in a computing process at the same time.
+
+	\item \textit{Language element}. A block is itself a statement, which is a syntactic category of the language. Furthermore, through the procedure mechanism, reference to a block may be dissociated from its defining text.
+\end{enumerate}
+
+Referring back to our earlier discussion it appears that the ALGOL block mechanism has all the properties required of a concept modeling mechanism. On closer inspection, however, it turns out that the composition rules and interaction mechanisms provided place certain restrictions on the range of concepts to be formulated.
+
+In ALGOL 60, the rules of the language have been carefully designed to ensure that the lifetimes of block instances are nested, in the sense that those instances that are latest activated are the first to go out of existence. It is this feature that permits an ALGOL 60 implementation to take advantage of a stack as a method of dynamic storage allocation and relinquishment. But it has the disadvantage that a program which creates a new block instance can never interact with it as an object which exists and has attributes, since it has disappeared by the time the calling program regains control. Thus the calling program can observe only the results of the actions of the procedures it calls. Consequently, the operational aspects of a block are overemphasized; and algorithms (for example, matrix multiplication) are the only concepts that can be modeled.
+
+In SIMULA 67, a block instance is permitted to outlive its calling statement, and to remain in existence for as long as the program needs to refer to it. It may even outlive the block instance that called it into existence. As a consequence, it is no longer possible to administer storage allocation as a simple stack; a general garbage-collector, including a scan-mark operation, is required to detect and reclaim those areas of store (local workspace of block instances) which can no longer be referenced by the running program. The reason for accepting this extra complexity is that it permits a wider range of concepts to be conveniently expressed. In particular, it clarifies the relationship between data and the operations which may be performed upon it, in a way which is awkward or impossible in ALGOL 60.
+
+\section[Object classes]{Object Classes}
+
+Page 179
+
+\subsection{Frequency histogram}
+\label{sec:frequency-histogram}
 
 \bigskip
 
