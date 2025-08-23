@@ -101,8 +101,9 @@
 }
 \makeatother
 
-\counterwithout{figure}{chapter}
 \renewcommand{\figurename}{Fig.}
+\counterwithout{figure}{chapter}
+\counterwithin*{figure}{chapter}
 \usepackage[labelsep=quad]{caption}
 
 \DeclareSymbolFont{yhlargesymbols}{OMX}{yhex}{m}{n}
