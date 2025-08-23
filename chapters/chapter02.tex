@@ -774,7 +774,7 @@ In general the values of the different alternative types occupy different amount
 	\caption{Representation of cars}
 \end{figure}
 
-In present-day programming practice, it is quite common to omit the tag field in the representation of unions. In order to operate correctly on such a representation, the programmer needs to ``know'' from other considerations what the interpretation of the value ought to be, since it is not possible to find out from the value itself. If his belief is mistaken, this is not detectable either by a runtime or compile-time check. Since the effect of such an error will depend on details of bitpattern representation, it will give rise to results unpredictable in terms of the abstractions with which the programmer is working. It would therefore in general seem advisable to use tag fields and compile-time checkable case discriminations as standard programming practice, to be bypassed only in exceptional circumstances.
+In present-day programming practice, it is quite common to omit the tag field in the representation of unions. In order to operate correctly on such a representation, the programmer needs to ``know'' from other considerations what the interpretation of the value ought to be, since it is not possible to find out from the value itself. If his belief is mistaken, this is not detectable either by a runtime or compile-time check. Since the effect of such an error will depend on details of bitpattern representation, it will give rise to results unpredictable in terms of the abstractions with which the programmer is working. It would therefore in general seem advisable to use tag fields and compile-time checkable case discrimination as standard programming practice, to be bypassed only in exceptional circumstances.
 
 \subsection{Example}
 
@@ -941,7 +941,21 @@ The minimal representation for an array is similar to that for a Cartesian produ
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=.9\textwidth]{chap2/fig3}
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[height=8em]{chap2/fig3a}
+		\caption{}
+	\end{subfigure}	
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[height=6.5em]{chap2/fig3b}
+		\caption{}
+	\end{subfigure}	
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[height=4.5em]{chap2/fig3c}
+		\caption{}
+	\end{subfigure}%
 	\caption{Representation of $A:\text{\textbf{array} } 0\,.\,.\,7 \text{ \textbf{of} } T$}
 \end{figure}
 
