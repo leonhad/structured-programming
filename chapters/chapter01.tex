@@ -570,10 +570,7 @@ When we do take a number of intermediate states into consideration this means th
 
 The simplest case is a parsing, a decomposition, into a fixed number of sub-actions that can be enumerated. In flowchart form this can be represented as follows. 
 
-\begin{figure}[ht!]
-	\centering
-	\includegraphics[scale=0.4]{chap1/fig1}
-\end{figure}
+\centerline{\includegraphics[scale=0.4]{chap1/fig1}}
 
 The validity of this decomposition has to be established by enumerative reasoning. In this case, shortening of the conceptual gap between program and computation can be achieved by requiring that a linear piece of program text contains names or descriptions of the sub-actions in the order in which they have to take place. In our earlier example (invariance of $0 \leqslant r < dd$)
 \medskip
@@ -624,24 +621,15 @@ is ``over-ordered'' with respect to ``statement 1'' and ``statement 2'': they ar
 
 The alternative clause has been generalized by C. A. R. Hoare whose ``case-of'' construction provides a choice between more than two possibilities. In flowchart form they can be represented as follows.
 
-\begin{figure}[ht!]
-	\centering
-	\includegraphics[width=.7\textwidth]{chap1/fig2}
-\end{figure}
+\centerline{\includegraphics[height=11em]{chap1/fig2a}\qquad \includegraphics[height=11em]{chap1/fig2b}}
 
-\begin{figure}[ht!]
-	\centering
-	\includegraphics[width=.8\textwidth]{chap1/fig3}
-\end{figure}
+\centerline{\includegraphics[width=.9\textwidth]{chap1/fig3}}
 
 These flowcharts share the property that they have a single entry at the top and a single exit at the bottom: as indicated by the dotted block they can again be interpreted (by disregarding what is inside the dotted lines) as a single action in a sequential computation. To be a little bit more precise: we are dealing with a great number of possible computations, primarily decomposed into the same time-succession of subactions and it is only on closer inspection \textemdash{}  i.e. by looking inside the dotted block \textemdash{}  that it is revealed that over the collection of possible computations such a sub-action may take one of an enumerated set of distinguished forms.
 
 The above is sufficient to consider a class of computations that are primarily decomposed into the same set of enumerated sub-actions; they are insufficient to consider a class of computations that are primarily decomposed into a varying number of sub-actions (i.e. varying over the class of computations considered). It is here that the usefulness of the repetition clauses becomes apparent. We mention ``\textbf{while} condition \textbf{do} statement'' and ``\textbf{repeat} statement \textbf{until} condition'' that may be represented in flowchart form as follows.
 
-\begin{figure}[ht!]
-	\centering
-	\includegraphics[width=\textwidth]{chap1/fig4}
-\end{figure}
+\centerline{\includegraphics[height=11em]{chap1/fig4a}\qquad \includegraphics[height=11em]{chap1/fig4b}}
 
 These flowcharts also share the property of a single entry at the top and a single exit at the bottom. They enable us to express that the action represented by the dotted block is on closer inspection a time-succession of ``a sufficient number'' of sub-actions of a certain type.
 
