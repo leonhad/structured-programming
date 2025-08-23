@@ -573,9 +573,25 @@ In order to construct a minimal representation of a structured value, it is nece
 
 The choice between the various representations depends on the wider context within which the values are processed. If selection and selective updating are frequent, it pays to use an unpacked representation, so that the normal selection mechanism of word-addressed hardware may be used directly in these operations. However if copying and comparison of the value as a whole is comparatively frequent, then it pays to use a packed representation, so that these operations can be carried out with fewer instructions and fewer stores accesses. A particular case of copying which should be taken into consideration is that which takes place between the main store of the computer and a backing store. If such transfers are frequent, considerable efficiency may be gained if the volume of material transferred is reduced by judicious packing.
 
-\begin{figure}[h]
+\begin{figure}[th]
 	\centering
-	\includegraphics[width=\textwidth]{chap2/fig1}
+	\begin{subfigure}[t]{0.3\textwidth}
+		\centering
+		\includegraphics[height=4em]{chap2/fig1a}
+		\caption{}
+	\end{subfigure}
+	~
+	\begin{subfigure}[t]{0.3\textwidth}
+		\centering
+		\includegraphics[height=4em]{chap2/fig1b}
+		\caption{}
+	\end{subfigure}
+	~
+	\begin{subfigure}[t]{0.3\textwidth}
+		\centering
+		\includegraphics[height=4em]{chap2/fig1c}
+		\caption{}
+	\end{subfigure}
 	\caption{Representation of date (7, March, 1908)}
 \end{figure}
 
