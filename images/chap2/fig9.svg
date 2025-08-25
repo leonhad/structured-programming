@@ -419,7 +419,10 @@
        id="path44"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cc" /><path
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="fig9.pdf"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" /><path
        style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#ArrowTriangleStylized)"
        d="m 47.228124,81.756249 -13.38252,0.119011 0.09313,15.862608 1.680794,0.02567"
        id="path45"
@@ -464,6 +467,6 @@
        d="m 85.823244,111.67119 -12.978899,-0.009 -0.0256,27.85092 2.222729,0.0382"
        id="path55"
        sodipodi:nodetypes="cccc"
-       inkscape:export-filename="C:\Users\leonh\fig9.pdf"
+       inkscape:export-filename="fig9.pdf"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" /></g></svg>
