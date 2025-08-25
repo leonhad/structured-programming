@@ -884,13 +884,6 @@ We are now in a position to outline the general structure of the phrase class:
 
 Assume that an object has successfully matched the first $k - 1(k > 0)$ symbols of a chosen alternative $(j)$ for the given meta-symbol $(i)$. We now formulate a piece of program for matching the $k$th symbol to the input in all possible ways. We assume that the remainder, if any, of the right hand side is matched to the input in all possible ways by the statement ``match remainder'', and that this statement leaves unaltered the position of the reading head and the part of the syntax tree so far constructed. We make the latter assumption also for an object which has failed to identify (another) phrase.
 
-\begin{figure}[ht!]
-	\centering
-	\includegraphics[width=.7\textwidth]{chap3/fig4}
-	\caption{Tree form of syntax analyzer}
-	\label{fig:syntax-analyzer-1}
-\end{figure}
-
 \begin{enumerate}[nosep, label=\arabic*.]
 	\item \textbf{begin integer} $g$; $g\coloneq G[i, j, k]$;
 	\item \label{en:comment-label-2}
@@ -916,7 +909,13 @@ Assume that an object has successfully matched the first $k - 1(k > 0)$ symbols 
 	\item \quad \quad \textbf{end}
 	\item \quad \textbf{end}
 \end{enumerate}
-\pagebreak[4]
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=.6\textwidth]{chap3/fig4}
+	\caption{Tree form of syntax analyzer}
+	\label{fig:syntax-analyzer-1}
+\end{figure}
 
 \noindent
 \textit{Comments}.
