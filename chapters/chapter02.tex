@@ -1780,17 +1780,15 @@ The standard representation of a recursive type is also very similar to that of 
 An alternative method of representation is the linear sequence or \textit{bitstream}. In this representation it is possible to avoid the use of pointers, and place the values of recursive substructures contiguous with the rest of the information, just as they are in the familiar bracketed character representations of expressions. However instead of using brackets, we can reestablish the bracketing structure by context, and if necessary by scanning the tag of union values. This method is usually associated with packed representations of the other components, and a very significant reduction in storage may be achieved, at the expense of enforcing serial access to the components of the structure. In many circumstances, a bitstream representation is some ten times more compact than the tree representation.
 
 \begin{figure}[h]
-	\centering
 	\begin{subfigure}[t]{\textwidth}
 		\centering
 		\includegraphics[width=.7\textwidth]{chap2/fig8a}
 		\caption{}
 	\end{subfigure}
-	\medskip
 	
 	\begin{subfigure}[t]{\textwidth}
 		\centering
-		\includegraphics[width=.55\textwidth]{chap2/fig8b}
+		\includegraphics[width=.58\textwidth]{chap2/fig8b}
 		\caption{}
 	\end{subfigure}
 	\caption{Representation of (($A$\,.\,($B$.NIL))\,.\,($B$\,.\,$A$)}
