@@ -6,7 +6,8 @@
 	right=15mm,
 	top=15mm,
 	bottom=15mm,
-	headsep=10pt
+	headsep=10pt,
+	footskip=1.2em
 }
 \usepackage{enumitem}
 \usepackage[utf8]{inputenc}
@@ -20,7 +21,7 @@
 	pdfkeywords={Structured, Programming},
 	pdfproducer={Latex with hyperref},
 	pdfcreator={pdflatex},
-	colorlinks,
+	%colorlinks,
 	bookmarksopen=true,
 	bookmarksopenlevel=1,
 	citecolor = {blue},
@@ -56,10 +57,10 @@
 \renewcommand\thesubsubsection{\thesubsection\arabic{subsubsection}.}
 
 \titleformat{\chapter}[hang]{\large\bfseries\centering}{\thechapter{}}{.5em}{}
-\titlespacing{\chapter}{0pt}{0cm}{.5cm}
+\titlespacing{\chapter}{0pt}{2cm}{.5cm}
 
 \titleformat{\section}[hang]{\normalsize\centering\scshape}{\thesection{}}{.5em}{}
-\titlespacing{\section}{0pt}{1em}{.6em}
+\titlespacing{\section}{0pt}{.6em}{.6em}
 
 \titleformat{\subsection}[hang]{\footnotesize\scshape\uppercase}{\thesubsection{}}{.5em}{}
 \titlespacing{\subsection}{0pt}{.8em}{.2em}
@@ -116,7 +117,7 @@
 \title{STRUCTURED PROGRAMMING}
 \date{1972}
 \pagestyle{empty}
-\pagenumbering{roman}
+\pagenumbering{Roman}
 
 \include{./frontcover}
 \cleardoublepage
